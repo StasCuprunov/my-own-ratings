@@ -29,9 +29,9 @@ public class RatingEntry {
     private String name;
 
     @NonNull
-    private Long value;
+    private Double value;
 
-    public RatingEntry(Long ratingId, String name, Long value) {
+    public RatingEntry(Long ratingId, String name, Double value) {
         setRatingId(ratingId);
         setName(name);
         setValue(value);
