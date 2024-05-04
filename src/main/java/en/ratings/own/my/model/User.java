@@ -24,7 +24,7 @@ public class User {
 
     @Indexed(unique = true)
     @NonNull
-    private String username;
+    private String email;
 
     @NonNull
     private String firstName;
@@ -35,8 +35,8 @@ public class User {
     @NonNull
     private String password;
 
-    public User (String username, String firstName, String surname, String password) {
-        setUsername(username);
+    public User (String email, String firstName, String surname, String password) {
+        setEmail(email);
         setFirstName(firstName);
         setSurname(surname);
         setPassword(password);
