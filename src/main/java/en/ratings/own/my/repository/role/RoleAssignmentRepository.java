@@ -10,5 +10,5 @@ public interface RoleAssignmentRepository extends MongoRepository<RoleAssignment
 
     <S extends RoleAssignment> S save(S roleAssignment);
 
-    Optional<RoleAssignment> deleteByUserIdAndRoleId(Long userId, Long roleId);
+    void deleteByUserIdAndRoleId(Long userId, Long roleId);
 }
