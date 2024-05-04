@@ -22,13 +22,17 @@ public class RangeOfValues {
     private Long id;
 
     @NonNull
-    private Long minimum;
+    private Double minimum;
 
     @NonNull
-    private Long maximum;
+    private Double maximum;
 
-    public RangeOfValues(Long minimum, Long maximum) {
+    @NonNull
+    private Double stepWidth;
+
+    public RangeOfValues(Double minimum, Double maximum, Double stepWidth) {
         setMinimum(minimum);
         setMaximum(maximum);
+        setStepWidth(stepWidth);
     }
 }
