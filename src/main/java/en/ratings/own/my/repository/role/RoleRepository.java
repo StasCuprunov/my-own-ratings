@@ -1,4 +1,4 @@
-package en.ratings.own.my.repository;
+package en.ratings.own.my.repository.role;
 
 import en.ratings.own.my.model.role.Role;
 import org.springframework.data.mongodb.repository.MongoRepository;
