@@ -9,5 +9,7 @@ public interface RoleRepository extends MongoRepository<Role, Long> {
 
     Optional<Role> findById(Long id);
 
+    Optional<Role> findByName(String name);
+
     <S extends Role> S save(S role);
 }
