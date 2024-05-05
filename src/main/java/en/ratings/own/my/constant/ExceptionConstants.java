@@ -16,4 +16,8 @@ public final class ExceptionConstants {
     public static final String KEY_RATING_NAME_ALREADY_USED_FOR_USER = "ratingNameAlreadyUsedForUser";
     public static final String KEY_RATING_BY_ID_NOT_FOUND = "ratingByIdNotFound";
     public static final String KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE = "ratingEntriesDontFitInScale";
+
+    // For RatingEntryCreationFailedException
+    public static final String KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING = "ratingEntryNameAlreadyUsedInRating";
+    public static final String KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED = "ratingEntryValueIsNotAllowed";
 }
