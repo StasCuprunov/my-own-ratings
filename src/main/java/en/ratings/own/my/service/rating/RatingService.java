@@ -1,6 +1,7 @@
 package en.ratings.own.my.service.rating;
 
 import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
+import en.ratings.own.my.exception.rating.RatingsByUserIdNotFoundException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
 import en.ratings.own.my.model.User;
@@ -58,38 +59,25 @@ public class RatingService {
         return rating.get();
     }
 
-    public ArrayList<Rating> findAllByUserId(Long userId) {
-        return findAllRatingsByUserId(userId).get();
+    public ArrayList<Rating> findAllByUserId(Long userId) throws Exception {
+        Optional<ArrayList<Rating>> ratings = findAllRatingsByUserId(userId);
+
+        if (ratings.isEmpty()) {
+            throw new RatingsByUserIdNotFoundException(userId);
+        }
+        return ratings.get();
     }
 
     public Rating create(Long userId, RangeOfValues rangeOfValues, String name, String description) throws Exception {
-        ArrayList<String> keysForException = rangeOfValuesValidation(rangeOfValues);
-        keysForException = addExistentStringToArrayList(keysForException, userIdValidation(userId));
-        keysForException = addExistentStringToArrayList(keysForException, ratingNameForUserValidation(userId, name));
-
-        if (!keysForException.isEmpty()) {
-            throw new RatingCreationFailedException(keysForException);
-        }
+        checkIfRangeOfValuesAndUserIdAreValid(userId, rangeOfValues);
+        checkIfRatingNameIsValid(userId, name);
         return createRating(userId, rangeOfValues, name, description);
     }
 
     public Rating update(Long id, Long userId, RangeOfValues rangeOfValues, String name, String description)
             throws Exception {
-        ArrayList<String> keysForException = rangeOfValuesValidation(rangeOfValues);
-        keysForException = addExistentStringToArrayList(keysForException, ratingIdValidation(id));
-        if (!keysForException.isEmpty()) {
-            throw new RatingUpdateFailedException(keysForException);
-        }
-
-        keysForException = addExistentStringToArrayList(keysForException, ratingNameForUpdateValidation(userId, name));
-
-        ArrayList<String> ratingEntries = ratingEntriesDontFitInNewRangeOfValues(id, rangeOfValues);
-        if (!ratingEntries.isEmpty()) {
-            keysForException = addExistentStringToArrayList(keysForException, KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE);
-        }
-        if (!keysForException.isEmpty()) {
-            throw new RatingUpdateFailedException(keysForException, ratingEntries);
-        }
+        checkIfRangeOfValuesAndRatingIdAndUserIdAreValid(id, userId, rangeOfValues);
+        checkIfRatingNameIsValidAndNoInconsistentWithRatingEntries(id, userId, rangeOfValues, name);
         return updateRating(id, userId, rangeOfValues, name, description);
     }
 
@@ -107,36 +95,75 @@ public class RatingService {
         deleteRangeOfValuesIfNotUsed(rangeOfValuesId);
     }
 
-    private Rating createRating(Long userId, RangeOfValues rangeOfValues, String name, String description) {
+    private Rating createRating(Long userId, RangeOfValues rangeOfValues, String name, String description)
+            throws Exception {
         return updateRating(null, userId, rangeOfValues, name, description);
     }
 
-    private Rating updateRating(Long ratingId, Long userId, RangeOfValues rangeOfValues, String name,
-                                String description) {
-        Long rangeOfValuesId;
-        Long oldRangeOfValuesId = null;
+    private Rating updateRating(Long id, Long userId, RangeOfValues rangeOfValues, String name, String description)
+            throws Exception {
+        Rating oldRating = findById(id);
+        Optional<RangeOfValues> targetRangeOfValues = findRangeOfValuesByMinimumAndMaximumAndStepWidth(rangeOfValues);
 
-        Optional<RangeOfValues> oldRangeOfValues = findRangeOfValuesByMinimumAndMaximumAndStepWidth(rangeOfValues);
-
-        if (oldRangeOfValues.isPresent()) {
-            oldRangeOfValuesId = oldRangeOfValues.get().getId();
-            rangeOfValuesId = oldRangeOfValuesId;
+        Long newRangeOfValuesId;
+        if (targetRangeOfValues.isEmpty()) {
+            newRangeOfValuesId = saveRangeOfValues(rangeOfValues).getId();
         }
         else {
-            rangeOfValuesId = saveRangeOfValues(rangeOfValues).getId();
+            newRangeOfValuesId = targetRangeOfValues.get().getId();
         }
 
-        Rating rating = new Rating(userId, rangeOfValuesId, name, description);
-        if (ratingId != null) {
-            rating.setId(ratingId);
+        Rating newRating = new Rating(userId, newRangeOfValuesId, name, description);
+        if (id != null) {
+            oldRating.setId(id);
         }
 
-        rating = saveRating(rating);
+        newRating = saveRating(newRating);
+        deleteRangeOfValuesIfNotUsed(oldRating.getRangeOfValuesId());
 
-        if (oldRangeOfValuesId != null) {
-            deleteRangeOfValuesIfNotUsed(oldRangeOfValuesId);
+        return newRating;
+    }
+
+    private void checkIfRangeOfValuesAndUserIdAreValid(Long userId, RangeOfValues rangeOfValues) throws Exception {
+        ArrayList<String> keysForException = rangeOfValuesValidation(rangeOfValues);
+        keysForException = addExistentStringToArrayList(keysForException, userIdValidation(userId));
+
+        if (!keysForException.isEmpty()) {
+            throw new RatingCreationFailedException(keysForException);
         }
-        return rating;
+    }
+
+    private void checkIfRatingNameIsValid(Long userId, String name) throws Exception {
+        ArrayList<String> keysForException = new ArrayList<>();
+        addExistentStringToArrayList(keysForException, ratingNameForUserValidation(userId, name));
+
+        if (!keysForException.isEmpty()) {
+            throw new RatingCreationFailedException(keysForException);
+        }
+    }
+
+    private void checkIfRangeOfValuesAndRatingIdAndUserIdAreValid(Long ratingId, Long userId,
+                                                                  RangeOfValues rangeOfValues) throws Exception {
+        ArrayList<String> keysForException = rangeOfValuesValidation(rangeOfValues);
+        keysForException = addExistentStringToArrayList(keysForException, userIdValidation(userId));
+        keysForException = addExistentStringToArrayList(keysForException, ratingIdValidation(ratingId));
+        if (!keysForException.isEmpty()) {
+            throw new RatingUpdateFailedException(keysForException);
+        }
+    }
+
+    private void checkIfRatingNameIsValidAndNoInconsistentWithRatingEntries
+            (Long ratingId, Long userId, RangeOfValues rangeOfValues, String name) throws Exception {
+        ArrayList<String> keysForException = new ArrayList<>();
+        keysForException = addExistentStringToArrayList(keysForException, ratingNameForUpdateValidation(userId, name));
+
+        ArrayList<String> ratingEntries = ratingEntriesDontFitInNewRangeOfValues(ratingId, rangeOfValues);
+        if (!ratingEntries.isEmpty()) {
+            keysForException = addExistentStringToArrayList(keysForException, KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE);
+        }
+        if (!keysForException.isEmpty()) {
+            throw new RatingUpdateFailedException(keysForException, ratingEntries);
+        }
     }
 
     private String userIdValidation(Long id) {
@@ -218,17 +245,21 @@ public class RatingService {
         return ratingRepository.save(rating);
     }
 
-    private void deleteRatingById(long id) {
+    private void deleteRatingById(Long id) {
         ratingRepository.deleteById(id);
     }
 
-    private RangeOfValues saveRangeOfValues(RangeOfValues rangeOfValues) {
-        return rangeOfValuesRepository.save(rangeOfValues);
+    private Optional<RangeOfValues> findRangeOfValuesById(Long id) {
+        return rangeOfValuesRepository.findById(id);
     }
 
     private Optional<RangeOfValues> findRangeOfValuesByMinimumAndMaximumAndStepWidth(RangeOfValues rangeOfValues) {
         return rangeOfValuesRepository.findByMinimumAndMaximumAndStepWidth(rangeOfValues.getMinimum(),
                 rangeOfValues.getMaximum(), rangeOfValues.getStepWidth());
+    }
+
+    private RangeOfValues saveRangeOfValues(RangeOfValues rangeOfValues) {
+        return rangeOfValuesRepository.save(rangeOfValues);
     }
 
     private void deleteRangeOfValuesById(Long id) {

@@ -35,4 +35,12 @@ public class RangeOfValues {
         setMaximum(maximum);
         setStepWidth(stepWidth);
     }
+
+    public boolean equals(RangeOfValues rangeOfValues) {
+        boolean isMinimumEqual = (this.minimum.equals(rangeOfValues.getMinimum()));
+        boolean isMaximumEqual = (this.maximum.equals(rangeOfValues.getMaximum()));
+        boolean isStepWidthEqual = (this.stepWidth.equals(rangeOfValues.getStepWidth()));
+
+        return isMinimumEqual && isMaximumEqual && isStepWidthEqual;
+    }
 }
