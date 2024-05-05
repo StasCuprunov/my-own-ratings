@@ -4,14 +4,13 @@ import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
 import en.ratings.own.my.exception.rating.RatingsByUserIdNotFoundException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
-import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.rating.RangeOfValues;
 import en.ratings.own.my.model.rating.Rating;
 import en.ratings.own.my.model.rating.RatingEntry;
-import en.ratings.own.my.repository.UserRepository;
-import en.ratings.own.my.repository.rating.RangeOfValuesRepository;
-import en.ratings.own.my.repository.rating.RatingEntryRepository;
-import en.ratings.own.my.repository.rating.RatingRepository;
+import en.ratings.own.my.service.repository.UserRepositoryService;
+import en.ratings.own.my.service.repository.rating.RangeOfValuesRepositoryService;
+import en.ratings.own.my.service.repository.rating.RatingEntryRepositoryService;
+import en.ratings.own.my.service.repository.rating.RatingRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,25 +32,26 @@ import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayLi
 @Service
 public class RatingService {
 
-    private final UserRepository userRepository;
+    private final UserRepositoryService userRepositoryService;
 
-    private final RatingRepository ratingRepository;
+    private final RatingRepositoryService ratingRepositoryService;
 
-    private final RangeOfValuesRepository rangeOfValuesRepository;
+    private final RangeOfValuesRepositoryService rangeOfValuesRepositoryService;
 
-    private final RatingEntryRepository ratingEntryRepository;
+    private final RatingEntryRepositoryService ratingEntryRepositoryService;
 
     @Autowired
-    public RatingService(UserRepository userRepository, RatingRepository ratingRepository,
-                         RangeOfValuesRepository rangeOfValuesRepository, RatingEntryRepository ratingEntryRepository) {
-        this.userRepository = userRepository;
-        this.ratingRepository = ratingRepository;
-        this.rangeOfValuesRepository = rangeOfValuesRepository;
-        this.ratingEntryRepository = ratingEntryRepository;
+    public RatingService(UserRepositoryService userRepositoryService, RatingRepositoryService ratingRepositoryService,
+                         RangeOfValuesRepositoryService rangeOfValuesRepositoryService,
+                         RatingEntryRepositoryService ratingEntryRepositoryService) {
+        this.userRepositoryService = userRepositoryService;
+        this.ratingRepositoryService = ratingRepositoryService;
+        this.rangeOfValuesRepositoryService = rangeOfValuesRepositoryService;
+        this.ratingEntryRepositoryService = ratingEntryRepositoryService;
     }
 
     public Rating findById(Long id) throws Exception {
-        Optional<Rating> rating = findRatingById(id);
+        Optional<Rating> rating = ratingRepositoryService.findById(id);
 
         if (rating.isEmpty()) {
             throw new RatingByIdNotFoundException(id);
@@ -60,7 +60,7 @@ public class RatingService {
     }
 
     public ArrayList<Rating> findAllByUserId(Long userId) throws Exception {
-        Optional<ArrayList<Rating>> ratings = findAllRatingsByUserId(userId);
+        Optional<ArrayList<Rating>> ratings = ratingRepositoryService.findAllByUserId(userId);
 
         if (ratings.isEmpty()) {
             throw new RatingsByUserIdNotFoundException(userId);
@@ -82,7 +82,7 @@ public class RatingService {
     }
 
     public void deleteById(Long id) throws Exception {
-        Optional<Rating> rating = findRatingById(id);
+        Optional<Rating> rating = ratingRepositoryService.findById(id);
 
         if (rating.isEmpty()) {
             throw new RatingByIdNotFoundException(id);
@@ -90,8 +90,8 @@ public class RatingService {
 
         Long rangeOfValuesId = rating.get().getRangeOfValuesId();
 
-        deleteAllRatingEntriesByRatingId(id);
-        deleteRatingById(id);
+        ratingEntryRepositoryService.deleteAllByRatingId(id);
+        ratingRepositoryService.deleteById(id);
         deleteRangeOfValuesIfNotUsed(rangeOfValuesId);
     }
 
@@ -103,11 +103,12 @@ public class RatingService {
     private Rating updateRating(Long id, Long userId, RangeOfValues rangeOfValues, String name, String description)
             throws Exception {
         Rating oldRating = findById(id);
-        Optional<RangeOfValues> targetRangeOfValues = findRangeOfValuesByMinimumAndMaximumAndStepWidth(rangeOfValues);
+        Optional<RangeOfValues> targetRangeOfValues = rangeOfValuesRepositoryService.
+                findByMinimumAndMaximumAndStepWidth(rangeOfValues);
 
         Long newRangeOfValuesId;
         if (targetRangeOfValues.isEmpty()) {
-            newRangeOfValuesId = saveRangeOfValues(rangeOfValues).getId();
+            newRangeOfValuesId = rangeOfValuesRepositoryService.save(rangeOfValues).getId();
         }
         else {
             newRangeOfValuesId = targetRangeOfValues.get().getId();
@@ -118,7 +119,7 @@ public class RatingService {
             oldRating.setId(id);
         }
 
-        newRating = saveRating(newRating);
+        newRating = ratingRepositoryService.save(newRating);
         deleteRangeOfValuesIfNotUsed(oldRating.getRangeOfValuesId());
 
         return newRating;
@@ -167,7 +168,7 @@ public class RatingService {
     }
 
     private String userIdValidation(Long id) {
-        if (findUserById(id).isEmpty()) {
+        if (userRepositoryService.findById(id).isEmpty()) {
             return KEY_USER_WITH_ID_NOT_FOUND;
         }
         return null;
@@ -189,14 +190,14 @@ public class RatingService {
     }
 
     private String ratingNameForUserValidation(Long userId, String name) {
-        if (findRatingByUserIdAndName(userId, name).isPresent()) {
+        if (ratingRepositoryService.findByUserIdAndName(userId, name).isPresent()) {
             return KEY_RATING_NAME_ALREADY_USED_FOR_USER;
         }
         return null;
     }
 
     private String ratingIdValidation(Long id) {
-        Optional<Rating> rating = findRatingById(id);
+        Optional<Rating> rating = ratingRepositoryService.findById(id);
 
         if (rating.isEmpty()) {
             return KEY_RATING_BY_ID_NOT_FOUND;
@@ -209,7 +210,7 @@ public class RatingService {
     }
 
     private ArrayList<String> ratingEntriesDontFitInNewRangeOfValues(Long ratingId, RangeOfValues rangeOfValues) {
-        ArrayList<RatingEntry> ratingEntries = findAllRatingEntriesByRatingId(ratingId).get();
+        ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(ratingId).get();
 
         ArrayList<String> ratingEntriesDontFitInScale = new ArrayList<>();
 
@@ -221,62 +222,10 @@ public class RatingService {
         return ratingEntriesDontFitInScale;
     }
 
-    private Optional<User> findUserById(Long id) {
-        return userRepository.findById(id);
-    }
-
-    private Optional<Rating> findRatingById(Long id) {
-        return ratingRepository.findById(id);
-    }
-
-    private Optional<Rating> findRatingByUserIdAndName(Long userId, String name) {
-        return ratingRepository.findByUserIdAndName(userId, name);
-    }
-
-    private Optional<ArrayList<Rating>> findAllRatingsByUserId(Long userId) {
-        return ratingRepository.findAllByUserId(userId);
-    }
-
-    private boolean existsRatingByRangeOfValuesId(Long rangeOfValuesId) {
-        return ratingRepository.existsByRangeOfValuesId(rangeOfValuesId);
-    }
-
-    private Rating saveRating(Rating rating) {
-        return ratingRepository.save(rating);
-    }
-
-    private void deleteRatingById(Long id) {
-        ratingRepository.deleteById(id);
-    }
-
-    private Optional<RangeOfValues> findRangeOfValuesById(Long id) {
-        return rangeOfValuesRepository.findById(id);
-    }
-
-    private Optional<RangeOfValues> findRangeOfValuesByMinimumAndMaximumAndStepWidth(RangeOfValues rangeOfValues) {
-        return rangeOfValuesRepository.findByMinimumAndMaximumAndStepWidth(rangeOfValues.getMinimum(),
-                rangeOfValues.getMaximum(), rangeOfValues.getStepWidth());
-    }
-
-    private RangeOfValues saveRangeOfValues(RangeOfValues rangeOfValues) {
-        return rangeOfValuesRepository.save(rangeOfValues);
-    }
-
-    private void deleteRangeOfValuesById(Long id) {
-        rangeOfValuesRepository.deleteById(id);
-    }
-
     private void deleteRangeOfValuesIfNotUsed(Long id) {
-        if (!existsRatingByRangeOfValuesId(id)) {
-            deleteRangeOfValuesById(id);
+        if (!ratingRepositoryService.existsByRangeOfValuesId(id)) {
+            rangeOfValuesRepositoryService.deleteById(id);
         }
     }
 
-    private Optional<ArrayList<RatingEntry>> findAllRatingEntriesByRatingId(Long ratingId) {
-        return ratingEntryRepository.findAllByRatingId(ratingId);
-    }
-
-    private void deleteAllRatingEntriesByRatingId(Long ratingId) {
-        ratingEntryRepository.deleteAllByRatingId(ratingId);
-    }
 }

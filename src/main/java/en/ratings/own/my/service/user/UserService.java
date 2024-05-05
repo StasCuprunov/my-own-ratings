@@ -6,9 +6,9 @@ import en.ratings.own.my.exception.user.UserNotFoundByEmailException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.role.Role;
 import en.ratings.own.my.model.role.RoleAssignment;
-import en.ratings.own.my.repository.UserRepository;
-import en.ratings.own.my.repository.role.RoleAssignmentRepository;
-import en.ratings.own.my.repository.role.RoleRepository;
+import en.ratings.own.my.service.repository.UserRepositoryService;
+import en.ratings.own.my.service.repository.role.RoleAssignmentRepositoryService;
+import en.ratings.own.my.service.repository.role.RoleRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,22 +25,23 @@ import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayLi
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final UserRepositoryService userRepositoryService;
 
-    private final RoleAssignmentRepository roleAssignmentRepository;
+    private final RoleAssignmentRepositoryService roleAssignmentRepositoryService;
 
-    private final RoleRepository roleRepository;
+    private final RoleRepositoryService roleRepositoryService;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleAssignmentRepository roleAssignmentRepository,
-                       RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.roleAssignmentRepository = roleAssignmentRepository;
-        this.roleRepository = roleRepository;
+    public UserService(UserRepositoryService userRepositoryService,
+                       RoleAssignmentRepositoryService roleAssignmentRepositoryService,
+                       RoleRepositoryService roleRepositoryService) {
+        this.userRepositoryService = userRepositoryService;
+        this.roleAssignmentRepositoryService = roleAssignmentRepositoryService;
+        this.roleRepositoryService = roleRepositoryService;
     }
 
     public User findByEmail(String email) throws Exception {
-        Optional<User> user = findUserByEmail(email);
+        Optional<User> user = userRepositoryService.findByEmail(email);
 
         if (user.isEmpty()) {
             throw new UserNotFoundByEmailException(email);
@@ -59,9 +60,9 @@ public class UserService {
     }
 
     private User createUser(User user) throws Exception {
-        User userResult = saveUser(user);
+        User userResult = userRepositoryService.save(user);
         String roleName = RoleUserAsString();
-        Optional<Role> role = findRoleByName(roleName);
+        Optional<Role> role = roleRepositoryService.findByName(roleName);
 
         if (role.isEmpty()) {
             throw new RoleNotFoundException(roleName);
@@ -70,25 +71,9 @@ public class UserService {
         Long roleId = role.get().getId();
         Long userId = userResult.getId();
 
-        saveRoleAssignment(new RoleAssignment(userId, roleId));
+        roleAssignmentRepositoryService.save(new RoleAssignment(userId, roleId));
 
         return userResult;
-    }
-
-    private Optional<User> findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    private User saveUser(User user) {
-        return userRepository.save(user);
-    }
-
-    private Optional<Role> findRoleByName(String name) {
-        return roleRepository.findByName(name);
-    }
-
-    private RoleAssignment saveRoleAssignment(RoleAssignment roleAssignment) {
-        return roleAssignmentRepository.save(roleAssignment);
     }
 
     private ArrayList<String> emailValidation(String email) {
@@ -103,6 +88,6 @@ public class UserService {
     }
 
     private boolean isEmailAvailable(String email)  {
-        return findUserByEmail(email).isEmpty();
+        return userRepositoryService.findByEmail(email).isEmpty();
     }
 }
