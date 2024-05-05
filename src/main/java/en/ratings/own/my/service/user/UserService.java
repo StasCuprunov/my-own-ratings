@@ -1,8 +1,8 @@
 package en.ratings.own.my.service.user;
 
 import en.ratings.own.my.exception.RoleNotFoundException;
-import en.ratings.own.my.exception.user.UserCreationFailedException;
-import en.ratings.own.my.exception.user.UserNotFoundByEmail;
+import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
+import en.ratings.own.my.exception.user.UserNotFoundByEmailException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.role.Role;
 import en.ratings.own.my.model.role.RoleAssignment;
@@ -20,44 +20,45 @@ import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_ALREADY_EX
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_SYNTAX;
 import static en.ratings.own.my.service.user.UserValidation.isEmailSyntaxAllowed;
 import static en.ratings.own.my.service.user.UserValidation.passwordValidation;
+import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayList;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final RoleAssignmentRepository roleAssignmentRepository;
+
+    private final RoleRepository roleRepository;
 
     @Autowired
-    private RoleAssignmentRepository roleAssignmentRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    public UserService() {
-
+    public UserService(UserRepository userRepository, RoleAssignmentRepository roleAssignmentRepository,
+                       RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleAssignmentRepository = roleAssignmentRepository;
+        this.roleRepository = roleRepository;
     }
 
     public User findByEmail(String email) throws Exception {
         Optional<User> user = findUserByEmail(email);
 
         if (user.isEmpty()) {
-            throw new UserNotFoundByEmail(email);
+            throw new UserNotFoundByEmailException(email);
         }
         return user.get();
     }
 
     public User create(String email, String firstName, String surname, String password) throws Exception {
-        ArrayList<String> keysForException = new ArrayList<>(emailValidation(email));
-        keysForException.add(passwordValidation(password));
+        ArrayList<String> keysForException = emailValidation(email);
+        keysForException = addExistentStringToArrayList(keysForException, passwordValidation(password));
 
         if (!keysForException.isEmpty()) {
             throw new UserCreationFailedException(keysForException);
         }
-
-        return createUserInDatabase(new User(email, firstName, surname, password));
+        return createUser(new User(email, firstName, surname, password));
     }
 
-    private User createUserInDatabase(User user) throws Exception {
+    private User createUser(User user) throws Exception {
         User userResult = saveUser(user);
         String roleName = RoleUserAsString();
         Optional<Role> role = findRoleByName(roleName);

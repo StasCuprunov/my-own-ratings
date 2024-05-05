@@ -27,7 +27,7 @@ public class UserValidation {
         else if (passwordLength > PASSWORD_MAXIMUM_LENGTH) {
             return KEY_PASSWORD_TOO_LONG;
         }
-        return "";
+        return null;
     }
 
 }
