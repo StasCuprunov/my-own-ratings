@@ -93,8 +93,18 @@ public class RatingService {
         return updateRating(id, userId, rangeOfValues, name, description);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
+        Optional<Rating> rating = findRatingById(id);
+
+        if (rating.isEmpty()) {
+            throw new RatingByIdNotFoundException(id);
+        }
+
+        Long rangeOfValuesId = rating.get().getRangeOfValuesId();
+
+        deleteAllRatingEntriesByRatingId(id);
         deleteRatingById(id);
+        deleteRangeOfValuesIfNotUsed(rangeOfValuesId);
     }
 
     private Rating createRating(Long userId, RangeOfValues rangeOfValues, String name, String description) {
@@ -233,5 +243,9 @@ public class RatingService {
 
     private Optional<ArrayList<RatingEntry>> findAllRatingEntriesByRatingId(Long ratingId) {
         return ratingEntryRepository.findAllByRatingId(ratingId);
+    }
+
+    private void deleteAllRatingEntriesByRatingId(Long ratingId) {
+        ratingEntryRepository.deleteAllByRatingId(ratingId);
     }
 }
