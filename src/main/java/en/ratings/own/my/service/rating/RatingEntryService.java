@@ -1,6 +1,5 @@
 package en.ratings.own.my.service.rating;
 
-import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntriesByRatingIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
@@ -16,8 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;
+import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayList;
 import static en.ratings.own.my.service.rating.RangeOfValuesValidation.isValueInRangeOfValues;
 
 @Service
@@ -60,17 +62,9 @@ public class RatingEntryService {
     }
 
     public RatingEntry update(Long id, Long ratingId, String name, Double value) throws Exception {
-        if (id != null) {
-            findById(id);
-        }
-
-        Optional<Rating> rating = ratingRepositoryService.findById(ratingId);
-        if (rating.isEmpty()) {
-            throw new RatingByIdNotFoundException(ratingId);
-        }
-
+        Rating rating = getRatingForRatingEntryAndCheckRatingEntryId(id, ratingId);
         RatingEntry ratingEntry = new RatingEntry(ratingId, name, value);
-        checkIfUpdateIsAllowed(rating.get().getRangeOfValuesId(), ratingEntry);
+        checkIfUpdateIsAllowed(rating.getRangeOfValuesId(), ratingEntry);
 
         if (id != null) {
             ratingEntry.setId(id);
@@ -84,6 +78,32 @@ public class RatingEntryService {
 
     public void deleteAllByRatingId(Long ratingId) {
         ratingEntryRepositoryService.deleteAllByRatingId(ratingId);
+    }
+
+    private Rating getRatingForRatingEntryAndCheckRatingEntryId(Long ratingEntryId, Long ratingId) throws Exception {
+        ArrayList<String> keysForException = new ArrayList<>();
+        if (ratingEntryId != null) {
+            addExistentStringToArrayList(keysForException, idValidation(ratingEntryId));
+        }
+
+        Optional<Rating> rating = ratingRepositoryService.findById(ratingId);
+        if (rating.isEmpty()) {
+            keysForException.add(KEY_RATING_BY_ID_NOT_FOUND);
+        }
+
+        if (!keysForException.isEmpty()) {
+            throw new RatingEntryFailedException(keysForException);
+        }
+        return rating.get();
+    }
+
+    private String idValidation(Long id) {
+        try {
+            findById(id);
+        } catch (Exception e) {
+            return KEY_RATING_ENTRY_BY_ID_NOT_FOUND;
+        }
+        return null;
     }
 
     private void checkIfUpdateIsAllowed(Long rangeOfValuesId, RatingEntry ratingEntry) throws Exception {
