@@ -1,4 +1,4 @@
-package en.ratings.own.my.controller;
+package en.ratings.own.my.controller.rating;
 
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.service.rating.RatingService;
