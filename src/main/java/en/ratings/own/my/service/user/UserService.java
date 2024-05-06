@@ -1,5 +1,6 @@
 package en.ratings.own.my.service.user;
 
+import en.ratings.own.my.dto.UserDTO;
 import en.ratings.own.my.exception.RoleNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
 import en.ratings.own.my.exception.user.UserNotFoundByEmailException;
@@ -40,26 +41,26 @@ public class UserService {
         this.roleRepositoryService = roleRepositoryService;
     }
 
-    public User findByEmail(String email) throws Exception {
+    public UserDTO findByEmail(String email) throws Exception {
         Optional<User> user = userRepositoryService.findByEmail(email);
 
         if (user.isEmpty()) {
             throw new UserNotFoundByEmailException(email);
         }
-        return user.get();
+        return convertModelToDTO(user.get());
     }
 
-    public User create(String email, String firstName, String surname, String password) throws Exception {
-        ArrayList<String> keysForException = emailValidation(email);
-        keysForException = addExistentStringToArrayList(keysForException, passwordValidation(password));
+    public UserDTO create(User user) throws Exception {
+        ArrayList<String> keysForException = emailValidation(user.getEmail());
+        keysForException = addExistentStringToArrayList(keysForException, passwordValidation(user.getPassword()));
 
         if (!keysForException.isEmpty()) {
             throw new UserCreationFailedException(keysForException);
         }
-        return createUser(new User(email, firstName, surname, password));
+        return createUser(user);
     }
 
-    private User createUser(User user) throws Exception {
+    private UserDTO createUser(User user) throws Exception {
         User userResult = userRepositoryService.save(user);
         String roleName = RoleUserAsString();
         Optional<Role> role = roleRepositoryService.findByName(roleName);
@@ -73,7 +74,7 @@ public class UserService {
 
         roleAssignmentRepositoryService.save(new RoleAssignment(userId, roleId));
 
-        return userResult;
+        return convertModelToDTO(userResult);
     }
 
     private ArrayList<String> emailValidation(String email) {
@@ -89,5 +90,9 @@ public class UserService {
 
     private boolean isEmailAvailable(String email)  {
         return userRepositoryService.findByEmail(email).isEmpty();
+    }
+
+    private UserDTO convertModelToDTO(User user) {
+        return new UserDTO(user.getId(), user.getEmail(), user.getFirstName(), user.getSurname());
     }
 }

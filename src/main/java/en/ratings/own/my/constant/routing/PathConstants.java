@@ -4,7 +4,9 @@ public class PathConstants {
 
     public static final String CREATE_PATH = "/create";
 
-    public static final String ID_PATH = "/id";
+    public static final String ID_PATH = "/{id}";
+
+    public static final String EMAIL_PATH = "/{email}";
 
     public static final String EDIT_PATH = "/edit" + ID_PATH;
 

@@ -3,6 +3,7 @@ package en.ratings.own.my.constant.routing;
 import static en.ratings.own.my.constant.routing.PathConstants.CREATE_PATH;
 import static en.ratings.own.my.constant.routing.PathConstants.DELETE_PATH;
 import static en.ratings.own.my.constant.routing.PathConstants.EDIT_PATH;
+import static en.ratings.own.my.constant.routing.PathConstants.EMAIL_PATH;
 import static en.ratings.own.my.constant.routing.PathConstants.ID_PATH;
 
 public class RoutingConstants {
@@ -17,7 +18,9 @@ public class RoutingConstants {
 
     public static final String ROUTING_USER = "/user";
 
-    public static final String ROUTING_USER_CREATION = ROUTING_USER + CREATE_PATH;
+    public static final String ROUTING_USER_EMAIL = ROUTING_USER + EMAIL_PATH;
+
+    public static final String ROUTING_USER_CREATE = ROUTING_USER + CREATE_PATH;
 
     public static final String ROUTING_RATING = "/rating";
 
