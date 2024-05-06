@@ -20,7 +20,7 @@ public class Role {
 
     @Id
     @Generated
-    private Long id;
+    private String id;
 
     @Indexed(unique = true)
     @NonNull

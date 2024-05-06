@@ -5,6 +5,7 @@ import en.ratings.own.my.repository.role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -19,5 +20,13 @@ public class RoleRepositoryService {
 
     public Optional<Role> findByName(String name) {
         return roleRepository.findByName(name);
+    }
+
+    public ArrayList<Role> findAll() {
+        return roleRepository.findAll();
+    }
+
+    public Role save(Role role) {
+        return roleRepository.save(role);
     }
 }

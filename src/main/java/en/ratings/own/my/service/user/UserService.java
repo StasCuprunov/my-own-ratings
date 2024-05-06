@@ -69,7 +69,7 @@ public class UserService {
             throw new RoleByNameNotFoundException(roleName);
         }
 
-        Long roleId = role.get().getId();
+        String roleId = role.get().getId();
         Long userId = userResult.getId();
 
         roleAssignmentRepositoryService.save(new RoleAssignment(userId, roleId));

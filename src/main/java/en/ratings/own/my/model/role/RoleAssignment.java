@@ -25,9 +25,9 @@ public class RoleAssignment {
     private Long userId;
 
     @NonNull
-    private Long roleId;
+    private String roleId;
 
-    public RoleAssignment(Long userId, Long roleId) {
+    public RoleAssignment(Long userId, String roleId) {
         setUserId(userId);
         setRoleId(roleId);
     }
