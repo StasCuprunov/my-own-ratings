@@ -1,4 +1,4 @@
-package en.ratings.own.my.config;
+package en.ratings.own.my.component;
 
 import en.ratings.own.my.enums.RoleEnum;
 import en.ratings.own.my.model.role.Role;
