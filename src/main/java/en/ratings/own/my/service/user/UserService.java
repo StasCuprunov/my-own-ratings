@@ -1,9 +1,9 @@
 package en.ratings.own.my.service.user;
 
 import en.ratings.own.my.dto.UserDTO;
-import en.ratings.own.my.exception.RoleNotFoundException;
+import en.ratings.own.my.exception.RoleByNameNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
-import en.ratings.own.my.exception.user.UserNotFoundByEmailException;
+import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.role.Role;
 import en.ratings.own.my.model.role.RoleAssignment;
@@ -45,7 +45,7 @@ public class UserService {
         Optional<User> user = userRepositoryService.findByEmail(email);
 
         if (user.isEmpty()) {
-            throw new UserNotFoundByEmailException(email);
+            throw new UserByEmailNotFoundException(email);
         }
         return convertModelToDTO(user.get());
     }
@@ -66,7 +66,7 @@ public class UserService {
         Optional<Role> role = roleRepositoryService.findByName(roleName);
 
         if (role.isEmpty()) {
-            throw new RoleNotFoundException(roleName);
+            throw new RoleByNameNotFoundException(roleName);
         }
 
         Long roleId = role.get().getId();

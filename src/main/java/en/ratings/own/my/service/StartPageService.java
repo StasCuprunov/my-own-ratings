@@ -3,7 +3,7 @@ package en.ratings.own.my.service;
 import en.ratings.own.my.dto.StartPageDTO;
 import en.ratings.own.my.dto.UserDTO;
 import en.ratings.own.my.dto.rating.RatingForStartPageDTO;
-import en.ratings.own.my.exception.user.UserNotFoundByEmailException;
+import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.rating.Rating;
 import en.ratings.own.my.service.repository.UserRepositoryService;
@@ -32,7 +32,7 @@ public class StartPageService {
         Optional<User> userResult = userRepositoryService.findByEmail(email);
 
         if (userResult.isEmpty()) {
-            throw new UserNotFoundByEmailException(email);
+            throw new UserByEmailNotFoundException(email);
         }
 
         User user = userResult.get();

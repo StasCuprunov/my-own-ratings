@@ -1,7 +1,7 @@
 package en.ratings.own.my.exception.user;
 
-public class UserNotFoundByEmailException extends Exception {
-    public UserNotFoundByEmailException(String email) {
+public class UserByEmailNotFoundException extends Exception {
+    public UserByEmailNotFoundException(String email) {
         super(errorMessage(email));
     }
 
