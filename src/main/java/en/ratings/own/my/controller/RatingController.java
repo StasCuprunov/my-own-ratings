@@ -10,14 +10,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static en.ratings.own.my.constant.routing.RoutingConstants.ROUTING_RATING_CREATE;
-import static en.ratings.own.my.constant.routing.RoutingConstants.ROUTING_RATING_DELETE;
-import static en.ratings.own.my.constant.routing.RoutingConstants.ROUTING_RATING_EDIT;
-import static en.ratings.own.my.constant.routing.RoutingConstants.ROUTING_RATING_ID;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_ID;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATING;
 
 @RestController
+@RequestMapping(ROUTING_RATING)
 public class RatingController {
 
     private final RatingService ratingService;
@@ -27,22 +30,22 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
-    @GetMapping(ROUTING_RATING_ID)
+    @GetMapping(ROUTING_ID)
     public RatingDTO findById(@PathVariable @NonNull Long id) throws Exception {
         return ratingService.findById(id);
     }
 
-    @PostMapping(ROUTING_RATING_CREATE)
+    @PostMapping(ROUTING_CREATE)
     public RatingDTO create(@RequestBody RatingDTO ratingDTO) throws Exception {
         return ratingService.create(ratingDTO);
     }
 
-    @PutMapping(ROUTING_RATING_EDIT)
+    @PutMapping(ROUTING_EDIT)
     public RatingDTO update(@RequestBody RatingDTO ratingDTO) throws Exception {
         return ratingService.update(ratingDTO);
     }
 
-    @DeleteMapping(ROUTING_RATING_DELETE)
+    @DeleteMapping(ROUTING_DELETE)
     public void deleteById(@PathVariable @NonNull Long id) throws Exception {
         ratingService.deleteById(id);
     }

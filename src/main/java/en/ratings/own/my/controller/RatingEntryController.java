@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static en.ratings.own.my.constant.routing.RoutingConstants.ROUTING_RATING_ENTRY_CREATE;
-import static en.ratings.own.my.constant.routing.RoutingConstants.ROUTING_RATING_ENTRY_DELETE;
-import static en.ratings.own.my.constant.routing.RoutingConstants.ROUTING_RATING_ENTRY_EDIT;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATING_ENTRY;
 
 @RestController
+@RequestMapping(ROUTING_RATING_ENTRY)
 public class RatingEntryController {
 
     private final RatingEntryService ratingEntryService;
@@ -24,17 +27,17 @@ public class RatingEntryController {
         this.ratingEntryService = ratingEntryService;
     }
 
-    @PostMapping(ROUTING_RATING_ENTRY_CREATE)
+    @PostMapping(ROUTING_CREATE)
     public RatingEntry create(@RequestBody RatingEntry ratingEntry) throws Exception {
         return ratingEntryService.create(ratingEntry);
     }
 
-    @PutMapping(ROUTING_RATING_ENTRY_EDIT)
+    @PutMapping(ROUTING_EDIT)
     public RatingEntry update(@RequestBody RatingEntry ratingEntry) throws Exception {
         return ratingEntryService.update(ratingEntry);
     }
 
-    @DeleteMapping(ROUTING_RATING_ENTRY_DELETE)
+    @DeleteMapping(ROUTING_DELETE)
     public void deleteById(@PathVariable @NonNull Long id) {
         ratingEntryService.deleteById(id);
     }
