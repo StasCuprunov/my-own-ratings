@@ -1,5 +1,6 @@
 package en.ratings.own.my.service.rating;
 
+import en.ratings.own.my.dto.rating.RatingEntryDTO;
 import en.ratings.own.my.exception.rating.entry.RatingEntriesByRatingIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
@@ -57,19 +58,14 @@ public class RatingEntryService {
         return ratingEntries.get();
     }
 
-    public RatingEntry create(Long ratingId, String name, Double value) throws Exception {
-        return update(null, ratingId, name, value);
+    public RatingEntryDTO create(RatingEntry ratingEntry) throws Exception {
+        return update(ratingEntry);
     }
 
-    public RatingEntry update(Long id, Long ratingId, String name, Double value) throws Exception {
-        Rating rating = getRatingForRatingEntryAndCheckRatingEntryId(id, ratingId);
-        RatingEntry ratingEntry = new RatingEntry(ratingId, name, value);
+    public RatingEntryDTO update(RatingEntry ratingEntry) throws Exception {
+        Rating rating = getRatingForRatingEntryAndCheckRatingEntryId(ratingEntry.getId(), ratingEntry.getRatingId());
         checkIfUpdateIsAllowed(rating.getRangeOfValuesId(), ratingEntry);
-
-        if (id != null) {
-            ratingEntry.setId(id);
-        }
-        return ratingEntryRepositoryService.save(ratingEntry);
+        return convertModelToDTO(ratingEntryRepositoryService.save(ratingEntry));
     }
 
     public void deleteById(Long id) {
@@ -146,5 +142,10 @@ public class RatingEntryService {
             return KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;
         }
         return null;
+    }
+
+    private RatingEntryDTO convertModelToDTO(RatingEntry ratingEntry) {
+        return new RatingEntryDTO(ratingEntry.getId(), ratingEntry.getRatingId(), ratingEntry.getName(),
+                ratingEntry.getValue());
     }
 }
