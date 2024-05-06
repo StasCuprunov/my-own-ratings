@@ -25,7 +25,7 @@ public class RatingRepositoryService {
         return ratingRepository.findByUserIdAndName(userId, name);
     }
 
-    public Optional<ArrayList<Rating>> findAllByUserId(Long userId) {
+    public ArrayList<Rating> findAllByUserId(Long userId) {
         return ratingRepository.findAllByUserId(userId);
     }
 

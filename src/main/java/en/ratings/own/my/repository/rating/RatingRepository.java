@@ -13,7 +13,7 @@ public interface RatingRepository extends MongoRepository<Rating, Long> {
 
     Optional<Rating> findByUserIdAndName(Long userId, String name);
 
-    Optional<ArrayList<Rating>> findAllByUserId(Long userId);
+    ArrayList<Rating> findAllByUserId(Long userId);
 
     boolean existsByRangeOfValuesId(Long rangeOfValuesId);
 

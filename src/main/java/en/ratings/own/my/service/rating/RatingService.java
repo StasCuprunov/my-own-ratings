@@ -2,7 +2,6 @@ package en.ratings.own.my.service.rating;
 
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
-import en.ratings.own.my.exception.rating.RatingsByUserIdNotFoundException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
 import en.ratings.own.my.model.rating.RangeOfValues;
@@ -64,13 +63,8 @@ public class RatingService {
         return new RatingDTO(rating, rangeOfValues.get(), ratingEntries);
     }
 
-    public ArrayList<Rating> findAllByUserId(Long userId) throws Exception {
-        Optional<ArrayList<Rating>> ratings = ratingRepositoryService.findAllByUserId(userId);
-
-        if (ratings.isEmpty()) {
-            throw new RatingsByUserIdNotFoundException(userId);
-        }
-        return ratings.get();
+    public ArrayList<Rating> findAllByUserId(Long userId) {
+        return ratingRepositoryService.findAllByUserId(userId);
     }
 
     public RatingDTO create(RatingDTO ratingDTO) throws Exception {
