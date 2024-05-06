@@ -19,6 +19,7 @@ import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATING_ENTRIES;
 import static en.ratings.own.my.utility.ResponseEntityUtility.createCreatedResponseEntity;
 import static en.ratings.own.my.utility.ResponseEntityUtility.createNoContentResponseEntity;
+import static en.ratings.own.my.utility.ResponseEntityUtility.createOkResponseEntity;
 
 @RestController
 @RequestMapping(ROUTING_RATING_ENTRIES)
@@ -37,7 +38,7 @@ public class RatingEntryController {
 
     @PutMapping(ROUTING_EDIT)
     public ResponseEntity<RatingEntry> update(@RequestBody RatingEntry ratingEntry) throws Exception {
-        return createCreatedResponseEntity(ratingEntryService.update(ratingEntry));
+        return createOkResponseEntity(ratingEntryService.update(ratingEntry));
     }
 
     @DeleteMapping(ROUTING_DELETE)

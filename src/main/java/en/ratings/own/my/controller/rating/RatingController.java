@@ -46,7 +46,7 @@ public class RatingController {
 
     @PutMapping(ROUTING_EDIT)
     public ResponseEntity<RatingDTO> update(@RequestBody RatingDTO ratingDTO) throws Exception {
-        return createCreatedResponseEntity(ratingService.update(ratingDTO));
+        return createOkResponseEntity(ratingService.update(ratingDTO));
     }
 
     @DeleteMapping(ROUTING_DELETE)
