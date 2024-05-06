@@ -20,7 +20,7 @@ public class User {
 
     @Id
     @Generated
-    private Long id;
+    private String id;
 
     @Indexed(unique = true)
     @NonNull

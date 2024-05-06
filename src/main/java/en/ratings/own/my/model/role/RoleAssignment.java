@@ -19,15 +19,15 @@ public class RoleAssignment {
 
     @Id
     @Generated
-    private Long id;
+    private String id;
 
     @NonNull
-    private Long userId;
+    private String userId;
 
     @NonNull
-    private Long roleId;
+    private String roleId;
 
-    public RoleAssignment(Long userId, Long roleId) {
+    public RoleAssignment(String userId, String roleId) {
         setUserId(userId);
         setRoleId(roleId);
     }

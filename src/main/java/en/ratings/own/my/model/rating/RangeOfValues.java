@@ -19,7 +19,7 @@ public class RangeOfValues {
 
     @Id
     @Generated
-    private Long id;
+    private String id;
 
     @NonNull
     private Double minimum;
@@ -29,10 +29,4 @@ public class RangeOfValues {
 
     @NonNull
     private Double stepWidth;
-
-    public RangeOfValues(Double minimum, Double maximum, Double stepWidth) {
-        setMinimum(minimum);
-        setMaximum(maximum);
-        setStepWidth(stepWidth);
-    }
 }
