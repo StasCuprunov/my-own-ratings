@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
-import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATING_ENTRY;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATING_ENTRIES;
 
 @RestController
-@RequestMapping(ROUTING_RATING_ENTRY)
+@RequestMapping(ROUTING_RATING_ENTRIES)
 public class RatingEntryController {
 
     private final RatingEntryService ratingEntryService;

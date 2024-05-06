@@ -17,10 +17,10 @@ import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_ID;
-import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATING;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATINGS;
 
 @RestController
-@RequestMapping(ROUTING_RATING)
+@RequestMapping(ROUTING_RATINGS)
 public class RatingController {
 
     private final RatingService ratingService;

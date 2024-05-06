@@ -22,7 +22,7 @@ public class RoutingConstants {
 
     public static final String ROUTING_USER = "/user";
 
-    public static final String ROUTING_RATING = "/rating";
+    public static final String ROUTING_RATINGS = "/ratings";
 
-    public static final String ROUTING_RATING_ENTRY = "/rating-entry";
+    public static final String ROUTING_RATING_ENTRIES = "/rating-entries";
 }
