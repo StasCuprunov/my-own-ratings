@@ -13,7 +13,7 @@ import en.ratings.own.my.model.User;
 @Setter
 public class UserDTO {
 
-    private Long id;
+    private String id;
 
     private String email;
 

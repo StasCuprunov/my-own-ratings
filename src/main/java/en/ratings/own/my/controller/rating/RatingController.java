@@ -35,7 +35,7 @@ public class RatingController {
     }
 
     @GetMapping(ROUTING_ID)
-    public ResponseEntity<RatingDTO> findById(@PathVariable @NonNull Long id) throws Exception {
+    public ResponseEntity<RatingDTO> findById(@PathVariable @NonNull String id) throws Exception {
         return createOkResponseEntity(ratingService.findById(id));
     }
 
@@ -50,7 +50,7 @@ public class RatingController {
     }
 
     @DeleteMapping(ROUTING_DELETE)
-    public ResponseEntity<Object> deleteById(@PathVariable @NonNull Long id) throws Exception {
+    public ResponseEntity<Object> deleteById(@PathVariable @NonNull String id) throws Exception {
         ratingService.deleteById(id);
         return createNoContentResponseEntity();
     }

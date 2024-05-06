@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RoleAssignmentRepository extends MongoRepository<RoleAssignment, Long> {
-    Optional<List<RoleAssignment>> findAllByUserId(Long userId);
+public interface RoleAssignmentRepository extends MongoRepository<RoleAssignment, String> {
+    Optional<List<RoleAssignment>> findAllByUserId(String userId);
 
     <S extends RoleAssignment> S save(S roleAssignment);
 
-    void deleteByUserIdAndRoleId(Long userId, Long roleId);
+    void deleteByUserIdAndRoleId(String userId, String roleId);
 }

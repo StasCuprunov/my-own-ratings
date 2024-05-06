@@ -8,16 +8,16 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Repository
-public interface RatingRepository extends MongoRepository<Rating, Long> {
-    Optional<Rating> findById(Long id);
+public interface RatingRepository extends MongoRepository<Rating, String> {
+    Optional<Rating> findById(String id);
 
-    Optional<Rating> findByUserIdAndName(Long userId, String name);
+    Optional<Rating> findByUserIdAndName(String userId, String name);
 
-    ArrayList<Rating> findAllByUserId(Long userId);
+    ArrayList<Rating> findAllByUserId(String userId);
 
-    boolean existsByRangeOfValuesId(Long rangeOfValuesId);
+    boolean existsByRangeOfValuesId(String rangeOfValuesId);
 
     <S extends Rating> S save(S rating);
 
-    void deleteById(Long id);
+    void deleteById(String id);
 }

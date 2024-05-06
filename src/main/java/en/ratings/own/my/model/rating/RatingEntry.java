@@ -19,10 +19,10 @@ public class RatingEntry {
 
     @Id
     @Generated
-    private Long id;
+    private String id;
 
     @NonNull
-    private Long ratingId;
+    private String ratingId;
 
     // unique within a rating
     @NonNull
@@ -31,7 +31,7 @@ public class RatingEntry {
     @NonNull
     private Double value;
 
-    public RatingEntry(Long ratingId, String name, Double value) {
+    public RatingEntry(String ratingId, String name, Double value) {
         setRatingId(ratingId);
         setName(name);
         setValue(value);

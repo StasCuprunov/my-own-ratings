@@ -17,19 +17,19 @@ public class RatingRepositoryService {
         this.ratingRepository = ratingRepository;
     }
 
-    public Optional<Rating> findById(Long id) {
+    public Optional<Rating> findById(String id) {
         return ratingRepository.findById(id);
     }
 
-    public Optional<Rating> findByUserIdAndName(Long userId, String name) {
+    public Optional<Rating> findByUserIdAndName(String userId, String name) {
         return ratingRepository.findByUserIdAndName(userId, name);
     }
 
-    public ArrayList<Rating> findAllByUserId(Long userId) {
+    public ArrayList<Rating> findAllByUserId(String userId) {
         return ratingRepository.findAllByUserId(userId);
     }
 
-    public boolean existsByRangeOfValuesId(Long rangeOfValuesId) {
+    public boolean existsByRangeOfValuesId(String rangeOfValuesId) {
         return ratingRepository.existsByRangeOfValuesId(rangeOfValuesId);
     }
 
@@ -37,7 +37,7 @@ public class RatingRepositoryService {
         return ratingRepository.save(rating);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         ratingRepository.deleteById(id);
     }
 }

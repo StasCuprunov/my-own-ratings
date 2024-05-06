@@ -18,11 +18,11 @@ public class RatingEntryRepositoryService {
         this.ratingEntryRepository = ratingEntryRepository;
     }
 
-    public Optional<RatingEntry> findById(Long id) {
+    public Optional<RatingEntry> findById(String id) {
         return ratingEntryRepository.findById(id);
     }
 
-    public ArrayList<RatingEntry> findAllByRatingId(Long ratingId) {
+    public ArrayList<RatingEntry> findAllByRatingId(String ratingId) {
         return ratingEntryRepository.findAllByRatingId(ratingId);
     }
 
@@ -30,11 +30,11 @@ public class RatingEntryRepositoryService {
         return ratingEntryRepository.save(ratingEntry);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         ratingEntryRepository.deleteById(id);
     }
 
-    public void deleteAllByRatingId(Long ratingId) {
+    public void deleteAllByRatingId(String ratingId) {
         ratingEntryRepository.deleteAllByRatingId(ratingId);
     }
 }

@@ -42,7 +42,7 @@ public class RatingEntryController {
     }
 
     @DeleteMapping(ROUTING_DELETE)
-    public ResponseEntity<Object> deleteById(@PathVariable @NonNull Long id) {
+    public ResponseEntity<Object> deleteById(@PathVariable @NonNull String id) {
         ratingEntryService.deleteById(id);
         return createNoContentResponseEntity();
     }

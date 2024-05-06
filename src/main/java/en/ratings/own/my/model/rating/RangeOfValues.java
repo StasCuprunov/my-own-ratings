@@ -19,7 +19,7 @@ public class RangeOfValues {
 
     @Id
     @Generated
-    private Long id;
+    private String id;
 
     @NonNull
     private Double minimum;

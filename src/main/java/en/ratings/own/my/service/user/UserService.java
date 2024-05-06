@@ -70,7 +70,7 @@ public class UserService {
         }
 
         String roleId = role.get().getId();
-        Long userId = userResult.getId();
+        String userId = userResult.getId();
 
         roleAssignmentRepositoryService.save(new RoleAssignment(userId, roleId));
 

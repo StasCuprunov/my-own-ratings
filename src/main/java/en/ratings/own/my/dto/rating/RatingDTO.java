@@ -17,10 +17,10 @@ import java.util.ArrayList;
 @Setter
 public class RatingDTO {
 
-    private Long id;
+    private String id;
 
     @NonNull
-    private Long userId;
+    private String userId;
 
     @NonNull
     private String name;

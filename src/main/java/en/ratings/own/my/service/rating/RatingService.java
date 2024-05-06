@@ -50,7 +50,7 @@ public class RatingService {
         this.ratingEntryRepositoryService = ratingEntryRepositoryService;
     }
 
-    public RatingDTO findById(Long id) throws Exception {
+    public RatingDTO findById(String id) throws Exception {
         Optional<Rating> ratingResult = ratingRepositoryService.findById(id);
 
         if (ratingResult.isEmpty()) {
@@ -63,12 +63,12 @@ public class RatingService {
         return new RatingDTO(rating, rangeOfValues.get(), ratingEntries);
     }
 
-    public ArrayList<Rating> findAllByUserId(Long userId) {
+    public ArrayList<Rating> findAllByUserId(String userId) {
         return ratingRepositoryService.findAllByUserId(userId);
     }
 
     public RatingDTO create(RatingDTO ratingDTO) throws Exception {
-        Long userId = ratingDTO.getUserId();
+        String userId = ratingDTO.getUserId();
 
         checkIfRangeOfValuesAndUserIdAreValid(userId, ratingDTO.getRangeOfValues());
         checkIfRatingNameIsValid(userId, ratingDTO.getName());
@@ -77,8 +77,8 @@ public class RatingService {
     }
 
     public RatingDTO update(RatingDTO ratingDTO) throws Exception {
-        Long id = ratingDTO.getId();
-        Long userId = ratingDTO.getUserId();
+        String id = ratingDTO.getId();
+        String userId = ratingDTO.getUserId();
         RangeOfValues rangeOfValues = ratingDTO.getRangeOfValues();
 
         checkIfRangeOfValuesAndRatingIdAndUserIdAreValid(id, userId, rangeOfValues);
@@ -87,14 +87,14 @@ public class RatingService {
         return updateRating(ratingDTO);
     }
 
-    public void deleteById(Long id) throws Exception {
+    public void deleteById(String id) throws Exception {
         Optional<Rating> rating = ratingRepositoryService.findById(id);
 
         if (rating.isEmpty()) {
             throw new RatingByIdNotFoundException(id);
         }
 
-        Long rangeOfValuesId = rating.get().getRangeOfValuesId();
+        String rangeOfValuesId = rating.get().getRangeOfValuesId();
 
         ratingEntryRepositoryService.deleteAllByRatingId(id);
         ratingRepositoryService.deleteById(id);
@@ -106,10 +106,10 @@ public class RatingService {
     }
 
     private RatingDTO updateRating(RatingDTO ratingDTO) {
-        Long ratingId = ratingDTO.getId();
+        String ratingId = ratingDTO.getId();
         RangeOfValues newRangeOfValues = ratingDTO.getRangeOfValues();
 
-        Long oldRangeOfValuesId = null;
+        String oldRangeOfValuesId = null;
         Optional<Rating> oldRating = ratingRepositoryService.findById(ratingId);
         if (oldRating.isPresent()) {
             oldRangeOfValuesId = oldRating.get().getRangeOfValuesId();
@@ -140,7 +140,7 @@ public class RatingService {
         return new RatingDTO(newRating, newRangeOfValues);
     }
 
-    private void checkIfRangeOfValuesAndUserIdAreValid(Long userId, RangeOfValues rangeOfValues) throws Exception {
+    private void checkIfRangeOfValuesAndUserIdAreValid(String userId, RangeOfValues rangeOfValues) throws Exception {
         ArrayList<String> keysForException = rangeOfValuesValidation(rangeOfValues);
         keysForException = addExistentStringToArrayList(keysForException, userIdValidation(userId));
 
@@ -149,7 +149,7 @@ public class RatingService {
         }
     }
 
-    private void checkIfRatingNameIsValid(Long userId, String name) throws Exception {
+    private void checkIfRatingNameIsValid(String userId, String name) throws Exception {
         ArrayList<String> keysForException = new ArrayList<>();
         addExistentStringToArrayList(keysForException, ratingNameForUserValidation(userId, name));
 
@@ -158,7 +158,7 @@ public class RatingService {
         }
     }
 
-    private void checkIfRangeOfValuesAndRatingIdAndUserIdAreValid(Long ratingId, Long userId,
+    private void checkIfRangeOfValuesAndRatingIdAndUserIdAreValid(String ratingId, String userId,
                                                                   RangeOfValues rangeOfValues) throws Exception {
         ArrayList<String> keysForException = rangeOfValuesValidation(rangeOfValues);
         keysForException = addExistentStringToArrayList(keysForException, userIdValidation(userId));
@@ -169,7 +169,7 @@ public class RatingService {
     }
 
     private void checkIfRatingNameIsValidAndNoInconsistentWithRatingEntries
-            (Long ratingId, Long userId, RangeOfValues rangeOfValues, String name) throws Exception {
+            (String ratingId, String userId, RangeOfValues rangeOfValues, String name) throws Exception {
         ArrayList<String> keysForException = new ArrayList<>();
         keysForException = addExistentStringToArrayList(keysForException, ratingNameForUpdateValidation(userId, name));
 
@@ -182,7 +182,7 @@ public class RatingService {
         }
     }
 
-    private String userIdValidation(Long id) {
+    private String userIdValidation(String id) {
         if (userRepositoryService.findById(id).isEmpty()) {
             return KEY_USER_WITH_ID_NOT_FOUND;
         }
@@ -204,14 +204,14 @@ public class RatingService {
         return keysForException;
     }
 
-    private String ratingNameForUserValidation(Long userId, String name) {
+    private String ratingNameForUserValidation(String userId, String name) {
         if (ratingRepositoryService.findByUserIdAndName(userId, name).isPresent()) {
             return KEY_RATING_NAME_ALREADY_USED_FOR_USER;
         }
         return null;
     }
 
-    private String ratingIdValidation(Long id) {
+    private String ratingIdValidation(String id) {
         Optional<Rating> rating = ratingRepositoryService.findById(id);
 
         if (rating.isEmpty()) {
@@ -220,11 +220,11 @@ public class RatingService {
         return null;
     }
 
-    private String ratingNameForUpdateValidation(Long userId, String name) {
+    private String ratingNameForUpdateValidation(String userId, String name) {
         return ratingNameForUserValidation(userId, name);
     }
 
-    private ArrayList<String> ratingEntriesDontFitInNewRangeOfValues(Long ratingId, RangeOfValues rangeOfValues) {
+    private ArrayList<String> ratingEntriesDontFitInNewRangeOfValues(String ratingId, RangeOfValues rangeOfValues) {
         ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(ratingId);
 
         ArrayList<String> ratingEntriesDontFitInScale = new ArrayList<>();
@@ -237,7 +237,7 @@ public class RatingService {
         return ratingEntriesDontFitInScale;
     }
 
-    private void deleteRangeOfValuesIfNotUsed(Long id) {
+    private void deleteRangeOfValuesIfNotUsed(String id) {
         if (!ratingRepositoryService.existsByRangeOfValuesId(id)) {
             rangeOfValuesRepositoryService.deleteById(id);
         }

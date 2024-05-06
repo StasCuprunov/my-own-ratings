@@ -38,7 +38,7 @@ public class RatingEntryService {
         this.rangeOfValuesRepositoryService = rangeOfValuesRepositoryService;
     }
 
-    public RatingEntry findById(Long id) throws Exception {
+    public RatingEntry findById(String id) throws Exception {
         Optional<RatingEntry> ratingEntry = ratingEntryRepositoryService.findById(id);
 
         if (ratingEntry.isEmpty()) {
@@ -47,7 +47,7 @@ public class RatingEntryService {
         return ratingEntry.get();
     }
 
-    public ArrayList<RatingEntry> findAllByRatingId(Long ratingId) throws Exception {
+    public ArrayList<RatingEntry> findAllByRatingId(String ratingId) throws Exception {
         return ratingEntryRepositoryService.findAllByRatingId(ratingId);
     }
 
@@ -61,15 +61,15 @@ public class RatingEntryService {
         return ratingEntryRepositoryService.save(ratingEntry);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         ratingEntryRepositoryService.deleteById(id);
     }
 
-    public void deleteAllByRatingId(Long ratingId) {
+    public void deleteAllByRatingId(String ratingId) {
         ratingEntryRepositoryService.deleteAllByRatingId(ratingId);
     }
 
-    private Rating getRatingForRatingEntryAndCheckRatingEntryId(Long ratingEntryId, Long ratingId) throws Exception {
+    private Rating getRatingForRatingEntryAndCheckRatingEntryId(String ratingEntryId, String ratingId) throws Exception {
         ArrayList<String> keysForException = new ArrayList<>();
         if (ratingEntryId != null) {
             addExistentStringToArrayList(keysForException, idValidation(ratingEntryId));
@@ -86,7 +86,7 @@ public class RatingEntryService {
         return rating.get();
     }
 
-    private String idValidation(Long id) {
+    private String idValidation(String id) {
         try {
             findById(id);
         } catch (Exception e) {
@@ -95,7 +95,7 @@ public class RatingEntryService {
         return null;
     }
 
-    private void checkIfUpdateIsAllowed(Long rangeOfValuesId, RatingEntry ratingEntry) throws Exception {
+    private void checkIfUpdateIsAllowed(String rangeOfValuesId, RatingEntry ratingEntry) throws Exception {
         ArrayList<String> keysForException = new ArrayList<>();
 
         String ratingEntryNameValidation = ratingEntryNameValidation(ratingEntry.getRatingId(), ratingEntry.getName());
@@ -113,7 +113,7 @@ public class RatingEntryService {
         }
     }
 
-    private String ratingEntryNameValidation(Long ratingId, String ratingEntryName) {
+    private String ratingEntryNameValidation(String ratingId, String ratingEntryName) {
         ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(ratingId);
 
         if (ratingEntries.isEmpty()) {
@@ -128,7 +128,7 @@ public class RatingEntryService {
         return null;
     }
 
-    private String ratingEntryValueValidation(Long rangeOfValuesId, Double value) {
+    private String ratingEntryValueValidation(String rangeOfValuesId, Double value) {
         RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rangeOfValuesId).get();
 
         if (!isValueInRangeOfValues(value, rangeOfValues)) {

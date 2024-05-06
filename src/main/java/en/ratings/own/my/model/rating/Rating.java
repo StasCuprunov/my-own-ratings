@@ -19,13 +19,13 @@ public class Rating {
 
     @Id
     @Generated
-    private Long id;
+    private String id;
 
     @NonNull
-    private Long userId;
+    private String userId;
 
     @NonNull
-    private Long rangeOfValuesId;
+    private String rangeOfValuesId;
 
     // unique for every user
     @NonNull
@@ -33,7 +33,7 @@ public class Rating {
 
     private String description;
 
-    public Rating(Long userId, Long rangeOfValuesId, String name, String description) {
+    public Rating(String userId, String rangeOfValuesId, String name, String description) {
         setUserId(userId);
         setRangeOfValuesId(rangeOfValuesId);
         setName(name);

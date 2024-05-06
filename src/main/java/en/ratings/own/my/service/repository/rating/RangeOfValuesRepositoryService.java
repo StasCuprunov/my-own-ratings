@@ -17,7 +17,7 @@ public class RangeOfValuesRepositoryService {
         this.rangeOfValuesRepository = rangeOfValuesRepository;
     }
 
-    public Optional<RangeOfValues> findById(Long id) {
+    public Optional<RangeOfValues> findById(String id) {
         return rangeOfValuesRepository.findById(id);
     }
 
@@ -30,7 +30,7 @@ public class RangeOfValuesRepositoryService {
         return rangeOfValuesRepository.save(rangeOfValues);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         rangeOfValuesRepository.deleteById(id);
     }
 }

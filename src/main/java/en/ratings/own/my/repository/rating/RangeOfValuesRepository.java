@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface RangeOfValuesRepository extends MongoRepository<RangeOfValues, Long> {
-    Optional<RangeOfValues> findById(Long id);
+public interface RangeOfValuesRepository extends MongoRepository<RangeOfValues, String> {
+    Optional<RangeOfValues> findById(String id);
 
     Optional<RangeOfValues> findByMinimumAndMaximumAndStepWidth(Double minimum, Double maximum, Double stepWidth);
 
     <S extends RangeOfValues> S save(S rangeOfValues);
 
-    void deleteById(Long id);
+    void deleteById(String id);
 }
