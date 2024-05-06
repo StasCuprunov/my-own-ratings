@@ -1,7 +1,5 @@
 package en.ratings.own.my.service.rating;
 
-import en.ratings.own.my.dto.rating.RatingEntryDTO;
-import en.ratings.own.my.exception.rating.entry.RatingEntriesByRatingIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
 import en.ratings.own.my.model.rating.RangeOfValues;
@@ -50,22 +48,17 @@ public class RatingEntryService {
     }
 
     public ArrayList<RatingEntry> findAllByRatingId(Long ratingId) throws Exception {
-        Optional<ArrayList<RatingEntry>> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(ratingId);
-
-        if (ratingEntries.isEmpty()) {
-            throw new RatingEntriesByRatingIdNotFoundException(ratingId);
-        }
-        return ratingEntries.get();
+        return ratingEntryRepositoryService.findAllByRatingId(ratingId);
     }
 
-    public RatingEntryDTO create(RatingEntry ratingEntry) throws Exception {
+    public RatingEntry create(RatingEntry ratingEntry) throws Exception {
         return update(ratingEntry);
     }
 
-    public RatingEntryDTO update(RatingEntry ratingEntry) throws Exception {
+    public RatingEntry update(RatingEntry ratingEntry) throws Exception {
         Rating rating = getRatingForRatingEntryAndCheckRatingEntryId(ratingEntry.getId(), ratingEntry.getRatingId());
         checkIfUpdateIsAllowed(rating.getRangeOfValuesId(), ratingEntry);
-        return convertModelToDTO(ratingEntryRepositoryService.save(ratingEntry));
+        return ratingEntryRepositoryService.save(ratingEntry);
     }
 
     public void deleteById(Long id) {
@@ -121,13 +114,13 @@ public class RatingEntryService {
     }
 
     private String ratingEntryNameValidation(Long ratingId, String ratingEntryName) {
-        Optional<ArrayList<RatingEntry>> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(ratingId);
+        ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(ratingId);
 
         if (ratingEntries.isEmpty()) {
             return null;
         }
 
-        for (RatingEntry entry: ratingEntries.get()) {
+        for (RatingEntry entry: ratingEntries) {
             if (entry.getName().equals(ratingEntryName)) {
                 return KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING;
             }
@@ -142,10 +135,5 @@ public class RatingEntryService {
             return KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;
         }
         return null;
-    }
-
-    private RatingEntryDTO convertModelToDTO(RatingEntry ratingEntry) {
-        return new RatingEntryDTO(ratingEntry.getId(), ratingEntry.getRatingId(), ratingEntry.getName(),
-                ratingEntry.getValue());
     }
 }

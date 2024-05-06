@@ -22,7 +22,7 @@ public class RatingEntryRepositoryService {
         return ratingEntryRepository.findById(id);
     }
 
-    public Optional<ArrayList<RatingEntry>> findAllByRatingId(Long ratingId) {
+    public ArrayList<RatingEntry> findAllByRatingId(Long ratingId) {
         return ratingEntryRepository.findAllByRatingId(ratingId);
     }
 

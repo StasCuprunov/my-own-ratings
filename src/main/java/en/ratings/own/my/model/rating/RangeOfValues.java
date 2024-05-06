@@ -29,18 +29,4 @@ public class RangeOfValues {
 
     @NonNull
     private Double stepWidth;
-
-    public RangeOfValues(Double minimum, Double maximum, Double stepWidth) {
-        setMinimum(minimum);
-        setMaximum(maximum);
-        setStepWidth(stepWidth);
-    }
-
-    public boolean equals(RangeOfValues rangeOfValues) {
-        boolean isMinimumEqual = (this.minimum.equals(rangeOfValues.getMinimum()));
-        boolean isMaximumEqual = (this.maximum.equals(rangeOfValues.getMaximum()));
-        boolean isStepWidthEqual = (this.stepWidth.equals(rangeOfValues.getStepWidth()));
-
-        return isMinimumEqual && isMaximumEqual && isStepWidthEqual;
-    }
 }
