@@ -4,6 +4,7 @@ import en.ratings.own.my.model.rating.RatingEntry;
 import en.ratings.own.my.service.rating.RatingEntryService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATING_ENTRIES;
+import static en.ratings.own.my.utility.ResponseEntityUtility.createCreatedResponseEntity;
+import static en.ratings.own.my.utility.ResponseEntityUtility.createNoContentResponseEntity;
 
 @RestController
 @RequestMapping(ROUTING_RATING_ENTRIES)
@@ -28,17 +31,18 @@ public class RatingEntryController {
     }
 
     @PostMapping(ROUTING_CREATE)
-    public RatingEntry create(@RequestBody RatingEntry ratingEntry) throws Exception {
-        return ratingEntryService.create(ratingEntry);
+    public ResponseEntity<RatingEntry> create(@RequestBody RatingEntry ratingEntry) throws Exception {
+        return createCreatedResponseEntity(ratingEntryService.create(ratingEntry));
     }
 
     @PutMapping(ROUTING_EDIT)
-    public RatingEntry update(@RequestBody RatingEntry ratingEntry) throws Exception {
-        return ratingEntryService.update(ratingEntry);
+    public ResponseEntity<RatingEntry> update(@RequestBody RatingEntry ratingEntry) throws Exception {
+        return createCreatedResponseEntity(ratingEntryService.update(ratingEntry));
     }
 
     @DeleteMapping(ROUTING_DELETE)
-    public void deleteById(@PathVariable @NonNull Long id) {
+    public ResponseEntity<Object> deleteById(@PathVariable @NonNull Long id) {
         ratingEntryService.deleteById(id);
+        return createNoContentResponseEntity();
     }
 }

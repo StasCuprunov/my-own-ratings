@@ -4,6 +4,7 @@ import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.service.rating.RatingService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,9 @@ import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_ID;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATINGS;
+import static en.ratings.own.my.utility.ResponseEntityUtility.createCreatedResponseEntity;
+import static en.ratings.own.my.utility.ResponseEntityUtility.createNoContentResponseEntity;
+import static en.ratings.own.my.utility.ResponseEntityUtility.createOkResponseEntity;
 
 @RestController
 @RequestMapping(ROUTING_RATINGS)
@@ -31,22 +35,23 @@ public class RatingController {
     }
 
     @GetMapping(ROUTING_ID)
-    public RatingDTO findById(@PathVariable @NonNull Long id) throws Exception {
-        return ratingService.findById(id);
+    public ResponseEntity<RatingDTO> findById(@PathVariable @NonNull Long id) throws Exception {
+        return createOkResponseEntity(ratingService.findById(id));
     }
 
     @PostMapping(ROUTING_CREATE)
-    public RatingDTO create(@RequestBody RatingDTO ratingDTO) throws Exception {
-        return ratingService.create(ratingDTO);
+    public ResponseEntity<RatingDTO> create(@RequestBody RatingDTO ratingDTO) throws Exception {
+        return createCreatedResponseEntity(ratingService.create(ratingDTO));
     }
 
     @PutMapping(ROUTING_EDIT)
-    public RatingDTO update(@RequestBody RatingDTO ratingDTO) throws Exception {
-        return ratingService.update(ratingDTO);
+    public ResponseEntity<RatingDTO> update(@RequestBody RatingDTO ratingDTO) throws Exception {
+        return createCreatedResponseEntity(ratingService.update(ratingDTO));
     }
 
     @DeleteMapping(ROUTING_DELETE)
-    public void deleteById(@PathVariable @NonNull Long id) throws Exception {
+    public ResponseEntity<Object> deleteById(@PathVariable @NonNull Long id) throws Exception {
         ratingService.deleteById(id);
+        return createNoContentResponseEntity();
     }
 }
