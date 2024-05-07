@@ -19,7 +19,7 @@ import static en.ratings.own.my.constant.PermissionConstants.HAS_ROLE_USER_PERMI
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
-import static en.ratings.own.my.constant.RoutingConstants.ROUTING_ID;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_GET;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_RATINGS;
 import static en.ratings.own.my.utility.ResponseEntityUtility.createCreatedResponseEntity;
 import static en.ratings.own.my.utility.ResponseEntityUtility.createNoContentResponseEntity;
@@ -37,7 +37,7 @@ public class RatingController {
     }
 
     @PreAuthorize(HAS_ROLE_USER_PERMISSION)
-    @GetMapping(ROUTING_ID)
+    @GetMapping(ROUTING_GET)
     public ResponseEntity<RatingDTO> findById(@PathVariable @NonNull String id) throws Exception {
         return createOkResponseEntity(ratingService.findById(id));
     }

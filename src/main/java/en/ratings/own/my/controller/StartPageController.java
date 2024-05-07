@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static en.ratings.own.my.constant.PermissionConstants.HAS_ROLE_USER_PERMISSION;
-import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DEFAULT;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_START_PAGE;
 import static en.ratings.own.my.utility.ResponseEntityUtility.createOkResponseEntity;
 
@@ -24,7 +23,7 @@ public class StartPageController {
     }
 
     @PreAuthorize(HAS_ROLE_USER_PERMISSION)
-    @GetMapping(value={ROUTING_DEFAULT, ROUTING_START_PAGE})
+    @GetMapping(value={ROUTING_START_PAGE})
     public ResponseEntity<StartPageDTO> index() throws Exception {
         String dummyEmail = "stas.cuprunov@t-online.de";
         return createOkResponseEntity(startPageService.getByUserEmail(dummyEmail));

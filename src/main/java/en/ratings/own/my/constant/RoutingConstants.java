@@ -2,11 +2,15 @@ package en.ratings.own.my.constant;
 
 public class RoutingConstants {
 
-    public static final String ROUTING_CREATE = "/create";
-
     public static final String ROUTING_ID = "/{id}";
 
     public static final String ROUTING_EMAIL = "/{email}";
+
+    public static final String ROUTING_CREATE = "/create";
+
+    public static final String ROUTING_GET = "/get" + ROUTING_ID;
+
+    public static final String ROUTING_GET_BY_EMAIL = "/get-by-email" + ROUTING_EMAIL;
 
     public static final String ROUTING_EDIT = "/edit" + ROUTING_ID;
 
