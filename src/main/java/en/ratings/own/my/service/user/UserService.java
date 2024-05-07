@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static en.ratings.own.my.utility.EnumUtility.RoleUserAsString;
+import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_ALREADY_EXISTS;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_SYNTAX;
 import static en.ratings.own.my.service.user.UserValidation.isEmailSyntaxAllowed;
@@ -67,7 +67,7 @@ public class UserService {
     private UserDTO createUser(User user) throws Exception {
         encodePassword(user);
         User userResult = userRepositoryService.save(user);
-        String roleName = RoleUserAsString();
+        String roleName = roleUserAsString();
         Optional<Role> role = roleRepositoryService.findByName(roleName);
 
         if (role.isEmpty()) {

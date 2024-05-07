@@ -15,9 +15,13 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 public class SecurityConfig {
     private static final int PASSWORD_STRENGTH = 16;
 
+    private static final int MAXIMUM_SESSIONS = 1;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return deactivateDefaultAuthentication(http);
+        http.httpBasic(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable);
+        configureSessionManagement(http);
+        return http.build();
     }
 
     @Bean
@@ -25,9 +29,10 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(PASSWORD_STRENGTH);
     }
 
-    private SecurityFilterChain deactivateDefaultAuthentication(HttpSecurity http) throws Exception {
-        return http.httpBasic(Customizer.withDefaults()).
-                csrf(AbstractHttpConfigurer::disable).
-                build();
+    private void configureSessionManagement(HttpSecurity http) throws Exception {
+        http.sessionManagement(sessionManagementConfigurer ->
+                        sessionManagementConfigurer.maximumSessions(MAXIMUM_SESSIONS)).
+                sessionManagement(sessionManagementConfigurer ->
+                        sessionManagementConfigurer.sessionFixation().newSession());
     }
 }

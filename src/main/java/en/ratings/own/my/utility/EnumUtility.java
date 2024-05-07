@@ -1,10 +1,12 @@
 package en.ratings.own.my.utility;
 
-import en.ratings.own.my.enums.RoleEnum;
+import static en.ratings.own.my.enums.RoleEnum.USER;
+import static en.ratings.own.my.enums.RoleEnum.ADMIN;
 
 public class EnumUtility {
 
-    public static String RoleUserAsString() {
-        return RoleEnum.USER.name();
+    public static String roleUserAsString() {
+        return USER.name();
     }
+    public static String roleAdminAsString() { return ADMIN.name(); }
 }

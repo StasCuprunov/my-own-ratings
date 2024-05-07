@@ -26,7 +26,7 @@ public class RestResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = {UserCreationFailedException.class, RatingCreationFailedException.class,
-            RatingUpdateFailedException.class, RatingEntryFailedException.class})
+            RatingUpdateFailedException.class, RatingEntryFailedException.class, WrongPasswordLoginException.class})
     protected ResponseEntity<String> handleBadRequest(Exception exception) {
         return createResponseEntity(exception, BAD_REQUEST);
     }
