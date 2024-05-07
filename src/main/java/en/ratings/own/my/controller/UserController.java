@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import static en.ratings.own.my.constant.PermissionConstants.HAS_ROLE_ADMIN_PERMISSION;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_GET_BY_EMAIL;
-import static en.ratings.own.my.constant.RoutingConstants.ROUTING_USER;
+import static en.ratings.own.my.constant.RoutingConstants.ROUTING_USERS;
 import static en.ratings.own.my.utility.ResponseEntityUtility.createCreatedResponseEntity;
 import static en.ratings.own.my.utility.ResponseEntityUtility.createOkResponseEntity;
 
 @RestController
-@RequestMapping(ROUTING_USER)
+@RequestMapping(ROUTING_USERS)
 public class UserController {
 
     private final UserService userService;

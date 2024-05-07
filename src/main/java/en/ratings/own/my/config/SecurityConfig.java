@@ -8,10 +8,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
+    private static final int PASSWORD_STRENGTH = 16;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return deactivateDefaultAuthentication(http);
@@ -19,10 +22,12 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(PASSWORD_STRENGTH);
     }
 
     private SecurityFilterChain deactivateDefaultAuthentication(HttpSecurity http) throws Exception {
-        return http.httpBasic(Customizer.withDefaults()).build();
+        return http.httpBasic(Customizer.withDefaults()).
+                csrf(AbstractHttpConfigurer::disable).
+                build();
     }
 }
