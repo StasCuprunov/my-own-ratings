@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -33,6 +34,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.
                 httpBasic(Customizer.withDefaults()).
+                logout(configurer -> configurer.
+                        clearAuthentication(true).
+                        deleteCookies(AUTH_TOKEN)
+                ).
                 csrf(AbstractHttpConfigurer::disable).
                 sessionManagement(configurer -> configurer.sessionCreationPolicy(STATELESS)).
                 addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).
