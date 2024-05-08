@@ -1,69 +1,55 @@
 package en.ratings.own.my.service.authentication;
 
-import en.ratings.own.my.dto.LoginDTO;
-import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
-import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
-import en.ratings.own.my.service.repository.UserRepositoryService;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseCookie;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import en.ratings.own.my.model.role.RoleAssignment;
+import en.ratings.own.my.service.repository.role.RoleAssignmentRepositoryService;
+import en.ratings.own.my.service.repository.role.RoleRepositoryService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import static en.ratings.own.my.constant.AttributeConstants.COOKIE_PATH;
-import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
-import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
-import static org.springframework.http.HttpHeaders.SET_COOKIE;
+import static en.ratings.own.my.constant.PermissionConstants.LIST_OF_GRANTED_AUTHORITIES;
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 @Service
 public class AuthenticationService {
-    private final UserRepositoryService userRepositoryService;
 
-    private final JwtService jwtService;
+    private final RoleAssignmentRepositoryService roleAssignmentRepositoryService;
 
-    private final PasswordEncoder passwordEncoder;
+    private final RoleRepositoryService roleRepositoryService;
 
-    @Autowired
-    public AuthenticationService(UserRepositoryService userRepositoryService, JwtService jwtService,
-                                 PasswordEncoder passwordEncoder) {
-        this.userRepositoryService = userRepositoryService;
-        this.jwtService = jwtService;
-        this.passwordEncoder = passwordEncoder;
+    public AuthenticationService(RoleAssignmentRepositoryService roleAssignmentRepositoryService,
+                                 RoleRepositoryService roleRepositoryService) {
+        this.roleAssignmentRepositoryService = roleAssignmentRepositoryService;
+        this.roleRepositoryService = roleRepositoryService;
     }
 
-    public void login(LoginDTO loginDTO, HttpServletResponse response) throws Exception {
-        String email = loginDTO.getEmail();
-        User user = getUser(email);
+    public UsernamePasswordAuthenticationToken createAuthenticationToken(User user) {
+        return new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(),
+                getAuthorities(user.getId()));
+    }
 
-        if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            throw new WrongPasswordLoginException(email);
+    public void setAuthentication(UsernamePasswordAuthenticationToken authenticationToken) {
+        getContext().setAuthentication(authenticationToken);
+    }
+
+    public Authentication getAuthentication() {
+        return getContext().getAuthentication();
+    }
+
+    private Collection<GrantedAuthority> getAuthorities(String userId) {
+        Collection<GrantedAuthority> listOfAuthorities = new ArrayList<>();
+
+        ArrayList<RoleAssignment> roleAssignments = roleAssignmentRepositoryService.findAllByUserId(userId);
+        for (RoleAssignment roleAssignment: roleAssignments) {
+            String roleName = roleRepositoryService.findById(roleAssignment.getRoleId()).get().getName();
+            listOfAuthorities.add(LIST_OF_GRANTED_AUTHORITIES.get(roleName));
         }
-        ResponseCookie cookie = createCookie(jwtService.generateToken(user.getEmail()));
-        setAuthTokenCookie(cookie, response);
+        return listOfAuthorities;
     }
 
-    private ResponseCookie createCookie(String token) {
-        return ResponseCookie.from(AUTH_TOKEN, token).
-                httpOnly(true).
-                secure(true).
-                path(COOKIE_PATH).
-                maxAge(EXPIRATION_TIME_IN_MILLISECONDS).
-                build();
-    }
-
-    private void setAuthTokenCookie(ResponseCookie cookie, HttpServletResponse response) {
-        response.addHeader(SET_COOKIE, cookie.toString());
-    }
-
-    private User getUser(String email) throws Exception {
-        Optional<User> userResult = userRepositoryService.findByEmail(email);
-
-        if (userResult.isEmpty()) {
-            throw new UserByEmailNotFoundException(email);
-        }
-        return userResult.get();
-    }
 }

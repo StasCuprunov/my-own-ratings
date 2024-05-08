@@ -4,7 +4,7 @@ import en.ratings.own.my.exception.authentication.EmailNotFoundInTokenException;
 import en.ratings.own.my.exception.authentication.InvalidTokenException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
-import en.ratings.own.my.service.authentication.AuthenticationTokenService;
+import en.ratings.own.my.service.authentication.AuthenticationService;
 import en.ratings.own.my.service.authentication.JwtService;
 import en.ratings.own.my.service.repository.UserRepositoryService;
 import jakarta.servlet.FilterChain;
@@ -28,15 +28,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
 
-    private final AuthenticationTokenService authenticationTokenService;
+    private final AuthenticationService authenticationService;
 
     private final UserRepositoryService userRepositoryService;
 
     @Autowired
-    public JwtAuthFilter(JwtService jwtService, AuthenticationTokenService authenticationTokenService,
+    public JwtAuthFilter(JwtService jwtService, AuthenticationService authenticationService,
                          UserRepositoryService userRepositoryService) {
         this.jwtService = jwtService;
-        this.authenticationTokenService = authenticationTokenService;
+        this.authenticationService = authenticationService;
         this.userRepositoryService = userRepositoryService;
     }
 
@@ -82,9 +82,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             throw new InvalidTokenException(token);
         }
         UsernamePasswordAuthenticationToken authenticationToken =
-                authenticationTokenService.createAuthenticationToken(user.get());
+                authenticationService.createAuthenticationToken(user.get());
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        authenticationTokenService.setAuthentication(authenticationToken);
+        authenticationService.setAuthentication(authenticationToken);
     }
 
 }
