@@ -15,7 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private static final int PASSWORD_STRENGTH = 16;
+    private static final int PASSWORD_STRENGTH = 10;
 
     private static final int MAXIMUM_SESSIONS = 1;
 
