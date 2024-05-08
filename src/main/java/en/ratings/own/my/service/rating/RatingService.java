@@ -1,7 +1,6 @@
 package en.ratings.own.my.service.rating;
 
 import en.ratings.own.my.dto.rating.RatingDTO;
-import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
 import en.ratings.own.my.model.rating.RangeOfValues;
@@ -51,12 +50,7 @@ public class RatingService {
     }
 
     public RatingDTO findById(String id) throws Exception {
-        Optional<Rating> ratingResult = ratingRepositoryService.findById(id);
-
-        if (ratingResult.isEmpty()) {
-            throw new RatingByIdNotFoundException(id);
-        }
-        Rating rating = ratingResult.get();
+        Rating rating = ratingRepositoryService.findById(id);
         Optional<RangeOfValues> rangeOfValues = rangeOfValuesRepositoryService.findById(rating.getRangeOfValuesId());
         ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(id);
 
@@ -88,13 +82,8 @@ public class RatingService {
     }
 
     public void deleteById(String id) throws Exception {
-        Optional<Rating> rating = ratingRepositoryService.findById(id);
-
-        if (rating.isEmpty()) {
-            throw new RatingByIdNotFoundException(id);
-        }
-
-        String rangeOfValuesId = rating.get().getRangeOfValuesId();
+        Rating rating = ratingRepositoryService.findById(id);
+        String rangeOfValuesId = rating.getRangeOfValuesId();
 
         ratingEntryRepositoryService.deleteAllByRatingId(id);
         ratingRepositoryService.deleteById(id);
@@ -110,9 +99,12 @@ public class RatingService {
         RangeOfValues newRangeOfValues = ratingDTO.getRangeOfValues();
 
         String oldRangeOfValuesId = null;
-        Optional<Rating> oldRating = ratingRepositoryService.findById(ratingId);
-        if (oldRating.isPresent()) {
-            oldRangeOfValuesId = oldRating.get().getRangeOfValuesId();
+
+        try {
+            Rating oldRating = ratingRepositoryService.findById(ratingId);
+            oldRangeOfValuesId = oldRating.getRangeOfValuesId();
+        } catch (Exception ignored) {
+
         }
 
         Optional<RangeOfValues> targetRangeOfValues = rangeOfValuesRepositoryService.
@@ -205,16 +197,18 @@ public class RatingService {
     }
 
     private String ratingNameForUserValidation(String userId, String name) {
-        if (ratingRepositoryService.findByUserIdAndName(userId, name).isPresent()) {
-            return KEY_RATING_NAME_ALREADY_USED_FOR_USER;
+        try {
+            ratingRepositoryService.findByUserIdAndName(userId, name);
+        } catch (Exception e) {
+            return null;
         }
-        return null;
+        return KEY_RATING_NAME_ALREADY_USED_FOR_USER;
     }
 
     private String ratingIdValidation(String id) {
-        Optional<Rating> rating = ratingRepositoryService.findById(id);
-
-        if (rating.isEmpty()) {
+        try {
+            ratingRepositoryService.findById(id);
+        } catch (Exception e) {
             return KEY_RATING_BY_ID_NOT_FOUND;
         }
         return null;

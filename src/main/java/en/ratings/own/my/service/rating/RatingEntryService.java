@@ -74,16 +74,17 @@ public class RatingEntryService {
         if (ratingEntryId != null) {
             addExistentStringToArrayList(keysForException, idValidation(ratingEntryId));
         }
-
-        Optional<Rating> rating = ratingRepositoryService.findById(ratingId);
-        if (rating.isEmpty()) {
+        Rating rating = null;
+        try {
+            rating = ratingRepositoryService.findById(ratingId);
+        } catch (Exception e) {
             keysForException.add(KEY_RATING_BY_ID_NOT_FOUND);
         }
 
         if (!keysForException.isEmpty()) {
             throw new RatingEntryFailedException(keysForException);
         }
-        return rating.get();
+        return rating;
     }
 
     private String idValidation(String id) {
