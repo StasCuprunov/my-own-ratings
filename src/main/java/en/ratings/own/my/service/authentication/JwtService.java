@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
 import static io.jsonwebtoken.Jwts.SIG.HS512;
 import static io.jsonwebtoken.io.Decoders.BASE64;
 import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
@@ -20,8 +21,6 @@ import static java.lang.System.currentTimeMillis;
 public class JwtService {
     private final String SECRET_KEY_VALUE =
             "b7ynPg1T65tpbz7WbTi9g5hu75FBfu2pDR8xe5NiLRYQJ/JLLVlJ6TuqllIDZyaDsSaxv045vwtpaNnB+l+sXA";
-
-    private final long EXPIRATION_TIME_IN_MILLISECONDS = 86400000; // 1 day
 
     private final String TOKEN_TYPE_KEY = "typ";
 

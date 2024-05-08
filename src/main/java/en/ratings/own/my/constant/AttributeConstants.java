@@ -8,4 +8,7 @@ public class AttributeConstants {
 
     public static final Double STEP_WIDTH_BORDER = 0.0;
 
+    public static final long EXPIRATION_TIME_IN_MILLISECONDS = 86400000; // 1 day
+
+    public static final String COOKIE_PATH = "/";
 }

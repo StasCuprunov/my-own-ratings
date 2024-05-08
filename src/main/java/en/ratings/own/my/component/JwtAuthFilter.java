@@ -1,28 +1,43 @@
 package en.ratings.own.my.component;
 
-import en.ratings.own.my.service.authentication.AuthenticationService;
+import en.ratings.own.my.exception.authentication.EmailNotFoundInTokenException;
+import en.ratings.own.my.exception.authentication.InvalidTokenException;
+import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
+import en.ratings.own.my.model.User;
+import en.ratings.own.my.service.authentication.AuthenticationTokenService;
+import en.ratings.own.my.service.authentication.JwtService;
+import en.ratings.own.my.service.repository.UserRepositoryService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final AuthenticationService authenticationService;
+    private final JwtService jwtService;
 
+    private final AuthenticationTokenService authenticationTokenService;
+
+    private final UserRepositoryService userRepositoryService;
 
     @Autowired
-    public JwtAuthFilter(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
+    public JwtAuthFilter(JwtService jwtService, AuthenticationTokenService authenticationTokenService,
+                         UserRepositoryService userRepositoryService) {
+        this.jwtService = jwtService;
+        this.authenticationTokenService = authenticationTokenService;
+        this.userRepositoryService = userRepositoryService;
     }
 
     @Override
@@ -31,7 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = getAuthToken(request);
         if (token != null) {
             try {
-                authenticationService.authentication(token, request);
+                authentication(token, request);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -50,6 +65,26 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }
         return null;
+    }
+
+    private void authentication(String token, HttpServletRequest request) throws Exception {
+        String email = jwtService.extractEmail(token);
+        if (email == null) {
+            throw new EmailNotFoundInTokenException(token);
+        }
+        Optional<User> user = userRepositoryService.findByEmail(email);
+
+        if (user.isEmpty()) {
+            throw new UserByEmailNotFoundException(email);
+        }
+
+        if (!jwtService.validateToken(token, email)) {
+            throw new InvalidTokenException(token);
+        }
+        UsernamePasswordAuthenticationToken authenticationToken =
+                authenticationTokenService.createAuthenticationToken(user.get());
+        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        authenticationTokenService.setAuthentication(authenticationToken);
     }
 
 }
