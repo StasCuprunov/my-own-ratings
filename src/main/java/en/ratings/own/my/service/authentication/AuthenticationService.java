@@ -28,7 +28,7 @@ public class AuthenticationService {
         this.roleRepositoryService = roleRepositoryService;
     }
 
-    public UsernamePasswordAuthenticationToken createAuthenticationToken(User user) {
+    public UsernamePasswordAuthenticationToken createAuthenticationToken(User user) throws Exception {
         return new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(),
                 getAuthorities(user.getId()));
     }
@@ -41,12 +41,12 @@ public class AuthenticationService {
         return getContext().getAuthentication();
     }
 
-    private Collection<GrantedAuthority> getAuthorities(String userId) {
+    private Collection<GrantedAuthority> getAuthorities(String userId) throws Exception {
         Collection<GrantedAuthority> listOfAuthorities = new ArrayList<>();
 
         ArrayList<RoleAssignment> roleAssignments = roleAssignmentRepositoryService.findAllByUserId(userId);
         for (RoleAssignment roleAssignment: roleAssignments) {
-            String roleName = roleRepositoryService.findById(roleAssignment.getRoleId()).get().getName();
+            String roleName = roleRepositoryService.findById(roleAssignment.getRoleId()).getName();
             listOfAuthorities.add(LIST_OF_GRANTED_AUTHORITIES.get(roleName));
         }
         return listOfAuthorities;

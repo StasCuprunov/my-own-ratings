@@ -1,5 +1,7 @@
 package en.ratings.own.my.service.repository.role;
 
+import en.ratings.own.my.exception.RoleByNameNotFoundException;
+import en.ratings.own.my.exception.role.RoleByIdNotFoundException;
 import en.ratings.own.my.model.role.Role;
 import en.ratings.own.my.repository.role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +20,22 @@ public class RoleRepositoryService {
         this.roleRepository = roleRepository;
     }
 
-    public Optional<Role> findByName(String name) {
-        return roleRepository.findByName(name);
+    public Role findByName(String name) throws Exception {
+        Optional<Role> roleResult = roleRepository.findByName(name);
+
+        if (roleResult.isEmpty()) {
+            throw new RoleByNameNotFoundException(name);
+        }
+        return roleResult.get();
     }
 
-    public Optional<Role> findById(String id) {
-        return roleRepository.findById(id);
+    public Role findById(String id) throws Exception {
+        Optional<Role> roleResult = roleRepository.findById(id);
+
+        if (roleResult.isEmpty()) {
+            throw new RoleByIdNotFoundException(id);
+        }
+        return roleResult.get();
     }
 
     public ArrayList<Role> findAll() {

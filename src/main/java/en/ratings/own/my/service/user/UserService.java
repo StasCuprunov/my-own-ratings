@@ -1,7 +1,6 @@
 package en.ratings.own.my.service.user;
 
 import en.ratings.own.my.dto.UserDTO;
-import en.ratings.own.my.exception.RoleByNameNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.role.Role;
@@ -14,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_ALREADY_EXISTS;
@@ -63,16 +61,9 @@ public class UserService {
         encodePassword(user);
         User userResult = userRepositoryService.save(user);
         String roleName = roleUserAsString();
-        Optional<Role> role = roleRepositoryService.findByName(roleName);
+        Role role = roleRepositoryService.findByName(roleName);
 
-        if (role.isEmpty()) {
-            throw new RoleByNameNotFoundException(roleName);
-        }
-
-        String roleId = role.get().getId();
-        String userId = userResult.getId();
-
-        roleAssignmentRepositoryService.save(new RoleAssignment(userId, roleId));
+        roleAssignmentRepositoryService.save(new RoleAssignment(userResult.getId(), role.getId()));
 
         return convertModelToDTO(userResult);
     }
