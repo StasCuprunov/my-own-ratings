@@ -3,7 +3,6 @@ package en.ratings.own.my.service.user;
 import en.ratings.own.my.dto.UserDTO;
 import en.ratings.own.my.exception.RoleByNameNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
-import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.role.Role;
 import en.ratings.own.my.model.role.RoleAssignment;
@@ -46,12 +45,8 @@ public class UserService {
     }
 
     public UserDTO findByEmail(String email) throws Exception {
-        Optional<User> user = userRepositoryService.findByEmail(email);
-
-        if (user.isEmpty()) {
-            throw new UserByEmailNotFoundException(email);
-        }
-        return convertModelToDTO(user.get());
+        User user = userRepositoryService.findByEmail(email);
+        return convertModelToDTO(user);
     }
 
     public UserDTO create(User user) throws Exception {
@@ -93,8 +88,13 @@ public class UserService {
         return keysForException;
     }
 
-    private boolean isEmailAvailable(String email)  {
-        return userRepositoryService.findByEmail(email).isEmpty();
+    private boolean isEmailAvailable(String email) {
+        try {
+            userRepositoryService.findByEmail(email);
+        } catch (Exception e) {
+            return true;
+        }
+        return false;
     }
 
     private void encodePassword(User user) {

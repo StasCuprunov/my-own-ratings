@@ -1,5 +1,6 @@
 package en.ratings.own.my.service.repository;
 
+import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,12 @@ public class UserRepositoryService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findByEmail(String email) throws Exception {
+        Optional<User> userResult = userRepository.findByEmail(email);
+        if (userResult.isEmpty()) {
+            throw new UserByEmailNotFoundException(email);
+        }
+        return userResult.get();
     }
 
     public User save(User user) {

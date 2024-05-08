@@ -2,7 +2,6 @@ package en.ratings.own.my.service.authentication;
 
 import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
-import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.service.repository.UserRepositoryService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
@@ -59,11 +56,6 @@ public class LoginService {
     }
 
     private User getUser(String email) throws Exception {
-        Optional<User> userResult = userRepositoryService.findByEmail(email);
-
-        if (userResult.isEmpty()) {
-            throw new UserByEmailNotFoundException(email);
-        }
-        return userResult.get();
+        return userRepositoryService.findByEmail(email);
     }
 }
