@@ -1,4 +1,4 @@
-package en.ratings.own.my.exception;
+package en.ratings.own.my.exception.authentication;
 
 public class WrongPasswordLoginException extends Exception {
     public WrongPasswordLoginException(String email) {

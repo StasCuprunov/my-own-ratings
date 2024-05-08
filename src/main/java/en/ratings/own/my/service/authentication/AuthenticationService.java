@@ -1,19 +1,22 @@
-package en.ratings.own.my.service;
+package en.ratings.own.my.service.authentication;
 
 import en.ratings.own.my.dto.LoginDTO;
-import en.ratings.own.my.dto.UserDTO;
-import en.ratings.own.my.exception.WrongPasswordLoginException;
+import en.ratings.own.my.exception.authentication.EmailNotFoundInTokenException;
+import en.ratings.own.my.exception.authentication.InvalidTokenException;
+import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.role.RoleAssignment;
 import en.ratings.own.my.service.repository.UserRepositoryService;
 import en.ratings.own.my.service.repository.role.RoleAssignmentRepositoryService;
 import en.ratings.own.my.service.repository.role.RoleRepositoryService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,29 +34,45 @@ public class AuthenticationService {
 
     private final RoleRepositoryService roleRepositoryService;
 
+    private final JwtService jwtService;
+
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public AuthenticationService(UserRepositoryService userRepositoryService,
                                  RoleAssignmentRepositoryService roleAssignmentRepositoryService,
-                                 RoleRepositoryService roleRepositoryService,
+                                 RoleRepositoryService roleRepositoryService, JwtService jwtService,
                                  PasswordEncoder passwordEncoder) {
         this.userRepositoryService = userRepositoryService;
         this.roleAssignmentRepositoryService = roleAssignmentRepositoryService;
         this.roleRepositoryService = roleRepositoryService;
+        this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDTO login(LoginDTO loginDTO) throws Exception {
+    public String login(LoginDTO loginDTO) throws Exception {
         String email = loginDTO.getEmail();
         User user = getUser(email);
 
         if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             throw new WrongPasswordLoginException(email);
         }
-        createSession(user);
+        return createSession(user);
+    }
 
-        return new UserDTO(user);
+    public void authentication(String token, HttpServletRequest request) throws Exception {
+        String email = jwtService.extractEmail(token);
+        if (email == null) {
+            throw new EmailNotFoundInTokenException(token);
+        }
+        User user = getUser(email);
+
+        if (!jwtService.validateToken(token, email)) {
+            throw new InvalidTokenException(token);
+        }
+        UsernamePasswordAuthenticationToken authenticationToken = createAuthenticationToken(user);
+        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        setAuthentication(authenticationToken);
     }
 
     private User getUser(String email) throws Exception {
@@ -65,11 +84,12 @@ public class AuthenticationService {
         return userResult.get();
     }
 
-    private void createSession(User user) {
-        SecurityContextHolder.getContext().setAuthentication(createToken(user));
+    private String createSession(User user) {
+        setAuthentication(createAuthenticationToken(user));
+        return jwtService.generateToken(user.getEmail());
     }
 
-    private UsernamePasswordAuthenticationToken createToken(User user) {
+    private UsernamePasswordAuthenticationToken createAuthenticationToken(User user) {
         return new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(),
                 getAuthorities(user.getId()));
     }
@@ -83,5 +103,9 @@ public class AuthenticationService {
             listOfAuthorities.add(LIST_OF_GRANTED_AUTHORITIES.get(roleName));
         }
         return listOfAuthorities;
+    }
+
+    private void setAuthentication(UsernamePasswordAuthenticationToken authenticationToken) {
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 }

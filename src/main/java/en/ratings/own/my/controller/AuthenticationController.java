@@ -1,7 +1,7 @@
 package en.ratings.own.my.controller;
 
 import en.ratings.own.my.dto.LoginDTO;
-import en.ratings.own.my.service.AuthenticationService;
+import en.ratings.own.my.service.authentication.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -28,13 +28,13 @@ public class AuthenticationController {
 
     @PostMapping(ROUTING_LOGIN)
     public String login(@RequestBody LoginDTO loginDTO) throws Exception {
-        authenticationService.login(loginDTO);
+        String token = authenticationService.login(loginDTO);
         Authentication authentication = getAuthentication();
 
         if (containsSpecificAuthority(authentication, ADMIN_AUTHORITY)) {
             return "admin";
         }
-        return "user";
+        return token;
     }
 
     @PreAuthorize(IS_AUTHENTICATED_PERMISSION)
