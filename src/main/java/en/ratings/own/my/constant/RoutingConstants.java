@@ -18,8 +18,6 @@ public class RoutingConstants {
 
     public static final String ROUTING_LOGIN = "/login";
 
-    public static final String ROUTING_LOGOUT = "/logout";
-
     public static final String ROUTING_START_PAGE = "/start-page";
 
     public static final String ROUTING_USERS = "/users";

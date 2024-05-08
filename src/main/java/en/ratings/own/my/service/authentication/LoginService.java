@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static en.ratings.own.my.constant.AttributeConstants.COOKIE_PATH;
 import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
+import static en.ratings.own.my.constant.CookieConstants.COOKIE_PATH;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
 @Service
