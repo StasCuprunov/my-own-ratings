@@ -11,19 +11,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
     private static final int PASSWORD_STRENGTH = 10;
 
-    private static final int MAXIMUM_SESSIONS = 1;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable);
-        configureSessionManagement(http);
-        return http.build();
+        return http.
+                httpBasic(Customizer.withDefaults()).
+                csrf(AbstractHttpConfigurer::disable).
+                sessionManagement(configurer -> configurer.sessionCreationPolicy(STATELESS)).
+                build();
     }
 
     @Bean
@@ -31,10 +33,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(PASSWORD_STRENGTH);
     }
 
-    private void configureSessionManagement(HttpSecurity http) throws Exception {
-        http.sessionManagement(sessionManagementConfigurer ->
-                        sessionManagementConfigurer.maximumSessions(MAXIMUM_SESSIONS)).
-                sessionManagement(sessionManagementConfigurer ->
-                        sessionManagementConfigurer.sessionFixation().newSession());
-    }
 }
