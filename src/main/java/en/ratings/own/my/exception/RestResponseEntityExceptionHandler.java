@@ -8,6 +8,8 @@ import en.ratings.own.my.exception.rating.RatingByUserIdAndNameNotFoundException
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
+import en.ratings.own.my.exception.rating.range.of.values.RangeOfValuesByIdNotFoundException;
+import en.ratings.own.my.exception.rating.range.of.values.RangeOfValuesByMinimumAndMaximumAndStepWidthNotFoundException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
 import en.ratings.own.my.exception.role.RoleByIdNotFoundException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
@@ -26,7 +28,9 @@ public class RestResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {UserByEmailNotFoundException.class, RoleByNameNotFoundException.class,
             RatingByIdNotFoundException.class, RatingEntryByIdNotFoundException.class,
-            RoleByIdNotFoundException.class, RatingByUserIdAndNameNotFoundException.class })
+            RoleByIdNotFoundException.class, RatingByUserIdAndNameNotFoundException.class,
+            RangeOfValuesByIdNotFoundException.class,
+            RangeOfValuesByMinimumAndMaximumAndStepWidthNotFoundException.class })
     protected ResponseEntity<String> handleNotFound(Exception exception) {
         return createResponseEntity(exception, NOT_FOUND);
     }

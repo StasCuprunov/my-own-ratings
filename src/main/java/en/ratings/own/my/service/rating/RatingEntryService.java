@@ -118,8 +118,8 @@ public class RatingEntryService {
         return null;
     }
 
-    private String ratingEntryValueValidation(String rangeOfValuesId, Double value) {
-        RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rangeOfValuesId).get();
+    private String ratingEntryValueValidation(String rangeOfValuesId, Double value) throws Exception {
+        RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rangeOfValuesId);
 
         if (!isValueInRangeOfValues(value, rangeOfValues)) {
             return KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;

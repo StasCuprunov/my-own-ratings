@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static en.ratings.own.my.constant.AttributeConstants.STEP_WIDTH_BORDER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE;
@@ -51,10 +50,10 @@ public class RatingService {
 
     public RatingDTO findById(String id) throws Exception {
         Rating rating = ratingRepositoryService.findById(id);
-        Optional<RangeOfValues> rangeOfValues = rangeOfValuesRepositoryService.findById(rating.getRangeOfValuesId());
+        RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rating.getRangeOfValuesId());
         ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(id);
 
-        return new RatingDTO(rating, rangeOfValues.get(), ratingEntries);
+        return new RatingDTO(rating, rangeOfValues, ratingEntries);
     }
 
     public ArrayList<Rating> findAllByUserId(String userId) {
@@ -107,14 +106,10 @@ public class RatingService {
 
         }
 
-        Optional<RangeOfValues> targetRangeOfValues = rangeOfValuesRepositoryService.
-                findByMinimumAndMaximumAndStepWidth(newRangeOfValues);
-
-        if (targetRangeOfValues.isEmpty()) {
+        try {
+            newRangeOfValues = rangeOfValuesRepositoryService.findByMinimumAndMaximumAndStepWidth(newRangeOfValues);
+        } catch (Exception e) {
             newRangeOfValues = rangeOfValuesRepositoryService.save(newRangeOfValues);
-        }
-        else {
-            newRangeOfValues = targetRangeOfValues.get();
         }
 
         Rating newRating = new Rating(ratingDTO.getUserId(), newRangeOfValues.getId(), ratingDTO.getName(),
