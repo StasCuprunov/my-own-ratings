@@ -3,7 +3,6 @@ package en.ratings.own.my.service;
 import en.ratings.own.my.dto.StartPageDTO;
 import en.ratings.own.my.dto.UserDTO;
 import en.ratings.own.my.dto.rating.RatingForStartPageDTO;
-import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.rating.Rating;
 import en.ratings.own.my.service.repository.UserRepositoryService;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 public class StartPageService {
@@ -29,16 +27,9 @@ public class StartPageService {
     }
 
     public StartPageDTO getByUserEmail(String email) throws Exception {
-        Optional<User> userResult = userRepositoryService.findByEmail(email);
-
-        if (userResult.isEmpty()) {
-            throw new UserByEmailNotFoundException(email);
-        }
-
-        User user = userResult.get();
+        User user = userRepositoryService.findByEmail(email);
         ArrayList<RatingForStartPageDTO> ratingDTOs = convertModelsToDTOs(ratingRepositoryService.
                 findAllByUserId(user.getId()));
-
         return new StartPageDTO(new UserDTO(user), ratingDTOs);
     }
 

@@ -2,7 +2,6 @@ package en.ratings.own.my.component;
 
 import en.ratings.own.my.exception.authentication.EmailNotFoundInTokenException;
 import en.ratings.own.my.exception.authentication.InvalidTokenException;
-import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.service.authentication.AuthenticationService;
 import en.ratings.own.my.service.authentication.JwtService;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
 
@@ -72,17 +70,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (email == null) {
             throw new EmailNotFoundInTokenException(token);
         }
-        Optional<User> user = userRepositoryService.findByEmail(email);
-
-        if (user.isEmpty()) {
-            throw new UserByEmailNotFoundException(email);
-        }
+        User user = userRepositoryService.findByEmail(email);
 
         if (!jwtService.validateToken(token, email)) {
             throw new InvalidTokenException(token);
         }
         UsernamePasswordAuthenticationToken authenticationToken =
-                authenticationService.createAuthenticationToken(user.get());
+                authenticationService.createAuthenticationToken(user);
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         authenticationService.setAuthentication(authenticationToken);
     }

@@ -1,6 +1,5 @@
 package en.ratings.own.my.service.rating;
 
-import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
 import en.ratings.own.my.model.rating.RangeOfValues;
 import en.ratings.own.my.model.rating.Rating;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_BY_ID_NOT_FOUND;
@@ -38,16 +36,7 @@ public class RatingEntryService {
         this.rangeOfValuesRepositoryService = rangeOfValuesRepositoryService;
     }
 
-    public RatingEntry findById(String id) throws Exception {
-        Optional<RatingEntry> ratingEntry = ratingEntryRepositoryService.findById(id);
-
-        if (ratingEntry.isEmpty()) {
-            throw new RatingEntryByIdNotFoundException(id);
-        }
-        return ratingEntry.get();
-    }
-
-    public ArrayList<RatingEntry> findAllByRatingId(String ratingId) throws Exception {
+    public ArrayList<RatingEntry> findAllByRatingId(String ratingId) {
         return ratingEntryRepositoryService.findAllByRatingId(ratingId);
     }
 
@@ -74,21 +63,22 @@ public class RatingEntryService {
         if (ratingEntryId != null) {
             addExistentStringToArrayList(keysForException, idValidation(ratingEntryId));
         }
-
-        Optional<Rating> rating = ratingRepositoryService.findById(ratingId);
-        if (rating.isEmpty()) {
+        Rating rating = null;
+        try {
+            rating = ratingRepositoryService.findById(ratingId);
+        } catch (Exception e) {
             keysForException.add(KEY_RATING_BY_ID_NOT_FOUND);
         }
 
         if (!keysForException.isEmpty()) {
             throw new RatingEntryFailedException(keysForException);
         }
-        return rating.get();
+        return rating;
     }
 
     private String idValidation(String id) {
         try {
-            findById(id);
+            ratingEntryRepositoryService.findById(id);
         } catch (Exception e) {
             return KEY_RATING_ENTRY_BY_ID_NOT_FOUND;
         }
@@ -128,8 +118,8 @@ public class RatingEntryService {
         return null;
     }
 
-    private String ratingEntryValueValidation(String rangeOfValuesId, Double value) {
-        RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rangeOfValuesId).get();
+    private String ratingEntryValueValidation(String rangeOfValuesId, Double value) throws Exception {
+        RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rangeOfValuesId);
 
         if (!isValueInRangeOfValues(value, rangeOfValues)) {
             return KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;

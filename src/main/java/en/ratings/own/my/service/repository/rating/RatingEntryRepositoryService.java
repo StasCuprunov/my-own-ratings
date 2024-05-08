@@ -1,5 +1,6 @@
 package en.ratings.own.my.service.repository.rating;
 
+import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.model.rating.RatingEntry;
 import en.ratings.own.my.repository.rating.RatingEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,12 @@ public class RatingEntryRepositoryService {
         this.ratingEntryRepository = ratingEntryRepository;
     }
 
-    public Optional<RatingEntry> findById(String id) {
-        return ratingEntryRepository.findById(id);
+    public RatingEntry findById(String id) throws Exception {
+        Optional<RatingEntry> ratingEntryResult = ratingEntryRepository.findById(id);
+        if (ratingEntryResult.isEmpty()) {
+            throw new RatingEntryByIdNotFoundException(id);
+        }
+        return ratingEntryResult.get();
     }
 
     public ArrayList<RatingEntry> findAllByRatingId(String ratingId) {
