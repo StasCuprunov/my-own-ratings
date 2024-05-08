@@ -4,12 +4,11 @@ import en.ratings.own.my.model.role.RoleAssignment;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.ArrayList;
 
 @Repository
 public interface RoleAssignmentRepository extends MongoRepository<RoleAssignment, String> {
-    Optional<List<RoleAssignment>> findAllByUserId(String userId);
+    ArrayList<RoleAssignment> findAllByUserId(String userId);
 
     <S extends RoleAssignment> S save(S roleAssignment);
 

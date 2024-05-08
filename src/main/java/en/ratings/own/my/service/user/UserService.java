@@ -11,12 +11,13 @@ import en.ratings.own.my.service.repository.UserRepositoryService;
 import en.ratings.own.my.service.repository.role.RoleAssignmentRepositoryService;
 import en.ratings.own.my.service.repository.role.RoleRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static en.ratings.own.my.utility.EnumUtility.RoleUserAsString;
+import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_ALREADY_EXISTS;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_SYNTAX;
 import static en.ratings.own.my.service.user.UserValidation.isEmailSyntaxAllowed;
@@ -32,13 +33,16 @@ public class UserService {
 
     private final RoleRepositoryService roleRepositoryService;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserService(UserRepositoryService userRepositoryService,
                        RoleAssignmentRepositoryService roleAssignmentRepositoryService,
-                       RoleRepositoryService roleRepositoryService) {
+                       RoleRepositoryService roleRepositoryService, PasswordEncoder passwordEncoder) {
         this.userRepositoryService = userRepositoryService;
         this.roleAssignmentRepositoryService = roleAssignmentRepositoryService;
         this.roleRepositoryService = roleRepositoryService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDTO findByEmail(String email) throws Exception {
@@ -61,8 +65,9 @@ public class UserService {
     }
 
     private UserDTO createUser(User user) throws Exception {
+        encodePassword(user);
         User userResult = userRepositoryService.save(user);
-        String roleName = RoleUserAsString();
+        String roleName = roleUserAsString();
         Optional<Role> role = roleRepositoryService.findByName(roleName);
 
         if (role.isEmpty()) {
@@ -92,7 +97,11 @@ public class UserService {
         return userRepositoryService.findByEmail(email).isEmpty();
     }
 
+    private void encodePassword(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    }
+
     private UserDTO convertModelToDTO(User user) {
-        return new UserDTO(user.getId(), user.getEmail(), user.getFirstName(), user.getSurname());
+        return new UserDTO(user);
     }
 }

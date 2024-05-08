@@ -5,6 +5,8 @@ import en.ratings.own.my.repository.role.RoleAssignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class RoleAssignmentRepositoryService {
 
@@ -17,5 +19,9 @@ public class RoleAssignmentRepositoryService {
 
     public RoleAssignment save(RoleAssignment roleAssignment) {
         return roleAssignmentRepository.save(roleAssignment);
+    }
+
+    public ArrayList<RoleAssignment> findAllByUserId(String userId) {
+        return roleAssignmentRepository.findAllByUserId(userId);
     }
 }
