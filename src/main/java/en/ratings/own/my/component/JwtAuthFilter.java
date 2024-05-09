@@ -45,8 +45,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (token != null) {
             try {
                 authentication(token, request);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (Exception ignored) {
+
             }
         }
         filterChain.doFilter(request, response);
