@@ -5,8 +5,10 @@ import en.ratings.own.my.controller.AuthenticationController;
 import en.ratings.own.my.controller.UserController;
 import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.model.User;
+import en.ratings.own.my.repository.UserRepository;
 import en.ratings.own.my.service.authentication.JwtService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,11 +43,20 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
     private UserController userController;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private JwtService jwtService;
 
+    @After
+    public void clean() {
+        userRepository.deleteAll();
+    }
+
+
     @Test
-    public void testLoginWithValidAccount() {
-        LoginDTO loginDTO = createUserForLogin();
+    public void testValidLoginWithValidAccount() {
+        LoginDTO loginDTO = createUserFalakNoorahKhouryForLogin();
         HttpServletResponse response = createHttpServletResponse();
 
         try {
@@ -58,15 +69,37 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    public void testValidLoginWithSecondAccount() {
+        LoginDTO loginDTO = createUserFalakNoorahKhouryForLogin();
+        HttpServletResponse response = createHttpServletResponse();
+
+        try {
+            authenticationController.login(loginDTO, response);
+        } catch (Exception ignored) {
+
+        }
+        response = createHttpServletResponse();
+        loginDTO = createUserStevenWormForLogin();
+
+        try {
+            authenticationController.login(loginDTO, response);
+        } catch (Exception ignored) {
+
+        }
+        assertThat(response.getStatus()).isEqualTo(SC_OK);
+        testCookiesAfterSuccessfulLogin(loginDTO.getEmail(), response);
+    }
+
+    @Test
     public void testLoginWithFalseEmail() {
-        LoginDTO loginDTO = createUserForLogin();
+        LoginDTO loginDTO = createUserFalakNoorahKhouryForLogin();
         loginDTO.setEmail(createUserStevenWorm().getEmail());
         testLoginWithFalseEmail(loginDTO);
     }
 
     @Test
     public void testLoginWithFalsePassword() {
-        LoginDTO loginDTO = createUserForLogin();
+        LoginDTO loginDTO = createUserFalakNoorahKhouryForLogin();
         loginDTO.setPassword(createUserStevenWorm().getPassword());
         testLoginWithFalsePassword(loginDTO);
     }
@@ -93,8 +126,15 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
         assertThatExceptionIsEqualToWrongPasswordLoginException(foundException);
     }
 
-    private LoginDTO createUserForLogin() {
-        User user = createUserFalakNoorahKhoury();
+    private LoginDTO createUserFalakNoorahKhouryForLogin() {
+        return createUserForLogin(createUserFalakNoorahKhoury());
+    }
+
+    private LoginDTO createUserStevenWormForLogin() {
+        return createUserForLogin(createUserStevenWorm());
+    }
+
+    private LoginDTO createUserForLogin(User user) {
         String rawPassword = user.getPassword();
         try {
             userController.create(user);
