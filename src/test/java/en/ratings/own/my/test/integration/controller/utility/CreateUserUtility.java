@@ -47,12 +47,6 @@ public class CreateUserUtility {
         return user;
     }
 
-    public static User createUserStevenWormWithDifferentEmail() {
-        User user = createUserStevenWorm();
-        user.setEmail("worm.steven@gmail.com");
-        return user;
-    }
-
     public static User createUserStevenWormWithInvalidEmail() {
         User user = createUserStevenWorm();
         user.setEmail("steven.worm-gmail.com");
@@ -98,30 +92,6 @@ public class CreateUserUtility {
     public static User createUserStevenWormWithInvalidSpecialCharacterPassword() {
         User user = createUserStevenWorm();
         user.setPassword(INVALID_PASSWORD_WITH_INVALID_SPECIAL_CHARACTER);
-        return user;
-    }
-
-    public static User createUserStevenWormWithNullEmail() {
-        User user = createUserStevenWorm();
-        user.setEmail(null);
-        return user;
-    }
-
-    public static User createUserStevenWormWithNullFirstName() {
-        User user = createUserStevenWorm();
-        user.setFirstName(null);
-        return user;
-    }
-
-    public static User createUserStevenWormWithNullSurname() {
-        User user = createUserStevenWorm();
-        user.setSurname(null);
-        return user;
-    }
-
-    public static User createUserStevenWormWithNullPassword() {
-        User user = createUserStevenWorm();
-        user.setPassword(null);
         return user;
     }
 

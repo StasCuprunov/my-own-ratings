@@ -6,14 +6,16 @@ import en.ratings.own.my.controller.UserController;
 import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.dto.UserDTO;
 import en.ratings.own.my.model.User;
+import en.ratings.own.my.model.role.RoleAssignment;
 import en.ratings.own.my.repository.UserRepository;
-import en.ratings.own.my.service.repository.role.RoleAssignmentRepositoryService;
+import en.ratings.own.my.repository.role.RoleAssignmentRepository;
+import en.ratings.own.my.repository.role.RoleRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static en.ratings.own.my.AssertThatUtility.assertThatExceptionIsEqualToUserCreationFailedException;
@@ -22,13 +24,34 @@ import static en.ratings.own.my.AssertThatUtility.assertThatIsNotNull;
 import static en.ratings.own.my.AssertThatUtility.assertThatStatusCodeIsCreated;
 import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserFalakNoorahKhoury;
 import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserStevenWorm;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserStevenWormWithDefinedId;
 import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
         createUserStevenWormWithDifferentFirstName;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithDifferentPassword;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithDifferentSurname;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithInvalidEmail;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithInvalidSpecialCharacterPassword;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithTooLongPassword;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithTooShortPassword;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithoutDigitsPassword;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithoutLowerCaseLetterPassword;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithoutUpperCaseLetterPassword;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+        createUserStevenWormWithoutValidSpecialCharacterPassword;
 import static en.ratings.own.my.test.integration.controller.utility.HttpResponseUtility.createHttpServletResponse;
+import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserControllerIntegrationTest extends AbstractIntegrationTest {
-
     @Autowired
     private UserController userController;
 
@@ -39,76 +62,151 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleAssignmentRepositoryService roleAssignmentRepositoryService;
+    private RoleAssignmentRepository roleAssignmentRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private RoleRepository roleRepository;
 
     @After
-    public void cleanUp() {
+    public void clean() {
         userRepository.deleteAll();
+        roleAssignmentRepository.deleteAll();
     }
 
     @Test
-    public void testCreateWithValidInputWithoutLoggedInResult() {
-        User user = createUserStevenWorm();
+    public void testCreateWithValidInputWithoutLoggedIn() {
+        testValidCreate(createUserStevenWorm());
+    }
+
+    @Test
+    public void testCreateWithValidInputWithLoggedIn() {
+        login();
+        testValidCreate(createUserFalakNoorahKhoury());
+    }
+
+    @Test
+    public void testCreateWithValidInputWithDefinedId() {
+        testValidCreate(createUserStevenWormWithDefinedId());
+    }
+
+    @Test
+    public void testCreateWithNotAvailableEmailButWithDifferentFirstName() {
+        testCreateWithNotAvailableEmail(createUserStevenWormWithDifferentFirstName());
+    }
+
+    @Test
+    public void testCreateWithNotAvailableEmailButWithDifferentSurname() {
+        testCreateWithNotAvailableEmail(createUserStevenWormWithDifferentSurname());
+    }
+
+    @Test
+    public void testCreateWithNotAvailableEmailButWithDifferentPassword() {
+        testCreateWithNotAvailableEmail(createUserStevenWormWithDifferentPassword());
+    }
+
+    @Test
+    public void testCreateWithInvalidEmail() {
+        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithInvalidEmail());
+    }
+
+    @Test
+    public void testCreateWithTooShortPassword() {
+        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithTooShortPassword());
+    }
+
+    @Test
+    public void testCreateWithTooLongPassword() {
+        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithTooLongPassword());
+    }
+
+    @Test
+    public void testCreateWithoutDigitsInPassword() {
+        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutDigitsPassword());
+    }
+
+    @Test
+    public void testCreateWithoutLowerCaseLetterInPassword() {
+        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutLowerCaseLetterPassword());
+    }
+
+    @Test
+    public void testCreateWithoutUpperCaseLetterInPassword() {
+        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutUpperCaseLetterPassword());
+    }
+
+    @Test
+    public void testCreateWithoutValidSpecialCharacterInPassword() {
+        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutValidSpecialCharacterPassword());
+    }
+
+    @Test
+    public void testCreateWithInvalidSpecialCharacterInPassword() {
+        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithInvalidSpecialCharacterPassword());
+    }
+
+    private void testValidCreate(User user) {
         ResponseEntity<UserDTO> responseEntity = null;
         try {
             responseEntity = userController.create(user);
         } catch (Exception ignored) {
 
         }
-        assertThatResultAfterCreate(user, responseEntity);
-        assertThatDatabaseEntryAfterCreate(user);
+        checkResponseEntityAfterCreate(user, responseEntity);
+        compareUserWithStoredUserAfterCreate(user);
+        checkRoleAssignmentAfterCreate(user);
     }
 
-    @Test
-    public void testCreateWithValidInputWithLoggedIn() throws Exception {
-        User loggedInUser = createUserStevenWorm();
-        String rawPassword = loggedInUser.getPassword();
-        ResponseEntity<UserDTO> responseEntity = null;
-        try {
-            responseEntity = userController.create(loggedInUser);
-        } catch (Exception ignored) {
+    private void checkRoleAssignmentAfterCreate(User user) {
+        int numberOfResultsFound = 1;
+        int index = 0;
 
-        }
-        LoginDTO loginDTO = new LoginDTO(loggedInUser.getEmail(), rawPassword);
-        authenticationController.login(loginDTO, createHttpServletResponse());
+        ArrayList<RoleAssignment> roleAssignments = roleAssignmentRepository.findAllByUserId(user.getId());
+        assertThat(roleAssignments.size()).isEqualTo(numberOfResultsFound);
 
-        User newUser = createUserFalakNoorahKhoury();
-        try {
-            responseEntity = userController.create(newUser);
-        } catch (Exception ignored) {
+        String roleId = roleAssignments.get(index).getRoleId();
 
-        }
-        assertThatResultAfterCreate(newUser, responseEntity);
-        assertThatDatabaseEntryAfterCreate(newUser);
+        assertThat(roleRepository.findById(roleId).get().getName()).isEqualTo(roleUserAsString());
     }
 
-    @Test
-    public void testCreateWithNotAvailableEmail() {
-        Exception expectedException = new Exception();
+    private void testInvalidCreate(User user) {
+        Exception foundException = new Exception();
+        try {
+            userController.create(user);
+        } catch (Exception e) {
+            foundException = e;
+        }
+        assertThatExceptionIsEqualToUserCreationFailedException(foundException);
+    }
+
+    private void testInvalidCreateWithoutStoredEntries(User user) {
+        testInvalidCreate(user);
+        assertThat(userRepository.findByEmail(user.getEmail())).isEmpty();
+        assertThat(roleAssignmentRepository.findAll().isEmpty()).isTrue();
+    }
+
+    private void testCreateWithNotAvailableEmail(User differentUserButWithStevenWormsEmail) {
         try {
             userController.create(createUserStevenWorm());
         } catch (Exception ignored) {
 
         }
-        try {
-            userController.create(createUserStevenWormWithDifferentFirstName());
-        }
-        catch (Exception e) {
-            expectedException = e;
-        }
-        assertThatExceptionIsEqualToUserCreationFailedException(expectedException);
+        testInvalidCreate(differentUserButWithStevenWormsEmail);
     }
 
-    private void assertThatResultAfterCreate(User user, ResponseEntity<UserDTO> responseEntity) {
+    private void checkResponseEntityAfterCreate(User user, ResponseEntity<UserDTO> responseEntity) {
         assertThatIsNotNull(responseEntity);
         assertThatStatusCodeIsCreated(responseEntity);
-        assertThatUserResultIsEqualAfterCreate(user, responseEntity.getBody());
+        compareUserWithUserDTOAfterCreate(user, responseEntity.getBody());
     }
 
-    private void assertThatDatabaseEntryAfterCreate(User user) {
+    private void compareUserWithUserDTOAfterCreate(User user, UserDTO userDTO) {
+        assertThat(user.getId()).isEqualTo(userDTO.getId());
+        assertThat(user.getEmail()).isEqualTo(userDTO.getEmail());
+        assertThat(user.getFirstName()).isEqualTo(userDTO.getFirstName());
+        assertThat(user.getSurname()).isEqualTo(userDTO.getSurname());
+    }
+
+    private void compareUserWithStoredUserAfterCreate(User user) {
         Optional<User> userResult = userRepository.findByEmail(user.getEmail());
 
         assertThat(userResult).isPresent();
@@ -121,16 +219,20 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
         assertThat(storedUser.getPassword()).isEqualTo(user.getPassword());
     }
 
-    private void assertThatUserResultIsEqualAfterCreate(User user, UserDTO userDTO) {
-        assertThatUserIsEqual(user, userDTO, true);
-    }
+    private void login() {
+        User loggedInUser = createUserStevenWorm();
+        String rawPassword = loggedInUser.getPassword();
+        try {
+            userController.create(loggedInUser);
+        } catch (Exception ignored) {
 
-    private void assertThatUserIsEqual(User user, UserDTO userDTO, boolean afterUpdate) {
-        if (afterUpdate) {
-            assertThat(user.getId()).isEqualTo(userDTO.getId());
         }
-        assertThat(user.getEmail()).isEqualTo(userDTO.getEmail());
-        assertThat(user.getFirstName()).isEqualTo(userDTO.getFirstName());
-        assertThat(user.getSurname()).isEqualTo(userDTO.getSurname());
+
+        LoginDTO loginDTO = new LoginDTO(loggedInUser.getEmail(), rawPassword);
+        try {
+            authenticationController.login(loginDTO, createHttpServletResponse());
+        } catch (Exception ignored) {
+
+        }
     }
 }
