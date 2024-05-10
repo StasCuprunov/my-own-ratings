@@ -9,6 +9,10 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+
+/**
+ * Docker must be started for testing
+ */
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Testcontainers
