@@ -1,5 +1,7 @@
 package en.ratings.own.my;
 
+import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
+import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,14 @@ public class AssertThatUtility {
 
     public static <T extends Exception> void assertThatExceptionIsEqualToUserCreationFailedException(T exception) {
         assertThatExceptionIsEqual(exception, UserCreationFailedException.class);
+    }
+
+    public static <T extends Exception> void assertThatExceptionIsEqualToUserByEmailNotFoundException(T exception) {
+        assertThatExceptionIsEqual(exception, UserByEmailNotFoundException.class);
+    }
+
+    public static <T extends Exception> void assertThatExceptionIsEqualToWrongPasswordLoginException(T exception) {
+        assertThatExceptionIsEqual(exception, WrongPasswordLoginException.class);
     }
 
     private static <T extends Exception, S extends Exception> void

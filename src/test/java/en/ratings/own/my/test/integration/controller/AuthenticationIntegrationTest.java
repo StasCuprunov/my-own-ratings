@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static en.ratings.own.my.AssertThatUtility.assertThatExceptionIsEqualToUserByEmailNotFoundException;
+import static en.ratings.own.my.AssertThatUtility.assertThatExceptionIsEqualToWrongPasswordLoginException;
 import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
 import static en.ratings.own.my.constant.CookieConstants.HTTP_ONLY;
@@ -18,6 +20,7 @@ import static en.ratings.own.my.constant.CookieConstants.SAME_SITE;
 import static en.ratings.own.my.constant.CookieConstants.SAME_SITE_VALUE;
 import static en.ratings.own.my.constant.CookieConstants.SECURE;
 import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserFalakNoorahKhoury;
+import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserStevenWorm;
 import static en.ratings.own.my.test.integration.controller.utility.HttpResponseUtility.createHttpServletResponse;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,6 +45,55 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void testLoginWithValidAccount() {
+        LoginDTO loginDTO = createUserForLogin();
+        HttpServletResponse response = createHttpServletResponse();
+
+        try {
+            authenticationController.login(loginDTO, response);
+        } catch (Exception ignored) {
+
+        }
+        assertThat(response.getStatus()).isEqualTo(SC_OK);
+        testCookiesAfterSuccessfulLogin(loginDTO.getEmail(), response);
+    }
+
+    @Test
+    public void testLoginWithFalseEmail() {
+        LoginDTO loginDTO = createUserForLogin();
+        loginDTO.setEmail(createUserStevenWorm().getEmail());
+        testLoginWithFalseEmail(loginDTO);
+    }
+
+    @Test
+    public void testLoginWithFalsePassword() {
+        LoginDTO loginDTO = createUserForLogin();
+        loginDTO.setPassword(createUserStevenWorm().getPassword());
+        testLoginWithFalsePassword(loginDTO);
+    }
+
+    private void testLoginWithFalseEmail(LoginDTO loginDTO) {
+        HttpServletResponse response = createHttpServletResponse();
+        Exception foundException = new Exception();
+        try {
+            authenticationController.login(loginDTO, response);
+        } catch (Exception e) {
+            foundException = e;
+        }
+        assertThatExceptionIsEqualToUserByEmailNotFoundException(foundException);
+    }
+
+    private void testLoginWithFalsePassword(LoginDTO loginDTO) {
+        HttpServletResponse response = createHttpServletResponse();
+        Exception foundException = new Exception();
+        try {
+            authenticationController.login(loginDTO, response);
+        } catch (Exception e) {
+            foundException = e;
+        }
+        assertThatExceptionIsEqualToWrongPasswordLoginException(foundException);
+    }
+
+    private LoginDTO createUserForLogin() {
         User user = createUserFalakNoorahKhoury();
         String rawPassword = user.getPassword();
         try {
@@ -49,18 +101,10 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
         } catch (Exception ignored) {
 
         }
-        HttpServletResponse response = createHttpServletResponse();
-
-        try {
-            authenticationController.login(new LoginDTO(user.getEmail(), rawPassword), response);
-        } catch (Exception ignored) {
-
-        }
-        assertThat(response.getStatus()).isEqualTo(SC_OK);
-        testCookies(user, response);
+        return new LoginDTO(user.getEmail(), rawPassword);
     }
 
-    private void testCookies(User user, HttpServletResponse response) {
+    private void testCookiesAfterSuccessfulLogin(String email, HttpServletResponse response) {
         String cookies = response.getHeader(SET_COOKIE);
         String[] cookieList = cookies.split(COOKIE_SEPARATOR);
         boolean hasCorrectAuthToken = false;
@@ -70,7 +114,7 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
         boolean hasCorrectMaxAge = false;
         for (String cookie: cookieList) {
             if (cookie.contains(keyWithAssignment(AUTH_TOKEN))) {
-                hasCorrectAuthToken = hasCorrectAuthToken(user, cookie);
+                hasCorrectAuthToken = hasCorrectAuthToken(email, cookie);
             }
             else if (exactMatchInCookie(SECURE, cookie)) {
                 hasSecure = true;
@@ -100,13 +144,13 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
         return key + COOKIE_ASSIGNMENT;
     }
 
-    private boolean hasCorrectAuthToken(User user, String cookie) {
+    private boolean hasCorrectAuthToken(String email, String cookie) {
         String[] authTokenPair = cookie.split(COOKIE_ASSIGNMENT);
         if (authTokenPair.length != COOKIE_KEY_VALUE_NUMBER) {
             return false;
         }
         String token = authTokenPair[INDEX_OF_VALUE_FROM_KEY_VALUE_PAIR];
-        return jwtService.validateToken(token, user.getEmail());
+        return jwtService.validateToken(token, email);
     }
 
     private boolean hasCorrectSameSite(String cookie) {
