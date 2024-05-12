@@ -30,8 +30,11 @@ import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExcep
         assertThatExceptionIsEqualToRatingByIdNotFoundException;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingCreationFailedException;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToRatingDeleteByIdNotAllowedException;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatId;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsCreated;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsNoContent;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsOk;
 import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserFalakNoorahKhoury;
 import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserStevenWorm;
@@ -46,6 +49,8 @@ import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtili
         VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+        VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         createValidRatingDTOBooksWithGermanGradingAndDefinedRatingEntries;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
@@ -66,6 +71,7 @@ import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtil
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         createValidRatingEntryRedBullForDrinksWithNegativeMinimum;
+import static en.ratings.own.my.utility.Utility.isLastIndex;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
@@ -217,9 +223,9 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
         ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
         String ratingId = responseEntity.getBody().getId();
-        ratingEntryRepository.save(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
-        ratingEntryRepository.save(createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId));
-        ratingEntryRepository.save(createValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId));
+
+        createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
+
         testValidFindById(responseEntity.getBody());
     }
 
@@ -262,6 +268,87 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
             foundException = e;
         }
         assertThatExceptionIsEqualToRatingByIdNotFoundException(foundException);
+    }
+
+    @Test
+    public void testValidDeleteByIdWithDrinksAndDeletedRangeOfValues() {
+        ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        String ratingId = responseEntity.getBody().getId();
+        RangeOfValues rangeOfValues = responseEntity.getBody().getRangeOfValues();
+
+        createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
+
+        testValidDeleteByIdAndDeletedRangeOfValues(ratingId, rangeOfValues);
+    }
+
+    @Test
+    public void testValidDeleteByIdWithDrinksAndNotDeletedRangeOfValues() {
+        createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
+        ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        String ratingId = responseEntity.getBody().getId();
+        RangeOfValues rangeOfValues = responseEntity.getBody().getRangeOfValues();
+
+        ArrayList<Rating> listOfRatingsBeforeDelete = ratingRepository.findAll();
+        ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete = rangeOfValuesRepository.findAll();
+        ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete = ratingEntryRepository.findAll();
+
+        createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
+
+        testValidDeleteByIdAndNotDeletedRangeOfValues(ratingId, rangeOfValues);
+
+        assertAll(
+                () -> assertThat(isRatingMissingThatShouldExistAfterDeleteById(ratingId,
+                        listOfRatingsBeforeDelete)).isFalse(),
+                () -> assertThat(isRangeOfValuesThatShouldExistAfterDeleteById(null,
+                        listOfRangeOfValuesBeforeDelete)).isFalse(),
+                () -> assertThat(isRatingEntryMissingThatShouldExistAfterDeleteById(ratingId,
+                        listOfRatingEntriesBeforeDelete)).isFalse()
+        );
+    }
+
+    @Test
+    public void testInvalidDeleteByIdWithWrongId() {
+        ResponseEntity<RatingDTO> responseEntityCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        String ratingId = responseEntityCreate.getBody().getId();
+        createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
+
+        ArrayList<Rating> listOfRatingsBeforeDelete = ratingRepository.findAll();
+        ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete = rangeOfValuesRepository.findAll();
+        ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete = ratingEntryRepository.findAll();
+
+        String deleteRatingId = ratingId + "test";
+        Exception foundException = deleteByIdInvalid(deleteRatingId);
+
+        assertAll(
+                () -> assertThatExceptionIsEqualToRatingByIdNotFoundException(foundException),
+                () -> assertThat(isRatingMissingThatShouldExistAfterDeleteById(deleteRatingId,
+                        listOfRatingsBeforeDelete)).isFalse(),
+                () -> assertThat(isRangeOfValuesThatShouldExistAfterDeleteById(null,
+                        listOfRangeOfValuesBeforeDelete)).isFalse(),
+                () -> assertThat(isRatingEntryMissingThatShouldExistAfterDeleteById(deleteRatingId,
+                        listOfRatingEntriesBeforeDelete)).isFalse()
+        );
+    }
+
+    @Test
+    public void testInvalidDeleteByIdWithoutLoggedIn() {
+        ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
+        logout();
+        Exception foundException = deleteByIdInvalid(responseEntity.getBody().getId());
+        assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException(foundException);
+    }
+
+    @Test
+    public void testInvalidDeleteByIdWithDifferentUser() {
+        ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
+        login(userFalakNoorahKhoury);
+        Exception foundException = deleteByIdInvalid(responseEntity.getBody().getId());
+        assertThatExceptionIsEqualToRatingDeleteByIdNotAllowedException(foundException);
     }
 
     private void testValidCreate(User user, RatingDTO input) {
@@ -400,6 +487,135 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
             }
             assertThat(numberOfEqualRatingEntry).isEqualTo(NUMBER_OF_UNIQUE_RATING_ENTRIES);
         }
+    }
+
+    private void checkValidDeleteById(String ratingId, ResponseEntity<Object> responseEntity) {
+        assertAll("Test valid deleteById:",
+                () -> assertThatStatusCodeIsNoContent(responseEntity),
+                () -> assertThat(ratingRepository.findById(ratingId).isEmpty()).isTrue(),
+                () -> assertThat(ratingEntryRepository.findAllByRatingId(ratingId).isEmpty()).isTrue()
+        );
+    }
+
+    private void testValidDeleteByIdAndDeletedRangeOfValues(String ratingId, RangeOfValues rangeOfValues) {
+        testValidDeleteById(ratingId, rangeOfValues, true);
+    }
+
+    private void testValidDeleteByIdAndNotDeletedRangeOfValues(String ratingId, RangeOfValues rangeOfValues) {
+        testValidDeleteById(ratingId, rangeOfValues, false);
+    }
+
+    private void testValidDeleteById(String ratingId, RangeOfValues rangeOfValues, boolean shouldRangeOfValuesDeleted) {
+        ResponseEntity<Object> responseEntity = deleteByIdSuccessful(ratingId);
+
+        checkValidDeleteById(ratingId, responseEntity);
+        checkRangeOfValuesAfterDeleteById(rangeOfValues, shouldRangeOfValuesDeleted);
+    }
+
+    private ResponseEntity<Object> deleteByIdSuccessful(String id) {
+        try {
+            return ratingController.deleteById(id);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private Exception deleteByIdInvalid(String id) {
+        try {
+            ratingController.deleteById(id);
+        } catch (Exception e) {
+            return e;
+        }
+        return new Exception();
+    }
+
+    private void checkRangeOfValuesAfterDeleteById(RangeOfValues rangeOfValues, boolean shouldRangeOfValuesDeleted) {
+        boolean notFoundById = rangeOfValuesRepository.findById(rangeOfValues.getId()).isEmpty();
+        boolean notFoundByAttributes = rangeOfValuesRepository.findByMinimumAndMaximumAndStepWidth(
+                rangeOfValues.getMinimum(), rangeOfValues.getMaximum(), rangeOfValues.getStepWidth()).isEmpty();
+        if (shouldRangeOfValuesDeleted) {
+            assertAll("Range of values should be deleted:",
+                    () -> assertThat(notFoundById).isTrue(),
+                    () -> assertThat(notFoundByAttributes).isTrue()
+            );
+        }
+        else {
+            assertAll("Range of values should exist:",
+                    () -> assertThat(notFoundById).isFalse(),
+                    () -> assertThat(notFoundByAttributes).isFalse()
+            );
+        }
+    }
+
+    private void createRatingEntriesForDrinksWithNegativeMinimum(String ratingId) {
+        ratingEntryRepository.save(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
+        ratingEntryRepository.save(createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId));
+        ratingEntryRepository.save(createValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId));
+    }
+
+    private boolean isRatingMissingThatShouldExistAfterDeleteById(String deleteRatingId,
+                                                                  ArrayList<Rating> listOfRatingsBeforeDelete) {
+        ArrayList<Rating> listOfRatingsAfterDelete = ratingRepository.findAll();
+        int sizeListOfRatingsAfterDelete = listOfRatingsAfterDelete.size();
+        for (Rating ratingBeforeDelete: listOfRatingsBeforeDelete) {
+            if (deleteRatingId.equals(ratingBeforeDelete.getId())) {
+                continue;
+            }
+            for (int index = 0; index < sizeListOfRatingsAfterDelete; index++) {
+                Rating ratingAfterDelete = listOfRatingsAfterDelete.get(index);
+                if (ratingBeforeDelete.equals(ratingAfterDelete)) {
+                    break;
+                }
+                else if (isLastIndex(index, sizeListOfRatingsAfterDelete)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isRangeOfValuesThatShouldExistAfterDeleteById(RangeOfValues deletedRangeOfValues,
+                                                  ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete) {
+        ArrayList<RangeOfValues> listOfRangeOfValuesAfterDelete = rangeOfValuesRepository.findAll();
+        int sizeListOfRangeOfValuesAfterDelete = listOfRangeOfValuesAfterDelete.size();
+        boolean isDeletedRangeOfValuesNotNull = deletedRangeOfValues != null;
+        for (RangeOfValues rangeOfValuesBeforeDelete: listOfRangeOfValuesBeforeDelete) {
+            if (isDeletedRangeOfValuesNotNull && rangeOfValuesBeforeDelete.equals(deletedRangeOfValues)) {
+                continue;
+            }
+            for (int index = 0; index < sizeListOfRangeOfValuesAfterDelete; index++) {
+                RangeOfValues rangeOfValuesAfterDelete = listOfRangeOfValuesAfterDelete.get(index);
+                if (rangeOfValuesBeforeDelete.equals(rangeOfValuesAfterDelete)) {
+                    break;
+                }
+                else if (isLastIndex(index, sizeListOfRangeOfValuesAfterDelete)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isRatingEntryMissingThatShouldExistAfterDeleteById(String deleteRatingId,
+                                                       ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete) {
+        ArrayList<RatingEntry> listOfRatingEntriesAfterDelete = ratingEntryRepository.findAll();
+        int sizeListOfRatingsAfterDelete = listOfRatingEntriesAfterDelete.size();
+        for (RatingEntry ratingEntryBeforeDelete: listOfRatingEntriesBeforeDelete) {
+            if (deleteRatingId.equals(ratingEntryBeforeDelete.getRatingId())) {
+                continue;
+            }
+            for (int index = 0; index < sizeListOfRatingsAfterDelete; index++) {
+                RatingEntry ratingAfterDelete = listOfRatingEntriesAfterDelete.get(index);
+                if (ratingEntryBeforeDelete.equals(ratingAfterDelete)) {
+                    break;
+                }
+                else if (isLastIndex(index, sizeListOfRatingsAfterDelete)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void login(User user) {

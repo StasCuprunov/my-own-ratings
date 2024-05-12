@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public interface RatingEntryRepository extends MongoRepository<RatingEntry, String> {
     ArrayList<RatingEntry> findAllByRatingId(String ratingId);
 
+    ArrayList<RatingEntry> findAll();
+
     <S extends RatingEntry> S save(S ratingEntry);
 
     void deleteById(String id);

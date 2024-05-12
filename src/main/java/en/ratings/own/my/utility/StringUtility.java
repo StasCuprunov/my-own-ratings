@@ -2,6 +2,8 @@ package en.ratings.own.my.utility;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.utility.Utility.isLastIndex;
+
 public class StringUtility {
     private static final String SPACE = " ";
     private static final String COMMA_SEPARATION = ", ";
@@ -35,9 +37,5 @@ public class StringUtility {
             }
         }
         return enumeration.toString();
-    }
-
-    private static boolean isLastIndex(int index, int size) {
-        return index == (size - 1);
     }
 }

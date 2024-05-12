@@ -3,6 +3,7 @@ package en.ratings.own.my.test.integration.utility.asserts;
 import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
 import en.ratings.own.my.exception.rating.RatingByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
+import en.ratings.own.my.exception.rating.RatingDeleteByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
@@ -39,6 +40,11 @@ public class AssertThatExceptionUtility {
 
     public static <T extends Exception> void assertThatExceptionIsEqualToRatingByIdNotFoundException(T exception) {
         assertThatExceptionIsEqual(exception, RatingByIdNotFoundException.class);
+    }
+
+    public static <T extends Exception> void
+    assertThatExceptionIsEqualToRatingDeleteByIdNotAllowedException(T exception) {
+        assertThatExceptionIsEqual(exception, RatingDeleteByIdNotAllowedException.class);
     }
 
     private static <T extends Exception, S extends Exception> void
