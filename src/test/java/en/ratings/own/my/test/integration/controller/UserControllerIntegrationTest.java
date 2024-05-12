@@ -18,36 +18,37 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static en.ratings.own.my.AssertThatUtility.assertThatExceptionIsEqualToUserCreationFailedException;
-import static en.ratings.own.my.AssertThatUtility.assertThatId;
-import static en.ratings.own.my.AssertThatUtility.assertThatIsNotNull;
-import static en.ratings.own.my.AssertThatUtility.assertThatStatusCodeIsCreated;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserFalakNoorahKhoury;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserStevenWorm;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserStevenWormWithDefinedId;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToUserCreationFailedException;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatId;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIsNotNull;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsCreated;
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserFalakNoorahKhoury;
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserStevenWorm;
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserStevenWormWithDefinedId;
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithDifferentFirstName;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithDifferentPassword;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithDifferentSurname;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithInvalidEmail;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithInvalidSpecialCharacterPassword;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithTooLongPassword;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithTooShortPassword;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithoutDigitsPassword;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithoutLowerCaseLetterPassword;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithoutUpperCaseLetterPassword;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.
         createUserStevenWormWithoutValidSpecialCharacterPassword;
-import static en.ratings.own.my.test.integration.controller.utility.HttpResponseUtility.createHttpServletResponse;
+import static en.ratings.own.my.test.integration.utility.HttpResponseUtility.createHttpServletResponse;
 import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

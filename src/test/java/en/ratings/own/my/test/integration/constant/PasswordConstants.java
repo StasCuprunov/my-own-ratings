@@ -1,4 +1,4 @@
-package en.ratings.own.my.test.integration.controller.constant;
+package en.ratings.own.my.test.integration.constant;
 
 public class PasswordConstants {
     public static final String VALID_PASSWORD_ONE = "u73N~XAr";

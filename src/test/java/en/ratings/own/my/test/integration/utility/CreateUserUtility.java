@@ -1,21 +1,21 @@
-package en.ratings.own.my.test.integration.controller.utility;
+package en.ratings.own.my.test.integration.utility;
 
 import en.ratings.own.my.model.User;
 
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.INVALID_PASSWORD_TOO_LONG;
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.INVALID_PASSWORD_TOO_SHORT;
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.INVALID_PASSWORD_WITHOUT_DIGITS;
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.INVALID_PASSWORD_TOO_LONG;
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.INVALID_PASSWORD_TOO_SHORT;
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.INVALID_PASSWORD_WITHOUT_DIGITS;
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.
         INVALID_PASSWORD_WITHOUT_LOWER_CASE_LETTER;
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.
         INVALID_PASSWORD_WITHOUT_UPPER_CASE_LETTER;
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.
         INVALID_PASSWORD_WITHOUT_VALID_SPECIAL_CHARACTER;
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.
         INVALID_PASSWORD_WITH_INVALID_SPECIAL_CHARACTER;
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.VALID_PASSWORD_ONE;
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.VALID_PASSWORD_THREE;
-import static en.ratings.own.my.test.integration.controller.constant.PasswordConstants.VALID_PASSWORD_TWO;
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.VALID_PASSWORD_ONE;
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.VALID_PASSWORD_THREE;
+import static en.ratings.own.my.test.integration.constant.PasswordConstants.VALID_PASSWORD_TWO;
 
 public class CreateUserUtility {
 

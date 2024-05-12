@@ -1,4 +1,4 @@
-package en.ratings.own.my.test.integration.controller.utility.rating;
+package en.ratings.own.my.test.integration.utility.rating;
 
 import en.ratings.own.my.model.rating.RangeOfValues;
 

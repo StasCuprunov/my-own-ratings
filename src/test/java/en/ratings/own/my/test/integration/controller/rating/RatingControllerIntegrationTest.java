@@ -22,38 +22,50 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.AssertThatUtility.
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
-import static en.ratings.own.my.AssertThatUtility.assertThatId;
-import static en.ratings.own.my.AssertThatUtility.assertThatStatusCodeIsCreated;
-import static en.ratings.own.my.AssertThatUtility.assertThatExceptionIsEqualToRatingCreationFailedException;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserFalakNoorahKhoury;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserStevenWorm;
-import static en.ratings.own.my.test.integration.controller.utility.HttpResponseUtility.createHttpServletResponse;
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRatingDTOUtility.
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToRatingByIdNotAllowedException;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToRatingByIdNotFoundException;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToRatingCreationFailedException;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatId;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsCreated;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsOk;
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserFalakNoorahKhoury;
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserStevenWorm;
+import static en.ratings.own.my.test.integration.utility.HttpResponseUtility.createHttpServletResponse;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
         INVALID_RATING_DTO_BECAUSE_EMPTY_NAME;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_NEGATIVE_STEP_WIDTH;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_ZERO_STEP_WIDTH;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         createValidRatingDTOBooksWithGermanGradingAndDefinedRatingEntries;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         INVALID_RATING_DTO_DRINKS_WITH_MINIMUM_EQUALS_TO_MAXIMUM;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         INVALID_RATING_DTO_DRINKS_WITH_MINIMUM_GREATER_THAN_MAXIMUM;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         INVALID_RATING_DTO_DRINKS_WITH_UNAVAILABLE_MAXIMUM;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         INVALID_RATING_DTO_WITH_EMPTY_NAME_AND_NO_DESCRIPTION_AND_WITH_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM;
-import static en.ratings.own.my.test.integration.controller.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         VALID_RATING_DTO_DRINKS_WITH_NO_DESCRIPTION_AND_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+        createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum;
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+        createValidRatingEntryCokeForDrinksWithNegativeMinimum;
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+        createValidRatingEntryRedBullForDrinksWithNegativeMinimum;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
@@ -88,6 +100,8 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
     private final int MAX_RANGE_OF_VALUES_WITH_SAME_ATTRIBUTES_IN_DOCUMENT = 1;
 
     private final int NUMBER_OF_RATING_ENTRIES_AFTER_CREATE_RATING = 0;
+
+    private final int NUMBER_OF_UNIQUE_RATING_ENTRIES = 1;
 
     @Before
     public void setup() {
@@ -198,11 +212,72 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
         testInvalidCreate(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING, userFalakNoorahKhoury.getId());
     }
 
+    @Test
+    public void testValidFindByIdWithDrinks() {
+        ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        String ratingId = responseEntity.getBody().getId();
+        ratingEntryRepository.save(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
+        ratingEntryRepository.save(createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId));
+        ratingEntryRepository.save(createValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId));
+        testValidFindById(responseEntity.getBody());
+    }
+
+    @Test
+    public void testInvalidFindByIdWithoutLoggedIn() {
+        ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING);
+        logout();
+        Exception foundException = new Exception();
+        try {
+            ratingController.findById(responseEntity.getBody().getId());
+        } catch (Exception e) {
+            foundException = e;
+        }
+        assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException(foundException);
+    }
+
+    @Test
+    public void testInvalidFindByIdWithDifferentUser() {
+        ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING);
+        login(userFalakNoorahKhoury);
+        Exception foundException = new Exception();
+        try {
+            ratingController.findById(responseEntity.getBody().getId());
+        } catch (Exception e) {
+            foundException = e;
+        }
+        assertThatExceptionIsEqualToRatingByIdNotAllowedException(foundException);
+    }
+
+    @Test
+    public void testInvalidFindByIdWithNotExistentId() {
+        ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING);
+        Exception foundException = new Exception();
+        try {
+            ratingController.findById(responseEntity.getBody().getId() + "test");
+        } catch (Exception e) {
+            foundException = e;
+        }
+        assertThatExceptionIsEqualToRatingByIdNotFoundException(foundException);
+    }
+
     private void testValidCreate(User user, RatingDTO input) {
         testValidCreate(user, input, null);
     }
 
     private void testValidCreate(User user, RatingDTO input, String differentUserId) {
+        ResponseEntity<RatingDTO> responseEntity = createValidRating(user, input, differentUserId);
+        checkValidCreate(input, responseEntity);
+    }
+
+    private ResponseEntity<RatingDTO> createValidRating(User user, RatingDTO input) {
+        return createValidRating(user, input, null);
+    }
+
+    private ResponseEntity<RatingDTO> createValidRating(User user, RatingDTO input, String differentUserId) {
         login(user);
         String id = (differentUserId == null) ? user.getId() : differentUserId;
         input.setUserId(id);
@@ -212,7 +287,11 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
         } catch (Exception ignored) {
 
         }
-        testValidCreate(input, responseEntity);
+        return responseEntity;
+    }
+
+    private void testInvalidCreate(User user, RatingDTO input) {
+        testInvalidCreate(user, input, null);
     }
 
     private void testInvalidCreate(User user, RatingDTO input, String differentUserId) {
@@ -227,11 +306,8 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
         }
         assertThatExceptionIsEqualToRatingCreationFailedException(foundException);
     }
-    private void testInvalidCreate(User user, RatingDTO input) {
-        testInvalidCreate(user, input, null);
-    }
 
-    private void testValidCreate(RatingDTO input, ResponseEntity<RatingDTO> responseEntity) {
+    private void checkValidCreate(RatingDTO input, ResponseEntity<RatingDTO> responseEntity) {
         RatingDTO result = responseEntity.getBody();
         assertAll("Test valid create rating",
                 () -> assertThatStatusCodeIsCreated(responseEntity),
@@ -286,6 +362,44 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
     private void compareInputRatingEntryDocumentAfterCreate(RatingDTO input) {
         ArrayList<RatingEntry> ratingEntries = ratingEntryRepository.findAllByRatingId(input.getId());
         assertThat(ratingEntries.size()).isEqualTo(NUMBER_OF_RATING_ENTRIES_AFTER_CREATE_RATING);
+    }
+
+
+    private void testValidFindById(RatingDTO input) {
+        ResponseEntity<RatingDTO> responseEntity = null;
+        try {
+            responseEntity = ratingController.findById(input.getId());
+        } catch (Exception ignored) {
+
+        }
+        ResponseEntity<RatingDTO> resultResponseEntity = responseEntity;
+        assertAll("Test valid findById rating",
+                () -> assertThatStatusCodeIsOk(resultResponseEntity),
+                () -> compareWithFoundById(input, resultResponseEntity.getBody())
+        );
+    }
+
+    private void compareWithFoundById(RatingDTO input, RatingDTO foundRatingDTO) {
+        assertAll(
+                () -> assertThat(foundRatingDTO.getId()).isEqualTo(input.getId()),
+                () -> assertThat(foundRatingDTO.getUserId()).isEqualTo(input.getUserId()),
+                () -> assertThat(foundRatingDTO.getName()).isEqualTo(input.getName()),
+                () -> assertThat(foundRatingDTO.getDescription()).isEqualTo(input.getDescription()),
+                () -> assertThat(foundRatingDTO.getRangeOfValues().equals(input.getRangeOfValues())).isTrue()
+        );
+        compareFoundRatingEntries(foundRatingDTO);
+    }
+
+    private void compareFoundRatingEntries(RatingDTO foundRatingDTO) {
+        for (RatingEntry foundRatingEntry: foundRatingDTO.getRatingEntries()) {
+            int numberOfEqualRatingEntry = 0;
+            for (RatingEntry storedRatingEntry: ratingEntryRepository.findAllByRatingId(foundRatingDTO.getId())) {
+                if (storedRatingEntry.equals(foundRatingEntry)) {
+                    numberOfEqualRatingEntry++;
+                }
+            }
+            assertThat(numberOfEqualRatingEntry).isEqualTo(NUMBER_OF_UNIQUE_RATING_ENTRIES);
+        }
     }
 
     private void login(User user) {

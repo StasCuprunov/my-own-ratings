@@ -36,4 +36,9 @@ public class RatingEntry {
         setName(name);
         setValue(value);
     }
+
+    public boolean equals(RatingEntry ratingEntry) {
+        return id.equals(ratingEntry.getId()) && ratingId.equals(ratingEntry.getRatingId()) &&
+                name.equals(ratingEntry.getName()) && value.equals(ratingEntry.getValue());
+    }
 }

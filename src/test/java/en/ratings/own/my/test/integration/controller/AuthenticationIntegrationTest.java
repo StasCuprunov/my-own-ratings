@@ -12,8 +12,6 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static en.ratings.own.my.AssertThatUtility.assertThatExceptionIsEqualToUserByEmailNotFoundException;
-import static en.ratings.own.my.AssertThatUtility.assertThatExceptionIsEqualToWrongPasswordLoginException;
 import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
 import static en.ratings.own.my.constant.CookieConstants.HTTP_ONLY;
@@ -21,9 +19,13 @@ import static en.ratings.own.my.constant.CookieConstants.MAX_AGE;
 import static en.ratings.own.my.constant.CookieConstants.SAME_SITE;
 import static en.ratings.own.my.constant.CookieConstants.SAME_SITE_VALUE;
 import static en.ratings.own.my.constant.CookieConstants.SECURE;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserFalakNoorahKhoury;
-import static en.ratings.own.my.test.integration.controller.utility.CreateUserUtility.createUserStevenWorm;
-import static en.ratings.own.my.test.integration.controller.utility.HttpResponseUtility.createHttpServletResponse;
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserFalakNoorahKhoury;
+import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserStevenWorm;
+import static en.ratings.own.my.test.integration.utility.HttpResponseUtility.createHttpServletResponse;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToUserByEmailNotFoundException;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToWrongPasswordLoginException;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;

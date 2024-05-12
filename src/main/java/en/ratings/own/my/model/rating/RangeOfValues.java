@@ -36,6 +36,10 @@ public class RangeOfValues {
         setStepWidth(stepWidth);
     }
 
+    public boolean equals(RangeOfValues rangeOfValues) {
+        return id.equals(rangeOfValues.getId()) && equalsWithoutId(rangeOfValues);
+    }
+
     public boolean equalsWithoutId(RangeOfValues rangeOfValues) {
         return minimum.equals(rangeOfValues.getMinimum()) && maximum.equals(rangeOfValues.getMaximum()) &&
                 stepWidth.equals(rangeOfValues.getStepWidth());

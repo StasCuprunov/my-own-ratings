@@ -1,23 +1,23 @@
-package en.ratings.own.my.test.integration.controller.utility.rating;
+package en.ratings.own.my.test.integration.utility.rating;
 
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.rating.RatingEntry;
 
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_MINIMUM_EQUALS_TO_MAXIMUM;
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_MINIMUM_GREATER_THAN_MAXIMUM;
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM;
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM;
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM;
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRatingDTOUtility.
+import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
         createRatingDTOWithNoUserId;
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRatingDTOUtility.
+import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
         createRatingDTOWithNoUserIdAndNoDescription;
 
 public class RatingDrinksUtility {
