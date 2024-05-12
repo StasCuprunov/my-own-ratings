@@ -1,10 +1,12 @@
 package en.ratings.own.my;
 
 import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
+import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -43,6 +45,15 @@ public class AssertThatUtility {
 
     public static <T extends Exception> void assertThatExceptionIsEqualToWrongPasswordLoginException(T exception) {
         assertThatExceptionIsEqual(exception, WrongPasswordLoginException.class);
+    }
+
+    public static <T extends Exception> void assertThatExceptionIsEqualToRatingCreationFailedException(T exception) {
+        assertThatExceptionIsEqual(exception, RatingCreationFailedException.class);
+    }
+
+    public static <T extends Exception> void
+    assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException(T exception) {
+        assertThatExceptionIsEqual(exception, AuthenticationCredentialsNotFoundException.class);
     }
 
     private static <T extends Exception, S extends Exception> void

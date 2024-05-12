@@ -42,6 +42,24 @@ public class RatingDTO {
     }
 
     public RatingDTO(Rating rating, @NonNull RangeOfValues rangeOfValues) {
-        new RatingDTO(rating, rangeOfValues, null);
+        this(rating, rangeOfValues, null);
     }
+
+    public RatingDTO(String userId, String name, RangeOfValues rangeOfValues) {
+        this(userId, name,  "", rangeOfValues);
+    }
+
+    public RatingDTO(String userId, String name, String description, RangeOfValues rangeOfValues) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.rangeOfValues = rangeOfValues;
+    }
+
+    public boolean equalsAfterCreate(RatingDTO result) {
+        return userId.equals(result.getUserId()) && name.equals(result.getName()) &&
+                description.equals(result.getDescription()) &&
+                rangeOfValues.equalsWithoutId(result.getRangeOfValues());
+    }
+
 }

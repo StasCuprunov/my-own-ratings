@@ -10,8 +10,6 @@ import static en.ratings.own.my.test.integration.controller.utility.rating.Creat
 import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM;
 import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
-        VALID_RANGE_OF_VALUES_AS_AMAZON_RATING;
-import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING;
 import static en.ratings.own.my.test.integration.controller.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM;
@@ -38,9 +36,6 @@ public class RatingDrinksUtility {
 
     public static RatingDTO INVALID_RATING_DTO_WITH_EMPTY_NAME_AND_NO_DESCRIPTION_AND_WITH_GERMAN_GRADING =
             createRatingDTOWithNoUserIdAndNoDescription("", VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING);
-
-    public static RatingDTO INVALID_RATING_DTO_WITH_EMPTY_NAME_AND_WITH_AMAZON_RATING =
-            createRatingDTOWithNoUserIdAndNoDescription("", VALID_RANGE_OF_VALUES_AS_AMAZON_RATING);
 
     public static RatingDTO INVALID_RATING_DTO_DRINKS_WITH_MINIMUM_EQUALS_TO_MAXIMUM =
             createRatingDTOWithNoUserId(DRINKS_NAME, DRINKS_DESCRIPTION,

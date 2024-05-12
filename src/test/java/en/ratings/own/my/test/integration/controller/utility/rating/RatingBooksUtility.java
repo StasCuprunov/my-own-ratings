@@ -26,14 +26,6 @@ public class RatingBooksUtility {
     public static RatingDTO VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING =
             createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION, VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING);
 
-    public static RatingDTO VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING_AND_DEFINED_RATING_ENTRIES() {
-        RatingDTO ratingDTO = VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
-        ArrayList<RatingEntry> ratingEntries = new ArrayList<>();
-        ratingEntries.add(createValidRatingEntryTheGreatGatsbyForBooksWithGermanGrading("abc"));
-        ratingDTO.setRatingEntries(ratingEntries);
-        return ratingDTO;
-    }
-
     public static RatingDTO VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING =
             createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION, VALID_RANGE_OF_VALUES_AS_AMAZON_RATING);
 
@@ -44,6 +36,14 @@ public class RatingBooksUtility {
     public static RatingDTO INVALID_RATING_DTO_BOOKS_WITH_ZERO_STEP_WIDTH =
             createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION,
                     INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH);
+
+    public static RatingDTO createValidRatingDTOBooksWithGermanGradingAndDefinedRatingEntries() {
+        RatingDTO ratingDTO = VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
+        ArrayList<RatingEntry> ratingEntries = new ArrayList<>();
+        ratingEntries.add(createValidRatingEntryTheGreatGatsbyForBooksWithGermanGrading("abc"));
+        ratingDTO.setRatingEntries(ratingEntries);
+        return ratingDTO;
+    }
 
     public static RatingEntry createValidRatingEntryTheGreatGatsbyForBooksWithGermanGrading(String ratingId) {
         return new RatingEntry(ratingId, "The Great Gatsby", 4.0);
