@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
@@ -231,7 +232,7 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
 
     private void compareInputRatingEntryDocumentAfterCreate(RatingDTO input) {
         ArrayList<RatingEntry> ratingEntries = findAllByRatingIdRatingEntryRepository(input.getId());
-        assertThat(ratingEntries.size()).isEqualTo(NUMBER_OF_RATING_ENTRIES_AFTER_CREATE_RATING);
+        assertThat(ratingEntries.size()).isEqualTo(EXPECTED_ZERO);
     }
 
     private Exception createInvalid(RatingDTO input) {

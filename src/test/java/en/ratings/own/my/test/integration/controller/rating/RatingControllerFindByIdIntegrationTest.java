@@ -5,6 +5,7 @@ import en.ratings.own.my.model.rating.RatingEntry;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
+import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
@@ -86,7 +87,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
                     numberOfEqualRatingEntry++;
                 }
             }
-            assertThat(numberOfEqualRatingEntry).isEqualTo(NUMBER_OF_UNIQUE_RATING_ENTRIES);
+            assertThat(numberOfEqualRatingEntry).isEqualTo(EXPECTED_ONE);
         }
     }
 

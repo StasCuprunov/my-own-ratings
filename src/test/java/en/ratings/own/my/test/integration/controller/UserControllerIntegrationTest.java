@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_EXACT_ONE;
+import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToUserCreationFailedException;
@@ -153,7 +153,7 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
         int index = 0;
 
         ArrayList<RoleAssignment> roleAssignments = findAllByUserIdRoleAssignmentRepository(user.getId());
-        assertThat(roleAssignments.size()).isEqualTo(EXPECTED_EXACT_ONE);
+        assertThat(roleAssignments.size()).isEqualTo(EXPECTED_ONE);
 
         String roleId = roleAssignments.get(index).getRoleId();
 

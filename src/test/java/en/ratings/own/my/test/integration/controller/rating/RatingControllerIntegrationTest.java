@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
@@ -38,12 +39,6 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     protected RatingEntryRepository ratingEntryRepository;
-
-    protected final int MAX_RANGE_OF_VALUES_WITH_SAME_ATTRIBUTES_IN_DOCUMENT = 1;
-
-    protected final int NUMBER_OF_RATING_ENTRIES_AFTER_CREATE_RATING = 0;
-
-    protected final int NUMBER_OF_UNIQUE_RATING_ENTRIES = 1;
 
     @After
     public void clean() {
@@ -87,7 +82,7 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
                 numberOfFoundRangeOfValues++;
             }
         }
-        assertThat(numberOfFoundRangeOfValues).isEqualTo(MAX_RANGE_OF_VALUES_WITH_SAME_ATTRIBUTES_IN_DOCUMENT);
+        assertThat(numberOfFoundRangeOfValues).isEqualTo(EXPECTED_ONE);
     }
 
     protected Optional<Rating> findByIdRatingRepository(String id) {
