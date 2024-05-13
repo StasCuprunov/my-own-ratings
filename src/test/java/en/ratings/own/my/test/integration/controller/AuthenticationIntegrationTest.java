@@ -1,11 +1,8 @@
 package en.ratings.own.my.test.integration.controller;
 
 import en.ratings.own.my.AbstractIntegrationTest;
-import en.ratings.own.my.controller.AuthenticationController;
-import en.ratings.own.my.controller.UserController;
 import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.model.User;
-import en.ratings.own.my.repository.UserRepository;
 import en.ratings.own.my.service.authentication.JwtService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.After;
@@ -39,20 +36,11 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
     private static final int INDEX_OF_VALUE_FROM_KEY_VALUE_PAIR = 1;
 
     @Autowired
-    private AuthenticationController authenticationController;
-
-    @Autowired
-    private UserController userController;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private JwtService jwtService;
 
     @After
     public void clean() {
-        userRepository.deleteAll();
+        deleteAllUserRepository();
     }
 
 

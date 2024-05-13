@@ -1,13 +1,10 @@
 package en.ratings.own.my.test.integration.controller;
 
 import en.ratings.own.my.AbstractIntegrationTest;
-import en.ratings.own.my.controller.AuthenticationController;
-import en.ratings.own.my.controller.UserController;
 import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.dto.UserDTO;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.role.RoleAssignment;
-import en.ratings.own.my.repository.UserRepository;
 import en.ratings.own.my.repository.role.RoleAssignmentRepository;
 import en.ratings.own.my.repository.role.RoleRepository;
 import org.junit.After;
@@ -53,14 +50,6 @@ import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserControllerIntegrationTest extends AbstractIntegrationTest {
-    @Autowired
-    private UserController userController;
-
-    @Autowired
-    private AuthenticationController authenticationController;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private RoleAssignmentRepository roleAssignmentRepository;
@@ -70,7 +59,7 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
 
     @After
     public void clean() {
-        userRepository.deleteAll();
+        deleteAllUserRepository();
         roleAssignmentRepository.deleteAll();
     }
 
