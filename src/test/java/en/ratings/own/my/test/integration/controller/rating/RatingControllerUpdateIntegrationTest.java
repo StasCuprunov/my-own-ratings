@@ -163,19 +163,23 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
     public void testInvalidUpdateWithoutLoggedIn() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setName(DRINKS_IN_ASIA_NAME);
         logout();
         testUpdateInvalidWithExceptedAuthenticationCredentialsNotFoundException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
     public void testInvalidUpdateWithNotExistentId() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setId(createNotExistentId(input.getId()));
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     // UserId has to be the same as the authenticated user
@@ -183,27 +187,33 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
     public void testInvalidUpdateWithOtherUserId() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setUserId(userFalakNoorahKhoury.getId());
         testUpdateInvalidWithExceptedRatingUpdateNotAllowedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
     public void testInvalidUpdateWithNotExistentUserId() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setUserId(createNotExistentId(userStevenWorm.getId()));
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
     public void testInvalidUpdateWithEmptyName() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
-        input.setName("        ");
+        input.setName("        \n");
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
@@ -212,54 +222,66 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
         ResponseEntity<RatingDTO> responseCreateBooks = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreateBooks.getBody());
         RatingDTO input = responseCreateBooks.getBody();
         input.setName(responseCreateDrinks.getBody().getName());
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
     public void testInvalidUpdateWithZeroStepWidth() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH);
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
     public void testInvalidUpdateWithNegativeStepWidth() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_NEGATIVE_STEP_WIDTH);
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
     public void testInvalidUpdateWithMinimumEqualsToMaximum() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_MINIMUM_EQUALS_TO_MAXIMUM);
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
     public void testInvalidUpdateWithMinimumGreaterThanMaximum() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_MINIMUM_GREATER_THAN_MAXIMUM);
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
     public void testInvalidUpdateWithUnavailableMaximum() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM);
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     @Test
@@ -272,7 +294,7 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
         assertAll("Test valid update rating:",
                 () -> assertThatStatusCodeIsOk(responseEntity),
                 () -> compareValidInputWithResultAfterUpdate(input, result),
-                () -> compareValidInputWithDatabaseAfterUpdate(input)
+                () -> compareValidInputWithDatabase(input)
         );
     }
 
@@ -288,9 +310,13 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
         );
     }
 
-    private void compareValidInputWithDatabaseAfterUpdate(RatingDTO input) {
+    private void compareValidInputWithDatabase(RatingDTO input) {
         String rangeOfValuesId = compareValidInputWithRatingTable(input);
         compareValidInputWithRangeOfValuesTable(input, rangeOfValuesId);
+    }
+
+    private void compareIfDatabaseEntriesHasNotBeenChanged(RatingDTO input) {
+        compareValidInputWithDatabase(input);
     }
 
     private String compareValidInputWithRatingTable(RatingDTO input) {
@@ -368,5 +394,10 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
     private RangeOfValues createNewRangeOfValuesObject(RangeOfValues rangeOfValues) {
         return new RangeOfValues(rangeOfValues.getId(), rangeOfValues.getMinimum(), rangeOfValues.getMaximum(),
                 rangeOfValues.getStepWidth());
+    }
+
+    private RatingDTO createNewRatingDTOObject(RatingDTO ratingDTO) {
+        return new RatingDTO(ratingDTO.getId(), ratingDTO.getUserId(), ratingDTO.getName(),
+                ratingDTO.getDescription(), ratingDTO.getRangeOfValues(), ratingDTO.getRatingEntries());
     }
 }
