@@ -176,7 +176,7 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
     }
 
     private Rating compareInputWithRatingDocumentAfterCreate(RatingDTO input) {
-        Rating rating = ratingRepository.findById(input.getId()).get();
+        Rating rating = findByIdRatingRepository(input.getId()).get();
 
         assertThat(input.getUserId()).isEqualTo(rating.getUserId());
         assertThat(input.getName()).isEqualTo(rating.getName());
@@ -186,15 +186,14 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
     }
 
     private void compareInputWithRangeOfValuesDocumentAfterCreate(RatingDTO input, Rating foundRatingInDatabase) {
-        RangeOfValues rangeOfValues = rangeOfValuesRepository.
-                findById(foundRatingInDatabase.getRangeOfValuesId()).get();
+        RangeOfValues rangeOfValues = findByIdRangeOfValuesRepository(foundRatingInDatabase.getRangeOfValuesId()).get();
 
         assertThat(input.getRangeOfValues().equalsWithoutId(rangeOfValues)).isTrue();
         compareIfRangeOfValuesExistsExactOnce(input);
     }
 
     private void compareInputRatingEntryDocumentAfterCreate(RatingDTO input) {
-        ArrayList<RatingEntry> ratingEntries = ratingEntryRepository.findAllByRatingId(input.getId());
+        ArrayList<RatingEntry> ratingEntries = findAllByRatingIdRatingEntryRepository(input.getId());
         assertThat(ratingEntries.size()).isEqualTo(NUMBER_OF_RATING_ENTRIES_AFTER_CREATE_RATING);
     }
 

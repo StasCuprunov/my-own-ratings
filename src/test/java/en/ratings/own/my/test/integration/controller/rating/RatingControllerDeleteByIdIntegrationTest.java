@@ -45,9 +45,9 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
         String ratingId = responseEntity.getBody().getId();
         RangeOfValues rangeOfValues = responseEntity.getBody().getRangeOfValues();
 
-        ArrayList<Rating> listOfRatingsBeforeDelete = ratingRepository.findAll();
-        ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete = rangeOfValuesRepository.findAll();
-        ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete = ratingEntryRepository.findAll();
+        ArrayList<Rating> listOfRatingsBeforeDelete = findAllRatingRepository();
+        ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete = findAllRangeOfValuesRepository();
+        ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete = findAllRatingEntryRepository();
 
         createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
 
@@ -64,9 +64,9 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
         String ratingId = responseEntityCreate.getBody().getId();
         createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
 
-        ArrayList<Rating> listOfRatingsBeforeDelete = ratingRepository.findAll();
-        ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete = rangeOfValuesRepository.findAll();
-        ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete = ratingEntryRepository.findAll();
+        ArrayList<Rating> listOfRatingsBeforeDelete = findAllRatingRepository();
+        ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete = findAllRangeOfValuesRepository();
+        ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete = findAllRatingEntryRepository();
 
         String deleteRatingId = ratingId + "test";
         Exception foundException = deleteByIdInvalid(deleteRatingId);
@@ -114,14 +114,14 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
     private void checkValidDeleteById(String ratingId, ResponseEntity<Object> responseEntity) {
         assertAll("Test valid deleteById:",
                 () -> assertThatStatusCodeIsNoContent(responseEntity),
-                () -> assertThat(ratingRepository.findById(ratingId).isEmpty()).isTrue(),
-                () -> assertThat(ratingEntryRepository.findAllByRatingId(ratingId).isEmpty()).isTrue()
+                () -> assertThat(findByIdRatingRepository(ratingId).isEmpty()).isTrue(),
+                () -> assertThat(findAllByRatingIdRatingEntryRepository(ratingId).isEmpty()).isTrue()
         );
     }
 
     private void checkRangeOfValuesAfterDeleteById(RangeOfValues rangeOfValues, boolean shouldRangeOfValuesDeleted) {
-        boolean notFoundById = rangeOfValuesRepository.findById(rangeOfValues.getId()).isEmpty();
-        boolean notFoundByAttributes = rangeOfValuesRepository.findByMinimumAndMaximumAndStepWidth(
+        boolean notFoundById = findByIdRangeOfValuesRepository(rangeOfValues.getId()).isEmpty();
+        boolean notFoundByAttributes = findByMinimumAndMaximumAndStepWidthRangeOfValuesRepository(
                 rangeOfValues.getMinimum(), rangeOfValues.getMaximum(), rangeOfValues.getStepWidth()).isEmpty();
         if (shouldRangeOfValuesDeleted) {
             assertAll("Range of values should be deleted:",
@@ -164,7 +164,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
     private boolean
     isRatingMissingThatShouldExistAfterDeleteById(String deleteRatingId,
                                                   ArrayList<Rating> listOfRatingsBeforeDelete) {
-        ArrayList<Rating> listOfRatingsAfterDelete = ratingRepository.findAll();
+        ArrayList<Rating> listOfRatingsAfterDelete = findAllRatingRepository();
         int sizeListOfRatingsAfterDelete = listOfRatingsAfterDelete.size();
         for (Rating ratingBeforeDelete: listOfRatingsBeforeDelete) {
             if (deleteRatingId.equals(ratingBeforeDelete.getId())) {
@@ -186,7 +186,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
     private boolean
     isRangeOfValuesThatShouldExistAfterDeleteById(RangeOfValues deletedRangeOfValues,
                                                   ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete) {
-        ArrayList<RangeOfValues> listOfRangeOfValuesAfterDelete = rangeOfValuesRepository.findAll();
+        ArrayList<RangeOfValues> listOfRangeOfValuesAfterDelete = findAllRangeOfValuesRepository();
         int sizeListOfRangeOfValuesAfterDelete = listOfRangeOfValuesAfterDelete.size();
         boolean isDeletedRangeOfValuesNotNull = deletedRangeOfValues != null;
         for (RangeOfValues rangeOfValuesBeforeDelete: listOfRangeOfValuesBeforeDelete) {
@@ -209,7 +209,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
     private boolean
     isRatingEntryMissingThatShouldExistAfterDeleteById(String deleteRatingId,
                                                        ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete) {
-        ArrayList<RatingEntry> listOfRatingEntriesAfterDelete = ratingEntryRepository.findAll();
+        ArrayList<RatingEntry> listOfRatingEntriesAfterDelete = findAllRatingEntryRepository();
         int sizeListOfRatingsAfterDelete = listOfRatingEntriesAfterDelete.size();
         for (RatingEntry ratingEntryBeforeDelete: listOfRatingEntriesBeforeDelete) {
             if (deleteRatingId.equals(ratingEntryBeforeDelete.getRatingId())) {

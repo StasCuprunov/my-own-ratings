@@ -81,7 +81,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
     private void compareFoundRatingEntries(RatingDTO foundRatingDTO) {
         for (RatingEntry foundRatingEntry: foundRatingDTO.getRatingEntries()) {
             int numberOfEqualRatingEntry = 0;
-            for (RatingEntry storedRatingEntry: ratingEntryRepository.findAllByRatingId(foundRatingDTO.getId())) {
+            for (RatingEntry storedRatingEntry: findAllByRatingIdRatingEntryRepository(foundRatingDTO.getId())) {
                 if (storedRatingEntry.equals(foundRatingEntry)) {
                     numberOfEqualRatingEntry++;
                 }

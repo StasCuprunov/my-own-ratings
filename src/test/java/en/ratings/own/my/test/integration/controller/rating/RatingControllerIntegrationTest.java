@@ -8,6 +8,8 @@ import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.rating.RangeOfValues;
+import en.ratings.own.my.model.rating.Rating;
+import en.ratings.own.my.model.rating.RatingEntry;
 import en.ratings.own.my.repository.UserRepository;
 import en.ratings.own.my.repository.rating.RangeOfValuesRepository;
 import en.ratings.own.my.repository.rating.RatingEntryRepository;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserFalakNoorahKhoury;
 import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserStevenWorm;
@@ -96,14 +99,14 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
     }
 
     protected void createRatingEntriesForDrinksWithNegativeMinimum(String ratingId) {
-        ratingEntryRepository.save(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
-        ratingEntryRepository.save(createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId));
-        ratingEntryRepository.save(createValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId));
+        saveRatingEntryRepository(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
+        saveRatingEntryRepository(createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId));
+        saveRatingEntryRepository(createValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId));
     }
 
     protected void compareIfRangeOfValuesExistsExactOnce(RatingDTO input) {
         RangeOfValues inputRangeOfValues = input.getRangeOfValues();
-        ArrayList<RangeOfValues> listOfRangeOfValues =  rangeOfValuesRepository.findAll();
+        ArrayList<RangeOfValues> listOfRangeOfValues =  findAllRangeOfValuesRepository();
 
         int listSize = listOfRangeOfValues.size();
         int numberOfFoundRangeOfValues = 0;
@@ -139,4 +142,37 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
         return user;
     }
 
+    protected Optional<Rating> findByIdRatingRepository(String id) {
+        return ratingRepository.findById(id);
+    }
+
+    protected ArrayList<Rating> findAllRatingRepository() {
+        return ratingRepository.findAll();
+    }
+
+    protected ArrayList<RangeOfValues> findAllRangeOfValuesRepository() {
+        return rangeOfValuesRepository.findAll();
+    }
+
+    protected Optional<RangeOfValues> findByIdRangeOfValuesRepository(String id) {
+        return rangeOfValuesRepository.findById(id);
+    }
+
+    protected Optional<RangeOfValues>findByMinimumAndMaximumAndStepWidthRangeOfValuesRepository(Double minimum,
+                                                                                                Double maximum,
+                                                                                                Double stepWidth) {
+        return rangeOfValuesRepository.findByMinimumAndMaximumAndStepWidth(minimum, maximum, stepWidth);
+    }
+
+    protected void saveRatingEntryRepository(RatingEntry ratingEntry) {
+        ratingEntryRepository.save(ratingEntry);
+    }
+
+    protected ArrayList<RatingEntry> findAllRatingEntryRepository() {
+        return ratingEntryRepository.findAll();
+    }
+
+    protected ArrayList<RatingEntry> findAllByRatingIdRatingEntryRepository(String ratingId) {
+        return ratingEntryRepository.findAllByRatingId(ratingId);
+    }
 }

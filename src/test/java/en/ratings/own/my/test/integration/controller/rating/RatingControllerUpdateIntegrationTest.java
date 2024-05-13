@@ -260,16 +260,4 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
         }
         return new Exception();
     }
-
-    private Optional<Rating> findByIdRatingRepository(String id) {
-        return ratingRepository.findById(id);
-    }
-
-    private Optional<RangeOfValues> findByIdRangeOfValuesRepository(String id) {
-        return rangeOfValuesRepository.findById(id);
-    }
-
-    private ArrayList<RatingEntry> findAllRatingEntryRepository() {
-        return ratingEntryRepository.findAll();
-    }
 }
