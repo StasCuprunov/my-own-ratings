@@ -25,12 +25,16 @@ public class RatingBooksUtility {
 
     public static final String BOOKS_DESCRIPTION = "This are my favourite books!";
 
-    public static final String BOOKS_NAME_SCIENTIFIC = "These are the most useful scientific books!";
+    public static final String BOOKS_SCIENTIFIC_NAME = "These are the most useful scientific books!";
 
-    public static final String BOOKS_DESCRIPTION_SCIENTIFIC = "These books are rated with the German grading.";
+    public static final String BOOKS_SCIENTIFIC_DESCRIPTION = "These books are rated with the German grading.";
 
     public static RatingDTO VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING =
             createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION, VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING);
+
+    public static RatingDTO VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING =
+            createRatingDTOWithNoUserId(BOOKS_SCIENTIFIC_NAME, BOOKS_SCIENTIFIC_DESCRIPTION,
+                    VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING);
 
     public static RatingDTO VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING =
             createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION, VALID_RANGE_OF_VALUES_AS_AMAZON_RATING);

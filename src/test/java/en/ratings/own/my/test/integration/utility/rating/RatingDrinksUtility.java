@@ -22,9 +22,14 @@ import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOU
 
 public class RatingDrinksUtility {
 
-    private static final String DRINKS_NAME = "Drink list:";
+    public static final String DRINKS_NAME = "Drink list:";
 
-    private static final String DRINKS_DESCRIPTION = "My personal rating:";
+    public static final String DRINKS_DESCRIPTION = "My personal rating:";
+
+    public static final String DRINKS_IN_ASIA_NAME = "My favourite drinks in Asia";
+
+    public static final String DRINKS_IN_ASIA_DESCRIPTION = "Asia drinks are awesome!";
+
 
     public static RatingDTO VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM =
             createRatingDTOWithNoUserId(DRINKS_NAME, DRINKS_DESCRIPTION,

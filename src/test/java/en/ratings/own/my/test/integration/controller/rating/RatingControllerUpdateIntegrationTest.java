@@ -3,16 +3,26 @@ package en.ratings.own.my.test.integration.controller.rating;
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.rating.RangeOfValues;
 import en.ratings.own.my.model.rating.Rating;
+import en.ratings.own.my.model.rating.RatingEntry;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsOk;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_NAME_SCIENTIFIC;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_NAME;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_SCIENTIFIC_NAME;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+        VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_NAME;
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+        VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+        createValidRatingEntryCokeForDrinksWithNegativeMinimum;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -23,18 +33,31 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING);
         RatingDTO input = responseCreate.getBody();
-        input.setName(BOOKS_NAME_SCIENTIFIC);
+        input.setName(BOOKS_SCIENTIFIC_NAME);
         testValidUpdate(input, updateSuccessful(input));
     }
 
     @Test
     public void testValidUpdateWithNameWhichIsAlsoUsedByAnotherUser() {
-
+        createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING);
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userFalakNoorahKhoury,
+                VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING);
+        RatingDTO input = responseCreate.getBody();
+        input.setName(BOOKS_NAME);
+        testValidUpdate(input, updateSuccessful(input));
     }
 
     @Test
     public void testValidUpdateWithNameAndDefinedRatingEntriesInInput() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setName(DRINKS_IN_ASIA_NAME);
+        ArrayList<RatingEntry> ratingEntries = new ArrayList<>();
+        ratingEntries.add(createValidRatingEntryCokeForDrinksWithNegativeMinimum(input.getId()));
+        input.setRatingEntries(ratingEntries);
+        testValidUpdate(input, updateSuccessful(input));
+        checkIfRatingEntriesInInputAreCreatedWithUpdate(input);
     }
 
     @Test
@@ -212,6 +235,14 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
         );
     }
 
+    private void checkIfRatingEntriesInInputAreCreatedWithUpdate(RatingDTO input) {
+        for (RatingEntry storedRatingEntry: findAllRatingEntryRepository()) {
+            for (RatingEntry inputRatingEntry: input.getRatingEntries()) {
+                assertThat(inputRatingEntry).isNotEqualTo(storedRatingEntry);
+            }
+        }
+    }
+
     private ResponseEntity<RatingDTO> updateSuccessful(RatingDTO input) {
         try {
             return ratingController.update(input);
@@ -236,5 +267,9 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
 
     private Optional<RangeOfValues> findByIdRangeOfValuesRepository(String id) {
         return rangeOfValuesRepository.findById(id);
+    }
+
+    private ArrayList<RatingEntry> findAllRatingEntryRepository() {
+        return ratingEntryRepository.findAll();
     }
 }
