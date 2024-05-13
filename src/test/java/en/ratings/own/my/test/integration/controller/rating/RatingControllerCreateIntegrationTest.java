@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
+import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
@@ -101,7 +102,7 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
     @Test
     public void testInvalidCreateWithDefinedId() {
         RatingDTO input = VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
-        input.setId("test");
+        input.setId(ID_TEST);
         testInvalidCreate(userStevenWorm, input);
     }
 

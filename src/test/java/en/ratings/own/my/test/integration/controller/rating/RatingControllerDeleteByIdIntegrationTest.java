@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.test.utility.GeneratorUtility.createNotExistentId;
+import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
@@ -68,7 +70,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
         ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete = findAllRangeOfValuesRepository();
         ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete = findAllRatingEntryRepository();
 
-        String deleteRatingId = ratingId + "test";
+        String deleteRatingId = createNotExistentId(ratingId);
         Exception foundException = deleteByIdInvalid(deleteRatingId);
 
         assertAll(
@@ -233,7 +235,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
         try {
             return ratingController.deleteById(id);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            printExceptionMessage(e);
         }
         return null;
     }

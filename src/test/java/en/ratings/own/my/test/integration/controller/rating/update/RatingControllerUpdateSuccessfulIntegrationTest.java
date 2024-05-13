@@ -24,6 +24,7 @@ import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
+import static en.ratings.own.my.utility.StringUtility.EMPTY_STRING;
 
 public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingControllerUpdateIntegrationTest {
 
@@ -77,7 +78,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
     @Test
     public void testValidUpdateWithEmptyDescription() {
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
-        input.setDescription("");
+        input.setDescription(EMPTY_STRING);
         testValidUpdate(input, updateSuccessful(input));
     }
 

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
+import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
@@ -109,8 +110,8 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
     protected ResponseEntity<RatingDTO> updateSuccessful(RatingDTO input) {
         try {
             return ratingController.update(input);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            printExceptionMessage(e);
         }
         return null;
     }
