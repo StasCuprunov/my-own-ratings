@@ -15,7 +15,7 @@ import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtili
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
-        VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM;
+        createValidRatingDTODrinksWithNegativeMinimum;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -23,7 +23,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
     @Test
     public void testValidFindByIdWithDrinks() {
         ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         String ratingId = responseEntity.getBody().getId();
 
         createRatingEntriesForDrinksWithNegativeMinimum(ratingId);

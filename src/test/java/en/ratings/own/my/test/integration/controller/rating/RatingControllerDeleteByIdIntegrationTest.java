@@ -19,7 +19,7 @@ import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtili
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
-        VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM;
+        createValidRatingDTODrinksWithNegativeMinimum;
 import static en.ratings.own.my.utility.MathUtility.isLastIndex;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -28,7 +28,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
     @Test
     public void testValidDeleteByIdWithDrinksAndDeletedRangeOfValues() {
         ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         String ratingId = responseEntity.getBody().getId();
         RangeOfValues rangeOfValues = responseEntity.getBody().getRangeOfValues();
 
@@ -41,7 +41,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
     public void testValidDeleteByIdWithDrinksAndNotDeletedRangeOfValues() {
         createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
         ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         String ratingId = responseEntity.getBody().getId();
         RangeOfValues rangeOfValues = responseEntity.getBody().getRangeOfValues();
 
@@ -60,7 +60,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
     @Test
     public void testInvalidDeleteByIdWithWrongId() {
         ResponseEntity<RatingDTO> responseEntityCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         String ratingId = responseEntityCreate.getBody().getId();
         createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
 

@@ -29,14 +29,14 @@ import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtili
         VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_NAME;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
-        VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM;
+        createValidRatingDTODrinksWithNegativeMinimum;
 
 public class RatingControllerUpdateInvalidIntegrationTest extends RatingControllerUpdateIntegrationTest {
 
     @Test
     public void testInvalidUpdateWithoutLoggedIn() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setName(DRINKS_IN_ASIA_NAME);
@@ -48,7 +48,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithNotExistentId() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setId(createNotExistentId(input.getId()));
@@ -60,7 +60,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithOtherUserId() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setUserId(userFalakNoorahKhoury.getId());
@@ -71,7 +71,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithNotExistentUserId() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setUserId(createNotExistentId(userStevenWorm.getId()));
@@ -82,7 +82,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithEmptyName() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setName("        \n");
@@ -93,7 +93,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithAlreadyUsedName() {
         ResponseEntity<RatingDTO> responseCreateDrinks = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         ResponseEntity<RatingDTO> responseCreateBooks = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING);
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreateBooks.getBody());
@@ -106,7 +106,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithTooSmallMinimum() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_TOO_SMALL_MINIMUM);
@@ -117,7 +117,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithTooBigMaximum() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_TOO_BIG_MAXIMUM);
@@ -128,7 +128,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithMinimumTooManyDecimalDigits() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(createInvalidRangeOfValuesWithMinimumTooManyDecimalDigits());
@@ -139,7 +139,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithMaximumAndStepWidthWithTooManyDecimalDigits() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(createInvalidRangeOfValuesWithMaximumAndStepWidthWithTooManyDecimalDigits());
@@ -150,7 +150,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithStepWidthTooManyDecimalDigits() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(createInvalidRangeOfValuesWithStepWidthTooManyDecimalDigits());
@@ -161,7 +161,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithZeroStepWidth() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH);
@@ -172,7 +172,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithNegativeStepWidth() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_NEGATIVE_STEP_WIDTH);
@@ -183,7 +183,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithMinimumEqualsToMaximum() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_MINIMUM_EQUALS_TO_MAXIMUM);
@@ -194,7 +194,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithMinimumGreaterThanMaximum() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_MINIMUM_GREATER_THAN_MAXIMUM);
@@ -205,7 +205,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithUnavailableMaximum() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM);
@@ -216,7 +216,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     @Test
     public void testInvalidUpdateWithInconsistentRatingEntryValue() {
         ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+                createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         createRatingEntriesForDrinksWithNegativeMinimum(input.getId());

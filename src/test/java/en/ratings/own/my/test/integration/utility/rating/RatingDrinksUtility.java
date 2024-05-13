@@ -12,7 +12,7 @@ import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfVal
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
-        VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM;
+        createValidRangeOfValuesWithNegativeMinimum;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
@@ -29,11 +29,11 @@ public class RatingDrinksUtility {
     public static final String DRINKS_IN_ASIA_NAME = "My favourite drinks in Asia";
 
     public static final String DRINKS_IN_ASIA_DESCRIPTION = "Asia drinks are awesome!";
-
-
-    public static RatingDTO VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM =
-            createRatingDTOWithNoUserId(DRINKS_NAME, DRINKS_DESCRIPTION,
-                    VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM);
+    
+    public static RatingDTO createValidRatingDTODrinksWithNegativeMinimum() {
+        return createRatingDTOWithNoUserId(DRINKS_NAME, DRINKS_DESCRIPTION,
+                createValidRangeOfValuesWithNegativeMinimum());
+    }
 
     public static RatingDTO VALID_RATING_DTO_DRINKS_WITH_NO_DESCRIPTION_AND_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM =
             createRatingDTOWithNoUserIdAndNoDescription(DRINKS_NAME,

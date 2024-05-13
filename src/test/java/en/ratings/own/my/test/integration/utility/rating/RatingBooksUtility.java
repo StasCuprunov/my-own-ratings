@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_NEGATIVE_STEP_WIDTH;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.INVALID_RANGE_OF_VALUES_WITH_TOO_BIG_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.INVALID_RANGE_OF_VALUES_WITH_TOO_SMALL_MINIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        INVALID_RANGE_OF_VALUES_WITH_TOO_BIG_MAXIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        INVALID_RANGE_OF_VALUES_WITH_TOO_SMALL_MINIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
@@ -16,10 +18,13 @@ import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfVal
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
-        VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.createInvalidRangeOfValuesWithMaximumAndStepWidthWithTooManyDecimalDigits;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.createInvalidRangeOfValuesWithMinimumTooManyDecimalDigits;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.createInvalidRangeOfValuesWithStepWidthTooManyDecimalDigits;
+        createValidRangeOfValuesWithNegativeMinimum;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        createInvalidRangeOfValuesWithMaximumAndStepWidthWithTooManyDecimalDigits;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        createInvalidRangeOfValuesWithMinimumTooManyDecimalDigits;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        createInvalidRangeOfValuesWithStepWidthTooManyDecimalDigits;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
         createRatingDTOWithNoUserId;
 import static java.lang.Math.PI;
@@ -45,7 +50,7 @@ public class RatingBooksUtility {
             createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION, VALID_RANGE_OF_VALUES_AS_AMAZON_RATING);
 
     public static RatingDTO VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM =
-            createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION, VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM);
+            createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION, createValidRangeOfValuesWithNegativeMinimum());
 
     public static RatingDTO INVALID_RATING_DTO_BOOKS_WITH_NEGATIVE_STEP_WIDTH =
             createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION,
