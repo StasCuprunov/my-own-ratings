@@ -8,21 +8,21 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createValidRangeOfValuesWithNegativeMinimum;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_NAME;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_SCIENTIFIC_NAME;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.BOOKS_NAME;
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.BOOKS_SCIENTIFIC_NAME;
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_DESCRIPTION;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_NAME;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_DESCRIPTION;
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_NAME;
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
 
 public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingControllerUpdateIntegrationTest {

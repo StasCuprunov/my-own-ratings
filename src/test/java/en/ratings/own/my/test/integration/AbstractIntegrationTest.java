@@ -1,4 +1,4 @@
-package en.ratings.own.my;
+package en.ratings.own.my.test.integration;
 
 import en.ratings.own.my.controller.AuthenticationController;
 import en.ratings.own.my.controller.UserController;
@@ -16,9 +16,9 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserFalakNoorahKhoury;
-import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserStevenWorm;
-import static en.ratings.own.my.test.integration.utility.HttpResponseUtility.createHttpServletResponse;
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserFalakNoorahKhoury;
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserStevenWorm;
+import static en.ratings.own.my.test.utility.HttpResponseUtility.createHttpServletResponse;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
 
 

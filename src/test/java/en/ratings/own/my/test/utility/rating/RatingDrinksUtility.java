@@ -1,23 +1,25 @@
-package en.ratings.own.my.test.integration.utility.rating;
+package en.ratings.own.my.test.utility.rating;
 
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.rating.RatingEntry;
 
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_MINIMUM_EQUALS_TO_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_MINIMUM_GREATER_THAN_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
+        VALID_RANGE_OF_VALUES_AS_AMAZON_RATING;
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createValidRangeOfValuesWithNegativeMinimum;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.
         createRatingDTOWithNoUserId;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.
         createRatingDTOWithNoUserIdAndNoDescription;
 
 public class RatingDrinksUtility {
@@ -33,6 +35,11 @@ public class RatingDrinksUtility {
     public static RatingDTO createValidRatingDTODrinksWithNegativeMinimum() {
         return createRatingDTOWithNoUserId(DRINKS_NAME, DRINKS_DESCRIPTION,
                 createValidRangeOfValuesWithNegativeMinimum());
+    }
+
+    public static RatingDTO createValidRatingDTODrinkInAsiaWithAmazonRating() {
+        return createRatingDTOWithNoUserId(DRINKS_IN_ASIA_NAME, DRINKS_IN_ASIA_DESCRIPTION,
+                VALID_RANGE_OF_VALUES_AS_AMAZON_RATING);
     }
 
     public static RatingDTO VALID_RATING_DTO_DRINKS_WITH_NO_DESCRIPTION_AND_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM =

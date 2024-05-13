@@ -5,16 +5,16 @@ import en.ratings.own.my.model.rating.RatingEntry;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingByIdNotAllowedException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingByIdNotFoundException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsOk;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsOk;
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;

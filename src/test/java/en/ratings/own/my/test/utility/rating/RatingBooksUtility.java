@@ -1,31 +1,31 @@
-package en.ratings.own.my.test.integration.utility.rating;
+package en.ratings.own.my.test.utility.rating;
 
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.rating.RatingEntry;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_NEGATIVE_STEP_WIDTH;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_TOO_BIG_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_TOO_SMALL_MINIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_AS_AMAZON_RATING;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createValidRangeOfValuesWithNegativeMinimum;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createInvalidRangeOfValuesWithMaximumAndStepWidthWithTooManyDecimalDigits;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createInvalidRangeOfValuesWithMinimumTooManyDecimalDigits;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createInvalidRangeOfValuesWithStepWidthTooManyDecimalDigits;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.
         createRatingDTOWithNoUserId;
 import static java.lang.Math.PI;
 

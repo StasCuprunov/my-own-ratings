@@ -1,4 +1,4 @@
-package en.ratings.own.my.test.integration.utility.asserts;
+package en.ratings.own.my.test.utility.asserts;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,12 +8,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
-public class AssertThatUtility {
-
-    public static void assertThatIsNotNull(Object object) {
-        assertThat(object).isNotEqualTo(null);
-    }
-
+public class AssertThatStatusCodeUtility {
     public static <T> void assertThatStatusCodeIsCreated(ResponseEntity<T> responseEntity) {
         assertThatStatusCodeIsEqualTo(responseEntity, CREATED);
     }
@@ -24,10 +19,6 @@ public class AssertThatUtility {
 
     public static <T> void assertThatStatusCodeIsNoContent(ResponseEntity<T> responseEntity) {
         assertThatStatusCodeIsEqualTo(responseEntity, NO_CONTENT);
-    }
-
-    public static void assertThatIdIsDefined(String id) {
-        assertThat(id).isNotNull().isNotBlank().isNotEmpty();
     }
 
     private static <T> void assertThatStatusCodeIsEqualTo(ResponseEntity<T> responseEntity, HttpStatus statusCode) {

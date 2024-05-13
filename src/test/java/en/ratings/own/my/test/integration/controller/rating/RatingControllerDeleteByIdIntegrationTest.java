@@ -9,16 +9,16 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingByIdNotFoundException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingDeleteByIdNotAllowedException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsNoContent;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsNoContent;
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
 import static en.ratings.own.my.utility.MathUtility.isLastIndex;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

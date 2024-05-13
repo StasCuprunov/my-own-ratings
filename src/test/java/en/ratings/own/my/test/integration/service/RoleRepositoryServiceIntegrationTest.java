@@ -1,6 +1,6 @@
 package en.ratings.own.my.test.integration.service;
 
-import en.ratings.own.my.AbstractIntegrationTest;
+import en.ratings.own.my.test.integration.AbstractIntegrationTest;
 import en.ratings.own.my.enums.RoleEnum;
 import en.ratings.own.my.model.role.Role;
 import en.ratings.own.my.service.repository.role.RoleRepositoryService;

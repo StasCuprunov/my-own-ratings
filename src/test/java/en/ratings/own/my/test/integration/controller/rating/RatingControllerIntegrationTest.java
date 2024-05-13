@@ -1,6 +1,6 @@
 package en.ratings.own.my.test.integration.controller.rating;
 
-import en.ratings.own.my.AbstractIntegrationTest;
+import en.ratings.own.my.test.integration.AbstractIntegrationTest;
 import en.ratings.own.my.controller.rating.RatingController;
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.User;
@@ -17,11 +17,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryRedBullForDrinksWithNegativeMinimum;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

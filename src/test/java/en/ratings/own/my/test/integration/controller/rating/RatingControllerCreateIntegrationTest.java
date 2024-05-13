@@ -10,45 +10,45 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingCreationFailedException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsCreated;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
+import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsCreated;
+import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.
         INVALID_RATING_DTO_BECAUSE_EMPTY_NAME;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_MAXIMUM_AND_STEP_WIDTH_WITH_TOO_MANY_DECIMAL_DIGITS;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_MINIMUM_TOO_MANY_DECIMAL_DIGITS;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_NEGATIVE_STEP_WIDTH;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_STEP_WIDTH_TOO_MANY_DECIMAL_DIGITS;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_TOO_BIG_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_TOO_SMALL_MINIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_ZERO_STEP_WIDTH;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         createValidRatingDTOBooksWithGermanGradingAndDefinedRatingEntries;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         INVALID_RATING_DTO_DRINKS_WITH_MINIMUM_EQUALS_TO_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         INVALID_RATING_DTO_DRINKS_WITH_MINIMUM_GREATER_THAN_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         INVALID_RATING_DTO_DRINKS_WITH_UNAVAILABLE_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         INVALID_RATING_DTO_WITH_EMPTY_NAME_AND_NO_DESCRIPTION_AND_WITH_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         VALID_RATING_DTO_DRINKS_WITH_NO_DESCRIPTION_AND_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;

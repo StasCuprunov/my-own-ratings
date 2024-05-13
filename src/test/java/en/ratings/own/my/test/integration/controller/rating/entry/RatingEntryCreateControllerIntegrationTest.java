@@ -7,17 +7,17 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingEntryCreateNotAllowedException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingEntryFailedException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsCreated;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
+import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsCreated;
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createValidRangeOfValuesWithNegativeMinimum;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;

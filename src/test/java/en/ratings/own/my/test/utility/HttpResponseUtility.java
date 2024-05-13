@@ -1,4 +1,4 @@
-package en.ratings.own.my.test.integration.utility;
+package en.ratings.own.my.test.utility;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.mock.web.MockHttpServletResponse;

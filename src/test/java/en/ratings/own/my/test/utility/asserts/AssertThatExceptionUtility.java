@@ -1,4 +1,4 @@
-package en.ratings.own.my.test.integration.utility.asserts;
+package en.ratings.own.my.test.utility.asserts;
 
 import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
 import en.ratings.own.my.exception.rating.RatingByIdNotAllowedException;

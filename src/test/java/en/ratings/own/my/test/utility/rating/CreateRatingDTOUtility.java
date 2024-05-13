@@ -1,4 +1,4 @@
-package en.ratings.own.my.test.integration.utility.rating;
+package en.ratings.own.my.test.utility.rating;
 
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.rating.RangeOfValues;

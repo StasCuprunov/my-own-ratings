@@ -5,30 +5,30 @@ import en.ratings.own.my.model.rating.RangeOfValues;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_MINIMUM_EQUALS_TO_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_MINIMUM_GREATER_THAN_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_NEGATIVE_STEP_WIDTH;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_TOO_BIG_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_TOO_SMALL_MINIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createInvalidRangeOfValuesWithMaximumAndStepWidthWithTooManyDecimalDigits;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createInvalidRangeOfValuesWithMinimumTooManyDecimalDigits;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createInvalidRangeOfValuesWithStepWidthTooManyDecimalDigits;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_NAME;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_NAME;
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
 
 public class RatingControllerUpdateInvalidIntegrationTest extends RatingControllerUpdateIntegrationTest {

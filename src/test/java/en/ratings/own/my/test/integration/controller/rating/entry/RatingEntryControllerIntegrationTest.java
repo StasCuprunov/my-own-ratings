@@ -1,6 +1,6 @@
 package en.ratings.own.my.test.integration.controller.rating.entry;
 
-import en.ratings.own.my.AbstractIntegrationTest;
+import en.ratings.own.my.test.integration.AbstractIntegrationTest;
 import en.ratings.own.my.controller.rating.RatingController;
 import en.ratings.own.my.controller.rating.RatingEntryController;
 import en.ratings.own.my.dto.rating.RatingDTO;
@@ -18,13 +18,13 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING;
-import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinkInAsiaWithAmazonRating;
-import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
 
 public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTest {

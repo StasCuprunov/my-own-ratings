@@ -1,6 +1,6 @@
 package en.ratings.own.my.test.integration.controller;
 
-import en.ratings.own.my.AbstractIntegrationTest;
+import en.ratings.own.my.test.integration.AbstractIntegrationTest;
 import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.service.authentication.JwtService;
@@ -16,12 +16,12 @@ import static en.ratings.own.my.constant.CookieConstants.MAX_AGE;
 import static en.ratings.own.my.constant.CookieConstants.SAME_SITE;
 import static en.ratings.own.my.constant.CookieConstants.SAME_SITE_VALUE;
 import static en.ratings.own.my.constant.CookieConstants.SECURE;
-import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserFalakNoorahKhoury;
-import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserStevenWorm;
-import static en.ratings.own.my.test.integration.utility.HttpResponseUtility.createHttpServletResponse;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserFalakNoorahKhoury;
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserStevenWorm;
+import static en.ratings.own.my.test.utility.HttpResponseUtility.createHttpServletResponse;
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToUserByEmailNotFoundException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToWrongPasswordLoginException;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
