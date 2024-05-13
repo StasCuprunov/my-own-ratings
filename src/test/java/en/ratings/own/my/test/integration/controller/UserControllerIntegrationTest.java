@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToUserCreationFailedException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatId;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIsNotNull;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsCreated;
 import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserFalakNoorahKhoury;
@@ -213,7 +213,7 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
         assertThat(userResult).isPresent();
         User storedUser = userResult.get();
 
-        assertThatId(storedUser.getId());
+        assertThatIdIsDefined(storedUser.getId());
         assertThat(storedUser.getEmail()).isEqualTo(user.getEmail());
         assertThat(storedUser.getFirstName()).isEqualTo(user.getFirstName());
         assertThat(storedUser.getSurname()).isEqualTo(user.getSurname());

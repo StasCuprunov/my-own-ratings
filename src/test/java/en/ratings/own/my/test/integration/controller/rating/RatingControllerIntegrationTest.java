@@ -7,6 +7,7 @@ import en.ratings.own.my.controller.rating.RatingController;
 import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.User;
+import en.ratings.own.my.model.rating.RangeOfValues;
 import en.ratings.own.my.repository.UserRepository;
 import en.ratings.own.my.repository.rating.RangeOfValuesRepository;
 import en.ratings.own.my.repository.rating.RatingEntryRepository;
@@ -15,6 +16,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
+import java.util.ArrayList;
 
 import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserFalakNoorahKhoury;
 import static en.ratings.own.my.test.integration.utility.CreateUserUtility.createUserStevenWorm;
@@ -25,6 +28,7 @@ import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtil
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         createValidRatingEntryRedBullForDrinksWithNegativeMinimum;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.security.core.context.SecurityContextHolder.clearContext;
 
 public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
@@ -95,6 +99,20 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
         ratingEntryRepository.save(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
         ratingEntryRepository.save(createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId));
         ratingEntryRepository.save(createValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId));
+    }
+
+    protected void compareIfRangeOfValuesExistsExactOnce(RatingDTO input) {
+        RangeOfValues inputRangeOfValues = input.getRangeOfValues();
+        ArrayList<RangeOfValues> listOfRangeOfValues =  rangeOfValuesRepository.findAll();
+
+        int listSize = listOfRangeOfValues.size();
+        int numberOfFoundRangeOfValues = 0;
+        for (int index = 0; index < listSize; index++) {
+            if (listOfRangeOfValues.get(index).equalsWithoutId(inputRangeOfValues)) {
+                numberOfFoundRangeOfValues++;
+            }
+        }
+        assertThat(numberOfFoundRangeOfValues).isEqualTo(MAX_RANGE_OF_VALUES_WITH_SAME_ATTRIBUTES_IN_DOCUMENT);
     }
 
     protected void login(User user) {

@@ -26,7 +26,7 @@ public class AssertThatUtility {
         assertThatStatusCodeIsEqualTo(responseEntity, NO_CONTENT);
     }
 
-    public static void assertThatId(String id) {
+    public static void assertThatIdIsDefined(String id) {
         assertThat(id).isNotNull().isNotBlank().isNotEmpty();
     }
 

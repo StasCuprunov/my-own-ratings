@@ -21,9 +21,13 @@ import static java.lang.Math.PI;
 
 public class RatingBooksUtility {
 
-    private static final String BOOKS_NAME = "Books";
+    public static final String BOOKS_NAME = "Books";
 
-    private static final String BOOKS_DESCRIPTION = "This are my favourite books!";
+    public static final String BOOKS_DESCRIPTION = "This are my favourite books!";
+
+    public static final String BOOKS_NAME_SCIENTIFIC = "These are the most useful scientific books!";
+
+    public static final String BOOKS_DESCRIPTION_SCIENTIFIC = "These books are rated with the German grading.";
 
     public static RatingDTO VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING =
             createRatingDTOWithNoUserId(BOOKS_NAME, BOOKS_DESCRIPTION, VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING);

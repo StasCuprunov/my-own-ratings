@@ -14,7 +14,7 @@ import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExcep
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingCreationFailedException;
-import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatId;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsCreated;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
         INVALID_RATING_DTO_BECAUSE_EMPTY_NAME;
@@ -165,7 +165,7 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
     }
 
     private void compareInputWithResultAfterValidCreate(RatingDTO input, RatingDTO result) {
-        assertThatId(result.getUserId());
+        assertThatIdIsDefined(result.getUserId());
         assertThat(input.equalsAfterCreate(result)).isTrue();
     }
 
@@ -191,20 +191,6 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
 
         assertThat(input.getRangeOfValues().equalsWithoutId(rangeOfValues)).isTrue();
         compareIfRangeOfValuesExistsExactOnce(input);
-    }
-
-    private void compareIfRangeOfValuesExistsExactOnce(RatingDTO input) {
-        RangeOfValues inputRangeOfValues = input.getRangeOfValues();
-        ArrayList<RangeOfValues> listOfRangeOfValues =  rangeOfValuesRepository.findAll();
-
-        int listSize = listOfRangeOfValues.size();
-        int numberOfFoundRangeOfValues = 0;
-        for (int index = 0; index < listSize; index++) {
-            if (listOfRangeOfValues.get(index).equalsWithoutId(inputRangeOfValues)) {
-                numberOfFoundRangeOfValues++;
-            }
-        }
-        assertThat(numberOfFoundRangeOfValues).isEqualTo(MAX_RANGE_OF_VALUES_WITH_SAME_ATTRIBUTES_IN_DOCUMENT);
     }
 
     private void compareInputRatingEntryDocumentAfterCreate(RatingDTO input) {

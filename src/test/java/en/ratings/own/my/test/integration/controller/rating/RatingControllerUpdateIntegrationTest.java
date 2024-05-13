@@ -1,13 +1,30 @@
 package en.ratings.own.my.test.integration.controller.rating;
 
+import en.ratings.own.my.dto.rating.RatingDTO;
+import en.ratings.own.my.model.rating.RangeOfValues;
+import en.ratings.own.my.model.rating.Rating;
 import org.junit.Test;
+import org.springframework.http.ResponseEntity;
+
+import java.util.Optional;
+
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsOk;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_NAME_SCIENTIFIC;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+        VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class RatingControllerUpdateIntegrationTest extends RatingControllerIntegrationTest {
 
-    // Check if RangeOfValues has been created
     @Test
     public void testValidUpdateWithName() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING);
+        RatingDTO input = responseCreate.getBody();
+        input.setName(BOOKS_NAME_SCIENTIFIC);
+        testValidUpdate(input, updateSuccessful(input));
     }
 
     @Test
@@ -142,4 +159,82 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
 
     }
 
+    private void testValidUpdate(RatingDTO input, ResponseEntity<RatingDTO> responseEntity) {
+        RatingDTO result = responseEntity.getBody();
+        assertAll("Test valid update rating:",
+                () -> assertThatStatusCodeIsOk(responseEntity),
+                () -> compareValidInputWithResultAfterUpdate(input, result),
+                () -> compareValidInputWithDatabaseAfterUpdate(input)
+        );
+    }
+
+    private void compareValidInputWithResultAfterUpdate(RatingDTO input, RatingDTO result) {
+        assertAll(
+                () -> assertThat(result.getId()).isEqualTo(input.getId()),
+                () -> assertThat(result.getUserId()).isEqualTo(input.getUserId()),
+                () -> assertThat(result.getName()).isEqualTo(input.getName()),
+                () -> assertThat(result.getDescription()).isEqualTo(input.getDescription()),
+                () -> assertThatIdIsDefined(result.getRangeOfValues().getId()),
+                () -> assertThat(result.getRangeOfValues().equalsWithoutId(input.getRangeOfValues())).isTrue(),
+                () -> assertThat(result.getRatingEntries()).isNull()
+        );
+    }
+
+    private void compareValidInputWithDatabaseAfterUpdate(RatingDTO input) {
+        String rangeOfValuesId = compareValidInputWithRatingTable(input);
+        compareValidInputWithRangeOfValuesTable(input, rangeOfValuesId);
+    }
+
+    private String compareValidInputWithRatingTable(RatingDTO input) {
+        Optional<Rating> storedRatingResult = findByIdRatingRepository(input.getId());
+        Rating storedRating = storedRatingResult.get();
+        String rangeOfValuesId = storedRating.getRangeOfValuesId();
+        assertAll(
+                () -> assertThat(storedRatingResult).isPresent(),
+                () -> assertThat(storedRating.getId()).isEqualTo(input.getId()),
+                () -> assertThat(storedRating.getUserId()).isEqualTo(input.getUserId()),
+                () -> assertThatIdIsDefined(rangeOfValuesId),
+                () -> assertThat(storedRating.getName()).isEqualTo(input.getName()),
+                () -> assertThat(storedRating.getDescription()).isEqualTo(input.getDescription())
+        );
+        return rangeOfValuesId;
+    }
+
+    private void compareValidInputWithRangeOfValuesTable(RatingDTO input, String rangeOfValuesId) {
+        RangeOfValues rangeOfValuesInput = input.getRangeOfValues();
+        Optional<RangeOfValues> storedRangeOfValuesResult = findByIdRangeOfValuesRepository(rangeOfValuesId);
+        RangeOfValues storedRangeOfValues = storedRangeOfValuesResult.get();
+
+        assertAll(
+                () -> assertThat(storedRangeOfValuesResult).isPresent(),
+                () -> assertThat(storedRangeOfValues.equalsWithoutId(rangeOfValuesInput)).isTrue(),
+                () -> compareIfRangeOfValuesExistsExactOnce(input)
+        );
+    }
+
+    private ResponseEntity<RatingDTO> updateSuccessful(RatingDTO input) {
+        try {
+            return ratingController.update(input);
+        } catch (Exception ignored) {
+
+        }
+        return null;
+    }
+
+    private Exception updateInvalid(RatingDTO input) {
+        try {
+            ratingController.update(input);
+        } catch (Exception e) {
+            return e;
+        }
+        return new Exception();
+    }
+
+    private Optional<Rating> findByIdRatingRepository(String id) {
+        return ratingRepository.findById(id);
+    }
+
+    private Optional<RangeOfValues> findByIdRangeOfValuesRepository(String id) {
+        return rangeOfValuesRepository.findById(id);
+    }
 }
