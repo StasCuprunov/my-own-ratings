@@ -25,11 +25,21 @@ import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfVal
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_NEGATIVE_STEP_WIDTH;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        INVALID_RANGE_OF_VALUES_WITH_TOO_BIG_MAXIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        INVALID_RANGE_OF_VALUES_WITH_TOO_SMALL_MINIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        createInvalidRangeOfValuesWithMaximumAndStepWidthWithTooManyDecimalDigits;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        createInvalidRangeOfValuesWithMinimumTooManyDecimalDigits;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        createInvalidRangeOfValuesWithStepWidthTooManyDecimalDigits;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_NAME;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_SCIENTIFIC_NAME;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
@@ -238,6 +248,61 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreateBooks.getBody());
         RatingDTO input = responseCreateBooks.getBody();
         input.setName(responseCreateDrinks.getBody().getName());
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
+    }
+
+    @Test
+    public void testInvalidUpdateWithTooSmallMinimum() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_TOO_SMALL_MINIMUM);
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
+    }
+
+    @Test
+    public void testInvalidUpdateWithTooBigMaximum() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_TOO_BIG_MAXIMUM);
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
+    }
+
+    @Test
+    public void testInvalidUpdateWithMinimumTooManyDecimalDigits() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(createInvalidRangeOfValuesWithMinimumTooManyDecimalDigits());
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
+    }
+
+    @Test
+    public void testInvalidUpdateWithMaximumAndStepWidthWithTooManyDecimalDigits() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(createInvalidRangeOfValuesWithMaximumAndStepWidthWithTooManyDecimalDigits());
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
+    }
+
+    @Test
+    public void testInvalidUpdateWithStepWidthTooManyDecimalDigits() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(createInvalidRangeOfValuesWithStepWidthTooManyDecimalDigits());
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
         compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }

@@ -18,8 +18,13 @@ import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtili
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsCreated;
 import static en.ratings.own.my.test.integration.utility.rating.CreateRatingDTOUtility.
         INVALID_RATING_DTO_BECAUSE_EMPTY_NAME;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.INVALID_RATING_DTO_BOOKS_WITH_MAXIMUM_AND_STEP_WIDTH_WITH_TOO_MANY_DECIMAL_DIGITS;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.INVALID_RATING_DTO_BOOKS_WITH_MINIMUM_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_NEGATIVE_STEP_WIDTH;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.INVALID_RATING_DTO_BOOKS_WITH_STEP_WIDTH_TOO_MANY_DECIMAL_DIGITS;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.INVALID_RATING_DTO_BOOKS_WITH_TOO_BIG_MAXIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.INVALID_RATING_DTO_BOOKS_WITH_TOO_SMALL_MINIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_ZERO_STEP_WIDTH;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
@@ -97,6 +102,33 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
     @Test
     public void testInvalidCreateWithEmptyName() {
         testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_BECAUSE_EMPTY_NAME);
+    }
+
+    @Test
+    public void testInvalidCreateWithTooSmallMinimum() {
+        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_BOOKS_WITH_TOO_SMALL_MINIMUM);
+    }
+
+    @Test
+    public void testInvalidCreateWithTooBigMaximum() {
+        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_BOOKS_WITH_TOO_BIG_MAXIMUM);
+    }
+
+    @Test
+    public void testInvalidCreateWithMinimumTooManyDecimalDigits() {
+        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_BOOKS_WITH_MINIMUM_TOO_MANY_DECIMAL_DIGITS);
+    }
+
+    @Test
+    public void testInvalidCreateWithMaximumAndStepWidthWithTooManyDecimalDigits() {
+        testInvalidCreate(userStevenWorm,
+                INVALID_RATING_DTO_BOOKS_WITH_MAXIMUM_AND_STEP_WIDTH_WITH_TOO_MANY_DECIMAL_DIGITS);
+    }
+
+    @Test
+    public void testInvalidCreateWithStepWidthTooManyDecimalDigits() {
+        testInvalidCreate(userStevenWorm,
+                INVALID_RATING_DTO_BOOKS_WITH_STEP_WIDTH_TOO_MANY_DECIMAL_DIGITS);
     }
 
     @Test

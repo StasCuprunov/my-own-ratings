@@ -20,7 +20,7 @@ import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtili
         VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM;
-import static en.ratings.own.my.utility.Utility.isLastIndex;
+import static en.ratings.own.my.utility.MathUtility.isLastIndex;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

@@ -2,7 +2,7 @@ package en.ratings.own.my.utility;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.utility.Utility.isLastIndex;
+import static en.ratings.own.my.utility.MathUtility.isLastIndex;
 
 public class StringUtility {
     private static final String SPACE = " ";
