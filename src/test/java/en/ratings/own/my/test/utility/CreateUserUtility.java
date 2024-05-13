@@ -16,6 +16,7 @@ import static en.ratings.own.my.test.constant.PasswordConstants.
 import static en.ratings.own.my.test.constant.PasswordConstants.VALID_PASSWORD_ONE;
 import static en.ratings.own.my.test.constant.PasswordConstants.VALID_PASSWORD_THREE;
 import static en.ratings.own.my.test.constant.PasswordConstants.VALID_PASSWORD_TWO;
+import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
 
 public class CreateUserUtility {
 
@@ -25,7 +26,7 @@ public class CreateUserUtility {
 
     public static User createUserStevenWormWithDefinedId() {
         User user = createUserStevenWorm();
-        user.setId("id");
+        user.setId(ID_TEST);
         return user;
     }
 

@@ -1,5 +1,6 @@
 package en.ratings.own.my.test.integration.controller;
 
+import en.ratings.own.my.model.role.Role;
 import en.ratings.own.my.test.integration.AbstractIntegrationTest;
 import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.dto.UserDTO;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_EXACT_ONE;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToUserCreationFailedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
@@ -147,15 +149,15 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     }
 
     private void checkRoleAssignmentAfterCreate(User user) {
-        int numberOfResultsFound = 1;
+        int numberOfResultsFound = EXPECTED_EXACT_ONE;
         int index = 0;
 
-        ArrayList<RoleAssignment> roleAssignments = roleAssignmentRepository.findAllByUserId(user.getId());
+        ArrayList<RoleAssignment> roleAssignments = findAllByUserIdRoleAssignmentRepository(user.getId());
         assertThat(roleAssignments.size()).isEqualTo(numberOfResultsFound);
 
         String roleId = roleAssignments.get(index).getRoleId();
 
-        assertThat(roleRepository.findById(roleId).get().getName()).isEqualTo(roleUserAsString());
+        assertThat(findByIdRoleRepository(roleId).get().getName()).isEqualTo(roleUserAsString());
     }
 
     private void testInvalidCreate(User user) {
@@ -170,8 +172,8 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
 
     private void testInvalidCreateWithoutStoredEntries(User user) {
         testInvalidCreate(user);
-        assertThat(userRepository.findByEmail(user.getEmail())).isEmpty();
-        assertThat(roleAssignmentRepository.findAll().isEmpty()).isTrue();
+        assertThat(findByEmailUserRepository(user.getEmail())).isEmpty();
+        assertThat(findAllRoleAssignmentRepository().isEmpty()).isTrue();
     }
 
     private void testCreateWithNotAvailableEmail(User differentUserButWithStevenWormsEmail) {
@@ -197,7 +199,7 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     }
 
     private void compareUserWithStoredUserAfterCreate(User user) {
-        Optional<User> userResult = userRepository.findByEmail(user.getEmail());
+        Optional<User> userResult = findByEmailUserRepository(user.getEmail());
 
         assertThat(userResult).isPresent();
         User storedUser = userResult.get();
@@ -224,5 +226,21 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
         } catch (Exception ignored) {
 
         }
+    }
+
+    private ArrayList<RoleAssignment> findAllByUserIdRoleAssignmentRepository(String userId) {
+        return roleAssignmentRepository.findAllByUserId(userId);
+    }
+
+    private ArrayList<RoleAssignment> findAllRoleAssignmentRepository() {
+        return roleAssignmentRepository.findAll();
+    }
+
+    private Optional<Role> findByIdRoleRepository(String id) {
+        return roleRepository.findById(id);
+    }
+
+    private Optional<User> findByEmailUserRepository(String email) {
+        return userRepository.findByEmail(email);
     }
 }

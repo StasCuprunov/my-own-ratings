@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_EXACT_ONE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class RoleRepositoryServiceIntegrationTest extends AbstractIntegrationTest {
@@ -28,7 +29,7 @@ public class RoleRepositoryServiceIntegrationTest extends AbstractIntegrationTes
                     numberOfEntriesFound++;
                 }
             }
-            if (numberOfEntriesFound != 1) {
+            if (numberOfEntriesFound != EXPECTED_EXACT_ONE) {
                 errorMessages.add(errorMessage(name, numberOfEntriesFound));
             }
         }

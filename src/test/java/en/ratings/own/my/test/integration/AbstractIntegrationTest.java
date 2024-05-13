@@ -16,6 +16,8 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import static en.ratings.own.my.test.constant.ContainerConstants.DOCKER_IMAGE_NAME;
+import static en.ratings.own.my.test.constant.ContainerConstants.URI_KEY;
 import static en.ratings.own.my.test.utility.CreateUserUtility.createUserFalakNoorahKhoury;
 import static en.ratings.own.my.test.utility.CreateUserUtility.createUserStevenWorm;
 import static en.ratings.own.my.test.utility.HttpResponseUtility.createHttpServletResponse;
@@ -29,12 +31,6 @@ import static org.springframework.security.core.context.SecurityContextHolder.cl
 @RunWith(SpringRunner.class)
 @Testcontainers
 public abstract class AbstractIntegrationTest {
-
-    private static final String MONGO_VERSION = "7.0.5";
-
-    private static final String DOCKER_IMAGE_NAME = "mongo:" + MONGO_VERSION;
-
-    private static final String URI_KEY = "spring.data.mongodb.uri";
 
     protected User userStevenWorm;
 
@@ -56,12 +52,6 @@ public abstract class AbstractIntegrationTest {
     private static void setProperties(final DynamicPropertyRegistry registry) {
         MONGO_DB.start();
         registry.add(URI_KEY, MONGO_DB::getReplicaSetUrl);
-    }
-
-    protected final String ID_TEST = "test";
-
-    protected String createNotExistentId(String existentId) {
-        return existentId +  ID_TEST;
     }
 
     @Before

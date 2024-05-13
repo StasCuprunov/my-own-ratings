@@ -30,6 +30,7 @@ import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_NAME;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
+import static en.ratings.own.my.test.utility.GeneratorUtility.createNotExistentId;
 
 public class RatingControllerUpdateInvalidIntegrationTest extends RatingControllerUpdateIntegrationTest {
 
