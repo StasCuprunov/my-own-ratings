@@ -5,6 +5,8 @@ import en.ratings.own.my.exception.rating.RatingByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
 import en.ratings.own.my.exception.rating.RatingDeleteByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
+import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
+import en.ratings.own.my.exception.rating.update.RatingUpdateNotAllowedException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -45,6 +47,14 @@ public class AssertThatExceptionUtility {
     public static <T extends Exception> void
     assertThatExceptionIsEqualToRatingDeleteByIdNotAllowedException(T exception) {
         assertThatExceptionIsEqual(exception, RatingDeleteByIdNotAllowedException.class);
+    }
+
+    public static <T extends Exception> void assertThatExceptionIsEqualToRatingUpdateFailedException(T exception) {
+        assertThatExceptionIsEqual(exception, RatingUpdateFailedException.class);
+    }
+
+    public static <T extends Exception> void assertThatExceptionIsEqualToRatingUpdateNotAllowedException(T exception){
+        assertThatExceptionIsEqual(exception, RatingUpdateNotAllowedException.class);
     }
 
     private static <T extends Exception, S extends Exception> void

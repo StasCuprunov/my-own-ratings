@@ -10,9 +10,26 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToRatingUpdateFailedException;
+import static en.ratings.own.my.test.integration.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToRatingUpdateNotAllowedException;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsOk;
-import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        INVALID_RANGE_OF_VALUES_WITH_MINIMUM_EQUALS_TO_MAXIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        INVALID_RANGE_OF_VALUES_WITH_MINIMUM_GREATER_THAN_MAXIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        INVALID_RANGE_OF_VALUES_WITH_NEGATIVE_STEP_WIDTH;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.
+        VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_NAME;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_SCIENTIFIC_NAME;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
@@ -144,59 +161,105 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
 
     @Test
     public void testInvalidUpdateWithoutLoggedIn() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setName(DRINKS_IN_ASIA_NAME);
+        logout();
+        testUpdateInvalidWithExceptedAuthenticationCredentialsNotFoundException(input);
     }
 
     @Test
-    public void testInvalidUpdateWithWrongId() {
-
+    public void testInvalidUpdateWithNotExistentId() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setId(createNotExistentId(input.getId()));
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
     }
 
-    // Users aren't allowed to change the id
+    // UserId has to be the same as the authenticated user
     @Test
-    public void testInvalidUpdateWithId() {
-
+    public void testInvalidUpdateWithOtherUserId() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setUserId(userFalakNoorahKhoury.getId());
+        testUpdateInvalidWithExceptedRatingUpdateNotAllowedException(input);
     }
 
-    // Users aren't allowed to change the userId
     @Test
-    public void testInvalidUpdateWithUserId() {
-
+    public void testInvalidUpdateWithNotExistentUserId() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setUserId(createNotExistentId(userStevenWorm.getId()));
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
     }
 
     @Test
     public void testInvalidUpdateWithEmptyName() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setName("        ");
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
     }
 
     @Test
     public void testInvalidUpdateWithAlreadyUsedName() {
-
+        ResponseEntity<RatingDTO> responseCreateDrinks = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        ResponseEntity<RatingDTO> responseCreateBooks = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING);
+        RatingDTO input = responseCreateBooks.getBody();
+        input.setName(responseCreateDrinks.getBody().getName());
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
     }
 
     @Test
     public void testInvalidUpdateWithZeroStepWidth() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH);
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
     }
 
     @Test
     public void testInvalidUpdateWithNegativeStepWidth() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_NEGATIVE_STEP_WIDTH);
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
     }
 
     @Test
     public void testInvalidUpdateWithMinimumEqualsToMaximum() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_MINIMUM_EQUALS_TO_MAXIMUM);
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
     }
 
     @Test
     public void testInvalidUpdateWithMinimumGreaterThanMaximum() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_MINIMUM_GREATER_THAN_MAXIMUM);
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
     }
 
     @Test
     public void testInvalidUpdateWithUnavailableMaximum() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM);
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
     }
 
     @Test
@@ -285,6 +348,21 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
             return e;
         }
         return new Exception();
+    }
+
+    private void testUpdateInvalidWithExpectedRatingUpdateFailedException(RatingDTO input) {
+        Exception foundException = updateInvalid(input);
+        assertThatExceptionIsEqualToRatingUpdateFailedException(foundException);
+    }
+
+    private void testUpdateInvalidWithExceptedAuthenticationCredentialsNotFoundException(RatingDTO input) {
+        Exception foundException = updateInvalid(input);
+        assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException(foundException);
+    }
+
+    private void testUpdateInvalidWithExceptedRatingUpdateNotAllowedException(RatingDTO input) {
+        Exception foundException = updateInvalid(input);
+        assertThatExceptionIsEqualToRatingUpdateNotAllowedException(foundException);
     }
 
     private RangeOfValues createNewRangeOfValuesObject(RangeOfValues rangeOfValues) {

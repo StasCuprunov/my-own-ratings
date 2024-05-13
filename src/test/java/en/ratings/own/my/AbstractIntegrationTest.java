@@ -32,4 +32,8 @@ public abstract class AbstractIntegrationTest {
         MONGO_DB.start();
         registry.add(URI_KEY, MONGO_DB::getReplicaSetUrl);
     }
+
+    protected String createNotExistentId(String existentId) {
+        return existentId + "test";
+    }
 }
