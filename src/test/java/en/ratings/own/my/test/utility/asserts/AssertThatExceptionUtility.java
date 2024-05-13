@@ -5,7 +5,9 @@ import en.ratings.own.my.exception.rating.RatingByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
 import en.ratings.own.my.exception.rating.RatingDeleteByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
+import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryCreateNotAllowedException;
+import en.ratings.own.my.exception.rating.entry.RatingEntryDeleteByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateNotAllowedException;
@@ -66,6 +68,15 @@ public class AssertThatExceptionUtility {
     public static <T extends Exception> void
     assertThatExceptionIsEqualToRatingEntryCreateNotAllowedException(T exception) {
         assertThatExceptionIsEqual(exception, RatingEntryCreateNotAllowedException.class);
+    }
+
+    public static <T extends Exception> void assertThatExceptionIsEqualToRatingEntryByIdNotFoundException(T exception) {
+        assertThatExceptionIsEqual(exception, RatingEntryByIdNotFoundException.class);
+    }
+
+    public static <T extends Exception> void
+    assertThatExceptionIsEqualToRatingEntryDeleteByIdNotAllowedException(T exception) {
+        assertThatExceptionIsEqual(exception, RatingEntryDeleteByIdNotAllowedException.class);
     }
 
     private static <T extends Exception, S extends Exception> void
