@@ -220,7 +220,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
                 createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
-        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = createNewRangeOfValuesObject(createdRatingDTO.getRangeOfValues());
         newRangeOfValues.setStepWidth(0.5);
         input.setRangeOfValues(newRangeOfValues);

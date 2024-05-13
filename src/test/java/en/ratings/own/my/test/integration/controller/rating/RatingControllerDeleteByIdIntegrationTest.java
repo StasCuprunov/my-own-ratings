@@ -32,7 +32,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
         String ratingId = responseEntity.getBody().getId();
         RangeOfValues rangeOfValues = responseEntity.getBody().getRangeOfValues();
 
-        createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
+        createValidRatingEntriesForDrinksWithNegativeMinimum(ratingId);
 
         testValidDeleteByIdAndDeletedRangeOfValues(ratingId, rangeOfValues);
     }
@@ -49,7 +49,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
         ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete = findAllRangeOfValuesRepository();
         ArrayList<RatingEntry> listOfRatingEntriesBeforeDelete = findAllRatingEntryRepository();
 
-        createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
+        createValidRatingEntriesForDrinksWithNegativeMinimum(ratingId);
 
         testValidDeleteByIdAndNotDeletedRangeOfValues(ratingId, rangeOfValues);
 
@@ -62,7 +62,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
         ResponseEntity<RatingDTO> responseEntityCreate = createValidRating(userStevenWorm,
                 createValidRatingDTODrinksWithNegativeMinimum());
         String ratingId = responseEntityCreate.getBody().getId();
-        createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
+        createValidRatingEntriesForDrinksWithNegativeMinimum(ratingId);
 
         ArrayList<Rating> listOfRatingsBeforeDelete = findAllRatingRepository();
         ArrayList<RangeOfValues> listOfRangeOfValuesBeforeDelete = findAllRangeOfValuesRepository();

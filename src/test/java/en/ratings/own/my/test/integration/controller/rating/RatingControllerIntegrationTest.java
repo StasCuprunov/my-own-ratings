@@ -65,7 +65,7 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
         return responseEntity;
     }
 
-    protected void createRatingEntriesForDrinksWithNegativeMinimum(String ratingId) {
+    protected void createValidRatingEntriesForDrinksWithNegativeMinimum(String ratingId) {
         saveRatingEntryRepository(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
         saveRatingEntryRepository(createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId));
         saveRatingEntryRepository(createValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId));

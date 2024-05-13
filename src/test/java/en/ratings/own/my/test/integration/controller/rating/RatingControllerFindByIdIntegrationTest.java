@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
+import static en.ratings.own.my.test.utility.GeneratorUtility.createNotExistentId;
+import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
@@ -27,7 +29,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
                 createValidRatingDTODrinksWithNegativeMinimum());
         String ratingId = responseEntity.getBody().getId();
 
-        createRatingEntriesForDrinksWithNegativeMinimum(ratingId);
+        createValidRatingEntriesForDrinksWithNegativeMinimum(ratingId);
 
         testValidFindById(responseEntity.getBody());
     }
@@ -54,7 +56,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
     public void testInvalidFindByIdWithNotExistentId() {
         ResponseEntity<RatingDTO> responseEntity = createValidRating(userStevenWorm,
                 VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING);
-        Exception foundException = findByIdInvalid(responseEntity.getBody().getId() + "test");
+        Exception foundException = findByIdInvalid(createNotExistentId(responseEntity.getBody().getId()));
 
         assertThatExceptionIsEqualToRatingByIdNotFoundException(foundException);
     }
@@ -103,8 +105,8 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
     private ResponseEntity<RatingDTO> findByIdSuccessful(String id) {
         try {
             return ratingController.findById(id);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            printExceptionMessage(e);
         }
         return null;
     }

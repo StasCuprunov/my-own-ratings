@@ -105,7 +105,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
         createValidRating(userFalakNoorahKhoury, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
-        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();
         newRangeOfValues.setMinimum(VALID_MINIMUM_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
         input.setRangeOfValues(newRangeOfValues);
@@ -120,7 +120,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
         createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
-        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();
         newRangeOfValues.setMaximum(VALID_MAXIMUM_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
         input.setRangeOfValues(newRangeOfValues);
@@ -135,7 +135,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
         createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
-        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();
         newRangeOfValues.setStepWidth(VALID_STEP_WIDTH_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
         input.setRangeOfValues(newRangeOfValues);
@@ -150,7 +150,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
         createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
-        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();
         newRangeOfValues.setMinimum(VALID_MINIMUM_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
         newRangeOfValues.setMaximum(VALID_MAXIMUM_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
@@ -166,7 +166,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
         createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
-        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();
         newRangeOfValues.setMinimum(VALID_MINIMUM_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
         newRangeOfValues.setStepWidth(VALID_STEP_WIDTH_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
@@ -182,7 +182,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
         createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
-        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();
         newRangeOfValues.setStepWidth(VALID_STEP_WIDTH_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
         newRangeOfValues.setMaximum(VALID_MAXIMUM_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
@@ -198,7 +198,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
         createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
-        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();
         newRangeOfValues.setMinimum(VALID_MINIMUM_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
         newRangeOfValues.setStepWidth(VALID_STEP_WIDTH_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
@@ -216,7 +216,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         createValidRating(userFalakNoorahKhoury, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
         input.setName(DRINKS_IN_ASIA_NAME);
-        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();
         newRangeOfValues.setMaximum(VALID_MAXIMUM_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
         input.setRangeOfValues(newRangeOfValues);
