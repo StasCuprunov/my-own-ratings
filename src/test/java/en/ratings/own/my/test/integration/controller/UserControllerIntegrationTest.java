@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_EXACT_ONE;
+import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToUserCreationFailedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
@@ -66,73 +67,73 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testCreateWithValidInputWithoutLoggedIn() {
+    public void testValidCreateWithValidInputWithoutLoggedIn() {
         testValidCreate(createUserStevenWorm());
     }
 
     @Test
-    public void testCreateWithValidInputWithLoggedIn() {
+    public void testValidCreateWithValidInputWithLoggedIn() {
         login();
         testValidCreate(createUserFalakNoorahKhoury());
     }
 
     @Test
-    public void testCreateWithValidInputWithDefinedId() {
-        testValidCreate(createUserStevenWormWithDefinedId());
+    public void testInvalidCreateWithDefinedId() {
+        testInvalidCreate(createUserStevenWormWithDefinedId());
     }
 
     @Test
-    public void testCreateWithNotAvailableEmailButWithDifferentFirstName() {
+    public void testInvalidCreateWithNotAvailableEmailButWithDifferentFirstName() {
         testCreateWithNotAvailableEmail(createUserStevenWormWithDifferentFirstName());
     }
 
     @Test
-    public void testCreateWithNotAvailableEmailButWithDifferentSurname() {
+    public void testInvalidCreateWithNotAvailableEmailButWithDifferentSurname() {
         testCreateWithNotAvailableEmail(createUserStevenWormWithDifferentSurname());
     }
 
     @Test
-    public void testCreateWithNotAvailableEmailButWithDifferentPassword() {
+    public void testInvalidCreateWithNotAvailableEmailButWithDifferentPassword() {
         testCreateWithNotAvailableEmail(createUserStevenWormWithDifferentPassword());
     }
 
     @Test
-    public void testCreateWithInvalidEmail() {
+    public void testInvalidCreateWithInvalidEmail() {
         testInvalidCreateWithoutStoredEntries(createUserStevenWormWithInvalidEmail());
     }
 
     @Test
-    public void testCreateWithTooShortPassword() {
+    public void testInvalidCreateWithTooShortPassword() {
         testInvalidCreateWithoutStoredEntries(createUserStevenWormWithTooShortPassword());
     }
 
     @Test
-    public void testCreateWithTooLongPassword() {
+    public void testInvalidCreateWithTooLongPassword() {
         testInvalidCreateWithoutStoredEntries(createUserStevenWormWithTooLongPassword());
     }
 
     @Test
-    public void testCreateWithoutDigitsInPassword() {
+    public void testInvalidCreateWithoutDigitsInPassword() {
         testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutDigitsPassword());
     }
 
     @Test
-    public void testCreateWithoutLowerCaseLetterInPassword() {
+    public void testInvalidCreateWithoutLowerCaseLetterInPassword() {
         testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutLowerCaseLetterPassword());
     }
 
     @Test
-    public void testCreateWithoutUpperCaseLetterInPassword() {
+    public void testInvalidCreateWithoutUpperCaseLetterInPassword() {
         testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutUpperCaseLetterPassword());
     }
 
     @Test
-    public void testCreateWithoutValidSpecialCharacterInPassword() {
+    public void testInvalidCreateWithoutValidSpecialCharacterInPassword() {
         testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutValidSpecialCharacterPassword());
     }
 
     @Test
-    public void testCreateWithInvalidSpecialCharacterInPassword() {
+    public void testInvalidCreateWithInvalidSpecialCharacterInPassword() {
         testInvalidCreateWithoutStoredEntries(createUserStevenWormWithInvalidSpecialCharacterPassword());
     }
 
@@ -140,8 +141,8 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
         ResponseEntity<UserDTO> responseEntity = null;
         try {
             responseEntity = userController.create(user);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            printExceptionMessage(e);
         }
         checkResponseEntityAfterCreate(user, responseEntity);
         compareUserWithStoredUserAfterCreate(user);
@@ -149,11 +150,10 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     }
 
     private void checkRoleAssignmentAfterCreate(User user) {
-        int numberOfResultsFound = EXPECTED_EXACT_ONE;
         int index = 0;
 
         ArrayList<RoleAssignment> roleAssignments = findAllByUserIdRoleAssignmentRepository(user.getId());
-        assertThat(roleAssignments.size()).isEqualTo(numberOfResultsFound);
+        assertThat(roleAssignments.size()).isEqualTo(EXPECTED_EXACT_ONE);
 
         String roleId = roleAssignments.get(index).getRoleId();
 
@@ -179,8 +179,8 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     private void testCreateWithNotAvailableEmail(User differentUserButWithStevenWormsEmail) {
         try {
             userController.create(createUserStevenWorm());
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            printExceptionMessage(e);
         }
         testInvalidCreate(differentUserButWithStevenWormsEmail);
     }
@@ -216,15 +216,15 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
         String rawPassword = loggedInUser.getPassword();
         try {
             userController.create(loggedInUser);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            printExceptionMessage(e);
         }
 
         LoginDTO loginDTO = new LoginDTO(loggedInUser.getEmail(), rawPassword);
         try {
             authenticationController.login(loginDTO, createHttpServletResponse());
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            printExceptionMessage(e);
         }
     }
 

@@ -6,4 +6,8 @@ public class GeneratorUtility {
     public static String createNotExistentId(String existentId) {
         return existentId +  ID_TEST;
     }
+
+    public static void printExceptionMessage(Exception e) {
+        System.out.println(e.getMessage());
+    }
 }
