@@ -60,13 +60,6 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
     }
 
     @Test
-    public void testValidCreateWithDefinedId() {
-        RatingDTO input = VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
-        input.setId("test");
-        testValidCreate(userFalakNoorahKhoury, input);
-    }
-
-    @Test
     public void testValidCreateWithDefinedRatingEntries() {
         testValidCreate(userStevenWorm, createValidRatingDTOBooksWithGermanGradingAndDefinedRatingEntries());
     }
@@ -102,6 +95,13 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
         input.setUserId(userStevenWorm.getId());
         Exception foundException = createInvalid(input);
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException(foundException);
+    }
+
+    @Test
+    public void testInvalidCreateWithDefinedId() {
+        RatingDTO input = VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
+        input.setId("test");
+        testInvalidCreate(userStevenWorm, input);
     }
 
     @Test

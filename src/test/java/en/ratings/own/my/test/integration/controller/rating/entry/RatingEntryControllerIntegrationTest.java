@@ -23,6 +23,8 @@ import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtili
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
+        createValidRatingDTODrinkInAsiaWithAmazonRating;
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
 
 public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTest {
@@ -76,6 +78,10 @@ public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTes
 
     protected ResponseEntity<RatingDTO> createRatingDrinksWithNegativeMinimum(User user) {
         return createValidRating(user, createValidRatingDTODrinksWithNegativeMinimum());
+    }
+
+    protected ResponseEntity<RatingDTO> createValidRatingDrinkInAsiaWithAmazonRating(User user) {
+        return createValidRating(user, createValidRatingDTODrinkInAsiaWithAmazonRating());
     }
 
     private ResponseEntity<RatingDTO> createValidRating(User user, RatingDTO input) {

@@ -28,17 +28,35 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
 
     @Test
     public void testValidCreateDrinks() {
-
+        ResponseEntity<RatingDTO> responseEntity = createRatingDrinksWithNegativeMinimum(userStevenWorm);
+        String ratingId = responseEntity.getBody().getId();
+        RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        testCreateSuccessful(ratingEntry, createSuccessful(ratingEntry));
     }
 
     @Test
     public void testValidCreateWithSameNameButDifferentUsers() {
+        ResponseEntity<RatingDTO> responseEntity = createRatingDrinksWithNegativeMinimum(userStevenWorm);
+        String ratingId = responseEntity.getBody().getId();
+        RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        createSuccessful(ratingEntry);
 
+        ResponseEntity<RatingDTO> responseEntityTest = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
+        String ratingIdTest =  responseEntityTest.getBody().getId();
+        RatingEntry ratingEntryTest = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingIdTest);
+        testCreateSuccessful(ratingEntryTest, createSuccessful(ratingEntryTest));
     }
 
     @Test
     public void testValidCreateWithSameNameAndSameUserButDifferentRatings() {
-
+        ResponseEntity<RatingDTO> responseEntity = createRatingDrinksWithNegativeMinimum(userStevenWorm);
+        String ratingId = responseEntity.getBody().getId();
+        RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        createSuccessful(ratingEntry);
+        ResponseEntity<RatingDTO> responseEntityTest = createValidRatingDrinkInAsiaWithAmazonRating(userStevenWorm);
+        String ratingIdTest = responseEntityTest.getBody().getId();
+        RatingEntry ratingEntryTest = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingIdTest);
+        testCreateSuccessful(ratingEntryTest, createSuccessful(ratingEntryTest));
     }
 
     @Test
@@ -58,6 +76,16 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         String ratingId = responseEntity.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         testCreateInvalidWithExpectedRatingEntryCreateNotAllowedException(ratingEntry);
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, NO_RESULTS_EXPECTED);
+    }
+
+    @Test
+    public void testInvalidCreateWithDefinedId() {
+        ResponseEntity<RatingDTO> responseEntity = createRatingDrinksWithNegativeMinimum(userStevenWorm);
+        String ratingId = responseEntity.getBody().getId();
+        RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        ratingEntry.setId(ID_TEST);
+        testCreateInvalidWithExpectedRatingEntryFailedException(ratingEntry);
         checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, NO_RESULTS_EXPECTED);
     }
 
