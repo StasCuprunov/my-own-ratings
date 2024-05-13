@@ -12,12 +12,14 @@ import java.util.Optional;
 
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
 import static en.ratings.own.my.test.integration.utility.asserts.AssertThatUtility.assertThatStatusCodeIsOk;
+import static en.ratings.own.my.test.integration.utility.rating.CreateRangeOfValuesUtility.VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_NAME;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.BOOKS_SCIENTIFIC_NAME;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
+import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_DESCRIPTION;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_NAME;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
         VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM;
@@ -62,22 +64,42 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
 
     @Test
     public void testValidUpdateWithDescription() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setDescription(DRINKS_IN_ASIA_DESCRIPTION);
+        testValidUpdate(input, updateSuccessful(input));
     }
 
     @Test
     public void testValidUpdateWithEmptyDescription() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setDescription("");
+        testValidUpdate(input, updateSuccessful(input));
     }
 
     @Test
     public void testValidUpdateWithNameAndDescription() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.setName(DRINKS_IN_ASIA_NAME);
+        input.setDescription(DRINKS_IN_ASIA_DESCRIPTION);
+        testValidUpdate(input, updateSuccessful(input));
     }
 
     @Test
     public void testValidUpdateWithMinimumAndDeletingOldRangeOfValues() {
+        RangeOfValues oldRangeOfValues = createNewRangeOfValuesObject(VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM);
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO input = responseCreate.getBody();
+        input.getRangeOfValues().setMinimum(2 * VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM.getMinimum());
 
+        testValidUpdate(input, updateSuccessful(input));
+        checkIfOldRangeOfValuesIsDeleted(oldRangeOfValues);
     }
 
     @Test
@@ -243,6 +265,10 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
         }
     }
 
+    private void checkIfOldRangeOfValuesIsDeleted(RangeOfValues oldRangeOfValues) {
+        assertThat(findByMinimumAndMaximumAndStepWidthRangeOfValuesRepository(oldRangeOfValues).isEmpty()).isTrue();
+    }
+
     private ResponseEntity<RatingDTO> updateSuccessful(RatingDTO input) {
         try {
             return ratingController.update(input);
@@ -259,5 +285,10 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
             return e;
         }
         return new Exception();
+    }
+
+    private RangeOfValues createNewRangeOfValuesObject(RangeOfValues rangeOfValues) {
+        return new RangeOfValues(rangeOfValues.getId(), rangeOfValues.getMinimum(), rangeOfValues.getMaximum(),
+                rangeOfValues.getStepWidth());
     }
 }

@@ -158,10 +158,16 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
         return rangeOfValuesRepository.findById(id);
     }
 
-    protected Optional<RangeOfValues>findByMinimumAndMaximumAndStepWidthRangeOfValuesRepository(Double minimum,
+    protected Optional<RangeOfValues> findByMinimumAndMaximumAndStepWidthRangeOfValuesRepository(Double minimum,
                                                                                                 Double maximum,
                                                                                                 Double stepWidth) {
         return rangeOfValuesRepository.findByMinimumAndMaximumAndStepWidth(minimum, maximum, stepWidth);
+    }
+
+    protected Optional<RangeOfValues> findByMinimumAndMaximumAndStepWidthRangeOfValuesRepository
+            (RangeOfValues rangeOfValues) {
+        return findByMinimumAndMaximumAndStepWidthRangeOfValuesRepository(rangeOfValues.getMinimum(),
+                rangeOfValues.getMaximum(), rangeOfValues.getStepWidth());
     }
 
     protected void saveRatingEntryRepository(RatingEntry ratingEntry) {
