@@ -7,7 +7,9 @@ import org.junit.Test;
 
 import java.util.Optional;
 
+import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
+import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
@@ -24,8 +26,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class RatingEntryCreateControllerIntegrationTest extends RatingEntryControllerIntegrationTest {
-
-    private static final int NO_RESULTS_EXPECTED = 0;
 
     @Test
     public void testValidCreateDrinks() {
@@ -54,6 +54,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         String ratingId = responseEntity.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         createSuccessful(ratingEntry);
+
         ResponseEntity<RatingDTO> responseEntityTest = createValidRatingDrinkInAsiaWithAmazonRating(userStevenWorm);
         String ratingIdTest = responseEntityTest.getBody().getId();
         RatingEntry ratingEntryTest = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingIdTest);
@@ -67,7 +68,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         String ratingId = responseEntity.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         testCreateInvalidWithExpectedAuthenticationCredentialsNotFoundException(ratingEntry);
-        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, NO_RESULTS_EXPECTED);
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 
     @Test
@@ -77,7 +78,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         String ratingId = responseEntity.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         testCreateInvalidWithExpectedRatingEntryCreateNotAllowedException(ratingEntry);
-        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, NO_RESULTS_EXPECTED);
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 
     @Test
@@ -87,7 +88,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         ratingEntry.setId(ID_TEST);
         testCreateInvalidWithExpectedRatingEntryFailedException(ratingEntry);
-        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, NO_RESULTS_EXPECTED);
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 
     @Test
@@ -97,7 +98,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         ratingEntry.setName("       \n ");
         testCreateInvalidWithExpectedRatingEntryFailedException(ratingEntry);
-        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, NO_RESULTS_EXPECTED);
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 
     @Test
@@ -120,7 +121,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         ratingEntry.setValue(createValidRangeOfValuesWithNegativeMinimum().getMinimum() - 1);
         testCreateInvalidWithExpectedRatingEntryFailedException(ratingEntry);
-        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, NO_RESULTS_EXPECTED);
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 
     @Test
@@ -130,7 +131,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         ratingEntry.setValue(createValidRangeOfValuesWithNegativeMinimum().getMaximum() + 0.5);
         testCreateInvalidWithExpectedRatingEntryFailedException(ratingEntry);
-        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, NO_RESULTS_EXPECTED);
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 
     @Test
@@ -142,7 +143,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
                 createValidRangeOfValuesWithNegativeMinimum().getStepWidth() / 2.0;
         ratingEntry.setValue(notAllowedValue);
         testCreateInvalidWithExpectedRatingEntryFailedException(ratingEntry);
-        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, NO_RESULTS_EXPECTED);
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 
     private void testCreateSuccessful(RatingEntry input, ResponseEntity<RatingEntry> responseEntity) {
@@ -189,7 +190,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
 
     private void checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(String ratingId,
                                                                            int expectedNumberOfRatingEntries) {
-        assertThat(ratingEntryRepository.findAllByRatingId(ratingId).size()).isEqualTo(expectedNumberOfRatingEntries);
+        assertThat(findAllByRatingIdRatingEntryRepository(ratingId).size()).isEqualTo(expectedNumberOfRatingEntries);
     }
 
     private void checkIfOldRatingEntryHasChangedAfterCreateWithSameRatingEntryNameAndSameRating
@@ -217,7 +218,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         try {
             return ratingEntryController.create(input);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            printExceptionMessage(e);
         }
         return null;
     }
