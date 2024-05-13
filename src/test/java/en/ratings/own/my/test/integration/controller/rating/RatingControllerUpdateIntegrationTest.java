@@ -286,7 +286,16 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
 
     @Test
     public void testInvalidUpdateWithInconsistentRatingEntryValue() {
-
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
+        RatingDTO input = responseCreate.getBody();
+        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        RangeOfValues newRangeOfValues = createNewRangeOfValuesObject(createdRatingDTO.getRangeOfValues());
+        newRangeOfValues.setStepWidth(0.5);
+        input.setRangeOfValues(newRangeOfValues);
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
     private void testValidUpdate(RatingDTO input, ResponseEntity<RatingDTO> responseEntity) {
