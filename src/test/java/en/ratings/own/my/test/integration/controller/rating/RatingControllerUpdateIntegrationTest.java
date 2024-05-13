@@ -36,6 +36,8 @@ import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtili
         VALID_RATING_DTO_BOOKS_SCIENTIFIC_WITH_GERMAN_GRADING;
 import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
+import static en.ratings.own.my.test.integration.utility.rating.RatingBooksUtility.
+        VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_DESCRIPTION;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.DRINKS_IN_ASIA_NAME;
 import static en.ratings.own.my.test.integration.utility.rating.RatingDrinksUtility.
@@ -121,7 +123,18 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
 
     @Test
     public void testValidUpdateWithMinimumAndWithExistentRatingEntries() {
+        RangeOfValues oldRangeOfValues = createNewRangeOfValuesObject(VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM);
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                VALID_RATING_DTO_DRINKS_WITH_NEGATIVE_MINIMUM);
+        createValidRating(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
+        RatingDTO input = responseCreate.getBody();
+        createRatingEntriesForDrinksWithNegativeMinimum(input.getId());
+        RangeOfValues newRangeOfValues = input.getRangeOfValues();
+        newRangeOfValues.setMinimum(2 * newRangeOfValues.getMinimum());
+
+        testValidUpdate(input, updateSuccessful(input));
+        checkIfOldRangeOfValuesIsAvailable(oldRangeOfValues);
     }
 
     @Test
@@ -364,7 +377,22 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
     }
 
     private void checkIfOldRangeOfValuesIsDeleted(RangeOfValues oldRangeOfValues) {
-        assertThat(findByMinimumAndMaximumAndStepWidthRangeOfValuesRepository(oldRangeOfValues).isEmpty()).isTrue();
+        checkOldRangeOfValuesAfterUpdate(oldRangeOfValues, true);
+    }
+
+    private void checkIfOldRangeOfValuesIsAvailable(RangeOfValues oldRangeOfValues) {
+        checkOldRangeOfValuesAfterUpdate(oldRangeOfValues, false);
+    }
+
+    private void checkOldRangeOfValuesAfterUpdate(RangeOfValues oldRangeOfValues, boolean shouldBeDeleted) {
+        boolean noRangeOfValuesFound = findByMinimumAndMaximumAndStepWidthRangeOfValuesRepository(oldRangeOfValues).
+                isEmpty();
+        if (shouldBeDeleted) {
+            assertThat(noRangeOfValuesFound).isTrue();
+        }
+        else {
+            assertThat(noRangeOfValuesFound).isFalse();
+        }
     }
 
     private ResponseEntity<RatingDTO> updateSuccessful(RatingDTO input) {
