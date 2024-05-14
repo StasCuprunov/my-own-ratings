@@ -15,16 +15,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.constant.AttributeConstants.STEP_WIDTH_BORDER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_USER_WITH_ID_NOT_FOUND;
-import static en.ratings.own.my.constant.ExceptionConstants.KEY_MINIMUM_IS_NOT_VALID;
-import static en.ratings.own.my.constant.ExceptionConstants.KEY_STEP_WIDTH_IS_TOO_SMALL;
-import static en.ratings.own.my.constant.ExceptionConstants.KEY_RANGE_OF_VALUES_IS_NOT_CONSISTENT;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_NAME_ALREADY_USED_FOR_USER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
-import static en.ratings.own.my.service.rating.RangeOfValuesValidation.isRangeOfValuesConsistent;
 import static en.ratings.own.my.service.rating.RangeOfValuesValidation.isValueInRangeOfValues;
+import static en.ratings.own.my.service.rating.RangeOfValuesValidation.rangeOfValuesValidation;
 import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayList;
 
 @Service
@@ -174,21 +170,6 @@ public class RatingService {
             return KEY_USER_WITH_ID_NOT_FOUND;
         }
         return null;
-    }
-
-    private ArrayList<String> rangeOfValuesValidation(RangeOfValues rangeOfValues) {
-        ArrayList<String> keysForException = new ArrayList<>();
-        if (rangeOfValues.getMinimum() >= rangeOfValues.getMaximum()) {
-            keysForException.add(KEY_MINIMUM_IS_NOT_VALID);
-        }
-        if (rangeOfValues.getStepWidth() < STEP_WIDTH_BORDER) {
-            keysForException.add(KEY_STEP_WIDTH_IS_TOO_SMALL);
-        }
-
-        if (!isRangeOfValuesConsistent(rangeOfValues)) {
-            keysForException.add(KEY_RANGE_OF_VALUES_IS_NOT_CONSISTENT);
-        }
-        return keysForException;
     }
 
     private String ratingNameForUserValidation(String userId, String name) {

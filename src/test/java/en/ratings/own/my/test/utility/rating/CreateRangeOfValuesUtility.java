@@ -5,7 +5,7 @@ import en.ratings.own.my.model.rating.RangeOfValues;
 import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_NUMBER_OF_DECIMAL_DIGITS;
 import static en.ratings.own.my.constant.AttributeConstants.RANGE_OF_VALUES_MAXIMUM_BORDER;
 import static en.ratings.own.my.constant.AttributeConstants.RANGE_OF_VALUES_MINIMUM_BORDER;
-import static en.ratings.own.my.utility.MathUtility.tenPow;
+import static en.ratings.own.my.utility.math.MathUtility.tenPow;
 
 public class CreateRangeOfValuesUtility {
     public static RangeOfValues VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING =
@@ -22,10 +22,16 @@ public class CreateRangeOfValuesUtility {
                     VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING.getMaximum(),
                     VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING.getStepWidth());
 
+    public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_MINIMUM_AND_STEP_WIDTH_HAVE_TOO_MANY_DECIMAL_DIGITS =
+            new RangeOfValues(-12.5555, 0.0, 0.0005);
+
     public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_TOO_BIG_MAXIMUM =
             new RangeOfValues(VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING.getMinimum(),
                     RANGE_OF_VALUES_MAXIMUM_BORDER + 1,
                     VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING.getStepWidth());
+
+    public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_MAXIMUM_AND_STEP_WIDTH_HAVE_TOO_MANY_DECIMAL_DIGITS =
+            new RangeOfValues(-12.0, -11.92278, 0.00078);
 
     public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_NEGATIVE_STEP_WIDTH =
             new RangeOfValues(VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING.getMinimum(),
@@ -35,14 +41,20 @@ public class CreateRangeOfValuesUtility {
             new RangeOfValues(createValidRangeOfValuesWithNegativeMinimum().getMinimum(),
                     VALID_RANGE_OF_VALUES_AS_GERMAN_GRADING.getMaximum(), 0.0);
 
+    public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_STEP_WIDTH_HAS_TOO_MANY_DECIMAL_DIGITS =
+            new RangeOfValues(-42.0, 42.0, 0.0000042);
+
     public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_MINIMUM_EQUALS_TO_MAXIMUM =
             new RangeOfValues(10.0, 10.0, 0.5);
 
     public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_MINIMUM_GREATER_THAN_MAXIMUM =
             new RangeOfValues(2.4, 1.2, 1.2);
 
-    public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM =
+    public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM_NUMBER_ONE =
             new RangeOfValues(1.7, 712.0, 224.0);
+
+    public static RangeOfValues INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM_NUMBER_TWO =
+            new RangeOfValues(-99.4, 77.27, 0.78);
 
     public static RangeOfValues createValidRangeOfValuesWithNegativeMinimum() {
         return  new RangeOfValues(-4.0, 0.0, 0.2);

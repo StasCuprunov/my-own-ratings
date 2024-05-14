@@ -27,7 +27,7 @@ import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility
 import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.creatRatingDTOWithUserId;
 import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.createValidRatingDTODrinksWithNegativeMinimum;
-import static en.ratings.own.my.utility.MathUtility.isLastIndex;
+import static en.ratings.own.my.utility.math.MathUtility.isLastIndex;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
