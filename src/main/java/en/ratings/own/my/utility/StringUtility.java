@@ -44,4 +44,16 @@ public class StringUtility {
     public static String removeSpaceCharacters(String stringWithSpaceCharacters) {
         return stringWithSpaceCharacters.replace(SPACE_CHARACTER, EMPTY_STRING);
     }
+
+    public static void print(ArrayList<String> list) {
+        String text = EMPTY_STRING;
+        int sizeList = list.size();
+        for (int index = 0; index < sizeList; index++) {
+            text += list.get(index);
+            if (!isLastIndex(index, sizeList)) {
+                text += COMMA_SEPARATION;
+            }
+        }
+        System.out.println(text);
+    }
 }
