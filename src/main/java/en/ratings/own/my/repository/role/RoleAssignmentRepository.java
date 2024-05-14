@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public interface RoleAssignmentRepository extends MongoRepository<RoleAssignment, String> {
     ArrayList<RoleAssignment> findAllByUserId(String userId);
 
+    ArrayList<RoleAssignment> findAll();
+
     <S extends RoleAssignment> S save(S roleAssignment);
 
     void deleteByUserIdAndRoleId(String userId, String roleId);

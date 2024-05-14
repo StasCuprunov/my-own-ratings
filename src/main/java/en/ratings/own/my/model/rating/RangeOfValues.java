@@ -29,4 +29,19 @@ public class RangeOfValues {
 
     @NonNull
     private Double stepWidth;
+
+    public RangeOfValues(Double minimum, Double maximum, Double stepWidth) {
+        setMinimum(minimum);
+        setMaximum(maximum);
+        setStepWidth(stepWidth);
+    }
+
+    public boolean equals(RangeOfValues rangeOfValues) {
+        return id.equals(rangeOfValues.getId()) && equalsWithoutId(rangeOfValues);
+    }
+
+    public boolean equalsWithoutId(RangeOfValues rangeOfValues) {
+        return minimum.equals(rangeOfValues.getMinimum()) && maximum.equals(rangeOfValues.getMaximum()) &&
+                stepWidth.equals(rangeOfValues.getStepWidth());
+    }
 }

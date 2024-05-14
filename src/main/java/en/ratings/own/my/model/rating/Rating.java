@@ -39,4 +39,10 @@ public class Rating {
         setName(name);
         setDescription(description);
     }
+
+    public boolean equals(Rating rating) {
+        return id.equals(rating.getId()) && userId.equals(rating.getUserId()) &&
+                rangeOfValuesId.equals(rating.getRangeOfValuesId()) && name.equals(rating.getName()) &&
+                description.equals(rating.getDescription());
+    }
 }

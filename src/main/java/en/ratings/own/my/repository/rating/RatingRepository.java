@@ -15,6 +15,8 @@ public interface RatingRepository extends MongoRepository<Rating, String> {
 
     ArrayList<Rating> findAllByUserId(String userId);
 
+    ArrayList<Rating> findAll();
+
     boolean existsByRangeOfValuesId(String rangeOfValuesId);
 
     <S extends Rating> S save(S rating);

@@ -2,9 +2,13 @@ package en.ratings.own.my.utility;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.utility.MathUtility.isLastIndex;
+
 public class StringUtility {
-    private static final String SPACE = " ";
-    private static final String COMMA_SEPARATION = ", ";
+
+    public static final String SPACE_CHARACTER = " ";
+    public static final String EMPTY_STRING = "";
+    public static final String COMMA_SEPARATION = ", ";
 
     public static String makeText(ArrayList<String> sentences) {
         StringBuilder text = new StringBuilder();
@@ -12,7 +16,7 @@ public class StringUtility {
         for (int index = 0; index < listSize; index++) {
             text.append(sentences.get(index));
             if (!(isLastIndex(index, listSize))) {
-                text.append(SPACE);
+                text.append(SPACE_CHARACTER);
             }
         }
         return text.toString();
@@ -37,7 +41,7 @@ public class StringUtility {
         return enumeration.toString();
     }
 
-    private static boolean isLastIndex(int index, int size) {
-        return index == (size - 1);
+    public static String removeSpaceCharacters(String stringWithSpaceCharacters) {
+        return stringWithSpaceCharacters.replace(SPACE_CHARACTER, EMPTY_STRING);
     }
 }
