@@ -60,6 +60,10 @@ public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTes
         return ratingEntryRepository.findAllByRatingId(ratingId);
     }
 
+    protected ArrayList<RatingEntry> findAllRatingEntryRepository() {
+        return ratingEntryRepository.findAll();
+    }
+
     protected RatingEntry saveRatingEntryRepository(RatingEntry ratingEntry) {
         return ratingEntryRepository.save(ratingEntry);
     }
