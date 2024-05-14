@@ -16,7 +16,7 @@ import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_TOO_SMALL_MINIMUM;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
-        INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM;
+        INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM_NUMBER_ONE;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_ZERO_STEP_WIDTH;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
@@ -209,7 +209,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
                 createValidRatingDTODrinksWithNegativeMinimum());
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
-        input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM);
+        input.setRangeOfValues(INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM_NUMBER_ONE);
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
         compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }

@@ -8,7 +8,7 @@ import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_MINIMUM_GREATER_THAN_MAXIMUM;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
-        INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM;
+        INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM_NUMBER_ONE;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         VALID_RANGE_OF_VALUES_AS_AMAZON_RATING;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
@@ -61,7 +61,7 @@ public class RatingDrinksUtility {
 
     public static RatingDTO INVALID_RATING_DTO_DRINKS_WITH_UNAVAILABLE_MAXIMUM =
             createRatingDTOWithNoUserId(DRINKS_NAME, DRINKS_DESCRIPTION,
-                    INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM);
+                    INVALID_RANGE_OF_VALUES_WITH_UNAVAILABLE_MAXIMUM_NUMBER_ONE);
 
     public static RatingEntry createValidRatingEntryCokeForDrinksWithNegativeMinimum(String ratingId) {
         return new RatingEntry(ratingId, "Coke", -2.2);

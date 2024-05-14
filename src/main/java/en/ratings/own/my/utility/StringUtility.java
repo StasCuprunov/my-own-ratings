@@ -2,7 +2,7 @@ package en.ratings.own.my.utility;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.utility.MathUtility.isLastIndex;
+import static en.ratings.own.my.utility.math.MathUtility.isLastIndex;
 
 public class StringUtility {
 

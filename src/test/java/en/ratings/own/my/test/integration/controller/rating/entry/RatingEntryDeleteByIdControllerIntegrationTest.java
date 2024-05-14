@@ -24,7 +24,7 @@ import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryRedBullForDrinksWithNegativeMinimum;
-import static en.ratings.own.my.utility.MathUtility.isLastIndex;
+import static en.ratings.own.my.utility.math.MathUtility.isLastIndex;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

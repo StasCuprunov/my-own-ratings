@@ -1,4 +1,4 @@
-package en.ratings.own.my.utility;
+package en.ratings.own.my.utility.math;
 
 import static java.lang.Math.pow;
 
