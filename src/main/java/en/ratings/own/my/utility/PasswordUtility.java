@@ -4,18 +4,19 @@ public class PasswordUtility {
 
     public static final int PASSWORD_MINIMUM_LENGTH = 6;
     public static final int PASSWORD_MAXIMUM_LENGTH = 64;
-    public static final String PASSWORD_REGEX = createPasswordRegex();
-    private static final String LENGTH_REGEX = "{" + PASSWORD_MINIMUM_LENGTH + "," + PASSWORD_MAXIMUM_LENGTH + "}";
 
-    private static final String AT_LEAST_ONE_ENGLISH_UPPER_CASE_LETTER_REGEX = "(?=.*?[A-Z])";
+    public static final String AT_LEAST_ONE_ENGLISH_UPPER_CASE_LETTER_REGEX =
+            createRegex("(?=.*?[A-Z])");
 
-    private static final String AT_LEAST_ONE_ENGLISH_LOWER_CASE_LETTER_REGEX = "(?=.*?[a-z])";
+    public static final String AT_LEAST_ONE_ENGLISH_LOWER_CASE_LETTER_REGEX =
+            createRegex("(?=.*?[a-z])");
 
-    private static final String AT_LEAST_ONE_DIGIT_REGEX = "(?=.*?[0-9])";
+    public static final String AT_LEAST_ONE_DIGIT_REGEX = createRegex("(?=.*?[0-9])");
 
-    private static final String AT_LEAST_ONE_VALID_SPECIAL_CHARACTER = createAtLeastOneValidSpecialCharacterRegex();
+    public static final String AT_LEAST_ONE_VALID_SPECIAL_CHARACTER_REGEX =
+            createRegex(createAtLeastOneValidSpecialCharacterRegex());
 
-    private static final String[] LIST_OF_VALID_SPECIAL_CHARACTERS = {"#", "$", "%", "&", "@", "^", "`", "~"};
+    public static final String[] LIST_OF_VALID_SPECIAL_CHARACTERS = {"#", "$", "%", "&", "@", "^", "`", "~"};
 
     private static String createAtLeastOneValidSpecialCharacterRegex() {
         StringBuilder regex = new StringBuilder("(?=.*?[");
@@ -26,11 +27,7 @@ public class PasswordUtility {
         return regex.toString();
     }
 
-    private static String createPasswordRegex() {
-        String regex = "^";
-        regex += AT_LEAST_ONE_ENGLISH_UPPER_CASE_LETTER_REGEX + AT_LEAST_ONE_ENGLISH_LOWER_CASE_LETTER_REGEX +
-                AT_LEAST_ONE_DIGIT_REGEX + AT_LEAST_ONE_VALID_SPECIAL_CHARACTER;
-        regex += "." + LENGTH_REGEX + "$";
-        return regex;
+    private static String createRegex(String regexWithoutBeginAndEnd) {
+        return "^" + regexWithoutBeginAndEnd + "$";
     }
 }

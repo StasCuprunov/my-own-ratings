@@ -41,6 +41,18 @@ public class StringUtility {
         return enumeration.toString();
     }
 
+    public static String enumerateStrings(String[] list) {
+        int length = list.length;
+        StringBuilder enumeration = new StringBuilder();
+        for (int index = 0; index < length; index++) {
+            enumeration.append(list[index]);
+            if (!isLastIndex(index, length)) {
+                enumeration.append(COMMA_SEPARATION);
+            }
+        }
+        return enumeration.toString();
+    }
+
     public static String removeSpaceCharacters(String stringWithSpaceCharacters) {
         return stringWithSpaceCharacters.replace(SPACE_CHARACTER, EMPTY_STRING);
     }

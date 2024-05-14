@@ -49,7 +49,7 @@ public class UserService {
 
     public UserDTO create(User user) throws Exception {
         ArrayList<String> keysForException = emailValidation(user.getEmail());
-        keysForException = addExistentStringToArrayList(keysForException, passwordValidation(user.getPassword()));
+        keysForException.addAll(passwordValidation(user.getPassword()));
 
         if (!keysForException.isEmpty()) {
             throw new UserCreationFailedException(keysForException);
