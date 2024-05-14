@@ -9,6 +9,9 @@ import java.util.Optional;
 
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
+import static en.ratings.own.my.test.utility.GeneratorUtility.numberBetweenRangeOfValuesButNotAllowed;
+import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanMaximum;
+import static en.ratings.own.my.test.utility.GeneratorUtility.numberSmallerThanMinimum;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
@@ -119,7 +122,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userStevenWorm);
         String ratingId = responseEntityRating.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
-        ratingEntry.setValue(createValidRangeOfValuesWithNegativeMinimum().getMinimum() - 1);
+        ratingEntry.setValue(numberSmallerThanMinimum(createValidRangeOfValuesWithNegativeMinimum().getMinimum()));
         assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
         checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
@@ -129,7 +132,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userStevenWorm);
         String ratingId = responseEntityRating.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
-        ratingEntry.setValue(createValidRangeOfValuesWithNegativeMinimum().getMaximum() + 0.5);
+        ratingEntry.setValue(numberGreaterThanMaximum(createValidRangeOfValuesWithNegativeMinimum().getMaximum()));
         assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
         checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
@@ -139,8 +142,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userStevenWorm);
         String ratingId = responseEntityRating.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
-        Double notAllowedValue = createValidRangeOfValuesWithNegativeMinimum().getMinimum() +
-                createValidRangeOfValuesWithNegativeMinimum().getStepWidth() / 2.0;
+        Double notAllowedValue = numberBetweenRangeOfValuesButNotAllowed(createValidRangeOfValuesWithNegativeMinimum());
         ratingEntry.setValue(notAllowedValue);
         assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
         checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
