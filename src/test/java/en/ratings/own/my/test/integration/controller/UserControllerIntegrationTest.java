@@ -51,6 +51,7 @@ import static en.ratings.own.my.test.utility.CreateUserUtility.
 import static en.ratings.own.my.test.utility.HttpResponseUtility.createHttpServletResponse;
 import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class UserControllerIntegrationTest extends AbstractIntegrationTest {
 
@@ -73,7 +74,7 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void testValidCreateWithValidInputWithLoggedIn() {
-        login();
+        loginWithStevenWorm();
         testValidCreate(createUserFalakNoorahKhoury());
     }
 
@@ -138,26 +139,32 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     }
 
     private void testValidCreate(User user) {
-        ResponseEntity<UserDTO> responseEntity = null;
+        ResponseEntity<UserDTO> tryResponseEntity = null;
         try {
-            responseEntity = userController.create(user);
+            tryResponseEntity = userController.create(user);
         } catch (Exception e) {
             printExceptionMessage(e);
         }
-        checkResponseEntityAfterCreate(user, responseEntity);
-        compareUserWithStoredUserAfterCreate(user);
-        checkRoleAssignmentAfterCreate(user);
+
+        ResponseEntity<UserDTO> responseEntity = tryResponseEntity;
+        assertAll("test valid create user",
+                () -> checkResponseEntityAfterCreate(user, responseEntity),
+                () -> compareUserWithStoredUserAfterCreate(user),
+                () -> checkRoleAssignmentAfterCreate(user)
+        );
     }
 
     private void checkRoleAssignmentAfterCreate(User user) {
         int index = 0;
 
         ArrayList<RoleAssignment> roleAssignments = findAllByUserIdRoleAssignmentRepository(user.getId());
-        assertThat(roleAssignments.size()).isEqualTo(EXPECTED_ONE);
 
         String roleId = roleAssignments.get(index).getRoleId();
 
-        assertThat(findByIdRoleRepository(roleId).get().getName()).isEqualTo(roleUserAsString());
+        assertAll(
+                () -> assertThat(roleAssignments.size()).isEqualTo(EXPECTED_ONE),
+                () -> assertThat(findByIdRoleRepository(roleId).get().getName()).isEqualTo(roleUserAsString())
+        );
     }
 
     private void testInvalidCreate(User user) {
@@ -171,9 +178,11 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     }
 
     private void testInvalidCreateWithoutStoredEntries(User user) {
-        testInvalidCreate(user);
-        assertThat(findByEmailUserRepository(user.getEmail())).isEmpty();
-        assertThat(findAllRoleAssignmentRepository().isEmpty()).isTrue();
+        assertAll(
+                () -> testInvalidCreate(user),
+                () -> assertThat(findByEmailUserRepository(user.getEmail())).isEmpty(),
+                () -> assertThat(findAllRoleAssignmentRepository().isEmpty()).isTrue()
+        );
     }
 
     private void testCreateWithNotAvailableEmail(User differentUserButWithStevenWormsEmail) {
@@ -186,32 +195,36 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     }
 
     private void checkResponseEntityAfterCreate(User user, ResponseEntity<UserDTO> responseEntity) {
-        assertThatIsNotNull(responseEntity);
-        assertThatStatusCodeIsCreated(responseEntity);
-        compareUserWithUserDTOAfterCreate(user, responseEntity.getBody());
+        assertAll(
+                () -> assertThatIsNotNull(responseEntity),
+                () -> assertThatStatusCodeIsCreated(responseEntity),
+                () -> compareUserWithUserDTOAfterCreate(user, responseEntity.getBody())
+        );
     }
 
     private void compareUserWithUserDTOAfterCreate(User user, UserDTO userDTO) {
-        assertThat(user.getId()).isEqualTo(userDTO.getId());
-        assertThat(user.getEmail()).isEqualTo(userDTO.getEmail());
-        assertThat(user.getFirstName()).isEqualTo(userDTO.getFirstName());
-        assertThat(user.getSurname()).isEqualTo(userDTO.getSurname());
+        assertAll(
+                () -> assertThat(user.getId()).isEqualTo(userDTO.getId()),
+                () -> assertThat(user.getEmail()).isEqualTo(userDTO.getEmail()),
+                () -> assertThat(user.getFirstName()).isEqualTo(userDTO.getFirstName()),
+                () -> assertThat(user.getSurname()).isEqualTo(userDTO.getSurname())
+        );
     }
 
     private void compareUserWithStoredUserAfterCreate(User user) {
         Optional<User> userResult = findByEmailUserRepository(user.getEmail());
-
-        assertThat(userResult).isPresent();
         User storedUser = userResult.get();
 
-        assertThatIdIsDefined(storedUser.getId());
-        assertThat(storedUser.getEmail()).isEqualTo(user.getEmail());
-        assertThat(storedUser.getFirstName()).isEqualTo(user.getFirstName());
-        assertThat(storedUser.getSurname()).isEqualTo(user.getSurname());
-        assertThat(storedUser.getPassword()).isEqualTo(user.getPassword());
+        assertAll(
+                () -> assertThatIdIsDefined(storedUser.getId()),
+                () -> assertThat(storedUser.getEmail()).isEqualTo(user.getEmail()),
+                () -> assertThat(storedUser.getFirstName()).isEqualTo(user.getFirstName()),
+                () -> assertThat(storedUser.getSurname()).isEqualTo(user.getSurname()),
+                () -> assertThat(storedUser.getPassword()).isEqualTo(user.getPassword())
+        );
     }
 
-    private void login() {
+    private void loginWithStevenWorm() {
         User loggedInUser = createUserStevenWorm();
         String rawPassword = loggedInUser.getPassword();
         try {
