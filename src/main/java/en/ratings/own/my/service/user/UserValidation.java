@@ -1,7 +1,7 @@
 package en.ratings.own.my.service.user;
 
-import static en.ratings.own.my.constant.AttributeConstants.PASSWORD_MAXIMUM_LENGTH;
-import static en.ratings.own.my.constant.AttributeConstants.PASSWORD_MINIMUM_LENGTH;
+import static en.ratings.own.my.utility.PasswordUtility.PASSWORD_MAXIMUM_LENGTH;
+import static en.ratings.own.my.utility.PasswordUtility.PASSWORD_MINIMUM_LENGTH;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_TOO_LONG;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_TOO_SHORT;
 

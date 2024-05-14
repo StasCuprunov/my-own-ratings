@@ -2,8 +2,8 @@ package en.ratings.own.my.exception.text;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.constant.AttributeConstants.PASSWORD_MAXIMUM_LENGTH;
-import static en.ratings.own.my.constant.AttributeConstants.PASSWORD_MINIMUM_LENGTH;
+import static en.ratings.own.my.utility.PasswordUtility.PASSWORD_MAXIMUM_LENGTH;
+import static en.ratings.own.my.utility.PasswordUtility.PASSWORD_MINIMUM_LENGTH;
 import static en.ratings.own.my.utility.StringUtility.makeText;
 
 public class UserExceptionText {
