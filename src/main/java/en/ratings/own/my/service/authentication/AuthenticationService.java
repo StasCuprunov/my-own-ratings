@@ -33,6 +33,10 @@ public class AuthenticationService {
                 getAuthorities(user.getId()));
     }
 
+    public void setAuthentication(User user) throws Exception {
+        setAuthentication(createAuthenticationToken(user));
+    }
+
     public void setAuthentication(UsernamePasswordAuthenticationToken authenticationToken) {
         getContext().setAuthentication(authenticationToken);
     }

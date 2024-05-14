@@ -19,14 +19,17 @@ import static org.springframework.http.HttpHeaders.SET_COOKIE;
 public class LoginService {
     private final UserRepositoryService userRepositoryService;
 
+    private final AuthenticationService authenticationService;
+
     private final JwtService jwtService;
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public LoginService(UserRepositoryService userRepositoryService, JwtService jwtService,
-                        PasswordEncoder passwordEncoder) {
+    public LoginService(UserRepositoryService userRepositoryService, AuthenticationService authenticationService,
+                        JwtService jwtService, PasswordEncoder passwordEncoder) {
         this.userRepositoryService = userRepositoryService;
+        this.authenticationService = authenticationService;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -38,6 +41,7 @@ public class LoginService {
         if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             throw new WrongPasswordLoginException(email);
         }
+        authenticationService.setAuthentication(user);
         ResponseCookie cookie = createCookie(jwtService.generateToken(user.getEmail()));
         setAuthTokenCookie(cookie, response);
     }
