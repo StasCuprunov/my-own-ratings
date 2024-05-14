@@ -31,6 +31,8 @@ public class RatingDrinksUtility {
     public static final String DRINKS_IN_ASIA_NAME = "My favourite drinks in Asia";
 
     public static final String DRINKS_IN_ASIA_DESCRIPTION = "Asia drinks are awesome!";
+
+    public static final String DRINK_APPLE_JUICE = "apple juice";
     
     public static RatingDTO createValidRatingDTODrinksWithNegativeMinimum() {
         return createRatingDTOWithNoUserId(DRINKS_NAME, DRINKS_DESCRIPTION,
@@ -66,7 +68,7 @@ public class RatingDrinksUtility {
     }
 
     public static RatingEntry createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(String ratingId) {
-        return new RatingEntry(ratingId, "apple juice", -3.4);
+        return new RatingEntry(ratingId, DRINK_APPLE_JUICE, -3.4);
     }
 
     public static RatingEntry createValidRatingEntryRedBullForDrinksWithNegativeMinimum(String ratingId) {

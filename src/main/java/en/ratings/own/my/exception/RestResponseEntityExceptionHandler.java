@@ -12,6 +12,7 @@ import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException
 import en.ratings.own.my.exception.rating.entry.RatingEntryCreateNotAllowedException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryDeleteByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
+import en.ratings.own.my.exception.rating.entry.RatingEntryUpdateNotAllowedException;
 import en.ratings.own.my.exception.rating.range.of.values.RangeOfValuesByIdNotFoundException;
 import en.ratings.own.my.exception.rating.range.of.values.RangeOfValuesByMinimumAndMaximumAndStepWidthNotFoundException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
@@ -50,7 +51,7 @@ public class RestResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {RatingByIdNotAllowedException.class, RatingDeleteByIdNotAllowedException.class,
             RatingUpdateNotAllowedException.class, RatingEntryCreateNotAllowedException.class,
-            RatingEntryDeleteByIdNotAllowedException.class})
+            RatingEntryDeleteByIdNotAllowedException.class, RatingEntryUpdateNotAllowedException.class})
     protected ResponseEntity<String> handleUnauthorized(Exception exception) {
         return createResponseEntity(exception, UNAUTHORIZED);
     }
