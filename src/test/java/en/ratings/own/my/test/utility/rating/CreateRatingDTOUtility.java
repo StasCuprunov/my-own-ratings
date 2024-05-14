@@ -13,6 +13,11 @@ public class CreateRatingDTOUtility {
         return new RatingDTO("", name, rangeOfValues);
     }
 
+    public static RatingDTO creatRatingDTOWithUserId(String userId, RatingDTO ratingDTO) {
+        ratingDTO.setUserId(userId);
+        return ratingDTO;
+    }
+
     public static final RatingDTO INVALID_RATING_DTO_BECAUSE_EMPTY_NAME =
             createRatingDTOWithNoUserId("         ", "Not allowed.",
                     CreateRangeOfValuesUtility.VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM);

@@ -16,6 +16,8 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.Optional;
+
 import static en.ratings.own.my.test.constant.ContainerConstants.DOCKER_IMAGE_NAME;
 import static en.ratings.own.my.test.constant.ContainerConstants.URI_KEY;
 import static en.ratings.own.my.test.utility.CreateUserUtility.createUserFalakNoorahKhoury;
@@ -86,5 +88,9 @@ public abstract class AbstractIntegrationTest {
 
     protected void deleteAllUserRepository() {
         userRepository.deleteAll();
+    }
+
+    protected Optional<User> findByIdUserRepository(String id) {
+        return userRepository.findById(id);
     }
 }
