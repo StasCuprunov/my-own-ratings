@@ -16,6 +16,7 @@ import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingEntryFailedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingEntryUpdateNotAllowedException;
+import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsOk;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createValidRangeOfValuesWithNegativeMinimum;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.DRINK_APPLE_JUICE;
@@ -25,6 +26,54 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class RatingEntryUpdateControllerIntegrationTest extends RatingEntryControllerIntegrationTest {
+
+    @Test
+    public void testValidUpdateWithName() {
+        ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
+        String ratingId = responseEntityRating.getBody().getId();
+        RatingEntry ratingEntryBeforeUpdate = saveValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        RatingEntry input = createNewRatingEntryObject(ratingEntryBeforeUpdate);
+        input.setName(DRINK_APPLE_JUICE);
+        testValidUpdate(input, updateSuccessful(input));
+    }
+
+    @Test
+    public void testValidUpdateWithValue() {
+        ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
+        String ratingId = responseEntityRating.getBody().getId();
+        RatingEntry ratingEntryBeforeUpdate = saveValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        RatingEntry input = createNewRatingEntryObject(ratingEntryBeforeUpdate);
+        input.setValue(createValidRangeOfValuesWithNegativeMinimum().getMinimum());
+        testValidUpdate(input, updateSuccessful(input));
+    }
+
+    @Test
+    public void testValidUpdateWithNameAndValue() {
+        ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
+        String ratingId = responseEntityRating.getBody().getId();
+        RatingEntry ratingEntryBeforeUpdate = saveValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        RatingEntry input = createNewRatingEntryObject(ratingEntryBeforeUpdate);
+        input.setName(DRINK_APPLE_JUICE);
+        input.setValue(createValidRangeOfValuesWithNegativeMinimum().getMinimum());
+        testValidUpdate(input, updateSuccessful(input));
+    }
+
+    @Test
+    public void testValidUpdateWithNameUsedByOtherUser() {
+        ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userStevenWorm);
+        String ratingId = responseEntityRating.getBody().getId();
+        RatingEntry ratingEntryFromOtherUser = saveValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+
+        responseEntityRating = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
+        ratingId = responseEntityRating.getBody().getId();
+        RatingEntry ratingEntryBeforeUpdate = saveValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId);
+
+        RatingEntry input = createNewRatingEntryObject(ratingEntryBeforeUpdate);
+        input.setName(ratingEntryFromOtherUser.getName());
+        input.setValue(createValidRangeOfValuesWithNegativeMinimum().getMinimum());
+
+        testValidUpdate(input, updateSuccessful(input));
+    }
 
     @Test
     public void testInvalidUpdateWithoutLoggedIn() {
@@ -133,6 +182,29 @@ public class RatingEntryUpdateControllerIntegrationTest extends RatingEntryContr
                 () -> assertThat(foundRatingEntry.getName()).isEqualTo(ratingEntryBefore.getName()),
                 () -> assertThat(foundRatingEntry.getValue()).isEqualTo(ratingEntryBefore.getValue())
         );
+    }
+
+    private void testValidUpdate(RatingEntry input, ResponseEntity<RatingEntry> responseEntity) {
+        RatingEntry result = responseEntity.getBody();
+        assertAll("Test valid update rating entry",
+                () -> assertThatStatusCodeIsOk(responseEntity),
+                () -> compareInputWithResult(input, result),
+                () -> compareInputWithDatabase(input)
+        );
+    }
+
+    private void compareInputWithResult(RatingEntry input, RatingEntry result) {
+        assertAll(
+                () -> assertThat(result.getId()).isEqualTo(input.getId()),
+                () -> assertThat(result.getRatingId()).isEqualTo(input.getRatingId()),
+                () -> assertThat(result.getName()).isEqualTo(input.getName()),
+                () -> assertThat(result.getValue()).isEqualTo(input.getValue())
+        );
+    }
+
+    private void compareInputWithDatabase(RatingEntry input) {
+        RatingEntry foundRatingEntry = findByIdRatingEntryRepository(input.getId()).get();
+        compareInputWithResult(input, foundRatingEntry);
     }
 
     private ResponseEntity<RatingEntry> updateSuccessful(RatingEntry input) {

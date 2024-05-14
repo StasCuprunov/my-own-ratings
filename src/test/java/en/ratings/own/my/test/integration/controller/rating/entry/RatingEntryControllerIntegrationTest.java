@@ -27,6 +27,8 @@ import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingDTODrinksWithNegativeMinimum;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
+        createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum;
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
 
 public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTest {
@@ -98,6 +100,10 @@ public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTes
         return saveRatingEntryRepository(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
     }
 
+    protected RatingEntry saveValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(String ratingId) {
+        return saveRatingEntryRepository(createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId));
+    }
+
     private ResponseEntity<RatingDTO> createValidRating(User user, RatingDTO input) {
         input.setUserId(user.getId());
         login(user);
@@ -110,7 +116,7 @@ public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTes
     }
 
     protected RatingEntry createNewRatingEntryObject(RatingEntry ratingEntry) {
-        return new RatingEntry(ratingEntry.getRatingId(), ratingEntry.getRatingId(), ratingEntry.getName(),
+        return new RatingEntry(ratingEntry.getId(), ratingEntry.getRatingId(), ratingEntry.getName(),
                 ratingEntry.getValue());
     }
 }
