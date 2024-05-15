@@ -37,6 +37,9 @@ public class PermissionConstants {
     public static final String USER_HAS_PERMISSION_FOR_CREATE_RATING = HAS_ROLE_USER_PERMISSION + AND +
             AT_SECURITY_SERVICE + "hasPermissionToCreateRating(#ratingDTO.userId)";
 
+    public static final String USER_HAS_PERMISSION_FOR_UPDATE_RATING = HAS_ROLE_USER_PERMISSION + AND +
+            AT_SECURITY_SERVICE + "hasPermissionToUpdateRating(#ratingDTO)";
+
     public static final String IS_AUTHENTICATED_PERMISSION = "isAuthenticated()";
 
     private static HashMap<String, SimpleGrantedAuthority> createGrantedAuthorities() {

@@ -1,5 +1,6 @@
 package en.ratings.own.my.service;
 
+import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.rating.Rating;
 import en.ratings.own.my.model.rating.RatingEntry;
@@ -60,6 +61,22 @@ public class SecurityService {
     }
 
     public boolean hasPermissionToCreateRating(String userId) {
+        return isIdEqualToActualUserId(userId);
+    }
+
+    public boolean hasPermissionToUpdateRating(RatingDTO ratingDTO) {
+        Rating rating = getRating(ratingDTO.getId());
+        if (rating == null) {
+            return false;
+        }
+        String userId = ratingDTO.getUserId();
+        if (!userId.equals(rating.getUserId())) {
+            return false;
+        }
+        return isIdEqualToActualUserId(userId);
+    }
+
+    private boolean isIdEqualToActualUserId(String userId) {
         User user = getActualUser();
         if (user == null) {
             return false;

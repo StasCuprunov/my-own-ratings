@@ -11,7 +11,6 @@ import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
 import en.ratings.own.my.exception.rating.range.of.values.RangeOfValuesByIdNotFoundException;
 import en.ratings.own.my.exception.rating.range.of.values.RangeOfValuesByMinimumAndMaximumAndStepWidthNotFoundException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
-import en.ratings.own.my.exception.rating.update.RatingUpdateNotAllowedException;
 import en.ratings.own.my.exception.role.RoleByIdNotFoundException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler {
@@ -42,11 +40,6 @@ public class RestResponseEntityExceptionHandler {
             EmailNotFoundInTokenException.class, InvalidTokenException.class})
     protected ResponseEntity<String> handleBadRequest(Exception exception) {
         return createResponseEntity(exception, BAD_REQUEST);
-    }
-
-    @ExceptionHandler(value = {RatingUpdateNotAllowedException.class})
-    protected ResponseEntity<String> handleUnauthorized(Exception exception) {
-        return createResponseEntity(exception, UNAUTHORIZED);
     }
 
     private ResponseEntity<String> createResponseEntity(Exception exception, HttpStatus status) {

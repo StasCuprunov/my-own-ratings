@@ -1,12 +1,10 @@
 package en.ratings.own.my.test.utility.asserts;
 
 import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
-import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
-import en.ratings.own.my.exception.rating.update.RatingUpdateNotAllowedException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
 import org.springframework.security.access.AccessDeniedException;
@@ -37,16 +35,8 @@ public class AssertThatExceptionUtility {
         assertThatExceptionIsEqual(exception, AuthenticationCredentialsNotFoundException.class);
     }
 
-    public static <T extends Exception> void assertThatExceptionIsEqualToRatingByIdNotFoundException(T exception) {
-        assertThatExceptionIsEqual(exception, RatingByIdNotFoundException.class);
-    }
-
     public static <T extends Exception> void assertThatExceptionIsEqualToRatingUpdateFailedException(T exception) {
         assertThatExceptionIsEqual(exception, RatingUpdateFailedException.class);
-    }
-
-    public static <T extends Exception> void assertThatExceptionIsEqualToRatingUpdateNotAllowedException(T exception){
-        assertThatExceptionIsEqual(exception, RatingUpdateNotAllowedException.class);
     }
 
     public static <T extends Exception> void assertThatExceptionIsEqualToRatingEntryFailedException(T exception) {

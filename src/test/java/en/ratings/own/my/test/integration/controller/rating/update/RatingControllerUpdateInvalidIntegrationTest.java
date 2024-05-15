@@ -53,7 +53,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setId(createNotExistentId(input.getId()));
-        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        testUpdateInvalidWithExceptedAccessDeniedException(input);
         compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
@@ -65,7 +65,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setUserId(userFalakNoorahKhoury.getId());
-        testUpdateInvalidWithExceptedRatingUpdateNotAllowedException(input);
+        testUpdateInvalidWithExceptedAccessDeniedException(input);
         compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
@@ -76,7 +76,7 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
         RatingDTO input = responseCreate.getBody();
         input.setUserId(createNotExistentId(userStevenWorm.getId()));
-        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        testUpdateInvalidWithExceptedAccessDeniedException(input);
         compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }
 
