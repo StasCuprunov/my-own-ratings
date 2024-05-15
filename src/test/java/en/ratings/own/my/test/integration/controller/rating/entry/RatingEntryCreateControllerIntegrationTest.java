@@ -14,9 +14,9 @@ import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanM
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberSmallerThanMinimum;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
+        assertThatExceptionIsEqualToAccessDeniedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingEntryCreateNotAllowedException;
+        assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingEntryFailedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
@@ -80,7 +80,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         login(userFalakNoorahKhoury);
         String ratingId = responseEntity.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
-        assertThatExceptionIsEqualToRatingEntryCreateNotAllowedException(createInvalid(ratingEntry));
+        assertThatExceptionIsEqualToAccessDeniedException(createInvalid(ratingEntry));
         checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 

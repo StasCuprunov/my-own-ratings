@@ -11,8 +11,8 @@ import static en.ratings.own.my.utility.PermissionUtility.createSimpleGrantedAut
 
 public class PermissionConstants {
     public static final String ROLE_PREFIX = "ROLE_";
-
     public static final String AND = " && ";
+    public static final String AT_SECURITY_SERVICE = "@securityService.";
     public static final HashMap<String, SimpleGrantedAuthority> LIST_OF_GRANTED_AUTHORITIES =
             createGrantedAuthorities();
     public static final SimpleGrantedAuthority USER_AUTHORITY = LIST_OF_GRANTED_AUTHORITIES.get(roleUserAsString());
@@ -21,7 +21,10 @@ public class PermissionConstants {
     public static final String HAS_ROLE_ADMIN_PERMISSION = "hasRole('ROLE_ADMIN')";
 
     public static final String USER_HAS_PERMISSION_FOR_DELETE_BY_ID_RATING_ENTRY =
-            HAS_ROLE_USER_PERMISSION + AND + "@securityService.hasPermissionToDeleteByIdRatingEntry(#id)";
+            HAS_ROLE_USER_PERMISSION + AND + AT_SECURITY_SERVICE + "hasPermissionToDeleteByIdRatingEntry(#id)";
+
+    public static final String USER_HAS_PERMISSION_FOR_CREATE_RATING_ENTRY = HAS_ROLE_USER_PERMISSION + AND +
+            AT_SECURITY_SERVICE + "hasPermissionToCreateRatingEntry(#ratingEntry.getRatingId())";
     public static final String IS_AUTHENTICATED_PERMISSION = "isAuthenticated()";
 
     private static HashMap<String, SimpleGrantedAuthority> createGrantedAuthorities() {
