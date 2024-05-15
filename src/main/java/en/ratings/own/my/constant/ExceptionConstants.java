@@ -7,6 +7,10 @@ public final class ExceptionConstants {
     public static final String KEY_EMAIL_ALREADY_EXISTS = "emailAlreadyExists";
     public static final String KEY_PASSWORD_TOO_SHORT = "passwordTooShort";
     public static final String KEY_PASSWORD_TOO_LONG = "passwordTooLong";
+    public static final String KEY_PASSWORD_HAS_NO_DIGIT = "passwordHasNoDigit";
+    public static final String KEY_PASSWORD_HAS_NO_ENGLISH_UPPER_CASE_LETTER = "passwordHasNoEnglishUpperCaseLetter";
+    public static final String KEY_PASSWORD_HAS_NO_ENGLISH_LOWER_CASE_LETTER = "passwordHasNoEnglishLowerCaseLetter";
+    public static final String KEY_PASSWORD_HAS_NO_VALID_SPECIAL_CHARACTER = "passwordHasNoValidSpecialCharacter";
 
     // For RatingCreationFailedException, RatingByIdNotFoundException, RatingUpdateFailedException
     public static final String KEY_USER_WITH_ID_NOT_FOUND = "userWithIdNotFound";

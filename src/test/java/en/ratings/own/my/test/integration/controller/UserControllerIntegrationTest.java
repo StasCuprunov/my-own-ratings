@@ -17,39 +17,40 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserLiangPai;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToUserCreationFailedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
 import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertThatIsNotNull;
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsCreated;
-import static en.ratings.own.my.test.utility.CreateUserUtility.createUserFalakNoorahKhoury;
 import static en.ratings.own.my.test.utility.CreateUserUtility.createUserStevenWorm;
-import static en.ratings.own.my.test.utility.CreateUserUtility.createUserStevenWormWithDefinedId;
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserLiangPaiWithDefinedId;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithDifferentFirstName;
+        createUserLiangPaiWithDifferentFirstName;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithDifferentPassword;
+        createUserLiangPaiWithDifferentPassword;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithDifferentSurname;
+        createUserLiangPaiWithDifferentSurname;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithInvalidEmail;
+        createUserLiangPaiWithInvalidEmail;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithInvalidSpecialCharacterPassword;
+        createUserLiangPaiWithInvalidSpecialCharacterPassword;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithTooLongPassword;
+        createUserLiangPaiWithTooLongPassword;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithTooShortPassword;
+        createUserLiangPaiWithTooShortPassword;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithoutDigitsPassword;
+        createUserLiangPaiWithoutDigitsPassword;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithoutLowerCaseLetterPassword;
+        createUserLiangPaiWithoutLowerCaseLetterPassword;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithoutUpperCaseLetterPassword;
+        createUserLiangPaiWithoutUpperCaseLetterPassword;
 import static en.ratings.own.my.test.utility.CreateUserUtility.
-        createUserStevenWormWithoutValidSpecialCharacterPassword;
+        createUserLiangPaiWithoutValidSpecialCharacterPassword;
 import static en.ratings.own.my.test.utility.HttpResponseUtility.createHttpServletResponse;
 import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
+import static en.ratings.own.my.utility.math.MathUtility.isLastIndex;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -69,73 +70,80 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void testValidCreateWithValidInputWithoutLoggedIn() {
-        testValidCreate(createUserStevenWorm());
+        testValidCreate(createUserLiangPai());
     }
 
     @Test
     public void testValidCreateWithValidInputWithLoggedIn() {
         loginWithStevenWorm();
-        testValidCreate(createUserFalakNoorahKhoury());
+        testValidCreate(createUserLiangPai());
     }
 
     @Test
     public void testInvalidCreateWithDefinedId() {
-        testInvalidCreate(createUserStevenWormWithDefinedId());
+        testInvalidCreate(createUserLiangPaiWithDefinedId());
     }
 
     @Test
     public void testInvalidCreateWithNotAvailableEmailButWithDifferentFirstName() {
-        testCreateWithNotAvailableEmail(createUserStevenWormWithDifferentFirstName());
+        testCreateWithNotAvailableEmailWithLiangPai(createUserLiangPaiWithDifferentFirstName());
     }
 
     @Test
     public void testInvalidCreateWithNotAvailableEmailButWithDifferentSurname() {
-        testCreateWithNotAvailableEmail(createUserStevenWormWithDifferentSurname());
+        testCreateWithNotAvailableEmailWithLiangPai(createUserLiangPaiWithDifferentSurname());
     }
 
     @Test
     public void testInvalidCreateWithNotAvailableEmailButWithDifferentPassword() {
-        testCreateWithNotAvailableEmail(createUserStevenWormWithDifferentPassword());
+        testCreateWithNotAvailableEmailWithLiangPai(createUserLiangPaiWithDifferentPassword());
     }
 
     @Test
     public void testInvalidCreateWithInvalidEmail() {
-        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithInvalidEmail());
+        testInvalidCreateWithoutStoredEntries(createUserLiangPaiWithInvalidEmail(), findAllRoleAssignmentRepository());
     }
 
     @Test
     public void testInvalidCreateWithTooShortPassword() {
-        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithTooShortPassword());
+        testInvalidCreateWithoutStoredEntries(createUserLiangPaiWithTooShortPassword(),
+                findAllRoleAssignmentRepository());
     }
 
     @Test
     public void testInvalidCreateWithTooLongPassword() {
-        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithTooLongPassword());
+        testInvalidCreateWithoutStoredEntries(createUserLiangPaiWithTooLongPassword(),
+                findAllRoleAssignmentRepository());
     }
 
     @Test
     public void testInvalidCreateWithoutDigitsInPassword() {
-        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutDigitsPassword());
+        testInvalidCreateWithoutStoredEntries(createUserLiangPaiWithoutDigitsPassword(),
+                findAllRoleAssignmentRepository());
     }
 
     @Test
     public void testInvalidCreateWithoutLowerCaseLetterInPassword() {
-        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutLowerCaseLetterPassword());
+        testInvalidCreateWithoutStoredEntries(createUserLiangPaiWithoutLowerCaseLetterPassword(),
+                findAllRoleAssignmentRepository());
     }
 
     @Test
     public void testInvalidCreateWithoutUpperCaseLetterInPassword() {
-        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutUpperCaseLetterPassword());
+        testInvalidCreateWithoutStoredEntries(createUserLiangPaiWithoutUpperCaseLetterPassword(),
+                findAllRoleAssignmentRepository());
     }
 
     @Test
     public void testInvalidCreateWithoutValidSpecialCharacterInPassword() {
-        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithoutValidSpecialCharacterPassword());
+        testInvalidCreateWithoutStoredEntries(createUserLiangPaiWithoutValidSpecialCharacterPassword(),
+                findAllRoleAssignmentRepository());
     }
 
     @Test
     public void testInvalidCreateWithInvalidSpecialCharacterInPassword() {
-        testInvalidCreateWithoutStoredEntries(createUserStevenWormWithInvalidSpecialCharacterPassword());
+        testInvalidCreateWithoutStoredEntries(createUserLiangPaiWithInvalidSpecialCharacterPassword(),
+                findAllRoleAssignmentRepository());
     }
 
     private void testValidCreate(User user) {
@@ -177,21 +185,41 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
         assertThatExceptionIsEqualToUserCreationFailedException(foundException);
     }
 
-    private void testInvalidCreateWithoutStoredEntries(User user) {
+    private void testInvalidCreateWithoutStoredEntries(User user, ArrayList<RoleAssignment> roleAssignmentsBefore) {
         assertAll(
                 () -> testInvalidCreate(user),
                 () -> assertThat(findByEmailUserRepository(user.getEmail())).isEmpty(),
-                () -> assertThat(findAllRoleAssignmentRepository().isEmpty()).isTrue()
+                () -> compareRoleAssignmentTable(roleAssignmentsBefore)
         );
     }
 
-    private void testCreateWithNotAvailableEmail(User differentUserButWithStevenWormsEmail) {
+    private void compareRoleAssignmentTable(ArrayList<RoleAssignment> listOfRoleAssignmentsBefore) {
+        ArrayList<RoleAssignment> listOfStoredRoleAssignments = findAllRoleAssignmentRepository();
+        int sizeOfStoredRoleAssignments = listOfStoredRoleAssignments.size();
+        ArrayList<String> notFoundRoleAssignmentIdsBefore = new ArrayList<>();
+        for (RoleAssignment roleAssignmentBefore: listOfRoleAssignmentsBefore) {
+            for (int index = 0; index < sizeOfStoredRoleAssignments; index++) {
+                if (listOfStoredRoleAssignments.get(index).equals(roleAssignmentBefore)) {
+                    break;
+                }
+                else if (isLastIndex(index, sizeOfStoredRoleAssignments)) {
+                    notFoundRoleAssignmentIdsBefore.add(roleAssignmentBefore.getId());
+                }
+            }
+        }
+        assertAll(
+                () -> assertThat(sizeOfStoredRoleAssignments).isEqualTo(listOfRoleAssignmentsBefore.size()),
+                () -> assertThat(notFoundRoleAssignmentIdsBefore.isEmpty()).isTrue()
+        );
+    }
+
+    private void testCreateWithNotAvailableEmailWithLiangPai(User differentUserButWithLiangPaisEmail) {
         try {
-            userController.create(createUserStevenWorm());
+            userController.create(createUserLiangPai());
         } catch (Exception e) {
             printExceptionMessage(e);
         }
-        testInvalidCreate(differentUserButWithStevenWormsEmail);
+        testInvalidCreate(differentUserButWithLiangPaisEmail);
     }
 
     private void checkResponseEntityAfterCreate(User user, ResponseEntity<UserDTO> responseEntity) {
@@ -227,11 +255,6 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     private void loginWithStevenWorm() {
         User loggedInUser = createUserStevenWorm();
         String rawPassword = loggedInUser.getPassword();
-        try {
-            userController.create(loggedInUser);
-        } catch (Exception e) {
-            printExceptionMessage(e);
-        }
 
         LoginDTO loginDTO = new LoginDTO(loggedInUser.getEmail(), rawPassword);
         try {

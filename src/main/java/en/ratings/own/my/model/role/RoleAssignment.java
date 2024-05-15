@@ -31,4 +31,9 @@ public class RoleAssignment {
         setUserId(userId);
         setRoleId(roleId);
     }
+
+    public boolean equals(RoleAssignment roleAssignment) {
+        return id.equals(roleAssignment.getId()) && userId.equals(roleAssignment.getUserId()) &&
+                roleId.equals(roleAssignment.getRoleId());
+    }
 }
