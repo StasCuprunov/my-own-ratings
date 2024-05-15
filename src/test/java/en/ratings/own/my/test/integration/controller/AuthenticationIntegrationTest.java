@@ -17,6 +17,7 @@ import static en.ratings.own.my.constant.CookieConstants.SAME_SITE;
 import static en.ratings.own.my.constant.CookieConstants.SAME_SITE_VALUE;
 import static en.ratings.own.my.constant.CookieConstants.SECURE;
 import static en.ratings.own.my.test.utility.CreateUserUtility.createUserFalakNoorahKhoury;
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserLiangPai;
 import static en.ratings.own.my.test.utility.CreateUserUtility.createUserStevenWorm;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.HttpResponseUtility.createHttpServletResponse;
@@ -81,10 +82,10 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testInvalidLoginWithFalseEmail() {
+    public void testInvalidLoginWithNotExistentEmail() {
         LoginDTO loginDTO = createLoginDTOForFalakNoorahKhoury();
-        loginDTO.setEmail(createUserStevenWorm().getEmail());
-        testInvalidLoginWithFalseEmail(loginDTO);
+        loginDTO.setEmail(createUserLiangPai().getEmail());
+        testInvalidLoginWithNotExistentEmail(loginDTO);
     }
 
     @Test
@@ -94,7 +95,7 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
         testInvalidLoginWithFalsePassword(loginDTO);
     }
 
-    private void testInvalidLoginWithFalseEmail(LoginDTO loginDTO) {
+    private void testInvalidLoginWithNotExistentEmail(LoginDTO loginDTO) {
         HttpServletResponse response = createHttpServletResponse();
         Exception foundException = new Exception();
         try {
@@ -126,11 +127,6 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
 
     private LoginDTO createLoginDTO(User user) {
         String rawPassword = user.getPassword();
-        try {
-            userController.create(user);
-        } catch (Exception e) {
-            printExceptionMessage(e);
-        }
         return new LoginDTO(user.getEmail(), rawPassword);
     }
 
