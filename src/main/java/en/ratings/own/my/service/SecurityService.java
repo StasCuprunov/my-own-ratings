@@ -28,31 +28,15 @@ public class SecurityService {
         this.ratingRepositoryService = ratingRepositoryService;
     }
     public boolean hasPermissionToDeleteByIdRatingEntry(String id) {
-        User user = getActualUser();
-        if (user == null) {
-            return false;
-        }
         RatingEntry ratingEntry = getRatingEntry(id);
         if (ratingEntry == null) {
             return false;
         }
-        Rating rating = getRating(ratingEntry.getRatingId());
-        if (rating == null) {
-            return false;
-        }
-        return rating.getUserId().equals(user.getId());
+        return hasPermissionToRating(ratingEntry.getRatingId());
     }
 
     public boolean hasPermissionToCreateRatingEntry(String ratingId) {
-        User user = getActualUser();
-        if (user == null) {
-            return false;
-        }
-        Rating rating = getRating(ratingId);
-        if (rating == null) {
-            return false;
-        }
-        return rating.getUserId().equals(user.getId());
+        return hasPermissionToRating(ratingId);
     }
 
     public boolean hasPermissionToUpdateRatingEntry(RatingEntry ratingEntry) {
@@ -60,7 +44,19 @@ public class SecurityService {
         if ((storedRatingEntry == null) || !storedRatingEntry.getRatingId().equals(ratingEntry.getRatingId())) {
             return false;
         }
-        return hasPermissionToCreateRatingEntry(ratingEntry.getRatingId());
+        return hasPermissionToRating(ratingEntry.getRatingId());
+    }
+
+    public boolean hasPermissionToRating(String id) {
+        User user = getActualUser();
+        if (user == null) {
+            return false;
+        }
+        Rating rating = getRating(id);
+        if (rating == null) {
+            return false;
+        }
+        return rating.getUserId().equals(user.getId());
     }
 
     private Rating getRating(String id) {

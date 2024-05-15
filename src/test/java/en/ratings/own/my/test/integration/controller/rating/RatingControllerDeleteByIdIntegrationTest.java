@@ -12,11 +12,9 @@ import java.util.ArrayList;
 import static en.ratings.own.my.test.utility.GeneratorUtility.createNotExistentId;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToAccessDeniedException;
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
-import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingByIdNotFoundException;
-import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingDeleteByIdNotAllowedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsNoContent;
 import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM;
@@ -74,7 +72,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
         Exception foundException = deleteByIdInvalid(deleteRatingId);
 
         assertAll(
-                () -> assertThatExceptionIsEqualToRatingByIdNotFoundException(foundException),
+                () -> assertThatExceptionIsEqualToAccessDeniedException(foundException),
                 () -> checkIfSomethingIsMissingThatShouldExistAfterDeleteById(deleteRatingId, listOfRatingsBeforeDelete,
                         listOfRangeOfValuesBeforeDelete, listOfRatingEntriesBeforeDelete)
         );
@@ -95,7 +93,7 @@ public class RatingControllerDeleteByIdIntegrationTest extends RatingControllerI
                 VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
         login(userFalakNoorahKhoury);
         Exception foundException = deleteByIdInvalid(responseEntity.getBody().getId());
-        assertThatExceptionIsEqualToRatingDeleteByIdNotAllowedException(foundException);
+        assertThatExceptionIsEqualToAccessDeniedException(foundException);
     }
 
     private void testValidDeleteByIdAndDeletedRangeOfValues(String ratingId, RangeOfValues rangeOfValues) {

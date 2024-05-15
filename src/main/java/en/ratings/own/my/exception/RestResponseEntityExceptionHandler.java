@@ -6,7 +6,6 @@ import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
 import en.ratings.own.my.exception.rating.RatingByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
 import en.ratings.own.my.exception.rating.RatingByUserIdAndNameNotFoundException;
-import en.ratings.own.my.exception.rating.RatingDeleteByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
@@ -46,8 +45,7 @@ public class RestResponseEntityExceptionHandler {
         return createResponseEntity(exception, BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {RatingByIdNotAllowedException.class, RatingDeleteByIdNotAllowedException.class,
-            RatingUpdateNotAllowedException.class})
+    @ExceptionHandler(value = {RatingByIdNotAllowedException.class, RatingUpdateNotAllowedException.class})
     protected ResponseEntity<String> handleUnauthorized(Exception exception) {
         return createResponseEntity(exception, UNAUTHORIZED);
     }
