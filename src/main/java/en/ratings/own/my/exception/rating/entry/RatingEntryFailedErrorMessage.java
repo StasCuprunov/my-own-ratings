@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_IS_EMPTY;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;
+import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageForRatingEntryNameIsEmpty;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageRatingEntryByIdNotFound;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageRatingEntryNameAlreadyUsedInRating;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageRatingEntryValueIsNotAllowed;
@@ -24,6 +26,7 @@ public class RatingEntryFailedErrorMessage implements InterfaceErrorMessage {
             switch (key) {
                 case KEY_RATING_ENTRY_BY_ID_NOT_FOUND -> errorMessage.add(errorMessageRatingEntryByIdNotFound());
                 case KEY_RATING_BY_ID_NOT_FOUND -> errorMessage.add(errorMessageForRatingByIdNotFound());
+                case KEY_RATING_ENTRY_NAME_IS_EMPTY -> errorMessage.add(errorMessageForRatingEntryNameIsEmpty());
                 case KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING -> errorMessage.
                         add(errorMessageRatingEntryNameAlreadyUsedInRating());
                 case KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED -> errorMessage.

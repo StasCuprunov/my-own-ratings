@@ -45,10 +45,11 @@ public class RangeOfValuesValidation {
     }
 
     public static boolean isValueInRangeOfValues(Double value, RangeOfValues rangeOfValues) {
-        if (rangeOfValues.getMaximum() < value) {
+        Double minimum = rangeOfValues.getMinimum();
+        if ((rangeOfValues.getMaximum() < value) || (minimum > value)) {
             return false;
         }
-        return canValueBeReachedFromMinimum(value, rangeOfValues.getMinimum(), rangeOfValues.getStepWidth());
+        return canValueBeReachedFromMinimum(value, minimum, rangeOfValues.getStepWidth());
     }
 
     private static ArrayList<String> minimumValidation(RangeOfValues rangeOfValues) {

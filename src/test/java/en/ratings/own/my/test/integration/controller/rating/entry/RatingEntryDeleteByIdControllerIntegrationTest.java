@@ -12,11 +12,11 @@ import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
 import static en.ratings.own.my.test.utility.GeneratorUtility.createNotExistentId;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToAccessDeniedException;
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingEntryByIdNotFoundException;
-import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingEntryDeleteByIdNotAllowedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsNoContent;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum;
@@ -63,7 +63,7 @@ public class RatingEntryDeleteByIdControllerIntegrationTest extends RatingEntryC
                 saveRatingEntryRepository(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
         String ratingEntryId = ratingEntry.getId();
         login(userStevenWorm);
-        assertThatExceptionIsEqualToRatingEntryDeleteByIdNotAllowedException(deleteByIdInvalid(ratingEntryId));
+        assertThatExceptionIsEqualToAccessDeniedException(deleteByIdInvalid(ratingEntryId));
         checkIfRatingEntryHasBeenNotDeletedAndEdited(ratingEntryId, ratingEntry);
 
     }
@@ -76,7 +76,7 @@ public class RatingEntryDeleteByIdControllerIntegrationTest extends RatingEntryC
                 saveRatingEntryRepository(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
         String ratingEntryId = ratingEntry.getId();
         String nonExistentRatingEntryId = createNotExistentId(ratingEntryId);
-        assertThatExceptionIsEqualToRatingEntryByIdNotFoundException(deleteByIdInvalid(nonExistentRatingEntryId));
+        assertThatExceptionIsEqualToAccessDeniedException(deleteByIdInvalid(nonExistentRatingEntryId));
         checkIfRatingEntryHasBeenNotDeletedAndEdited(ratingEntryId, ratingEntry);
     }
 

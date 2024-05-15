@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.Optional;
 
+import static en.ratings.own.my.test.constant.TestConstants.EMPTY_TEXT;
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberBetweenRangeOfValuesButNotAllowed;
@@ -14,15 +15,17 @@ import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanM
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberSmallerThanMinimum;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
+        assertThatExceptionIsEqualToAccessDeniedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingEntryCreateNotAllowedException;
+        assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingEntryFailedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsCreated;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createValidRangeOfValuesWithNegativeMinimum;
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
+        createValidRatingEntryCokeForDrinksWithAmazonRating;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,7 +63,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
 
         ResponseEntity<RatingDTO> responseEntityTest = createValidRatingDrinkInAsiaWithAmazonRating(userStevenWorm);
         String ratingIdTest = responseEntityTest.getBody().getId();
-        RatingEntry ratingEntryTest = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingIdTest);
+        RatingEntry ratingEntryTest = createValidRatingEntryCokeForDrinksWithAmazonRating(ratingIdTest);
         testCreateSuccessful(ratingEntryTest, createSuccessful(ratingEntryTest));
     }
 
@@ -80,7 +83,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         login(userFalakNoorahKhoury);
         String ratingId = responseEntity.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
-        assertThatExceptionIsEqualToRatingEntryCreateNotAllowedException(createInvalid(ratingEntry));
+        assertThatExceptionIsEqualToAccessDeniedException(createInvalid(ratingEntry));
         checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 
@@ -99,7 +102,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         ResponseEntity<RatingDTO> responseEntity = createRatingDrinksWithNegativeMinimum(userStevenWorm);
         String ratingId = responseEntity.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
-        ratingEntry.setName("       \n ");
+        ratingEntry.setName(EMPTY_TEXT);
         assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
         checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
@@ -112,6 +115,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
                 createSuccessful(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
         RatingEntry oldRatingEntry = createNewRatingEntryObject(responseEntityRatingEntry.getBody());
         RatingEntry ratingEntry = responseEntityRatingEntry.getBody();
+        ratingEntry.setId(null);
         ratingEntry.setValue(createValidRangeOfValuesWithNegativeMinimum().getMaximum());
         assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
         checkIfOldRatingEntryHasChangedAfterCreateWithSameRatingEntryNameAndSameRating(oldRatingEntry);
