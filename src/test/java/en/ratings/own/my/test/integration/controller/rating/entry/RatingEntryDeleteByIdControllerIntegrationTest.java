@@ -76,7 +76,7 @@ public class RatingEntryDeleteByIdControllerIntegrationTest extends RatingEntryC
                 saveRatingEntryRepository(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
         String ratingEntryId = ratingEntry.getId();
         String nonExistentRatingEntryId = createNotExistentId(ratingEntryId);
-        assertThatExceptionIsEqualToRatingEntryByIdNotFoundException(deleteByIdInvalid(nonExistentRatingEntryId));
+        assertThatExceptionIsEqualToAccessDeniedException(deleteByIdInvalid(nonExistentRatingEntryId));
         checkIfRatingEntryHasBeenNotDeletedAndEdited(ratingEntryId, ratingEntry);
     }
 
