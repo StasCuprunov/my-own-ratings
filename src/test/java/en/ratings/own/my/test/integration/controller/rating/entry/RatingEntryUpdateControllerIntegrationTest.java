@@ -11,17 +11,15 @@ import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanM
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberSmallerThanMinimum;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToAccessDeniedException;
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingEntryFailedException;
-import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingEntryUpdateNotAllowedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsOk;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createValidRangeOfValuesWithNegativeMinimum;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.DRINK_APPLE_JUICE;
-import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
-        createValidRatingEntryRedBullForDrinksWithNegativeMinimum;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -93,7 +91,7 @@ public class RatingEntryUpdateControllerIntegrationTest extends RatingEntryContr
         RatingEntry ratingEntryBeforeUpdate = saveValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         RatingEntry input = createNewRatingEntryObject(ratingEntryBeforeUpdate);
         input.setId(input.getId() + ID_TEST);
-        testInvalidUpdateWithExpectedRatingEntryFailedException(input, ratingEntryBeforeUpdate);
+        testInvalidUpdateWithExpectedAccessDeniedException(input, ratingEntryBeforeUpdate);
     }
 
     @Test
@@ -104,16 +102,17 @@ public class RatingEntryUpdateControllerIntegrationTest extends RatingEntryContr
         RatingEntry input = createNewRatingEntryObject(ratingEntryBeforeUpdate);
         input.setName(DRINK_APPLE_JUICE);
         login(userStevenWorm);
-        testInvalidUpdateWithExpectedRatingEntryUpdateNotAllowedException(input, ratingEntryBeforeUpdate);
+        testInvalidUpdateWithExpectedAccessDeniedException(input, ratingEntryBeforeUpdate);
     }
 
     @Test
     public void testInvalidUpdateWithAlreadyUsedNameInRating() {
         ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
         String ratingId = responseEntityRating.getBody().getId();
+
         RatingEntry ratingEntryBeforeUpdate = saveValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
-        RatingEntry input =
-                createNewRatingEntryObject(createValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId));
+
+        RatingEntry input = saveValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId);
         input.setName(ratingEntryBeforeUpdate.getName());
         testInvalidUpdateWithExpectedRatingEntryFailedException(input, ratingEntryBeforeUpdate);
     }
@@ -165,10 +164,9 @@ public class RatingEntryUpdateControllerIntegrationTest extends RatingEntryContr
         );
     }
 
-    private void testInvalidUpdateWithExpectedRatingEntryUpdateNotAllowedException(RatingEntry input,
-                                                                                   RatingEntry ratingEntryBefore) {
+    private void testInvalidUpdateWithExpectedAccessDeniedException(RatingEntry input, RatingEntry ratingEntryBefore) {
         assertAll(
-                () -> assertThatExceptionIsEqualToRatingEntryUpdateNotAllowedException(updateInvalid(input)),
+                () -> assertThatExceptionIsEqualToAccessDeniedException(updateInvalid(input)),
                 () -> compareCreatedRatingEntryBeforeAndAfterFailedUpdate(ratingEntryBefore)
         );
     }

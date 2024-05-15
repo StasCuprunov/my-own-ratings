@@ -30,6 +30,8 @@ import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
+        createValidRatingEntryRedBullForDrinksWithNegativeMinimum;
 
 public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTest {
 
@@ -102,6 +104,10 @@ public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTes
 
     protected RatingEntry saveValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(String ratingId) {
         return saveRatingEntryRepository(createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum(ratingId));
+    }
+
+    protected RatingEntry saveValidRatingEntryRedBullForDrinksWithNegativeMinimum(String ratingId) {
+        return saveRatingEntryRepository(createValidRatingEntryRedBullForDrinksWithNegativeMinimum(ratingId));
     }
 
     private ResponseEntity<RatingDTO> createValidRating(User user, RatingDTO input) {

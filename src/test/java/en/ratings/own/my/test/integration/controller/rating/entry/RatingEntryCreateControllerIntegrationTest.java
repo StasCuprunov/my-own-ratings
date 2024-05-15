@@ -115,6 +115,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
                 createSuccessful(createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId));
         RatingEntry oldRatingEntry = createNewRatingEntryObject(responseEntityRatingEntry.getBody());
         RatingEntry ratingEntry = responseEntityRatingEntry.getBody();
+        ratingEntry.setId(null);
         ratingEntry.setValue(createValidRangeOfValuesWithNegativeMinimum().getMaximum());
         assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
         checkIfOldRatingEntryHasChangedAfterCreateWithSameRatingEntryNameAndSameRating(oldRatingEntry);

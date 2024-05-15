@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static en.ratings.own.my.constant.PermissionConstants.HAS_ROLE_USER_PERMISSION;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_CREATE_RATING_ENTRY;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_DELETE_BY_ID_RATING_ENTRY;
+import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_UPDATE_RATING_ENTRY;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
@@ -41,10 +41,10 @@ public class RatingEntryController {
         return createCreatedResponseEntity(ratingEntryService.create(ratingEntry));
     }
 
-    @PreAuthorize(HAS_ROLE_USER_PERMISSION)
+    @PreAuthorize(USER_HAS_PERMISSION_FOR_UPDATE_RATING_ENTRY)
     @PutMapping(ROUTING_EDIT)
     public ResponseEntity<RatingEntry> update(@RequestBody RatingEntry ratingEntry) throws Exception {
-        return createOkResponseEntity(ratingEntryService.update(ratingEntry));
+        return createOkResponseEntity(ratingEntryService.save(ratingEntry));
     }
 
     @PreAuthorize(USER_HAS_PERMISSION_FOR_DELETE_BY_ID_RATING_ENTRY)

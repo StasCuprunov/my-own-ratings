@@ -42,13 +42,17 @@ public class RatingEntryService {
     }
 
     public RatingEntry create(RatingEntry ratingEntry) throws Exception {
-        return update(ratingEntry);
+        return save(ratingEntry);
     }
 
     public RatingEntry update(RatingEntry ratingEntry) throws Exception {
+        return save(ratingEntry);
+    }
+
+    public RatingEntry save(RatingEntry ratingEntry) throws Exception {
         Rating rating = getRatingForRatingEntryAndCheckRatingEntryId(ratingEntry.getId(), ratingEntry.getRatingId());
-        checkIfUpdateIsAllowed(rating.getRangeOfValuesId(), ratingEntry);
-        return ratingEntryRepositoryService.save(ratingEntry);
+        checkIfSaveIsAllowed(rating.getRangeOfValuesId(), ratingEntry);
+        return saveRatingEntry(ratingEntry);
     }
 
     public void deleteById(String id) {
@@ -86,10 +90,11 @@ public class RatingEntryService {
         return null;
     }
 
-    private void checkIfUpdateIsAllowed(String rangeOfValuesId, RatingEntry ratingEntry) throws Exception {
+    private void checkIfSaveIsAllowed(String rangeOfValuesId, RatingEntry ratingEntry) throws Exception {
         ArrayList<String> keysForException = new ArrayList<>();
+        String ratingEntryNameValidation = ratingEntryNameValidation(ratingEntry);
 
-        String ratingEntryNameValidation = ratingEntryNameValidation(ratingEntry.getRatingId(), ratingEntry.getName());
+
         if (ratingEntryNameValidation != null) {
             keysForException.add(ratingEntryNameValidation);
         }
@@ -104,23 +109,35 @@ public class RatingEntryService {
         }
     }
 
-    private String ratingEntryNameValidation(String ratingId, String ratingEntryName) {
-        if (ratingEntryName.isBlank()) {
+    private String ratingEntryNameValidation(RatingEntry ratingEntry) {
+        String name = ratingEntry.getName();
+        if (name.isBlank()) {
             return KEY_RATING_ENTRY_NAME_IS_EMPTY;
         }
 
-        ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(ratingId);
+        ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.
+                findAllByRatingId(ratingEntry.getRatingId());
 
         if (ratingEntries.isEmpty()) {
             return null;
         }
-
+        String id = ratingEntry.getId();
         for (RatingEntry entry: ratingEntries) {
-            if (entry.getName().equals(ratingEntryName)) {
+            if (isNameAlreadyUsedInDifferentRatingEntry(id, name, entry)) {
                 return KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING;
             }
         }
         return null;
+    }
+
+    private boolean isNameAlreadyUsedInDifferentRatingEntry(String id, String name, RatingEntry differentRatingEntry) {
+        if (!differentRatingEntry.getName().equals(name)) {
+            return false;
+        }
+        if (id != null) {
+            return !id.equals(differentRatingEntry.getId());
+        }
+        return true;
     }
 
     private String ratingEntryValueValidation(String rangeOfValuesId, Double value) throws Exception {
@@ -130,5 +147,9 @@ public class RatingEntryService {
             return KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;
         }
         return null;
+    }
+
+    private RatingEntry saveRatingEntry(RatingEntry ratingEntry) {
+        return ratingEntryRepositoryService.save(ratingEntry);
     }
 }

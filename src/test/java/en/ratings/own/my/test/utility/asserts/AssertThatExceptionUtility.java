@@ -7,7 +7,6 @@ import en.ratings.own.my.exception.rating.RatingDeleteByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryFailedException;
-import en.ratings.own.my.exception.rating.entry.RatingEntryUpdateNotAllowedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateNotAllowedException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
@@ -67,11 +66,6 @@ public class AssertThatExceptionUtility {
 
     public static <T extends Exception> void assertThatExceptionIsEqualToRatingEntryByIdNotFoundException(T exception) {
         assertThatExceptionIsEqual(exception, RatingEntryByIdNotFoundException.class);
-    }
-
-    public static <T extends Exception> void
-    assertThatExceptionIsEqualToRatingEntryUpdateNotAllowedException(T exception) {
-        assertThatExceptionIsEqual(exception, RatingEntryUpdateNotAllowedException.class);
     }
 
     public static <T extends Exception> void
