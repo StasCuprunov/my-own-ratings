@@ -9,11 +9,9 @@ import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
 import static en.ratings.own.my.test.utility.GeneratorUtility.createNotExistentId;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToAccessDeniedException;
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
-import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingByIdNotAllowedException;
-import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingByIdNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsOk;
 import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING;
@@ -49,7 +47,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
                 VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING);
         login(userFalakNoorahKhoury);
         Exception foundException = findByIdInvalid(responseEntity.getBody().getId());
-        assertThatExceptionIsEqualToRatingByIdNotAllowedException(foundException);
+        assertThatExceptionIsEqualToAccessDeniedException(foundException);
     }
 
     @Test
@@ -58,7 +56,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
                 VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING);
         Exception foundException = findByIdInvalid(createNotExistentId(responseEntity.getBody().getId()));
 
-        assertThatExceptionIsEqualToRatingByIdNotFoundException(foundException);
+        assertThatExceptionIsEqualToAccessDeniedException(foundException);
     }
 
     private void testValidFindById(RatingDTO input) {

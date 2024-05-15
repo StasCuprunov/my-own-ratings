@@ -3,7 +3,6 @@ package en.ratings.own.my.exception;
 import en.ratings.own.my.exception.authentication.EmailNotFoundInTokenException;
 import en.ratings.own.my.exception.authentication.InvalidTokenException;
 import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
-import en.ratings.own.my.exception.rating.RatingByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
 import en.ratings.own.my.exception.rating.RatingByUserIdAndNameNotFoundException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
@@ -45,7 +44,7 @@ public class RestResponseEntityExceptionHandler {
         return createResponseEntity(exception, BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {RatingByIdNotAllowedException.class, RatingUpdateNotAllowedException.class})
+    @ExceptionHandler(value = {RatingUpdateNotAllowedException.class})
     protected ResponseEntity<String> handleUnauthorized(Exception exception) {
         return createResponseEntity(exception, UNAUTHORIZED);
     }

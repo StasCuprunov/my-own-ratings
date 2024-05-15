@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static en.ratings.own.my.constant.PermissionConstants.HAS_ROLE_USER_PERMISSION;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_DELETE_BY_ID_RATING;
+import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_FIND_BY_ID_RATING;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
@@ -37,7 +38,7 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
-    @PreAuthorize(HAS_ROLE_USER_PERMISSION)
+    @PreAuthorize(USER_HAS_PERMISSION_FOR_FIND_BY_ID_RATING)
     @GetMapping(ROUTING_GET)
     public ResponseEntity<RatingDTO> findById(@PathVariable @NonNull String id) throws Exception {
         return createOkResponseEntity(ratingService.findById(id));

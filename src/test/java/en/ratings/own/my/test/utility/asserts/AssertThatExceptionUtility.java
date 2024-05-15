@@ -1,7 +1,6 @@
 package en.ratings.own.my.test.utility.asserts;
 
 import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
-import en.ratings.own.my.exception.rating.RatingByIdNotAllowedException;
 import en.ratings.own.my.exception.rating.RatingByIdNotFoundException;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.entry.RatingEntryByIdNotFoundException;
@@ -36,10 +35,6 @@ public class AssertThatExceptionUtility {
     public static <T extends Exception> void
     assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException(T exception) {
         assertThatExceptionIsEqual(exception, AuthenticationCredentialsNotFoundException.class);
-    }
-
-    public static <T extends Exception> void assertThatExceptionIsEqualToRatingByIdNotAllowedException(T exception) {
-        assertThatExceptionIsEqual(exception, RatingByIdNotAllowedException.class);
     }
 
     public static <T extends Exception> void assertThatExceptionIsEqualToRatingByIdNotFoundException(T exception) {
