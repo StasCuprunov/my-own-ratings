@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static en.ratings.own.my.constant.PermissionConstants.HAS_ROLE_USER_PERMISSION;
+import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_DELETE_BY_ID_RATING_ENTRY;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_DELETE;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_EDIT;
@@ -45,7 +46,7 @@ public class RatingEntryController {
         return createOkResponseEntity(ratingEntryService.update(ratingEntry));
     }
 
-    @PreAuthorize(HAS_ROLE_USER_PERMISSION)
+    @PreAuthorize(USER_HAS_PERMISSION_FOR_DELETE_BY_ID_RATING_ENTRY)
     @DeleteMapping(ROUTING_DELETE)
     public ResponseEntity<Object> deleteById(@PathVariable @NonNull String id) {
         ratingEntryService.deleteById(id);
