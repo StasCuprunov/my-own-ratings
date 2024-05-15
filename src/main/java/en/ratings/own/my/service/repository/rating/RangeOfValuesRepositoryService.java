@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static en.ratings.own.my.utility.math.DecimalFormatUtility.cutDoubleAfterMaximumNumberOfDecimalDigits;
+
 @Service
 public class RangeOfValuesRepositoryService {
 
@@ -38,7 +40,10 @@ public class RangeOfValuesRepositoryService {
     }
 
     public RangeOfValues save(RangeOfValues rangeOfValues) {
-        return rangeOfValuesRepository.save(rangeOfValues);
+        Double minimum = cutDoubleAfterMaximumNumberOfDecimalDigits(rangeOfValues.getMinimum());
+        Double maximum = cutDoubleAfterMaximumNumberOfDecimalDigits(rangeOfValues.getMaximum());
+        Double stepWidth = cutDoubleAfterMaximumNumberOfDecimalDigits(rangeOfValues.getStepWidth());
+        return rangeOfValuesRepository.save(new RangeOfValues(minimum, maximum, stepWidth));
     }
 
     public void deleteById(String id) {
