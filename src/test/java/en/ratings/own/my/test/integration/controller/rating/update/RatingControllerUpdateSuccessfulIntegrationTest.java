@@ -106,6 +106,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
         createValidRating(userFalakNoorahKhoury, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
+        login(userStevenWorm);
         createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();
         newRangeOfValues.setMinimum(VALID_MINIMUM_FOR_DRINKS_WITH_NEGATIVE_MINIMUM);
@@ -216,6 +217,7 @@ public class RatingControllerUpdateSuccessfulIntegrationTest extends RatingContr
         RatingDTO input = createValidRatingDrinksWithNegativeMinimumAsUserStevenWorm();
         createValidRating(userFalakNoorahKhoury, VALID_RATING_DTO_BOOKS_WITH_NEGATIVE_MINIMUM);
 
+        login(userStevenWorm);
         input.setName(DRINKS_IN_ASIA_NAME);
         createValidRatingEntriesForDrinksWithNegativeMinimum(input.getId());
         RangeOfValues newRangeOfValues = input.getRangeOfValues();

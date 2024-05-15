@@ -135,7 +135,7 @@ public class RatingService {
 
     private void checkIfRatingNameIsValid(String userId, String name) throws Exception {
         ArrayList<String> keysForException = new ArrayList<>();
-        addExistentStringToArrayList(keysForException, ratingNameForValidation(userId, name));
+        addExistentStringToArrayList(keysForException, ratingNameValidationForCreate(userId, name));
 
         if (!keysForException.isEmpty()) {
             throw new RatingCreationFailedException(keysForException);
@@ -155,7 +155,8 @@ public class RatingService {
     private void checkIfRatingNameIsValidAndNoInconsistentWithRatingEntries
             (String ratingId, String userId, RangeOfValues rangeOfValues, String name) throws Exception {
         ArrayList<String> keysForException = new ArrayList<>();
-        keysForException = addExistentStringToArrayList(keysForException, ratingNameForUpdateValidation(userId, name));
+        keysForException = addExistentStringToArrayList(keysForException,
+                ratingNameForUpdateValidation(ratingId, userId, name));
 
         ArrayList<String> ratingEntries = ratingEntriesDontFitInNewRangeOfValues(ratingId, rangeOfValues);
         if (!ratingEntries.isEmpty()) {
@@ -173,16 +174,8 @@ public class RatingService {
         return null;
     }
 
-    private String ratingNameForValidation(String userId, String name) {
-        if (name.isBlank()) {
-            return KEY_RATING_NAME_IS_EMPTY;
-        }
-        try {
-            ratingRepositoryService.findByUserIdAndName(userId, name);
-        } catch (Exception e) {
-            return null;
-        }
-        return KEY_RATING_NAME_ALREADY_USED_FOR_USER;
+    private String ratingNameValidationForCreate(String userId, String name) {
+        return ratingNameValidation(null, userId, name);
     }
 
     private String idValidationForCreate(String id) {
@@ -201,8 +194,24 @@ public class RatingService {
         return null;
     }
 
-    private String ratingNameForUpdateValidation(String userId, String name) {
-        return ratingNameForValidation(userId, name);
+    private String ratingNameForUpdateValidation(String ratingId, String userId, String name) {
+        return ratingNameValidation(ratingId, userId, name);
+    }
+
+    private String ratingNameValidation(String ratingId, String userId, String name) {
+        if (name.isBlank()) {
+            return KEY_RATING_NAME_IS_EMPTY;
+        }
+        Rating rating;
+        try {
+            rating = ratingRepositoryService.findByUserIdAndName(userId, name);
+        } catch (Exception e) {
+            return null;
+        }
+        if (!rating.getId().equals(ratingId)) {
+            return KEY_RATING_NAME_ALREADY_USED_FOR_USER;
+        }
+        return null;
     }
 
     private ArrayList<String> ratingEntriesDontFitInNewRangeOfValues(String ratingId, RangeOfValues rangeOfValues) {
