@@ -1,6 +1,7 @@
 package en.ratings.own.my.constant;
 
 public final class ExceptionConstants {
+    public static final String KEY_ID_IS_DEFINED = "idIsDefined";
 
     // For UserCreationFailedException
     public static final String KEY_EMAIL_SYNTAX = "emailSyntax";

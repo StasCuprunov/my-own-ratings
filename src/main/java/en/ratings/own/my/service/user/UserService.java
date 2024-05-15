@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_ID_IS_DEFINED;
 import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_ALREADY_EXISTS;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_SYNTAX;
@@ -50,6 +51,7 @@ public class UserService {
     public UserDTO create(User user) throws Exception {
         ArrayList<String> keysForException = emailValidation(user.getEmail());
         keysForException.addAll(passwordValidation(user.getPassword()));
+        addExistentStringToArrayList(keysForException, userIdValidationForCreate(user));
 
         if (!keysForException.isEmpty()) {
             throw new UserCreationFailedException(keysForException);
@@ -86,6 +88,13 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    private String userIdValidationForCreate(User user) {
+        if (user.getId() != null) {
+            return KEY_ID_IS_DEFINED;
+        }
+        return null;
     }
 
     private void encodePassword(User user) {

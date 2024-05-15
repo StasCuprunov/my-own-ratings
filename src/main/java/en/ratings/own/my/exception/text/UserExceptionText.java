@@ -10,6 +10,10 @@ import static en.ratings.own.my.utility.StringUtility.makeText;
 
 public class UserExceptionText {
 
+    public static String errorMessageForDefinedId() {
+        return "The id must not be defined";
+    }
+
     public static String errorMessageForEmailSyntax() {
         return "The specified email is not valid.";
     }
