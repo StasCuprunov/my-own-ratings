@@ -6,4 +6,6 @@ public class TestConstants {
 
     public static final int EXPECTED_ZERO = 0;
 
+    public static String EMPTY_TEXT = "    \t   \n ";
+
 }

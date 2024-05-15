@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_IS_EMPTY;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;
 import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayList;
 import static en.ratings.own.my.service.rating.RangeOfValuesValidation.isValueInRangeOfValues;
@@ -104,6 +105,10 @@ public class RatingEntryService {
     }
 
     private String ratingEntryNameValidation(String ratingId, String ratingEntryName) {
+        if (ratingEntryName.isBlank()) {
+            return KEY_RATING_ENTRY_NAME_IS_EMPTY;
+        }
+
         ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(ratingId);
 
         if (ratingEntries.isEmpty()) {

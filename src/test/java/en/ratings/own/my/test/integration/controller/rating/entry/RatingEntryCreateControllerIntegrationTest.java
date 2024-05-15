@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.Optional;
 
+import static en.ratings.own.my.test.constant.TestConstants.EMPTY_TEXT;
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberBetweenRangeOfValuesButNotAllowed;
@@ -101,7 +102,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         ResponseEntity<RatingDTO> responseEntity = createRatingDrinksWithNegativeMinimum(userStevenWorm);
         String ratingId = responseEntity.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
-        ratingEntry.setName("       \n ");
+        ratingEntry.setName(EMPTY_TEXT);
         assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
         checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
