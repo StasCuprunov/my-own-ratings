@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_SYNTAX;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_ALREADY_EXISTS;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_ID_IS_DEFINED;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_HAS_NO_DIGIT;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_HAS_NO_ENGLISH_LOWER_CASE_LETTER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_HAS_NO_ENGLISH_UPPER_CASE_LETTER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_HAS_NO_VALID_SPECIAL_CHARACTER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_TOO_SHORT;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_TOO_LONG;
+import static en.ratings.own.my.exception.text.UserExceptionText.errorMessageForDefinedId;
 import static en.ratings.own.my.exception.text.UserExceptionText.errorMessageForEmailSyntax;
 import static en.ratings.own.my.exception.text.UserExceptionText.errorMessageForEmailAlreadyExists;
 import static en.ratings.own.my.exception.text.UserExceptionText.errorMessageForPasswordHasNoDigit;
@@ -30,6 +32,7 @@ public class UserCreationFailedErrorMessage implements InterfaceErrorMessage {
 
         for (String key : keysForException) {
             switch (key) {
+                case KEY_ID_IS_DEFINED -> errorMessage.add(errorMessageForDefinedId());
                 case KEY_EMAIL_SYNTAX -> errorMessage.add(errorMessageForEmailSyntax());
                 case KEY_EMAIL_ALREADY_EXISTS -> errorMessage.add(errorMessageForEmailAlreadyExists());
                 case KEY_PASSWORD_TOO_SHORT -> errorMessage.add(errorMessageForPasswordTooShort());
