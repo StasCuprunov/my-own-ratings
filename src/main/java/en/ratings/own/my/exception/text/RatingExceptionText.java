@@ -53,6 +53,10 @@ public class RatingExceptionText {
         return "The rating name is already used by you. This name has to be unique.";
     }
 
+    public static String errorMessageForRatingHasDefinedId() {
+        return "The rating may not have a defined id.";
+    }
+
     public static String errorMessageForRatingEntriesDontFitInScale(ArrayList<String> ratingEntriesDontFitInScale) {
         String messageBegin = "The new range of scale isn't allowed " +
                 "because for the following rating entries the new range of values doesn't fit: ";

@@ -8,6 +8,7 @@ import static en.ratings.own.my.constant.ExceptionConstants.KEY_MAXIMUM_IS_TOO_B
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_MAXIMUM_HAS_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_MINIMUM_HAS_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_MINIMUM_IS_TOO_SMALL;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_HAS_DEFINED_ID;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_STEP_WIDTH_HAS_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_USER_WITH_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_MINIMUM_IS_TOO_BIG;
@@ -19,6 +20,7 @@ import static en.ratings.own.my.exception.text.RatingExceptionText.errorMessageF
 import static en.ratings.own.my.exception.text.RatingExceptionText.errorMessageForMaximumIsTooBig;
 import static en.ratings.own.my.exception.text.RatingExceptionText.errorMessageForMinimumHasTooManyDecimalDigits;
 import static en.ratings.own.my.exception.text.RatingExceptionText.errorMessageForMinimumIsTooSmall;
+import static en.ratings.own.my.exception.text.RatingExceptionText.errorMessageForRatingHasDefinedId;
 import static en.ratings.own.my.exception.text.RatingExceptionText.errorMessageForUserWithIdNotFound;
 import static en.ratings.own.my.exception.text.RatingExceptionText.errorMessageForMinimumIsTooBig;
 import static en.ratings.own.my.exception.text.RatingExceptionText.errorMessageForStepWidthIsTooSmall;
@@ -51,6 +53,7 @@ public class RatingCreationFailedErrorMessage implements InterfaceErrorMessage {
                         add(errorMessageForRangeOfValuesIsNotConsistent());
                 case KEY_RATING_NAME_ALREADY_USED_FOR_USER -> errorMessage.
                         add(errorMessageForRatingNameAlreadyUsedForUser());
+                case KEY_RATING_HAS_DEFINED_ID -> errorMessage.add(errorMessageForRatingHasDefinedId());
             }
         }
         return makeText(errorMessage);

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_HAS_DEFINED_ID;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_USER_WITH_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_NAME_ALREADY_USED_FOR_USER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
@@ -57,10 +58,8 @@ public class RatingService {
     }
 
     public RatingDTO create(RatingDTO ratingDTO) throws Exception {
-        String userId = ratingDTO.getUserId();
-
-        checkIfRangeOfValuesAndUserIdAreValid(userId, ratingDTO.getRangeOfValues());
-        checkIfRatingNameIsValid(userId, ratingDTO.getName());
+        checkIfIdAndRangeOfValuesAndUserIdAreValid(ratingDTO);
+        checkIfRatingNameIsValid(ratingDTO.getUserId(), ratingDTO.getName());
 
         return createRating(ratingDTO);
     }
@@ -123,9 +122,10 @@ public class RatingService {
         return new RatingDTO(newRating, newRangeOfValues);
     }
 
-    private void checkIfRangeOfValuesAndUserIdAreValid(String userId, RangeOfValues rangeOfValues) throws Exception {
-        ArrayList<String> keysForException = rangeOfValuesValidation(rangeOfValues);
-        keysForException = addExistentStringToArrayList(keysForException, userIdValidation(userId));
+    private void checkIfIdAndRangeOfValuesAndUserIdAreValid(RatingDTO ratingDTO) throws Exception {
+        ArrayList<String> keysForException = rangeOfValuesValidation(ratingDTO.getRangeOfValues());
+        keysForException = addExistentStringToArrayList(keysForException, userIdValidation(ratingDTO.getUserId()));
+        keysForException = addExistentStringToArrayList(keysForException, idValidationForCreate(ratingDTO.getId()));
 
         if (!keysForException.isEmpty()) {
             throw new RatingCreationFailedException(keysForException);
@@ -179,6 +179,13 @@ public class RatingService {
             return null;
         }
         return KEY_RATING_NAME_ALREADY_USED_FOR_USER;
+    }
+
+    private String idValidationForCreate(String id) {
+        if (id != null) {
+            return KEY_RATING_HAS_DEFINED_ID;
+        }
+        return null;
     }
 
     private String ratingIdValidation(String id) {

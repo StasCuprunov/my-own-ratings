@@ -24,6 +24,7 @@ public final class ExceptionConstants {
     public static final String KEY_STEP_WIDTH_HAS_TOO_MANY_DECIMAL_DIGITS = "stepWidthHasTooManyDecimalDigits";
     public static final String KEY_RANGE_OF_VALUES_IS_NOT_CONSISTENT = "rangeOfValuesIsNotConsistent";
     public static final String KEY_RATING_NAME_ALREADY_USED_FOR_USER = "ratingNameAlreadyUsedForUser";
+    public static final String KEY_RATING_HAS_DEFINED_ID = "ratingHasDefinedId";
     public static final String KEY_RATING_BY_ID_NOT_FOUND = "ratingByIdNotFound";
     public static final String KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE = "ratingEntriesDontFitInScale";
 

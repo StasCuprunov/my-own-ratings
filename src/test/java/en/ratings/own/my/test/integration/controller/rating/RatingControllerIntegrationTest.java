@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
+import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
@@ -59,8 +60,8 @@ public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
         ResponseEntity<RatingDTO> responseEntity = null;
         try {
             responseEntity = ratingController.create(input);
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            printExceptionMessage(e);
         }
         return responseEntity;
     }
