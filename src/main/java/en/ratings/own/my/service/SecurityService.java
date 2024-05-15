@@ -43,6 +43,18 @@ public class SecurityService {
         return rating.getUserId().equals(user.getId());
     }
 
+    public boolean hasPermissionToCreateRatingEntry(String ratingId) {
+        User user = getActualUser();
+        if (user == null) {
+            return false;
+        }
+        Rating rating = getRating(ratingId);
+        if (rating == null) {
+            return false;
+        }
+        return rating.getUserId().equals(user.getId());
+    }
+
     private Rating getRating(String id) {
         try {
             return ratingRepositoryService.findById(id);
