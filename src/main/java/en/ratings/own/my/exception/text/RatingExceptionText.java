@@ -49,6 +49,9 @@ public class RatingExceptionText {
         return "The range of values must be a scale.";
     }
 
+    public static String errorMessageForRatingNameIsEmpty() {
+        return "The rating name may not be empty.";
+    }
     public static String errorMessageForRatingNameAlreadyUsedForUser() {
         return "The rating name is already used by you. This name has to be unique.";
     }

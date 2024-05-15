@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_HAS_DEFINED_ID;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_NAME_IS_EMPTY;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_USER_WITH_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_NAME_ALREADY_USED_FOR_USER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
@@ -134,7 +135,7 @@ public class RatingService {
 
     private void checkIfRatingNameIsValid(String userId, String name) throws Exception {
         ArrayList<String> keysForException = new ArrayList<>();
-        addExistentStringToArrayList(keysForException, ratingNameForUserValidation(userId, name));
+        addExistentStringToArrayList(keysForException, ratingNameForValidation(userId, name));
 
         if (!keysForException.isEmpty()) {
             throw new RatingCreationFailedException(keysForException);
@@ -172,7 +173,10 @@ public class RatingService {
         return null;
     }
 
-    private String ratingNameForUserValidation(String userId, String name) {
+    private String ratingNameForValidation(String userId, String name) {
+        if (name.isBlank()) {
+            return KEY_RATING_NAME_IS_EMPTY;
+        }
         try {
             ratingRepositoryService.findByUserIdAndName(userId, name);
         } catch (Exception e) {
@@ -198,7 +202,7 @@ public class RatingService {
     }
 
     private String ratingNameForUpdateValidation(String userId, String name) {
-        return ratingNameForUserValidation(userId, name);
+        return ratingNameForValidation(userId, name);
     }
 
     private ArrayList<String> ratingEntriesDontFitInNewRangeOfValues(String ratingId, RangeOfValues rangeOfValues) {
