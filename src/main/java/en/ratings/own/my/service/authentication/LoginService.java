@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
 import static en.ratings.own.my.constant.CookieConstants.COOKIE_PATH;
+import static en.ratings.own.my.constant.CookieConstants.SAME_SITE_VALUE;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
 @Service
@@ -50,6 +51,7 @@ public class LoginService {
         return ResponseCookie.from(AUTH_TOKEN, token).
                 httpOnly(true).
                 secure(true).
+                sameSite(SAME_SITE_VALUE).
                 path(COOKIE_PATH).
                 maxAge(EXPIRATION_TIME_IN_MILLISECONDS).
                 build();
