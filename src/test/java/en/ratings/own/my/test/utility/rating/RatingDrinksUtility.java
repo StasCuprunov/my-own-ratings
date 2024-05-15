@@ -74,4 +74,8 @@ public class RatingDrinksUtility {
     public static RatingEntry createValidRatingEntryRedBullForDrinksWithNegativeMinimum(String ratingId) {
         return new RatingEntry(ratingId, "I love Red Bull!", 0.0);
     }
+
+    public static RatingEntry createValidRatingEntryCokeForDrinksWithAmazonRating(String ratingId) {
+        return new RatingEntry(ratingId, "Coke", 2.5);
+    }
 }

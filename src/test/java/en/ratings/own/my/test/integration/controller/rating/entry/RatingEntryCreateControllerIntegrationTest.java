@@ -24,6 +24,8 @@ import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         createValidRangeOfValuesWithNegativeMinimum;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
+        createValidRatingEntryCokeForDrinksWithAmazonRating;
+import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryCokeForDrinksWithNegativeMinimum;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -60,7 +62,7 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
 
         ResponseEntity<RatingDTO> responseEntityTest = createValidRatingDrinkInAsiaWithAmazonRating(userStevenWorm);
         String ratingIdTest = responseEntityTest.getBody().getId();
-        RatingEntry ratingEntryTest = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingIdTest);
+        RatingEntry ratingEntryTest = createValidRatingEntryCokeForDrinksWithAmazonRating(ratingIdTest);
         testCreateSuccessful(ratingEntryTest, createSuccessful(ratingEntryTest));
     }
 
