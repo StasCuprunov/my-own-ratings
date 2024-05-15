@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToAccessDeniedException;
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingCreationFailedException;
@@ -20,6 +22,7 @@ import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertTha
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsCreated;
 import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.
         INVALID_RATING_DTO_BECAUSE_EMPTY_NAME;
+import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.createNewRatingDTOObject;
 import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_MAXIMUM_AND_STEP_WIDTH_WITH_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
@@ -58,42 +61,44 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class RatingControllerCreateIntegrationTest extends RatingControllerIntegrationTest {
     @Test
     public void testValidCreate() {
-        testValidCreate(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING);
+        testValidCreate(userStevenWorm, createNewRatingDTOObject(VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING));
     }
 
     @Test
     public void testValidCreateWithDefinedRatingEntries() {
-        testValidCreate(userStevenWorm, createValidRatingDTOBooksWithGermanGradingAndDefinedRatingEntries());
+        testValidCreate(userStevenWorm,
+                createNewRatingDTOObject(createValidRatingDTOBooksWithGermanGradingAndDefinedRatingEntries()));
     }
 
     @Test
     public void testValidCreateWithSameInputsButDifferentUsers() {
         RatingDTO input = VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
-        testValidCreate(userStevenWorm, input);
-        testValidCreate(userFalakNoorahKhoury, input);
+        testValidCreate(userStevenWorm, createNewRatingDTOObject(input));
+        testValidCreate(userFalakNoorahKhoury, createNewRatingDTOObject(input));
     }
 
     @Test
     public void testValidCreateWithSameRatingNamesButDifferentUsers() {
-        testValidCreate(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING);
-        testValidCreate(userFalakNoorahKhoury, VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING);
+        testValidCreate(userStevenWorm, createNewRatingDTOObject(VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING));
+        testValidCreate(userFalakNoorahKhoury, createNewRatingDTOObject(VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING));
     }
 
     @Test
     public void testValidCreateWithNegativeMinimum() {
-        testValidCreate(userFalakNoorahKhoury, createValidRatingDTODrinksWithNegativeMinimum());
+        testValidCreate(userFalakNoorahKhoury,
+                createNewRatingDTOObject(createValidRatingDTODrinksWithNegativeMinimum()));
     }
 
     @Test
     public void testValidCreateWithNoDescriptionAndWithNegativeMinimumAndMaximum() {
-        testValidCreate(userStevenWorm,
-                VALID_RATING_DTO_DRINKS_WITH_NO_DESCRIPTION_AND_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM);
+        testValidCreate(userStevenWorm, createNewRatingDTOObject(
+                VALID_RATING_DTO_DRINKS_WITH_NO_DESCRIPTION_AND_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM));
     }
 
     @Test
     public void testInvalidCreateWithoutLoggedIn() {
         logout();
-        RatingDTO input = VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING;
+        RatingDTO input = createNewRatingDTOObject(VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING);
         input.setUserId(userStevenWorm.getId());
         Exception foundException = createInvalid(input);
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException(foundException);
@@ -101,76 +106,88 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
 
     @Test
     public void testInvalidCreateWithDefinedId() {
-        RatingDTO input = VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING;
+        RatingDTO input = createNewRatingDTOObject(VALID_RATING_DTO_BOOKS_WITH_GERMAN_GRADING);
         input.setId(ID_TEST);
-        testInvalidCreate(userStevenWorm, input);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm, input);
     }
 
     @Test
     public void testInvalidCreateWithEmptyName() {
-        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_BECAUSE_EMPTY_NAME);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm,
+                createNewRatingDTOObject(INVALID_RATING_DTO_BECAUSE_EMPTY_NAME));
     }
 
     @Test
     public void testInvalidCreateWithTooSmallMinimum() {
-        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_BOOKS_WITH_TOO_SMALL_MINIMUM);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm,
+                createNewRatingDTOObject(INVALID_RATING_DTO_BOOKS_WITH_TOO_SMALL_MINIMUM));
     }
 
     @Test
     public void testInvalidCreateWithTooBigMaximum() {
-        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_BOOKS_WITH_TOO_BIG_MAXIMUM);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm,
+                createNewRatingDTOObject(INVALID_RATING_DTO_BOOKS_WITH_TOO_BIG_MAXIMUM));
     }
 
     @Test
     public void testInvalidCreateWithMinimumTooManyDecimalDigits() {
-        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_BOOKS_WITH_MINIMUM_TOO_MANY_DECIMAL_DIGITS);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm,
+                createNewRatingDTOObject(INVALID_RATING_DTO_BOOKS_WITH_MINIMUM_TOO_MANY_DECIMAL_DIGITS));
     }
 
     @Test
     public void testInvalidCreateWithMaximumAndStepWidthWithTooManyDecimalDigits() {
-        testInvalidCreate(userStevenWorm,
-                INVALID_RATING_DTO_BOOKS_WITH_MAXIMUM_AND_STEP_WIDTH_WITH_TOO_MANY_DECIMAL_DIGITS);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm, createNewRatingDTOObject(
+                INVALID_RATING_DTO_BOOKS_WITH_MAXIMUM_AND_STEP_WIDTH_WITH_TOO_MANY_DECIMAL_DIGITS));
     }
 
     @Test
     public void testInvalidCreateWithStepWidthTooManyDecimalDigits() {
-        testInvalidCreate(userStevenWorm,
-                INVALID_RATING_DTO_BOOKS_WITH_STEP_WIDTH_TOO_MANY_DECIMAL_DIGITS);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm,
+                createNewRatingDTOObject(INVALID_RATING_DTO_BOOKS_WITH_STEP_WIDTH_TOO_MANY_DECIMAL_DIGITS));
     }
 
     @Test
     public void testInvalidCreateWithNegativeStepWidth() {
-        testInvalidCreate(userFalakNoorahKhoury, INVALID_RATING_DTO_BOOKS_WITH_NEGATIVE_STEP_WIDTH);
+        testInvalidCreateExpectedRatingCreationFailedException(userFalakNoorahKhoury,
+                createNewRatingDTOObject(INVALID_RATING_DTO_BOOKS_WITH_NEGATIVE_STEP_WIDTH));
     }
 
     @Test
     public void testInvalidCreateWithZeroStepWidth() {
-        testInvalidCreate(userFalakNoorahKhoury, INVALID_RATING_DTO_BOOKS_WITH_ZERO_STEP_WIDTH);
+        testInvalidCreateExpectedRatingCreationFailedException(userFalakNoorahKhoury,
+                createNewRatingDTOObject(INVALID_RATING_DTO_BOOKS_WITH_ZERO_STEP_WIDTH));
     }
 
     @Test
     public void testInvalidCreateWithEmptyNameAndNoDescription() {
-        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_WITH_EMPTY_NAME_AND_NO_DESCRIPTION_AND_WITH_GERMAN_GRADING);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm, createNewRatingDTOObject(
+                INVALID_RATING_DTO_WITH_EMPTY_NAME_AND_NO_DESCRIPTION_AND_WITH_GERMAN_GRADING));
     }
 
     @Test
     public void testInvalidCreateWithMinimumEqualsToMaximum() {
-        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_DRINKS_WITH_MINIMUM_EQUALS_TO_MAXIMUM);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm,
+                createNewRatingDTOObject(INVALID_RATING_DTO_DRINKS_WITH_MINIMUM_EQUALS_TO_MAXIMUM));
     }
 
     @Test
     public void testInvalidCreateWithMinimumGreaterThanMaximum() {
-        testInvalidCreate(userFalakNoorahKhoury, INVALID_RATING_DTO_DRINKS_WITH_MINIMUM_GREATER_THAN_MAXIMUM);
+        testInvalidCreateExpectedRatingCreationFailedException(userFalakNoorahKhoury,
+                createNewRatingDTOObject(INVALID_RATING_DTO_DRINKS_WITH_MINIMUM_GREATER_THAN_MAXIMUM));
     }
 
     @Test
     public void testInvalidCreateWithUnavailableMaximum() {
-        testInvalidCreate(userStevenWorm, INVALID_RATING_DTO_DRINKS_WITH_UNAVAILABLE_MAXIMUM);
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm,
+                createNewRatingDTOObject(INVALID_RATING_DTO_DRINKS_WITH_UNAVAILABLE_MAXIMUM));
     }
 
     @Test
     public void testInvalidCreateWithForeignUserId() {
-        testInvalidCreate(userStevenWorm, VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING, userFalakNoorahKhoury.getId());
+        testInvalidCreateWithExpectedAccessDeniedException(userStevenWorm,
+                createNewRatingDTOObject(VALID_RATING_DTO_BOOKS_WITH_AMAZON_RATING),
+                userFalakNoorahKhoury.getId());
     }
 
     private void testValidCreate(User user, RatingDTO input) {
@@ -182,16 +199,22 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
         checkValidCreate(input, responseEntity);
     }
 
-    private void testInvalidCreate(User user, RatingDTO input) {
-        testInvalidCreate(user, input, null);
-    }
-
-    private void testInvalidCreate(User user, RatingDTO input, String differentUserId) {
+    private Exception testInvalidCreate(User user, RatingDTO input, String differentUserId) {
         login(user);
         String id = (differentUserId == null) ? user.getId() : differentUserId;
         input.setUserId(id);
-        Exception foundException = createInvalid(input);
+        return createInvalid(input);
+    }
+
+    private void testInvalidCreateExpectedRatingCreationFailedException(User user, RatingDTO input) {
+        Exception foundException = testInvalidCreate(user, input, null);
         assertThatExceptionIsEqualToRatingCreationFailedException(foundException);
+    }
+
+    private void testInvalidCreateWithExpectedAccessDeniedException(User user, RatingDTO input,
+                                                                    String differentUserId) {
+        Exception foundException = testInvalidCreate(user, input, differentUserId);
+        assertThatExceptionIsEqualToAccessDeniedException(foundException);
     }
 
     private void checkValidCreate(RatingDTO input, ResponseEntity<RatingDTO> responseEntity) {

@@ -11,11 +11,11 @@ import java.util.Optional;
 
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
+        assertThatExceptionIsEqualToAccessDeniedException;
+import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToRatingUpdateFailedException;
-import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingUpdateNotAllowedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertThatIdIsDefined;
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsOk;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -135,9 +135,9 @@ public class RatingControllerUpdateIntegrationTest extends RatingControllerInteg
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException(foundException);
     }
 
-    protected void testUpdateInvalidWithExceptedRatingUpdateNotAllowedException(RatingDTO input) {
+    protected void testUpdateInvalidWithExceptedAccessDeniedException(RatingDTO input) {
         Exception foundException = updateInvalid(input);
-        assertThatExceptionIsEqualToRatingUpdateNotAllowedException(foundException);
+        assertThatExceptionIsEqualToAccessDeniedException(foundException);
     }
 
     protected RangeOfValues createNewRangeOfValuesObject(RangeOfValues rangeOfValues) {

@@ -1,5 +1,6 @@
 package en.ratings.own.my.service;
 
+import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.rating.Rating;
 import en.ratings.own.my.model.rating.RatingEntry;
@@ -28,31 +29,15 @@ public class SecurityService {
         this.ratingRepositoryService = ratingRepositoryService;
     }
     public boolean hasPermissionToDeleteByIdRatingEntry(String id) {
-        User user = getActualUser();
-        if (user == null) {
-            return false;
-        }
         RatingEntry ratingEntry = getRatingEntry(id);
         if (ratingEntry == null) {
             return false;
         }
-        Rating rating = getRating(ratingEntry.getRatingId());
-        if (rating == null) {
-            return false;
-        }
-        return rating.getUserId().equals(user.getId());
+        return hasPermissionToRating(ratingEntry.getRatingId());
     }
 
     public boolean hasPermissionToCreateRatingEntry(String ratingId) {
-        User user = getActualUser();
-        if (user == null) {
-            return false;
-        }
-        Rating rating = getRating(ratingId);
-        if (rating == null) {
-            return false;
-        }
-        return rating.getUserId().equals(user.getId());
+        return hasPermissionToRating(ratingId);
     }
 
     public boolean hasPermissionToUpdateRatingEntry(RatingEntry ratingEntry) {
@@ -60,7 +45,43 @@ public class SecurityService {
         if ((storedRatingEntry == null) || !storedRatingEntry.getRatingId().equals(ratingEntry.getRatingId())) {
             return false;
         }
-        return hasPermissionToCreateRatingEntry(ratingEntry.getRatingId());
+        return hasPermissionToRating(ratingEntry.getRatingId());
+    }
+
+    public boolean hasPermissionToRating(String id) {
+        User user = getActualUser();
+        if (user == null) {
+            return false;
+        }
+        Rating rating = getRating(id);
+        if (rating == null) {
+            return false;
+        }
+        return rating.getUserId().equals(user.getId());
+    }
+
+    public boolean hasPermissionToCreateRating(String userId) {
+        return isIdEqualToActualUserId(userId);
+    }
+
+    public boolean hasPermissionToUpdateRating(RatingDTO ratingDTO) {
+        Rating rating = getRating(ratingDTO.getId());
+        if (rating == null) {
+            return false;
+        }
+        String userId = ratingDTO.getUserId();
+        if (!userId.equals(rating.getUserId())) {
+            return false;
+        }
+        return isIdEqualToActualUserId(userId);
+    }
+
+    private boolean isIdEqualToActualUserId(String userId) {
+        User user = getActualUser();
+        if (user == null) {
+            return false;
+        }
+        return userId.equals(user.getId());
     }
 
     private Rating getRating(String id) {
