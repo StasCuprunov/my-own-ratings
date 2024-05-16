@@ -112,11 +112,10 @@ public class StartPageControllerIntegrationTest extends AbstractIntegrationTest 
                                                           ArrayList<RatingForStartPageDTO> ratingsForStartPage) {
         ArrayList<Rating> storedRatings = findAllByUserIdRatingRepository(userId);
         ArrayList<String> notFoundRatingIdsInStartPageObject = new ArrayList<>();
-
         int sizeOfFoundRatings = storedRatings.size();
-        for (int index = 0; index < sizeOfFoundRatings; index++) {
-            Rating rating = storedRatings.get(index);
-            for (RatingForStartPageDTO ratingForStartPageDTO: ratingsForStartPage) {
+        for (RatingForStartPageDTO ratingForStartPageDTO: ratingsForStartPage) {
+            for (int index = 0; index < sizeOfFoundRatings; index++) {
+                Rating rating = storedRatings.get(index);
                 if (compare(ratingForStartPageDTO, rating)) {
                     break;
                 }

@@ -5,6 +5,7 @@ import en.ratings.own.my.dto.UserDTO;
 import en.ratings.own.my.dto.rating.RatingForStartPageDTO;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.rating.Rating;
+import en.ratings.own.my.service.authentication.AuthenticationService;
 import en.ratings.own.my.service.repository.UserRepositoryService;
 import en.ratings.own.my.service.repository.rating.RatingRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,23 @@ public class StartPageService {
 
     private final RatingRepositoryService ratingRepositoryService;
 
+    private final AuthenticationService authenticationService;
+
     @Autowired
     public StartPageService(UserRepositoryService userRepositoryService,
-                            RatingRepositoryService ratingRepositoryService) {
+                            RatingRepositoryService ratingRepositoryService,
+                            AuthenticationService authenticationService) {
         this.userRepositoryService = userRepositoryService;
         this.ratingRepositoryService = ratingRepositoryService;
+        this.authenticationService = authenticationService;
     }
 
-    public StartPageDTO getByUserEmail(String email) throws Exception {
+
+
+    public StartPageDTO index() throws Exception {
+        String email = authenticationService.getAuthentication().getName();
         User user = userRepositoryService.findByEmail(email);
+
         ArrayList<RatingForStartPageDTO> ratingDTOs = convertModelsToDTOs(ratingRepositoryService.
                 findAllByUserId(user.getId()));
         return new StartPageDTO(new UserDTO(user), ratingDTOs);
