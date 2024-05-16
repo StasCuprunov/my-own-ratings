@@ -12,7 +12,10 @@ public class RatingEntryExceptionText {
     public static String errorMessageRatingEntryNameAlreadyUsedInRating() {
         return "The rating entry name is already used in your rating. This name has to be unique for every rating.";
     }
-    public static String errorMessageRatingEntryValueIsNotAllowed() {
-        return "The value is not allowed for the rating entry.";
+    public static String errorMessageForRatingEntryHasTooManyDecimalDigits() {
+        return "The rating entry value has too many decimal digits.";
+    }
+    public static String errorMessageRatingEntryValueDoesntFitInRangeOfValues() {
+        return "The rating entry value doesn't fit in range of values.";
     }
 }

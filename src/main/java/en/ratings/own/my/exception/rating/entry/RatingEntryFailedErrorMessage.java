@@ -8,11 +8,15 @@ import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_BY_
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_IS_EMPTY;
-import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_HAS_TOO_MANY_DECIMAL_DIGITS;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_DOES_NOT_FIT_IN_RANGE_OF_VALUES;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageForRatingEntryNameIsEmpty;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageRatingEntryByIdNotFound;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageRatingEntryNameAlreadyUsedInRating;
-import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageRatingEntryValueIsNotAllowed;
+import static en.ratings.own.my.exception.text.RatingEntryExceptionText.
+        errorMessageRatingEntryValueDoesntFitInRangeOfValues;
+import static en.ratings.own.my.exception.text.RatingEntryExceptionText.
+        errorMessageForRatingEntryHasTooManyDecimalDigits;
 import static en.ratings.own.my.exception.text.RatingExceptionText.errorMessageForRatingByIdNotFound;
 import static en.ratings.own.my.utility.StringUtility.makeText;
 
@@ -29,8 +33,10 @@ public class RatingEntryFailedErrorMessage implements InterfaceErrorMessage {
                 case KEY_RATING_ENTRY_NAME_IS_EMPTY -> errorMessage.add(errorMessageForRatingEntryNameIsEmpty());
                 case KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING -> errorMessage.
                         add(errorMessageRatingEntryNameAlreadyUsedInRating());
-                case KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED -> errorMessage.
-                        add(errorMessageRatingEntryValueIsNotAllowed());
+                case KEY_RATING_ENTRY_VALUE_HAS_TOO_MANY_DECIMAL_DIGITS ->
+                        errorMessage.add(errorMessageForRatingEntryHasTooManyDecimalDigits());
+                case KEY_RATING_ENTRY_VALUE_DOES_NOT_FIT_IN_RANGE_OF_VALUES -> errorMessage.
+                        add(errorMessageRatingEntryValueDoesntFitInRangeOfValues());
             }
         }
         return makeText(errorMessage);

@@ -33,5 +33,8 @@ public final class ExceptionConstants {
     public static final String KEY_RATING_ENTRY_BY_ID_NOT_FOUND = "ratingEntryByIdNotFound";
     public static final String KEY_RATING_ENTRY_NAME_IS_EMPTY = "ratingEntryNameIsEmpty";
     public static final String KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING = "ratingEntryNameAlreadyUsedInRating";
-    public static final String KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED = "ratingEntryValueIsNotAllowed";
+    public static final String KEY_RATING_ENTRY_VALUE_HAS_TOO_MANY_DECIMAL_DIGITS =
+            "ratingEntryValueHasTooManyDecimalDigits";
+    public static final String KEY_RATING_ENTRY_VALUE_DOES_NOT_FIT_IN_RANGE_OF_VALUES =
+            "ratingEntryValueDoesNotFitInRangeOfValues";
 }

@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import static en.ratings.own.my.test.constant.TestConstants.EMPTY_TEXT;
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
+import static en.ratings.own.my.test.constant.TestConstants.NUMBER_WITH_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberBetweenRangeOfValuesButNotAllowed;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanMaximum;
@@ -119,6 +120,19 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         ratingEntry.setValue(createValidRangeOfValuesWithNegativeMinimum().getMaximum());
         assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
         checkIfOldRatingEntryHasChangedAfterCreateWithSameRatingEntryNameAndSameRating(oldRatingEntry);
+    }
+
+    @Test
+    public void testInvalidCreateWithValueHasTooManyDecimalDigits() {
+        ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userStevenWorm);
+        String ratingId = responseEntityRating.getBody().getId();
+        RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+
+        Double invalidValue = createValidRangeOfValuesWithNegativeMinimum().getMinimum() +
+                NUMBER_WITH_TOO_MANY_DECIMAL_DIGITS;
+        ratingEntry.setValue(invalidValue);
+        assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
 
     @Test

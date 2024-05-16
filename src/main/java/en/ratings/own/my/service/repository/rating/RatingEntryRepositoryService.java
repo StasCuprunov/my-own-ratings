@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static en.ratings.own.my.utility.math.DecimalFormatUtility.cutDoubleAfterMaximumNumberOfDecimalDigits;
+
 @Service
 public class RatingEntryRepositoryService {
 
@@ -32,6 +34,7 @@ public class RatingEntryRepositoryService {
     }
 
     public RatingEntry save(RatingEntry ratingEntry) {
+        ratingEntry.setValue(cutDoubleAfterMaximumNumberOfDecimalDigits(ratingEntry.getValue()));
         return ratingEntryRepository.save(ratingEntry);
     }
 
