@@ -33,7 +33,7 @@ import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryRedBullForDrinksWithNegativeMinimum;
 
-public class RatingEntryControllerIntegrationTest extends AbstractIntegrationTest {
+public abstract class RatingEntryControllerIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     protected RatingController ratingController;

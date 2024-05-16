@@ -5,6 +5,7 @@ import en.ratings.own.my.model.rating.RatingEntry;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
+import static en.ratings.own.my.test.constant.TestConstants.NUMBER_WITH_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberBetweenRangeOfValuesButNotAllowed;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanMaximum;
@@ -118,6 +119,17 @@ public class RatingEntryUpdateControllerIntegrationTest extends RatingEntryContr
     }
 
     @Test
+    public void testInvalidUpdateWithValueHasTooManyDecimalDigits() {
+        ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
+        String ratingId = responseEntityRating.getBody().getId();
+        RatingEntry ratingEntryBeforeUpdate = saveValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        RatingEntry input = createNewRatingEntryObject(ratingEntryBeforeUpdate);
+        Double value = createValidRangeOfValuesWithNegativeMinimum().getMinimum() + NUMBER_WITH_TOO_MANY_DECIMAL_DIGITS;
+        input.setValue(numberSmallerThanMinimum(value));
+        testInvalidUpdateWithExpectedRatingEntryFailedException(input, ratingEntryBeforeUpdate);
+    }
+
+    @Test
     public void testInvalidUpdateWithValueSmallerThanMinimum() {
         ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
         String ratingId = responseEntityRating.getBody().getId();
@@ -158,8 +170,10 @@ public class RatingEntryUpdateControllerIntegrationTest extends RatingEntryContr
 
     private void testInvalidUpdateWithExpectedRatingEntryFailedException(RatingEntry input,
                                                                          RatingEntry ratingEntryBefore) {
+        Exception fondException = updateInvalid(input);
+        printExceptionMessage(fondException);
         assertAll(
-                () -> assertThatExceptionIsEqualToRatingEntryFailedException(updateInvalid(input)),
+                () -> assertThatExceptionIsEqualToRatingEntryFailedException(fondException),
                 () -> compareCreatedRatingEntryBeforeAndAfterFailedUpdate(ratingEntryBefore)
         );
     }

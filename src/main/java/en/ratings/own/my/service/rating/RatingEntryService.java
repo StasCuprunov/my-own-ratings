@@ -16,9 +16,11 @@ import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_IS_EMPTY;
-import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_HAS_TOO_MANY_DECIMAL_DIGITS;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_DOES_NOT_FIT_IN_RANGE_OF_VALUES;
 import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayList;
 import static en.ratings.own.my.service.rating.RangeOfValuesValidation.isValueInRangeOfValues;
+import static en.ratings.own.my.utility.math.DecimalFormatUtility.numberHasTooManyDecimalDigits;
 
 @Service
 public class RatingEntryService {
@@ -141,10 +143,12 @@ public class RatingEntryService {
     }
 
     private String ratingEntryValueValidation(String rangeOfValuesId, Double value) throws Exception {
+        if (numberHasTooManyDecimalDigits(value)) {
+            return KEY_RATING_ENTRY_VALUE_HAS_TOO_MANY_DECIMAL_DIGITS;
+        }
         RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rangeOfValuesId);
-
         if (!isValueInRangeOfValues(value, rangeOfValues)) {
-            return KEY_RATING_ENTRY_VALUE_IS_NOT_ALLOWED;
+            return KEY_RATING_ENTRY_VALUE_DOES_NOT_FIT_IN_RANGE_OF_VALUES;
         }
         return null;
     }

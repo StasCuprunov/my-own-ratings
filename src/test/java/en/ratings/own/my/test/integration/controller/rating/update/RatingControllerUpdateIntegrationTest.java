@@ -21,7 +21,7 @@ import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class RatingControllerUpdateIntegrationTest extends RatingControllerIntegrationTest {
+public abstract class RatingControllerUpdateIntegrationTest extends RatingControllerIntegrationTest {
 
     protected void testValidUpdate(RatingDTO input, ResponseEntity<RatingDTO> responseEntity) {
         RatingDTO result = responseEntity.getBody();

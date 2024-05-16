@@ -27,7 +27,7 @@ import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryRedBullForDrinksWithNegativeMinimum;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class RatingControllerIntegrationTest extends AbstractIntegrationTest {
+public abstract class RatingControllerIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     protected RatingController ratingController;
