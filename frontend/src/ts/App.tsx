@@ -1,9 +1,9 @@
 import React from 'react';
-import {Registration} from "./registration/Registration";
+import {RegistrationComponent} from "./registration/RegistrationComponent";
 
 function App() {
   return (
-      <Registration/>
+      <RegistrationComponent/>
   );
 }
 

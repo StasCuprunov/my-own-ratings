@@ -1,24 +1,10 @@
-import axios from "axios";
-import {FunctionComponent, useEffect, useState} from "react";
-import {ROUTING_REGISTRATION} from "../interface/APIConstants";
-import {HelloWorld} from "../HelloWorld";
-import {ComponentHandling} from "../component/ComponentHandling";
+import {FunctionComponent} from "react";
 
-export const Registration: FunctionComponent = () =>  {
-    const [registration, setRegistration] = useState(null);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        axios.get(ROUTING_REGISTRATION)
-            .then((response) => {
-                setRegistration(response.data);
-            })
-            .catch(error => {
-                setError(error);
-            });
-        },[]);
-
+export const Registration: FunctionComponent<any> = ({props}) => {
     return (
-        <ComponentHandling Component={HelloWorld} error={error}/>
+        <div>
+            <h1>Registration</h1>
+            <h2>{props.passwordMinimumLength}</h2>
+        </div>
     );
 }
