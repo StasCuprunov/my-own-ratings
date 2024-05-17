@@ -16,6 +16,8 @@ public class RoutingConstants {
 
     public static final String ROUTING_DELETE = "/delete" + ROUTING_ID;
 
+    public static final String ROUTING_REGISTRATION = "/registration";
+
     public static final String ROUTING_LOGIN = "/login";
 
     public static final String ROUTING_START_PAGE = "/start-page";
