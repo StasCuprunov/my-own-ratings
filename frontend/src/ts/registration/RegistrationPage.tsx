@@ -13,19 +13,19 @@ import {
     getLabelPasswordObject,
     getLabelSurnameObject
 } from "./RegistrationFunctions";
+import {PasswordRegex} from "./PasswordRegex";
 
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     const maxLengthString: number = props.maximumLengthOfString;
-    const atLeastOneDigitRegex: RegExp = new RegExp(props.atLeastOneDigitRegex);
-    const atLeastOneEnglishUpperCaseLetterRegex: RegExp = new RegExp(props.atLeastOneEnglishUpperCaseLetterRegex);
-    const atLeastOneEnglishLowerCaseLetterRegex: RegExp = new RegExp(props.atLeastOneEnglishLowerCaseLetterRegex);
-    const atLeastOneValidSpecialCharacterRegex: RegExp = new RegExp(props.atLeastOneValidSpecialCharacterRegex);
 
     const labelEmail: any = useMemo(() => getLabelEmailObject(), []);
     const labelFirstName: any = useMemo(() => getLabelFirstNameObject(), []);
     const labelSurname: any = useMemo(() => getLabelSurnameObject(), []);
     const labelPassword: any = useMemo(() => getLabelPasswordObject(), []);
     const labelPasswordConfirmation: any = useMemo(() => getLabelPasswordConfirmation(), []);
+    const passwordRegex: PasswordRegex = new PasswordRegex(props.atLeastOneDigitRegex,
+        props.atLeastOneEnglishUpperCaseLetterRegex, props.atLeastOneEnglishLowerCaseLetterRegex,
+        props.atLeastOneValidSpecialCharacterRegex, props.enumerationOfValidSpecialCharacters);
 
     const [user, setUser] = useState({
         id: "",
@@ -52,7 +52,7 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         setIsPasswordValid(true);
         setIsPasswordConfirmationValid(true);
 
-        checkPassword();
+        passwordRegex.checkPassword(user.password, setIsPasswordValid, setPasswordErrors);
         if (passwordConfirmation !== user.password) {
             setIsPasswordConfirmationValid(false);
         }
@@ -70,30 +70,6 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         };
     };
 
-    const checkPassword = ()=> {
-        let password: string = user.password;
-        let passwordErrors: string[] = [];
-        let isPasswordValid: boolean = true;
-        if (!atLeastOneDigitRegex.test(password)) {
-            isPasswordValid = false;
-            passwordErrors.push("Your password needs minimum one digit");
-        }
-        if (!atLeastOneEnglishUpperCaseLetterRegex.test(password)) {
-            isPasswordValid = false;
-            passwordErrors.push("Your password needs minimum one English uppercase letter");
-        }
-        if (!atLeastOneEnglishLowerCaseLetterRegex.test(password)) {
-            isPasswordValid = false;
-            passwordErrors.push("Your password needs minimum one English lowercase letter");
-        }
-        if(!atLeastOneValidSpecialCharacterRegex.test(password)) {
-            isPasswordValid = false;
-            passwordErrors.push("Your password needs minimum one of the following special characters: " +
-                props.enumerationOfValidSpecialCharacters);
-        }
-        setIsPasswordValid(isPasswordValid);
-        setPasswordErrors(passwordErrors);
-    };
     const inputEmail: any = useMemo(() =>
             getInputEmailObject(user.email, maxLengthString, handleUserChange("email", setUser)),
         [user.email]
@@ -155,7 +131,8 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
                         <li>
                             <sup>1</sup>Required
                         </li>
-                        <li><sup>2</sup>
+                        <li>
+                            <sup>2</sup>
                             The password must contain minimum one digit, one uppercase English letter, one lowercase
                             English letter, and one of the following special
                             characters: {props.enumerationOfValidSpecialCharacters}
