@@ -31,9 +31,9 @@ const createAccountButton: any = getCreateAccountButtonProps();
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     const maxLengthString: number = props.maximumLengthOfString;
 
-    const passwordRegex: PasswordRegex = new PasswordRegex(props.atLeastOneDigitRegex,
+    const passwordRegex: PasswordRegex = useMemo(() => new PasswordRegex(props.atLeastOneDigitRegex,
         props.atLeastOneEnglishUpperCaseLetterRegex, props.atLeastOneEnglishLowerCaseLetterRegex,
-        props.atLeastOneValidSpecialCharacterRegex, props.enumerationOfValidSpecialCharacters);
+        props.atLeastOneValidSpecialCharacterRegex, props.enumerationOfValidSpecialCharacters), []);
 
     const [user, setUser] = useState({
         id: "",
@@ -50,10 +50,6 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
 
     const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
 
-    const handlePasswordConfirmationChange = (event: any) => {
-        setPasswordConfirmation(event.target.value);
-    };
-
     const handleUserChange = (field: string, setUser: any) => {
         return (e: ChangeEvent<HTMLInputElement>) => {
             setUser((prev: any) => ({
@@ -63,11 +59,13 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         };
     };
 
+    const handlePasswordConfirmationChange = (event: any) => {
+        setPasswordConfirmation(event.target.value);
+    };
+
     const handleSubmit = (event: any) => {
         event.preventDefault();
-
-        setIsPasswordValid(true);
-        setIsPasswordConfirmationValid(true);
+        resetPasswordValidation();
 
         const { isPasswordValid, passwordErrors } = passwordRegex.checkPassword(user.password);
         setIsPasswordValid(isPasswordValid);
@@ -79,6 +77,11 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         if (!isPasswordValid || !isPasswordConfirmationValid) {
             return;
         }
+    };
+
+    const resetPasswordValidation = () => {
+        setIsPasswordValid(true);
+        setIsPasswordConfirmationValid(true);
     };
 
     const inputEmail: any = useMemo(() =>
