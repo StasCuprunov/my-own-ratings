@@ -1,7 +1,8 @@
 import {ChangeEvent, FunctionComponent, useMemo, useState} from "react";
-import {Label} from "../component/atom/Label";
-import {Input} from "../component/atom/Input";
+import {Label} from "../component/atom/form/Label";
+import {Input} from "../component/atom/form/Input";
 import {
+    getCreateAccountButtonObject,
     getInputEmailObject,
     getInputFirstNameObject,
     getInputPasswordConfirmation,
@@ -14,6 +15,7 @@ import {
     getLabelSurnameObject
 } from "./RegistrationFunctions";
 import {PasswordRegex} from "./PasswordRegex";
+import {Button} from "../component/atom/button/Button";
 
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     const maxLengthString: number = props.maximumLengthOfString;
@@ -23,6 +25,9 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     const labelSurname: any = useMemo(() => getLabelSurnameObject(), []);
     const labelPassword: any = useMemo(() => getLabelPasswordObject(), []);
     const labelPasswordConfirmation: any = useMemo(() => getLabelPasswordConfirmation(), []);
+
+    const createAccountButton: any = useMemo(() => getCreateAccountButtonObject(), []);
+
     const passwordRegex: PasswordRegex = new PasswordRegex(props.atLeastOneDigitRegex,
         props.atLeastOneEnglishUpperCaseLetterRegex, props.atLeastOneEnglishLowerCaseLetterRegex,
         props.atLeastOneValidSpecialCharacterRegex, props.enumerationOfValidSpecialCharacters);
@@ -46,6 +51,15 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         setPasswordConfirmation(event.target.value);
     };
 
+    const handleUserChange = (field: string, setUser: any) => {
+        return (e: ChangeEvent<HTMLInputElement>) => {
+            setUser((prev: any) => ({
+                ...prev,
+                [field]: e.target.value
+            }));
+        };
+    };
+
     const handleSubmit = (event: any) => {
         event.preventDefault();
         console.log(user)
@@ -59,15 +73,6 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         if (!isPasswordValid || !isPasswordConfirmationValid) {
             return;
         }
-    };
-
-    const handleUserChange = (field: string, setUser: any) => {
-        return (e: ChangeEvent<HTMLInputElement>) => {
-            setUser((prev: any) => ({
-                ...prev,
-                [field]: e.target.value
-            }));
-        };
     };
 
     const inputEmail: any = useMemo(() =>
@@ -123,7 +128,7 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
                     }
                 </div>
                 <div>
-                    <button type="submit">Create Account</button>
+                    <Button props={createAccountButton}/>
                 </div>
                 <div>
                     <h2>Hints</h2>

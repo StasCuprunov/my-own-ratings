@@ -42,6 +42,13 @@ export const getLabelPasswordConfirmation: any = () => {
     };
 };
 
+export const getCreateAccountButtonObject: any = () => {
+  return {
+    type: "submit",
+    text: "Create Account"
+  };
+};
+
 export const getInputEmailObject: any = (value: string, maxLength: number, handleChange: any) => {
     return {
         required: true,
