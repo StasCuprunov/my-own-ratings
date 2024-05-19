@@ -1,5 +1,6 @@
 import {ChangeEvent, FunctionComponent, useState} from "react";
 import {Label} from "../component/atom/Label";
+import {Input} from "../component/atom/Input";
 
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     const maxLengthString: number = props.maximumLengthOfString;
@@ -34,7 +35,7 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         };
     };
 
-    const onChangeHandler = (event: any) => {
+    const handlePasswordConfirmationChange = (event: any) => {
         setPasswordConfirmation(event.target.value);
     };
 
@@ -82,15 +83,15 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         htmlFor: "email",
         text: "Email",
         sup: "1"
-    }
-    let labelFirstname: any = {
+    };
+    let labelFirstName: any = {
         htmlFor: "first-name",
         text: "First name"
-    }
+    };
     let labelSurname: any = {
         htmlFor: "surname",
         text: "Surname"
-    }
+    };
     let labelPassword: any = {
         htmlFor: "password",
         text: "Password",
@@ -99,40 +100,73 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     let labelPasswordConfirmation: any = {
         htmlFor: "password-confirmation",
         text: "Password confirmation"
-    }
+    };
+    let inputEmail: any = {
+        required: true,
+        name: "email",
+        type: "email",
+        value: user.email,
+        maxLength: maxLengthString,
+        pattern: props.emailRegex,
+        onChange: handleUserChange("email")
+    };
+    let inputFirstName: any = {
+      required: true,
+        name: "first-name",
+        type: "text",
+        value: user.firstName,
+        maxlength: maxLengthString,
+        onChange: handleUserChange("firstName")
+    };
+    let inputSurname: any = {
+      name: "surname",
+      type: "text",
+      value: user.surname,
+      maxLength: maxLengthString,
+      onChange: handleUserChange("surname")
+    };
+    let inputPassword: any = {
+        required: true,
+        name: "password",
+        type: "password",
+        value: user.password,
+        minLength: minLengthPassword,
+        maxLength: maxLengthPassword,
+        onChange: handleUserChange("password")
+    };
+    let inputPasswordConfirmation: any = {
+        required: true,
+        name: "password-confirmation",
+        type: "password",
+        value: passwordConfirmation,
+        onChange: handlePasswordConfirmationChange
+    };
     return (
         <div>
             <form onSubmit={handleSubmit}>
                 <h1>Registration</h1>
                 <div>
                     <Label props={labelEmail}/>
-                    <input required name="email" type="email" value={user.email} maxLength={maxLengthString}
-                           pattern={props.emailRegex} onChange={handleUserChange("email")}/>
+                    <Input props={inputEmail}/>
                 </div>
                 <div>
-                    <Label props={labelFirstname}/>
-                    <input name="first-name" type="text" value={user.firstName} maxLength={maxLengthString}
-                    onChange={handleUserChange("firstName")}/>
+                    <Label props={labelFirstName}/>
+                    <Input props={inputFirstName}/>
                 </div>
                 <div>
                     <Label props={labelSurname}/>
-                    <input name="surname" type="text" value={user.surname} maxLength={maxLengthString}
-                           onChange={handleUserChange("surname")}/>
+                    <Input props={inputSurname}/>
                 </div>
                 <div>
                     <Label props={labelPassword}/>
-                    <input name="password" required type="password" value={user.password}
-                           onChange={handleUserChange("password")} minLength={minLengthPassword}
-                           maxLength={maxLengthPassword}/>
+                    <Input props={inputPassword}/>
                     {!isPasswordValid &&
                         <span>{passwordErrors.toString()}</span>
                     }
                 </div>
                 <div>
                     <Label props={labelPasswordConfirmation}/>
-                    <input required name="password-confirmation" type="password" value={passwordConfirmation}
-                        onChange={onChangeHandler}
-                    />
+                    <Input props={inputPasswordConfirmation}/>
                     {!isPasswordConfirmationValid &&
                         <span>The confirmation must be equal to the password.</span>
                     }
