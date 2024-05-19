@@ -8,11 +8,16 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.service.user.UserValidation.regexEmailRFC5322;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class RegistrationDTO {
+
+    private String emailRegex = regexEmailRFC5322();
+
     private int passwordMinimumLength = PasswordUtility.PASSWORD_MINIMUM_LENGTH;
 
     private int passwordMaximumLength = PasswordUtility.PASSWORD_MAXIMUM_LENGTH;
