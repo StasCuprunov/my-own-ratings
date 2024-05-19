@@ -1,9 +1,13 @@
 import React from 'react';
-import {RegistrationComponent} from "./registration/RegistrationComponent";
+import { Routes, Route } from 'react-router-dom';
+import {Registration} from "./registration/Registration";
 
 function App() {
   return (
-      <RegistrationComponent/>
+      <Routes>
+        <Route path="/" element={<Registration />} />
+        <Route path="/registration" element={<Registration />} />
+      </Routes>
   );
 }
 
