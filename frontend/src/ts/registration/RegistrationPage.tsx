@@ -2,29 +2,31 @@ import {ChangeEvent, FunctionComponent, useMemo, useState} from "react";
 import {Label} from "../component/atom/form/Label";
 import {Input} from "../component/atom/form/Input";
 import {
-    getCreateAccountButtonObject,
-    getInputEmailObject,
-    getInputFirstNameObject,
-    getInputPasswordConfirmation,
-    getInputPasswordObject,
-    getInputSurnameObject,
-    getLabelEmailObject,
-    getLabelFirstNameObject,
-    getLabelPasswordConfirmation,
-    getLabelPasswordObject,
-    getLabelSurnameObject
+    getCreateAccountButtonProps,
+    getInputEmailProps,
+    getInputErrorPasswordConfirmationProps,
+    getInputErrorPasswordProps,
+    getInputFirstNameProps,
+    getInputPasswordConfirmationProps,
+    getInputPasswordProps,
+    getInputSurnameProps,
+    getLabelEmailProps,
+    getLabelFirstNameProps,
+    getLabelPasswordConfirmationProps,
+    getLabelPasswordProps,
+    getLabelSurnameProps
 } from "./RegistrationFunctions";
 import {PasswordRegex} from "./PasswordRegex";
 import {Button} from "../component/atom/button/Button";
 import {InputError} from "../component/atom/form/InputError";
 
-const labelEmail: any = getLabelEmailObject();
-const labelFirstName: any = getLabelFirstNameObject();
-const labelSurname: any = getLabelSurnameObject();
-const labelPassword: any = getLabelPasswordObject();
-const labelPasswordConfirmation: any = getLabelPasswordConfirmation();
+const labelEmail: any = getLabelEmailProps();
+const labelFirstName: any = getLabelFirstNameProps();
+const labelSurname: any = getLabelSurnameProps();
+const labelPassword: any = getLabelPasswordProps();
+const labelPasswordConfirmation: any = getLabelPasswordConfirmationProps();
 
-const createAccountButton: any = getCreateAccountButtonObject();
+const createAccountButton: any = getCreateAccountButtonProps();
 
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     const maxLengthString: number = props.maximumLengthOfString;
@@ -80,36 +82,26 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     };
 
     const inputEmail: any = useMemo(() =>
-            getInputEmailObject(user.email, maxLengthString, handleUserChange("email", setUser)),
+            getInputEmailProps(user.email, maxLengthString, handleUserChange("email", setUser)),
         [user.email]
     );
     let inputFirstName: any = useMemo( () =>
-        getInputFirstNameObject(user.firstName, maxLengthString, handleUserChange("firstName", setUser)),
+        getInputFirstNameProps(user.firstName, maxLengthString, handleUserChange("firstName", setUser)),
         [user.firstName]
     );
     let inputSurname: any = useMemo(() =>
-        getInputSurnameObject(user.surname, maxLengthString, handleUserChange("surname", setUser)),
+        getInputSurnameProps(user.surname, maxLengthString, handleUserChange("surname", setUser)),
         [user.surname]
     );
     let inputPassword: any = useMemo(() =>
-        getInputPasswordObject(user.password, props.passwordMinimumLength, props.passwordMaximumLength,
+        getInputPasswordProps(user.password, props.passwordMinimumLength, props.passwordMaximumLength,
             handleUserChange("password", setUser)),
         [user.password]
     );
     let inputPasswordConfirmation: any = useMemo(() =>
-        getInputPasswordConfirmation(passwordConfirmation, handlePasswordConfirmationChange),
+        getInputPasswordConfirmationProps(passwordConfirmation, handlePasswordConfirmationChange),
         [passwordConfirmation]
     );
-
-    const inputErrorPassword: any = {
-      condition: !isPasswordValid,
-      text: passwordErrors.toString()
-    };
-
-    const inputErrorPasswordConfirmation: any = {
-        condition: !isPasswordConfirmationValid,
-        text: "The confirmation must be equal to the password."
-    }
 
     return (
         <div>
@@ -130,12 +122,12 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
                 <div>
                     <Label props={labelPassword}/>
                     <Input props={inputPassword}/>
-                    <InputError props={inputErrorPassword}/>
+                    <InputError props={getInputErrorPasswordProps(!isPasswordValid, passwordErrors)}/>
                 </div>
                 <div>
                     <Label props={labelPasswordConfirmation}/>
                     <Input props={inputPasswordConfirmation}/>
-                    <InputError props={inputErrorPasswordConfirmation}/>
+                    <InputError props={getInputErrorPasswordConfirmationProps(!isPasswordConfirmationValid)}/>
                 </div>
                 <div>
                     <Button props={createAccountButton}/>

@@ -5,7 +5,7 @@ export const useRegistration: any = () => {
     return useGet(ROUTING_REGISTRATION);
 };
 
-export const getLabelEmailObject: any = () => {
+export const getLabelEmailProps: any = () => {
     return {
         htmlFor: "email",
         text: "Email",
@@ -13,21 +13,21 @@ export const getLabelEmailObject: any = () => {
     };
 };
 
-export const getLabelFirstNameObject: any = () => {
+export const getLabelFirstNameProps: any = () => {
     return {
         htmlFor: "first-name",
         text: "First name"
     };
 };
 
-export const getLabelSurnameObject: any = () => {
+export const getLabelSurnameProps: any = () => {
     return {
         htmlFor: "surname",
         text: "Surname"
     };
 };
 
-export const getLabelPasswordObject: any = () => {
+export const getLabelPasswordProps: any = () => {
   return {
       htmlFor: "password",
       text: "Password",
@@ -35,21 +35,21 @@ export const getLabelPasswordObject: any = () => {
   };
 };
 
-export const getLabelPasswordConfirmation: any = () => {
+export const getLabelPasswordConfirmationProps: any = () => {
     return {
         htmlFor: "password-confirmation",
         text: "Password confirmation"
     };
 };
 
-export const getCreateAccountButtonObject: any = () => {
+export const getCreateAccountButtonProps: any = () => {
   return {
     type: "submit",
     text: "Create Account"
   };
 };
 
-export const getInputEmailObject: any = (value: string, maxLength: number, handleChange: any) => {
+export const getInputEmailProps: any = (value: string, maxLength: number, handleChange: any) => {
     return {
         required: true,
         name: "email",
@@ -60,7 +60,7 @@ export const getInputEmailObject: any = (value: string, maxLength: number, handl
     };
 };
 
-export const getInputFirstNameObject: any = (value: string, maxLength: number, handleChange: any) => {
+export const getInputFirstNameProps: any = (value: string, maxLength: number, handleChange: any) => {
   return {
       name: "first-name",
       type: "text",
@@ -70,7 +70,7 @@ export const getInputFirstNameObject: any = (value: string, maxLength: number, h
   }
 };
 
-export const getInputSurnameObject: any = (value: string, maxLength: number, handleChange: any) => {
+export const getInputSurnameProps: any = (value: string, maxLength: number, handleChange: any) => {
     return {
         name: "surname",
         type: "text",
@@ -80,7 +80,8 @@ export const getInputSurnameObject: any = (value: string, maxLength: number, han
     };
 };
 
-export const getInputPasswordObject: any = (value: string, minLength: number, maxLength: number, handleChange: any) => {
+export const getInputPasswordProps: any = (value: string, minLength: number, maxLength: number,
+                                           handleChange: any) => {
    return {
        required: true,
        name: "password",
@@ -92,7 +93,7 @@ export const getInputPasswordObject: any = (value: string, minLength: number, ma
    }
 };
 
-export const getInputPasswordConfirmation: any = (value: string, handleChange: any) => {
+export const getInputPasswordConfirmationProps: any = (value: string, handleChange: any) => {
     return {
         required: true,
         name: "password-confirmation",
@@ -101,3 +102,19 @@ export const getInputPasswordConfirmation: any = (value: string, handleChange: a
         onChange: handleChange
     };
 };
+
+export const getInputErrorPasswordProps: any = (isPasswordInvalid: boolean,
+                                                passwordErrors: string[]) => {
+    return {
+        condition: isPasswordInvalid,
+        text: passwordErrors.toString()
+    };
+};
+
+export const getInputErrorPasswordConfirmationProps: any =
+    (isPasswordConfirmationInvalid: boolean) => {
+        return {
+            condition: isPasswordConfirmationInvalid,
+            text: "The confirmation must be equal to the password."
+        };
+    };
