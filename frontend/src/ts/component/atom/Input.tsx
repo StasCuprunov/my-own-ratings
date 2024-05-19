@@ -1,7 +1,6 @@
 import {FunctionComponent} from "react";
 
 export const Input: FunctionComponent<any> = ({props}) => {
-    console.log(props)
     return (
         <input
             required={props.required}

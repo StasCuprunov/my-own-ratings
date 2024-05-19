@@ -1,15 +1,31 @@
-import {ChangeEvent, FunctionComponent, useState} from "react";
+import {ChangeEvent, FunctionComponent, useMemo, useState} from "react";
 import {Label} from "../component/atom/Label";
 import {Input} from "../component/atom/Input";
+import {
+    getInputEmailObject,
+    getInputFirstNameObject,
+    getInputPasswordConfirmation,
+    getInputPasswordObject,
+    getInputSurnameObject,
+    getLabelEmailObject,
+    getLabelFirstNameObject,
+    getLabelPasswordConfirmation,
+    getLabelPasswordObject,
+    getLabelSurnameObject
+} from "./RegistrationFunctions";
 
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     const maxLengthString: number = props.maximumLengthOfString;
-    const minLengthPassword: number = props.passwordMinimumLength;
-    const maxLengthPassword: number = props.passwordMaximumLength;
     const atLeastOneDigitRegex: RegExp = new RegExp(props.atLeastOneDigitRegex);
     const atLeastOneEnglishUpperCaseLetterRegex: RegExp = new RegExp(props.atLeastOneEnglishUpperCaseLetterRegex);
     const atLeastOneEnglishLowerCaseLetterRegex: RegExp = new RegExp(props.atLeastOneEnglishLowerCaseLetterRegex);
     const atLeastOneValidSpecialCharacterRegex: RegExp = new RegExp(props.atLeastOneValidSpecialCharacterRegex);
+
+    const labelEmail: any = useMemo(() => getLabelEmailObject(), []);
+    const labelFirstName: any = useMemo(() => getLabelFirstNameObject(), []);
+    const labelSurname: any = useMemo(() => getLabelSurnameObject(), []);
+    const labelPassword: any = useMemo(() => getLabelPasswordObject(), []);
+    const labelPasswordConfirmation: any = useMemo(() => getLabelPasswordConfirmation(), []);
 
     const [user, setUser] = useState({
         id: "",
@@ -26,22 +42,13 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
 
     const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
 
-    const handleUserChange = (field: string) => {
-        return (e: ChangeEvent<HTMLInputElement>) => {
-            setUser((prev) => ({
-                ...prev,
-                [field]: e.target.value
-            }));
-        };
-    };
-
     const handlePasswordConfirmationChange = (event: any) => {
         setPasswordConfirmation(event.target.value);
     };
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-
+        console.log(user)
         setIsPasswordValid(true);
         setIsPasswordConfirmationValid(true);
 
@@ -52,7 +59,15 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         if (!isPasswordValid || !isPasswordConfirmationValid) {
             return;
         }
-        console.log(user);
+    };
+
+    const handleUserChange = (field: string, setUser: any) => {
+        return (e: ChangeEvent<HTMLInputElement>) => {
+            setUser((prev: any) => ({
+                ...prev,
+                [field]: e.target.value
+            }));
+        };
     };
 
     const checkPassword = ()=> {
@@ -79,68 +94,28 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         setIsPasswordValid(isPasswordValid);
         setPasswordErrors(passwordErrors);
     };
-    let labelEmail: any = {
-        htmlFor: "email",
-        text: "Email",
-        sup: "1"
-    };
-    let labelFirstName: any = {
-        htmlFor: "first-name",
-        text: "First name"
-    };
-    let labelSurname: any = {
-        htmlFor: "surname",
-        text: "Surname"
-    };
-    let labelPassword: any = {
-        htmlFor: "password",
-        text: "Password",
-        sup: "1, 2"
-    }
-    let labelPasswordConfirmation: any = {
-        htmlFor: "password-confirmation",
-        text: "Password confirmation"
-    };
-    let inputEmail: any = {
-        required: true,
-        name: "email",
-        type: "email",
-        value: user.email,
-        maxLength: maxLengthString,
-        pattern: props.emailRegex,
-        onChange: handleUserChange("email")
-    };
-    let inputFirstName: any = {
-      required: true,
-        name: "first-name",
-        type: "text",
-        value: user.firstName,
-        maxlength: maxLengthString,
-        onChange: handleUserChange("firstName")
-    };
-    let inputSurname: any = {
-      name: "surname",
-      type: "text",
-      value: user.surname,
-      maxLength: maxLengthString,
-      onChange: handleUserChange("surname")
-    };
-    let inputPassword: any = {
-        required: true,
-        name: "password",
-        type: "password",
-        value: user.password,
-        minLength: minLengthPassword,
-        maxLength: maxLengthPassword,
-        onChange: handleUserChange("password")
-    };
-    let inputPasswordConfirmation: any = {
-        required: true,
-        name: "password-confirmation",
-        type: "password",
-        value: passwordConfirmation,
-        onChange: handlePasswordConfirmationChange
-    };
+    const inputEmail: any = useMemo(() =>
+            getInputEmailObject(user.email, maxLengthString, handleUserChange("email", setUser)),
+        [user.email]
+    );
+    let inputFirstName: any = useMemo( () =>
+        getInputFirstNameObject(user.firstName, maxLengthString, handleUserChange("firstName", setUser)),
+        [user.firstName]
+    );
+    let inputSurname: any = useMemo(() =>
+        getInputSurnameObject(user.surname, maxLengthString, handleUserChange("surname", setUser)),
+        [user.surname]
+    );
+    let inputPassword: any = useMemo(() =>
+        getInputPasswordObject(user.password, props.passwordMinimumLength, props.passwordMaximumLength,
+            handleUserChange("password", setUser)),
+        [user.password]
+    );
+    let inputPasswordConfirmation: any = useMemo(() =>
+        getInputPasswordConfirmation(passwordConfirmation, handlePasswordConfirmationChange),
+        [passwordConfirmation]
+    );
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
