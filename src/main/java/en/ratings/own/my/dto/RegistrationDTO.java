@@ -6,15 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-
+import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_LENGTH_OF_SMALL_String;
 import static en.ratings.own.my.service.user.UserValidation.regexEmailRFC5322;
+import static en.ratings.own.my.utility.StringUtility.enumerateStrings;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class RegistrationDTO {
+
+    private int maximumLengthOfString = MAXIMUM_LENGTH_OF_SMALL_String;
 
     private String emailRegex = regexEmailRFC5322();
 
@@ -33,5 +35,6 @@ public class RegistrationDTO {
     private String atLeastOneValidSpecialCharacterRegex =
             PasswordUtility.AT_LEAST_ONE_VALID_SPECIAL_CHARACTER_REGEX;
 
-    private ArrayList<String> listOfValidSpecialCharacters = PasswordUtility.LIST_OF_VALID_SPECIAL_CHARACTERS;
+    private String enumerationOfValidSpecialCharacters =
+            enumerateStrings(PasswordUtility.LIST_OF_VALID_SPECIAL_CHARACTERS);
 }
