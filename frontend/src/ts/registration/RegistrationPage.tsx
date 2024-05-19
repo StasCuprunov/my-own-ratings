@@ -16,17 +16,18 @@ import {
 } from "./RegistrationFunctions";
 import {PasswordRegex} from "./PasswordRegex";
 import {Button} from "../component/atom/button/Button";
+import {InputError} from "../component/atom/form/InputError";
+
+const labelEmail: any = getLabelEmailObject();
+const labelFirstName: any = getLabelFirstNameObject();
+const labelSurname: any = getLabelSurnameObject();
+const labelPassword: any = getLabelPasswordObject();
+const labelPasswordConfirmation: any = getLabelPasswordConfirmation();
+
+const createAccountButton: any = getCreateAccountButtonObject();
 
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     const maxLengthString: number = props.maximumLengthOfString;
-
-    const labelEmail: any = useMemo(() => getLabelEmailObject(), []);
-    const labelFirstName: any = useMemo(() => getLabelFirstNameObject(), []);
-    const labelSurname: any = useMemo(() => getLabelSurnameObject(), []);
-    const labelPassword: any = useMemo(() => getLabelPasswordObject(), []);
-    const labelPasswordConfirmation: any = useMemo(() => getLabelPasswordConfirmation(), []);
-
-    const createAccountButton: any = useMemo(() => getCreateAccountButtonObject(), []);
 
     const passwordRegex: PasswordRegex = new PasswordRegex(props.atLeastOneDigitRegex,
         props.atLeastOneEnglishUpperCaseLetterRegex, props.atLeastOneEnglishLowerCaseLetterRegex,
@@ -62,11 +63,14 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        console.log(user)
+
         setIsPasswordValid(true);
         setIsPasswordConfirmationValid(true);
 
-        passwordRegex.checkPassword(user.password, setIsPasswordValid, setPasswordErrors);
+        const { isPasswordValid, passwordErrors } = passwordRegex.checkPassword(user.password);
+        setIsPasswordValid(isPasswordValid);
+        setPasswordErrors(passwordErrors);
+
         if (passwordConfirmation !== user.password) {
             setIsPasswordConfirmationValid(false);
         }
@@ -97,6 +101,16 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         [passwordConfirmation]
     );
 
+    const inputErrorPassword: any = {
+      condition: !isPasswordValid,
+      text: passwordErrors.toString()
+    };
+
+    const inputErrorPasswordConfirmation: any = {
+        condition: !isPasswordConfirmationValid,
+        text: "The confirmation must be equal to the password."
+    }
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -116,16 +130,12 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
                 <div>
                     <Label props={labelPassword}/>
                     <Input props={inputPassword}/>
-                    {!isPasswordValid &&
-                        <span>{passwordErrors.toString()}</span>
-                    }
+                    <InputError props={inputErrorPassword}/>
                 </div>
                 <div>
                     <Label props={labelPasswordConfirmation}/>
                     <Input props={inputPasswordConfirmation}/>
-                    {!isPasswordConfirmationValid &&
-                        <span>The confirmation must be equal to the password.</span>
-                    }
+                    <InputError props={inputErrorPasswordConfirmation}/>
                 </div>
                 <div>
                     <Button props={createAccountButton}/>

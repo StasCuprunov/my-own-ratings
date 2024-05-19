@@ -15,7 +15,7 @@ export class PasswordRegex {
         this.enumerationOfValidSpecialCharacters = enumerationOfValidSpecialCharacters;
     }
 
-    public checkPassword = (password: string, setIsPasswordValid: any, setPasswordErrors: any)=> {
+    public checkPassword = (password: string): any => {
         let passwordErrors: string[] = [];
         let isPasswordValid: boolean = true;
         if (!this.atLeastOneDigitRegExp.test(password)) {
@@ -35,7 +35,9 @@ export class PasswordRegex {
             passwordErrors.push("Your password needs minimum one of the following special characters: " +
                 this.enumerationOfValidSpecialCharacters);
         }
-        setIsPasswordValid(isPasswordValid);
-        setPasswordErrors(passwordErrors);
+        return {
+            isPasswordValid: isPasswordValid,
+            passwordErrors: passwordErrors
+        }
     };
-};
+}
