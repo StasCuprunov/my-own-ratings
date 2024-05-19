@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
+import {getAxios} from "./BackendCalls";
 
 export const useGet: any = (url: string) => {
     const [data, setData] = useState(null);
@@ -7,17 +7,18 @@ export const useGet: any = (url: string) => {
     useEffect(() =>  {
         let load: boolean = true;
         const get = async () => {
-            await axios.get(url)
-                .then((response) => {
-                    if (load) {
-                        setData(response.data);
-                    }
-                })
-                .catch(error => {
-                    if (load) {
-                        setError(error);
-                    }
-                });
+            let result = await getAxios(url);
+            if (!result) {
+                return;
+            }
+            let data: any = result.data;
+            if (data && load) {
+                setData(data);
+            }
+            let error: any = result.error;
+            if (error && load) {
+                setError(result.error);
+            }
         };
         get();
         return () => {
@@ -27,5 +28,5 @@ export const useGet: any = (url: string) => {
     return {
         data: data,
         error: error
-    }
+    };
 };

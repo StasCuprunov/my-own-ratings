@@ -63,6 +63,11 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         setPasswordConfirmation(event.target.value);
     };
 
+    const resetPasswordValidation = () => {
+        setIsPasswordValid(true);
+        setIsPasswordConfirmationValid(true);
+    };
+
     const handleSubmit = (event: any) => {
         event.preventDefault();
         resetPasswordValidation();
@@ -77,11 +82,6 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         if (!isPasswordValid || !isPasswordConfirmationValid) {
             return;
         }
-    };
-
-    const resetPasswordValidation = () => {
-        setIsPasswordValid(true);
-        setIsPasswordConfirmationValid(true);
     };
 
     const inputEmail: any = useMemo(() =>
