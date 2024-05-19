@@ -1,4 +1,5 @@
 import {ChangeEvent, FunctionComponent, useState} from "react";
+import {Label} from "../component/atom/Label";
 
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     const maxLengthString: number = props.maximumLengthOfString;
@@ -77,29 +78,49 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         setIsPasswordValid(isPasswordValid);
         setPasswordErrors(passwordErrors);
     };
-
-
+    let labelEmail: any = {
+        htmlFor: "email",
+        text: "Email",
+        sup: "1"
+    }
+    let labelFirstname: any = {
+        htmlFor: "first-name",
+        text: "First name"
+    }
+    let labelSurname: any = {
+        htmlFor: "surname",
+        text: "Surname"
+    }
+    let labelPassword: any = {
+        htmlFor: "password",
+        text: "Password",
+        sup: "1, 2"
+    }
+    let labelPasswordConfirmation: any = {
+        htmlFor: "password-confirmation",
+        text: "Password confirmation"
+    }
     return (
         <div>
             <form onSubmit={handleSubmit}>
                 <h1>Registration</h1>
                 <div>
-                    <label htmlFor="email">Email<sup>1</sup></label>
+                    <Label props={labelEmail}/>
                     <input required name="email" type="email" value={user.email} maxLength={maxLengthString}
                            pattern={props.emailRegex} onChange={handleUserChange("email")}/>
                 </div>
                 <div>
-                    <label htmlFor="first-name">First name</label>
+                    <Label props={labelFirstname}/>
                     <input name="first-name" type="text" value={user.firstName} maxLength={maxLengthString}
                     onChange={handleUserChange("firstName")}/>
                 </div>
                 <div>
-                    <label htmlFor="surname">Surname</label>
+                    <Label props={labelSurname}/>
                     <input name="surname" type="text" value={user.surname} maxLength={maxLengthString}
                            onChange={handleUserChange("surname")}/>
                 </div>
                 <div>
-                    <label htmlFor="password">Password<sup>1, 2</sup></label>
+                    <Label props={labelPassword}/>
                     <input name="password" required type="password" value={user.password}
                            onChange={handleUserChange("password")} minLength={minLengthPassword}
                            maxLength={maxLengthPassword}/>
@@ -108,7 +129,7 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
                     }
                 </div>
                 <div>
-                    <label htmlFor="password-confirmation">Password confirmation</label>
+                    <Label props={labelPasswordConfirmation}/>
                     <input required name="password-confirmation" type="password" value={passwordConfirmation}
                         onChange={onChangeHandler}
                     />
