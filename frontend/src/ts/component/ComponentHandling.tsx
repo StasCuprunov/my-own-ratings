@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from "react";
-import {ErrorPage} from "../ErrorPage";
-import {WebsiteLoadingPage} from "../WebsiteLoadingPage";
+import {ErrorPage} from "../general-page/ErrorPage";
+import {WebsiteLoadingPage} from "../general-page/WebsiteLoadingPage";
 
 export const ComponentHandling: FunctionComponent<any> = ({HtmlComponent, props, error}) =>  {
     if (error) {

@@ -23,7 +23,7 @@ import {Button} from "../component/atom/button/Button";
 import {InputError} from "../component/atom/form/InputError";
 import {User} from "../model/User";
 import {WEBSITE_ROUTING_INDEX} from "../constant/WebsiteRoutingConstants";
-import {ErrorPage} from "../ErrorPage";
+import {ErrorPage} from "../general-page/ErrorPage";
 
 const labelEmail: any = getLabelEmailProps();
 const labelFirstName: any = getLabelFirstNameProps();
