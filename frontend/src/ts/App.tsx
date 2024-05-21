@@ -1,12 +1,20 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import {Registration} from "./registration/Registration";
+import {Login} from "./login/Login";
+import {
+    WEBSITE_ROUTING_INDEX,
+    WEBSITE_ROUTING_LOGIN,
+    WEBSITE_ROUTING_REGISTRATION
+} from "./constant/WebsiteRoutingConstants";
 
 function App() {
   return (
       <Routes>
-        <Route path="/" element={<Registration />} />
-        <Route path="/registration" element={<Registration />} />
+          {[WEBSITE_ROUTING_INDEX, WEBSITE_ROUTING_LOGIN].map((path, index)=>
+              <Route path={path} key={index} element={<Login />} />)
+          }
+        <Route path={WEBSITE_ROUTING_REGISTRATION} element={<Registration />} />
       </Routes>
   );
 }

@@ -1,4 +1,5 @@
 import {ChangeEvent, FunctionComponent, useMemo, useState} from "react";
+import { useNavigate } from 'react-router-dom';
 import {Label} from "../component/atom/form/Label";
 import {Input} from "../component/atom/form/Input";
 import {
@@ -21,6 +22,7 @@ import {PasswordRegex} from "./PasswordRegex";
 import {Button} from "../component/atom/button/Button";
 import {InputError} from "../component/atom/form/InputError";
 import {User} from "../model/User";
+import {WEBSITE_ROUTING_INDEX} from "../constant/WebsiteRoutingConstants";
 
 const labelEmail: any = getLabelEmailProps();
 const labelFirstName: any = getLabelFirstNameProps();
@@ -30,7 +32,9 @@ const labelPasswordConfirmation: any = getLabelPasswordConfirmationProps();
 
 const createAccountButton: any = getCreateAccountButtonProps();
 
+
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
+    const navigate = useNavigate();
     const maxLengthString: number = props.maximumLengthOfString;
 
     const passwordRegex: PasswordRegex = useMemo(() => new PasswordRegex(props.atLeastOneDigitRegex,
@@ -79,7 +83,8 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
             return;
         }
         let result: any = createUser(user);
-        console.log(result)
+        const {data, error} = result;
+        navigate(WEBSITE_ROUTING_INDEX);
     };
 
     const inputEmail: any = useMemo(() =>
