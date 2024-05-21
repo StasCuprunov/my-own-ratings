@@ -20,7 +20,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static en.ratings.own.my.constant.CORSConstants.CORS_ALLOWED_METHODS;
+import static en.ratings.own.my.constant.CORSConstants.CORS_ALLOWED_ALL;
 import static en.ratings.own.my.constant.CORSConstants.CORS_PATTERN;
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -65,7 +65,9 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
-        configuration.setAllowedMethods(CORS_ALLOWED_METHODS);
+        configuration.addAllowedMethod(CORS_ALLOWED_ALL);
+        configuration.addAllowedHeader(CORS_ALLOWED_ALL);
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration(CORS_PATTERN, configuration);
         return source;
