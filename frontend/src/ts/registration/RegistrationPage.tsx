@@ -23,39 +23,39 @@ const labelPasswordConfirmation: any = getLabelPasswordConfirmationProps();
 
 const createAccountButton: any = getCreateAccountButtonProps();
 
-export const RegistrationPage: FunctionComponent<any> = ({props}) => {
-
-    if (props.backendError) {
+export const RegistrationPage: FunctionComponent<any> = ({backendError, handleSubmit, inputEmail, inputFirstName,
+                                                             inputSurname, inputPassword, isPasswordValid, passwordErrorText, inputPasswordConfirmation, isPasswordConfirmationValid}) => {
+    if (backendError) {
         return (
-          <ErrorPage error={props.backendError}/>
+          <ErrorPage error={backendError}/>
         );
     }
 
     return (
         <div>
-            <form onSubmit={props.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <h1>Registration</h1>
                 <div>
                     <Label props={labelEmail}/>
-                    <Input props={props.inputEmail}/>
+                    <Input props={inputEmail}/>
                 </div>
                 <div>
                     <Label props={labelFirstName}/>
-                    <Input props={props.inputFirstName}/>
+                    <Input props={inputFirstName}/>
                 </div>
                 <div>
                     <Label props={labelSurname}/>
-                    <Input props={props.inputSurname}/>
+                    <Input props={inputSurname}/>
                 </div>
                 <div>
                     <Label props={labelPassword}/>
-                    <Input props={props.inputPassword}/>
-                    <InputError props={getInputErrorPasswordProps(!props.isPasswordValid, props.passwordErrors)}/>
+                    <Input props={inputPassword}/>
+                    <InputError props={getInputErrorPasswordProps(!isPasswordValid, passwordErrorText)}/>
                 </div>
                 <div>
                     <Label props={labelPasswordConfirmation}/>
-                    <Input props={props.inputPasswordConfirmation}/>
-                    <InputError props={getInputErrorPasswordConfirmationProps(!props.isPasswordConfirmationValid)}/>
+                    <Input props={inputPasswordConfirmation}/>
+                    <InputError props={getInputErrorPasswordConfirmationProps(!isPasswordConfirmationValid)}/>
                 </div>
                 <div>
                     <Button props={createAccountButton}/>
@@ -65,12 +65,6 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
                     <ul>
                         <li>
                             <sup>1</sup>Required
-                        </li>
-                        <li>
-                            <sup>2</sup>
-                            The password must contain minimum one digit, one uppercase English letter, one lowercase
-                            English letter, and one of the following special
-                            characters: {props.enumerationOfValidSpecialCharacters}
                         </li>
                     </ul>
                 </div>

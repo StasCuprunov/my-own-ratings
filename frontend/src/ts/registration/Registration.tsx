@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {PasswordRegex} from "./PasswordRegex";
-import {ChangeEvent, FunctionComponent, useMemo, useState} from "react";
+import {ChangeEvent, FunctionComponent, useMemo, useState, useEffect} from "react";
 import {User} from "../model/User";
 import {
     createUser,
@@ -19,7 +19,7 @@ export const Registration: FunctionComponent<any> = ({props}) => {
 
     const passwordRegex: PasswordRegex = useMemo(() => new PasswordRegex(props.atLeastOneDigitRegex,
         props.atLeastOneEnglishUpperCaseLetterRegex, props.atLeastOneEnglishLowerCaseLetterRegex,
-        props.atLeastOneValidSpecialCharacterRegex, props.enumerationOfValidSpecialCharacters), []);
+        props.atLeastOneValidSpecialCharacterRegex, props.enumerationOfValidSpecialCharacters), [])
 
     const [user, setUser] = useState(new User());
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -28,10 +28,11 @@ export const Registration: FunctionComponent<any> = ({props}) => {
     const [isPasswordConfirmationValid, setIsPasswordConfirmationValid] =
         useState(true);
 
-    const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
+    const [passwordErrorText, setPasswordErrorText] =
+        useState<string>("");
     const [backendError, setBackendError] = useState(null);
 
-    const handleUserChange = (field: string, setUser: any) => {
+    const handleUserChange = (field: string) => {
         return (e: ChangeEvent<HTMLInputElement>) => {
             setUser((prev: any) => ({
                 ...prev,
@@ -47,9 +48,6 @@ export const Registration: FunctionComponent<any> = ({props}) => {
     const handleSubmit = async (event: any) => {
         event.preventDefault();
 
-        resetPasswordValidation();
-        checkPassword();
-        checkPasswordConfirmation();
         if (!isPasswordValid || !isPasswordConfirmationValid) {
             return;
         }
@@ -64,38 +62,43 @@ export const Registration: FunctionComponent<any> = ({props}) => {
         }
     };
 
-    const resetPasswordValidation = () => {
-        setIsPasswordValid(true);
-        setIsPasswordConfirmationValid(true);
-    };
+    useEffect(() => {
+        checkPasswordConfirmation();
+    }, [passwordConfirmation]);
+
+    useEffect(() => {
+        checkPassword();
+    }, [user.password]);
 
     const checkPassword = () => {
-        const { isPasswordValid, passwordErrors } = passwordRegex.checkPassword(user.password);
+        const { isPasswordValid, passwordErrorText } = passwordRegex.checkPassword(user.password);
         setIsPasswordValid(isPasswordValid);
-        setPasswordErrors(passwordErrors);
+        setPasswordErrorText(passwordErrorText);
     };
 
     const checkPasswordConfirmation = () => {
+        let isValid: boolean = true;
         if (passwordConfirmation !== user.password) {
-            setIsPasswordConfirmationValid(false);
+            isValid = false;
         }
+        setIsPasswordConfirmationValid(isValid);
     };
 
     const inputEmail: any = useMemo(() =>
-            getInputEmailProps(user.email, maxLengthString, handleUserChange("email", setUser)),
+            getInputEmailProps(user.email, maxLengthString, handleUserChange("email")),
         [user.email]
     );
     let inputFirstName: any = useMemo( () =>
-            getInputFirstNameProps(user.firstName, maxLengthString, handleUserChange("firstName", setUser)),
+            getInputFirstNameProps(user.firstName, maxLengthString, handleUserChange("firstName")),
         [user.firstName]
     );
     let inputSurname: any = useMemo(() =>
-            getInputSurnameProps(user.surname, maxLengthString, handleUserChange("surname", setUser)),
+            getInputSurnameProps(user.surname, maxLengthString, handleUserChange("surname")),
         [user.surname]
     );
     let inputPassword: any = useMemo(() =>
             getInputPasswordProps(user.password, props.passwordMinimumLength, props.passwordMaximumLength,
-                handleUserChange("password", setUser)),
+                handleUserChange("password")),
         [user.password]
     );
     let inputPasswordConfirmation: any = useMemo(() =>
@@ -103,10 +106,12 @@ export const Registration: FunctionComponent<any> = ({props}) => {
         [passwordConfirmation]
     );
 
-    let propsForPage: any = {backendError, handleSubmit, inputEmail, inputFirstName, inputSurname, inputPassword,
-        inputPasswordConfirmation, passwordErrors, isPasswordConfirmationValid};
-
     return (
-        <RegistrationPage props={propsForPage}/>
+        <RegistrationPage backendError={backendError} handleSubmit={handleSubmit} inputEmail={inputEmail}
+                          inputFirstName={inputFirstName} inputSurname={inputSurname} inputPassword={inputPassword}
+                          isPasswordValid={isPasswordValid} passwordErrorText={passwordErrorText}
+                          inputPasswordConfirmation={inputPasswordConfirmation}
+                          isPasswordConfirmationValid={isPasswordConfirmationValid}
+        />
     );
 };

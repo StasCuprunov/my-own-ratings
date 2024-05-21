@@ -37,22 +37,23 @@ export const getLabelPasswordProps: any = () => {
   return {
       htmlFor: "password",
       text: "Password",
-      sup: "1, 2"
+      sup: "1"
   };
 };
 
 export const getLabelPasswordConfirmationProps: any = () => {
     return {
         htmlFor: "password-confirmation",
-        text: "Password confirmation"
+        text: "Password confirmation",
+        sup: "1"
     };
 };
 
 export const getCreateAccountButtonProps: any = () => {
-  return {
-    type: "submit",
-    text: "Create Account"
-  };
+    return {
+        type: "submit",
+        text: "Create Account"
+    };
 };
 
 export const getInputEmailProps: any = (value: string, maxLength: number, handleChange: any) => {
@@ -110,10 +111,10 @@ export const getInputPasswordConfirmationProps: any = (value: string, handleChan
 };
 
 export const getInputErrorPasswordProps: any = (isPasswordInvalid: boolean,
-                                                passwordErrors: string[]) => {
+                                                passwordErrorText: string) => {
     return {
         condition: isPasswordInvalid,
-        text: passwordErrors.toString()
+        text: passwordErrorText
     };
 };
 
