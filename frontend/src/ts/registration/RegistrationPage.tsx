@@ -1,28 +1,18 @@
-import {ChangeEvent, FunctionComponent, useMemo, useState} from "react";
-import {useNavigate} from 'react-router-dom';
+import {FunctionComponent} from "react";
 import {Label} from "../component/atom/form/Label";
 import {Input} from "../component/atom/form/Input";
 import {
-    createUser,
     getCreateAccountButtonProps,
-    getInputEmailProps,
     getInputErrorPasswordConfirmationProps,
     getInputErrorPasswordProps,
-    getInputFirstNameProps,
-    getInputPasswordConfirmationProps,
-    getInputPasswordProps,
-    getInputSurnameProps,
     getLabelEmailProps,
     getLabelFirstNameProps,
     getLabelPasswordConfirmationProps,
     getLabelPasswordProps,
     getLabelSurnameProps
 } from "./RegistrationFunctions";
-import {PasswordRegex} from "./PasswordRegex";
 import {Button} from "../component/atom/button/Button";
 import {InputError} from "../component/atom/form/InputError";
-import {User} from "../model/User";
-import {WEBSITE_ROUTING_INDEX} from "../constant/WebsiteRoutingConstants";
 import {ErrorPage} from "../general-page/ErrorPage";
 
 const labelEmail: any = getLabelEmailProps();
@@ -33,120 +23,39 @@ const labelPasswordConfirmation: any = getLabelPasswordConfirmationProps();
 
 const createAccountButton: any = getCreateAccountButtonProps();
 
-
 export const RegistrationPage: FunctionComponent<any> = ({props}) => {
-    const navigate = useNavigate();
-    const maxLengthString: number = props.maximumLengthOfString;
 
-    const passwordRegex: PasswordRegex = useMemo(() => new PasswordRegex(props.atLeastOneDigitRegex,
-        props.atLeastOneEnglishUpperCaseLetterRegex, props.atLeastOneEnglishLowerCaseLetterRegex,
-        props.atLeastOneValidSpecialCharacterRegex, props.enumerationOfValidSpecialCharacters), []);
-
-    const [user, setUser] = useState(new User());
-    const [passwordConfirmation, setPasswordConfirmation] = useState("");
-
-    const [isPasswordValid, setIsPasswordValid] = useState(true);
-    const [isPasswordConfirmationValid, setIsPasswordConfirmationValid] =
-        useState(true);
-
-    const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
-    const [backendError, setBackendError] = useState(null);
-
-    const handleUserChange = (field: string, setUser: any) => {
-        return (e: ChangeEvent<HTMLInputElement>) => {
-            setUser((prev: any) => ({
-                ...prev,
-                [field]: e.target.value
-            }));
-        };
-    };
-
-    const handlePasswordConfirmationChange = (event: any) => {
-        setPasswordConfirmation(event.target.value);
-    };
-
-    const resetPasswordValidation = () => {
-        setIsPasswordValid(true);
-        setIsPasswordConfirmationValid(true);
-    };
-
-    const handleSubmit = async (event: any) => {
-        event.preventDefault();
-        resetPasswordValidation();
-
-        const { isPasswordValid, passwordErrors } = passwordRegex.checkPassword(user.password);
-        setIsPasswordValid(isPasswordValid);
-        setPasswordErrors(passwordErrors);
-
-        if (passwordConfirmation !== user.password) {
-            setIsPasswordConfirmationValid(false);
-        }
-        if (!isPasswordValid || !isPasswordConfirmationValid) {
-            return;
-        }
-        let result: any = await createUser(user);
-        const {error} = result;
-        if (error) {
-            setBackendError(error);
-        }
-        else {
-            navigate(WEBSITE_ROUTING_INDEX);
-        }
-    };
-
-    const inputEmail: any = useMemo(() =>
-            getInputEmailProps(user.email, maxLengthString, handleUserChange("email", setUser)),
-        [user.email]
-    );
-    let inputFirstName: any = useMemo( () =>
-        getInputFirstNameProps(user.firstName, maxLengthString, handleUserChange("firstName", setUser)),
-        [user.firstName]
-    );
-    let inputSurname: any = useMemo(() =>
-        getInputSurnameProps(user.surname, maxLengthString, handleUserChange("surname", setUser)),
-        [user.surname]
-    );
-    let inputPassword: any = useMemo(() =>
-        getInputPasswordProps(user.password, props.passwordMinimumLength, props.passwordMaximumLength,
-            handleUserChange("password", setUser)),
-        [user.password]
-    );
-    let inputPasswordConfirmation: any = useMemo(() =>
-        getInputPasswordConfirmationProps(passwordConfirmation, handlePasswordConfirmationChange),
-        [passwordConfirmation]
-    );
-
-    if (backendError) {
+    if (props.backendError) {
         return (
-          <ErrorPage error={backendError}/>
+          <ErrorPage error={props.backendError}/>
         );
     }
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={props.handleSubmit}>
                 <h1>Registration</h1>
                 <div>
                     <Label props={labelEmail}/>
-                    <Input props={inputEmail}/>
+                    <Input props={props.inputEmail}/>
                 </div>
                 <div>
                     <Label props={labelFirstName}/>
-                    <Input props={inputFirstName}/>
+                    <Input props={props.inputFirstName}/>
                 </div>
                 <div>
                     <Label props={labelSurname}/>
-                    <Input props={inputSurname}/>
+                    <Input props={props.inputSurname}/>
                 </div>
                 <div>
                     <Label props={labelPassword}/>
-                    <Input props={inputPassword}/>
-                    <InputError props={getInputErrorPasswordProps(!isPasswordValid, passwordErrors)}/>
+                    <Input props={props.inputPassword}/>
+                    <InputError props={getInputErrorPasswordProps(!props.isPasswordValid, props.passwordErrors)}/>
                 </div>
                 <div>
                     <Label props={labelPasswordConfirmation}/>
-                    <Input props={inputPasswordConfirmation}/>
-                    <InputError props={getInputErrorPasswordConfirmationProps(!isPasswordConfirmationValid)}/>
+                    <Input props={props.inputPasswordConfirmation}/>
+                    <InputError props={getInputErrorPasswordConfirmationProps(!props.isPasswordConfirmationValid)}/>
                 </div>
                 <div>
                     <Button props={createAccountButton}/>
@@ -168,4 +77,4 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
             </form>
         </div>
     );
-}
+};
