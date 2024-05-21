@@ -2,6 +2,7 @@ import {ChangeEvent, FunctionComponent, useMemo, useState} from "react";
 import {Label} from "../component/atom/form/Label";
 import {Input} from "../component/atom/form/Input";
 import {
+    createUser,
     getCreateAccountButtonProps,
     getInputEmailProps,
     getInputErrorPasswordConfirmationProps,
@@ -19,6 +20,7 @@ import {
 import {PasswordRegex} from "./PasswordRegex";
 import {Button} from "../component/atom/button/Button";
 import {InputError} from "../component/atom/form/InputError";
+import {User} from "../model/User";
 
 const labelEmail: any = getLabelEmailProps();
 const labelFirstName: any = getLabelFirstNameProps();
@@ -35,13 +37,7 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         props.atLeastOneEnglishUpperCaseLetterRegex, props.atLeastOneEnglishLowerCaseLetterRegex,
         props.atLeastOneValidSpecialCharacterRegex, props.enumerationOfValidSpecialCharacters), []);
 
-    const [user, setUser] = useState({
-        id: "",
-        email: "",
-        firstName: "",
-        surname: "",
-        password: ""
-    });
+    const [user, setUser] = useState(new User());
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
     const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -82,6 +78,8 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         if (!isPasswordValid || !isPasswordConfirmationValid) {
             return;
         }
+        let result: any = createUser(user);
+        console.log(result)
     };
 
     const inputEmail: any = useMemo(() =>

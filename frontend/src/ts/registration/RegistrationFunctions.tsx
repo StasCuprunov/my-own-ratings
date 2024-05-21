@@ -1,8 +1,14 @@
 import {useGet} from "../interface/useGet";
-import {ROUTING_REGISTRATION} from "../interface/APIConstants";
+import {ROUTING_REGISTRATION, ROUTING_USERS_CREATE} from "../interface/APIConstants";
+import {postAxios} from "../interface/BackendCalls";
+import {User} from "../model/User";
 
 export const useRegistration: any = () => {
     return useGet(ROUTING_REGISTRATION);
+};
+
+export const createUser: any = (user: User) => {
+    return postAxios(ROUTING_USERS_CREATE, user);
 };
 
 export const getLabelEmailProps: any = () => {

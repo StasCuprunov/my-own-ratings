@@ -25,3 +25,5 @@ export const ROUTING_USERS: string = API_URL + "/users";
 export const ROUTING_RATINGS: string = API_URL + "/ratings";
 
 export const ROUTING_RATING_ENTRIES: string = API_URL + "/rating-entries";
+
+export const ROUTING_USERS_CREATE: string = ROUTING_USERS + ROUTING_CREATE;
