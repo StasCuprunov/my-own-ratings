@@ -2,7 +2,7 @@ import React, {FunctionComponent} from "react";
 import {ErrorPage} from "../general-page/ErrorPage";
 import {WebsiteLoadingPage} from "../general-page/WebsiteLoadingPage";
 
-export const ComponentHandling: FunctionComponent<any> = ({HtmlComponent, props, error}) =>  {
+export const LoadComponentHandling: FunctionComponent<any> = ({Component, props, error}) =>  {
     if (error) {
         return (
           <ErrorPage error={error}/>
@@ -10,7 +10,7 @@ export const ComponentHandling: FunctionComponent<any> = ({HtmlComponent, props,
     }
     else if (props) {
         return (
-          <HtmlComponent props={props}/>
+          <Component props={props}/>
         );
     }
     return (
