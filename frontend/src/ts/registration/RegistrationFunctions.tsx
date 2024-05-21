@@ -7,8 +7,8 @@ export const useRegistration: any = () => {
     return useGet(ROUTING_REGISTRATION);
 };
 
-export const createUser: any = (user: User) => {
-    return postAxios(ROUTING_USERS_CREATE, user);
+export const createUser: any = async (user: User) => {
+    return await postAxios(ROUTING_USERS_CREATE, user);
 };
 
 export const getLabelEmailProps: any = () => {

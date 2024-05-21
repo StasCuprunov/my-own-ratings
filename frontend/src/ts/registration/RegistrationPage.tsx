@@ -1,5 +1,5 @@
 import {ChangeEvent, FunctionComponent, useMemo, useState} from "react";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {Label} from "../component/atom/form/Label";
 import {Input} from "../component/atom/form/Input";
 import {
@@ -23,6 +23,7 @@ import {Button} from "../component/atom/button/Button";
 import {InputError} from "../component/atom/form/InputError";
 import {User} from "../model/User";
 import {WEBSITE_ROUTING_INDEX} from "../constant/WebsiteRoutingConstants";
+import {ErrorPage} from "../ErrorPage";
 
 const labelEmail: any = getLabelEmailProps();
 const labelFirstName: any = getLabelFirstNameProps();
@@ -49,6 +50,7 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         useState(true);
 
     const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
+    const [backendError, setBackendError] = useState(null);
 
     const handleUserChange = (field: string, setUser: any) => {
         return (e: ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +70,7 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         setIsPasswordConfirmationValid(true);
     };
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
         resetPasswordValidation();
 
@@ -82,9 +84,14 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         if (!isPasswordValid || !isPasswordConfirmationValid) {
             return;
         }
-        let result: any = createUser(user);
-        const {data, error} = result;
-        navigate(WEBSITE_ROUTING_INDEX);
+        let result: any = await createUser(user);
+        const {error} = result;
+        if (error) {
+            setBackendError(error);
+        }
+        else {
+            navigate(WEBSITE_ROUTING_INDEX);
+        }
     };
 
     const inputEmail: any = useMemo(() =>
@@ -108,6 +115,12 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
         getInputPasswordConfirmationProps(passwordConfirmation, handlePasswordConfirmationChange),
         [passwordConfirmation]
     );
+
+    if (backendError) {
+        return (
+          <ErrorPage error={backendError}/>
+        );
+    }
 
     return (
         <div>
