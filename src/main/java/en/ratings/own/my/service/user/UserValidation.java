@@ -31,8 +31,8 @@ public class UserValidation {
         return keysForException;
     }
 
-    private static String regexEmailRFC5322() {
-        return "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+    public static String regexEmailRFC5322() {
+        return "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+";
     }
 
     private static String passwordLengthValidation(String password) {

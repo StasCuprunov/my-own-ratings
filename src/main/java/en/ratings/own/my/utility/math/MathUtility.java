@@ -10,4 +10,8 @@ public class MathUtility {
     public static double tenPow(int number) {
         return pow(10, number);
     }
+
+    public static double twoPow(int number) {
+        return pow(2, number);
+    }
 }

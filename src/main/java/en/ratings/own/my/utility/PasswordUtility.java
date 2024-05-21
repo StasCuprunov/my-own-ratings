@@ -8,7 +8,7 @@ public class PasswordUtility {
 
     public static final int PASSWORD_MINIMUM_LENGTH = 8;
     public static final int PASSWORD_MAXIMUM_LENGTH = 64;
-    public static final String AT_LEAST_ONE_ENGLISH_UPPER_CASE_LETTER_REGEX = "^.*[A-Z].*";
+    public static final String AT_LEAST_ONE_ENGLISH_UPPER_CASE_LETTER_REGEX = ".*[A-Z].*";
     public static final String AT_LEAST_ONE_ENGLISH_LOWER_CASE_LETTER_REGEX = ".*[a-z].*";
     public static final String AT_LEAST_ONE_DIGIT_REGEX = ".*[0-9].*";
     public static final String AT_LEAST_ONE_VALID_SPECIAL_CHARACTER_REGEX = ".*[#%&@^`~].*";
