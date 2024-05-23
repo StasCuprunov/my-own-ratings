@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_LOGIN;
@@ -29,6 +30,11 @@ public class AuthenticationController {
     @PostMapping(ROUTING_LOGIN)
     public ResponseEntity<LoginDTO> login(@RequestBody Login login, HttpServletResponse response) throws Exception {
         return createOkResponseEntity(loginService.login(login, response));
+    }
+
+    @GetMapping(ROUTING_LOGIN)
+    public ResponseEntity<String> logout(@RequestParam String logout) {
+        return createOkResponseEntity("successful logout");
     }
 
     @GetMapping(ROUTING_REGISTRATION)

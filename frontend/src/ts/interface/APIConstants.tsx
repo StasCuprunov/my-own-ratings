@@ -18,6 +18,8 @@ export const ROUTING_REGISTRATION: string = API_URL + "/registration";
 
 export const ROUTING_LOGIN: string = API_URL + "/login";
 
+export const ROUTING_LOGOUT: string =  API_URL + "/logout";
+
 export const ROUTING_START_PAGE: string = API_URL + "/start-page";
 
 export const ROUTING_USERS: string = API_URL + "/users";
