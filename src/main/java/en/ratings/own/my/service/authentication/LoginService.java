@@ -1,5 +1,6 @@
 package en.ratings.own.my.service.authentication;
 
+import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.model.Login;
 import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
 import en.ratings.own.my.model.User;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_SECONDS;
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
@@ -35,16 +38,19 @@ public class LoginService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void login(Login login, HttpServletResponse response) throws Exception {
+    public LoginDTO login(Login login, HttpServletResponse response) throws Exception {
         String email = login.getEmail();
         User user = getUser(email);
 
         if (!passwordEncoder.matches(login.getPassword(), user.getPassword())) {
             throw new WrongPasswordLoginException(email);
         }
-        authenticationService.setAuthentication(user);
+        ArrayList<String> roles = authenticationService.setAuthentication(user);
+        LoginDTO loginDTO = new LoginDTO(roles);
         ResponseCookie cookie = createCookie(jwtService.generateToken(user.getEmail()));
         setAuthTokenCookie(cookie, response);
+
+        return loginDTO;
     }
 
     private ResponseCookie createCookie(String token) {

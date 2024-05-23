@@ -1,5 +1,6 @@
 package en.ratings.own.my.controller;
 
+import en.ratings.own.my.dto.LoginDTO;
 import en.ratings.own.my.model.Login;
 import en.ratings.own.my.dto.RegistrationDTO;
 import en.ratings.own.my.service.authentication.LoginService;
@@ -26,9 +27,8 @@ public class AuthenticationController {
     }
 
     @PostMapping(ROUTING_LOGIN)
-    public ResponseEntity<String> login(@RequestBody Login login, HttpServletResponse response) throws Exception {
-        loginService.login(login, response);
-        return createOkResponseEntity("login");
+    public ResponseEntity<LoginDTO> login(@RequestBody Login login, HttpServletResponse response) throws Exception {
+        return createOkResponseEntity(loginService.login(login, response));
     }
 
     @GetMapping(ROUTING_REGISTRATION)
