@@ -14,7 +14,7 @@ import {AuthContext} from "./context/AuthContext";
 import {hasRecentlyLoggedIn} from "./utility/CookieUtility";
 import {NavBar} from "./component/organism/navbar/NavBar";
 import {NotFoundPage} from "./general-page/NotFoundPage";
-import {LoadCreateRating} from "./rating/LoadCreateRating";
+import {LoadCreateRating} from "./rating/create/LoadCreateRating";
 import {NotAuthorizedPage} from "./general-page/NotAuthorizedPage";
 
 export const App = () => {
