@@ -1,4 +1,4 @@
-import {FunctionComponent} from "react";
+import {FunctionComponent, useEffect} from "react";
 import {useLogout} from "./LogoutFunctions";
 import {NavigateHandling} from "../../component/NavigateHandling";
 import {deleteCookieHasLoggedInRecentlyAsRole} from "../../utility/CookieUtility";
@@ -8,8 +8,11 @@ import {useAuth} from "../../context/AuthContext";
 export const Logout: FunctionComponent<any> = () => {
     const {data, error} = useLogout();
     const {setAuthenticated} = useAuth();
-    deleteCookieHasLoggedInRecentlyAsRole();
-    setAuthenticated(false);
+
+    useEffect(() => {
+        deleteCookieHasLoggedInRecentlyAsRole();
+        setAuthenticated(false);
+    }, []);
 
     return (
         <NavigateHandling data={data} error={error} link={WEBSITE_ROUTING_INDEX}/>
