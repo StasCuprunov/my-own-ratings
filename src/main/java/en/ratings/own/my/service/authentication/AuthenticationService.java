@@ -33,12 +33,13 @@ public class AuthenticationService {
                 getAuthorities(user.getId()));
     }
 
-    public void setAuthentication(User user) throws Exception {
-        setAuthentication(createAuthenticationToken(user));
+    public ArrayList<String> setAuthentication(User user) throws Exception {
+        return setAuthentication(createAuthenticationToken(user));
     }
 
-    public void setAuthentication(UsernamePasswordAuthenticationToken authenticationToken) {
+    public ArrayList<String> setAuthentication(UsernamePasswordAuthenticationToken authenticationToken) {
         getContext().setAuthentication(authenticationToken);
+        return getRoles(authenticationToken);
     }
 
     public Authentication getAuthentication() {
@@ -55,5 +56,11 @@ public class AuthenticationService {
         }
         return listOfAuthorities;
     }
-
+    private ArrayList<String> getRoles(UsernamePasswordAuthenticationToken authenticationToken) {
+        ArrayList<String> roles = new ArrayList<>();
+        for (GrantedAuthority grantedAuthority: authenticationToken.getAuthorities()) {
+            roles.add(grantedAuthority.getAuthority());
+        }
+        return roles;
+    }
 }

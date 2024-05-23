@@ -1,9 +1,13 @@
-import axios from "axios";
+import axios, {AxiosInstance} from "axios";
+
+const api: AxiosInstance = axios.create({
+    withCredentials: true
+});
 
 export const getAxios = async (url: string) => {
     let data: any = null;
     let errorResult: any = null;
-    await axios.get(url)
+    await api.get(url)
         .then((response) => {
             data = response.data;
         })
@@ -19,7 +23,7 @@ export const getAxios = async (url: string) => {
 export const postAxios = async (url: string, input: any) => {
   let data: any = null;
   let errorResult: any = null;
-  await axios.post(url, input)
+  await api.post(url, input)
       .then((response) => {
           data = response.data;
       })

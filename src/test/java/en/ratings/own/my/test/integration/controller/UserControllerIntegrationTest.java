@@ -2,7 +2,7 @@ package en.ratings.own.my.test.integration.controller;
 
 import en.ratings.own.my.model.role.Role;
 import en.ratings.own.my.test.integration.AbstractIntegrationTest;
-import en.ratings.own.my.dto.LoginDTO;
+import en.ratings.own.my.model.Login;
 import en.ratings.own.my.dto.UserDTO;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.model.role.RoleAssignment;
@@ -256,9 +256,9 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
         User loggedInUser = createUserStevenWorm();
         String rawPassword = loggedInUser.getPassword();
 
-        LoginDTO loginDTO = new LoginDTO(loggedInUser.getEmail(), rawPassword);
+        Login login = new Login(loggedInUser.getEmail(), rawPassword);
         try {
-            authenticationController.login(loginDTO, createHttpServletResponse());
+            authenticationController.login(login, createHttpServletResponse());
         } catch (Exception e) {
             printExceptionMessage(e);
         }
