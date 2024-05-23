@@ -1,6 +1,6 @@
 package en.ratings.own.my.service.authentication;
 
-import en.ratings.own.my.dto.LoginDTO;
+import en.ratings.own.my.model.Login;
 import en.ratings.own.my.exception.authentication.WrongPasswordLoginException;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.service.repository.UserRepositoryService;
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
+import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_SECONDS;
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
 import static en.ratings.own.my.constant.CookieConstants.COOKIE_PATH;
 import static en.ratings.own.my.constant.CookieConstants.SAME_SITE_VALUE;
@@ -35,11 +35,11 @@ public class LoginService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void login(LoginDTO loginDTO, HttpServletResponse response) throws Exception {
-        String email = loginDTO.getEmail();
+    public void login(Login login, HttpServletResponse response) throws Exception {
+        String email = login.getEmail();
         User user = getUser(email);
 
-        if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(login.getPassword(), user.getPassword())) {
             throw new WrongPasswordLoginException(email);
         }
         authenticationService.setAuthentication(user);
@@ -53,7 +53,7 @@ public class LoginService {
                 secure(true).
                 sameSite(SAME_SITE_VALUE).
                 path(COOKIE_PATH).
-                maxAge(EXPIRATION_TIME_IN_MILLISECONDS).
+                maxAge(EXPIRATION_TIME_IN_SECONDS).
                 build();
     }
 

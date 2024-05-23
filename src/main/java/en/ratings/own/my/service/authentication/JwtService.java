@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
+import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_SECONDS;
 import static io.jsonwebtoken.Jwts.SIG.HS512;
 import static io.jsonwebtoken.io.Decoders.BASE64;
 import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
@@ -54,7 +54,7 @@ public class JwtService {
     }
 
     private Date expirationDate() {
-        return new Date(currentTimeMillis() + EXPIRATION_TIME_IN_MILLISECONDS);
+        return new Date(currentTimeMillis() + EXPIRATION_TIME_IN_SECONDS);
     }
 
     private Date issuedDate() {

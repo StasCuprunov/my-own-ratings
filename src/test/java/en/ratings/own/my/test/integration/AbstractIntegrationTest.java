@@ -2,7 +2,7 @@ package en.ratings.own.my.test.integration;
 
 import en.ratings.own.my.controller.AuthenticationController;
 import en.ratings.own.my.controller.UserController;
-import en.ratings.own.my.dto.LoginDTO;
+import en.ratings.own.my.model.Login;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.repository.UserRepository;
 import org.junit.Before;
@@ -64,7 +64,7 @@ public abstract class AbstractIntegrationTest {
 
     protected void login(User user) {
         try {
-            authenticationController.login(new LoginDTO(user.getEmail(), user.getPassword()),
+            authenticationController.login(new Login(user.getEmail(), user.getPassword()),
                     createHttpServletResponse());
         } catch (Exception e) {
 

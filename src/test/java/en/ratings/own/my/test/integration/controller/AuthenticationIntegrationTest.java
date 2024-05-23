@@ -1,7 +1,7 @@
 package en.ratings.own.my.test.integration.controller;
 
 import en.ratings.own.my.test.integration.AbstractIntegrationTest;
-import en.ratings.own.my.dto.LoginDTO;
+import en.ratings.own.my.model.Login;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.service.authentication.JwtService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_MILLISECONDS;
+import static en.ratings.own.my.constant.AttributeConstants.EXPIRATION_TIME_IN_SECONDS;
 import static en.ratings.own.my.constant.CookieConstants.AUTH_TOKEN;
 import static en.ratings.own.my.constant.CookieConstants.HTTP_ONLY;
 import static en.ratings.own.my.constant.CookieConstants.MAX_AGE;
@@ -47,87 +47,87 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void testValidLoginWithValidAccount() {
-        LoginDTO loginDTO = createLoginDTOForFalakNoorahKhoury();
+        Login login = createLoginDTOForFalakNoorahKhoury();
         HttpServletResponse response = createHttpServletResponse();
 
         try {
-            authenticationController.login(loginDTO, response);
+            authenticationController.login(login, response);
         } catch (Exception e) {
             printExceptionMessage(e);
         }
         assertThat(response.getStatus()).isEqualTo(SC_OK);
-        testCookiesAfterSuccessfulLogin(loginDTO.getEmail(), response);
+        testCookiesAfterSuccessfulLogin(login.getEmail(), response);
     }
 
     @Test
     public void testValidLoginWithSecondAccount() {
-        LoginDTO loginDTO = createLoginDTOForFalakNoorahKhoury();
+        Login login = createLoginDTOForFalakNoorahKhoury();
         HttpServletResponse response = createHttpServletResponse();
 
         try {
-            authenticationController.login(loginDTO, response);
+            authenticationController.login(login, response);
         } catch (Exception e) {
             printExceptionMessage(e);
         }
         response = createHttpServletResponse();
-        loginDTO = createLoginDTOForStevenWorm();
+        login = createLoginDTOForStevenWorm();
 
         try {
-            authenticationController.login(loginDTO, response);
+            authenticationController.login(login, response);
         } catch (Exception e) {
             printExceptionMessage(e);
         }
         assertThat(response.getStatus()).isEqualTo(SC_OK);
-        testCookiesAfterSuccessfulLogin(loginDTO.getEmail(), response);
+        testCookiesAfterSuccessfulLogin(login.getEmail(), response);
     }
 
     @Test
     public void testInvalidLoginWithNotExistentEmail() {
-        LoginDTO loginDTO = createLoginDTOForFalakNoorahKhoury();
-        loginDTO.setEmail(createUserLiangPai().getEmail());
-        testInvalidLoginWithNotExistentEmail(loginDTO);
+        Login login = createLoginDTOForFalakNoorahKhoury();
+        login.setEmail(createUserLiangPai().getEmail());
+        testInvalidLoginWithNotExistentEmail(login);
     }
 
     @Test
     public void testInvalidLoginWithFalsePassword() {
-        LoginDTO loginDTO = createLoginDTOForFalakNoorahKhoury();
-        loginDTO.setPassword(createUserStevenWorm().getPassword());
-        testInvalidLoginWithFalsePassword(loginDTO);
+        Login login = createLoginDTOForFalakNoorahKhoury();
+        login.setPassword(createUserStevenWorm().getPassword());
+        testInvalidLoginWithFalsePassword(login);
     }
 
-    private void testInvalidLoginWithNotExistentEmail(LoginDTO loginDTO) {
+    private void testInvalidLoginWithNotExistentEmail(Login login) {
         HttpServletResponse response = createHttpServletResponse();
         Exception foundException = new Exception();
         try {
-            authenticationController.login(loginDTO, response);
+            authenticationController.login(login, response);
         } catch (Exception e) {
             foundException = e;
         }
         assertThatExceptionIsEqualToUserByEmailNotFoundException(foundException);
     }
 
-    private void testInvalidLoginWithFalsePassword(LoginDTO loginDTO) {
+    private void testInvalidLoginWithFalsePassword(Login login) {
         HttpServletResponse response = createHttpServletResponse();
         Exception foundException = new Exception();
         try {
-            authenticationController.login(loginDTO, response);
+            authenticationController.login(login, response);
         } catch (Exception e) {
             foundException = e;
         }
         assertThatExceptionIsEqualToWrongPasswordLoginException(foundException);
     }
 
-    private LoginDTO createLoginDTOForFalakNoorahKhoury() {
+    private Login createLoginDTOForFalakNoorahKhoury() {
         return createLoginDTO(createUserFalakNoorahKhoury());
     }
 
-    private LoginDTO createLoginDTOForStevenWorm() {
+    private Login createLoginDTOForStevenWorm() {
         return createLoginDTO(createUserStevenWorm());
     }
 
-    private LoginDTO createLoginDTO(User user) {
+    private Login createLoginDTO(User user) {
         String rawPassword = user.getPassword();
-        return new LoginDTO(user.getEmail(), rawPassword);
+        return new Login(user.getEmail(), rawPassword);
     }
 
     private void testCookiesAfterSuccessfulLogin(String email, HttpServletResponse response) {
@@ -188,6 +188,6 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
         if (maxAgePair.length != COOKIE_KEY_VALUE_NUMBER) {
             return false;
         }
-        return maxAgePair[INDEX_OF_VALUE_FROM_KEY_VALUE_PAIR].equals(String.valueOf(EXPIRATION_TIME_IN_MILLISECONDS));
+        return maxAgePair[INDEX_OF_VALUE_FROM_KEY_VALUE_PAIR].equals(String.valueOf(EXPIRATION_TIME_IN_SECONDS));
     }
 }
