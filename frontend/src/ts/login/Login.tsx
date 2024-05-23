@@ -32,7 +32,7 @@ export const Login: FunctionComponent<any> = () => {
             setBackendError(error);
             return;
         }
-        setCookieHasLoggedInRecentlyAsRole("User", 93600);
+        setCookieHasLoggedInRecentlyAsRole(data.roles, data.expirationTimeInSeconds);
         setAuthenticated(true);
         navigate(WEBSITE_ROUTING_INDEX);
     };
