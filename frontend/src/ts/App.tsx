@@ -9,9 +9,10 @@ import {
 } from "./constant/WebsiteRoutingConstants";
 import {StartPage} from "./start-page/StartPage";
 import {AuthContext} from "./context/AuthContext";
+import {hasRecentlyLoggedIn} from "./utility/CookieUtility";
 
 export const App = () => {
-    const [authenticated, setAuthenticated] = useState(false);
+    const [authenticated, setAuthenticated] = useState(hasRecentlyLoggedIn());
     return (
         <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
             <BrowserRouter>

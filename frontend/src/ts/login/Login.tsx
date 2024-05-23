@@ -4,8 +4,12 @@ import {getInputEmailProps, getInputPasswordProps} from "./LoginFunctions";
 import {LoginPage} from "./LoginPage";
 import {LoginModel} from "../model/LoginModel"
 import {useAuth} from "../context/AuthContext";
+import {useNavigate} from "react-router-dom";
+import {WEBSITE_ROUTING_INDEX} from "../constant/WebsiteRoutingConstants";
+import {setCookieHasLoggedInRecentlyAsRole} from "../utility/CookieUtility";
 
 export const Login: FunctionComponent<any> = () => {
+    const navigate = useNavigate();
     const [loginData, setLoginData] = useState(new LoginModel());
     const [backendError, setBackendError] = useState(null);
     const {setAuthenticated} = useAuth();
@@ -22,13 +26,15 @@ export const Login: FunctionComponent<any> = () => {
     const handleSubmit = async (event: any) => {
         event.preventDefault();
 
-        const {error} = await login(loginData);
+        const {data, error} = await login(loginData);
 
         if (error) {
             setBackendError(error);
             return;
         }
+        setCookieHasLoggedInRecentlyAsRole("User", 93600);
         setAuthenticated(true);
+        navigate(WEBSITE_ROUTING_INDEX);
     };
 
     let inputEmail: any = getInputEmailProps(loginData.email, handleChange("email"));
