@@ -1,4 +1,4 @@
-import {WEBSITE_ROUTING_LOGOUT} from "../../../constant/WebsiteRoutingConstants";
+import {WEBSITE_ROUTING_LOGOUT} from "../../../constant/routing/WebsiteRoutingConstants";
 
 export const getLogoutObject = ()=> {
     return {

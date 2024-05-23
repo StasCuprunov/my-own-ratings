@@ -10,7 +10,7 @@ import {
     getInputPasswordProps,
     getInputSurnameProps
 } from "./RegistrationFunctions";
-import {WEBSITE_ROUTING_INDEX} from "../constant/WebsiteRoutingConstants";
+import {WEBSITE_ROUTING_INDEX} from "../constant/routing/WebsiteRoutingConstants";
 import {RegistrationPage} from "./RegistrationPage";
 
 export const Registration: FunctionComponent<any> = ({props}) => {

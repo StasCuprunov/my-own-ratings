@@ -2,7 +2,7 @@ import {FunctionComponent, useEffect} from "react";
 import {useLogout} from "./LogoutFunctions";
 import {NavigateHandling} from "../../component/NavigateHandling";
 import {deleteCookieHasLoggedInRecentlyAsRole} from "../../utility/CookieUtility";
-import {WEBSITE_ROUTING_INDEX} from "../../constant/WebsiteRoutingConstants";
+import {WEBSITE_ROUTING_INDEX} from "../../constant/routing/WebsiteRoutingConstants";
 import {useAuth} from "../../context/AuthContext";
 
 export const Logout: FunctionComponent<any> = () => {

@@ -1,0 +1,10 @@
+export const ROUTING_GET: string = "/get";
+export const ROUTING_CREATE: string = "/create";
+export const ROUTING_EDIT: string = "/edit";
+export const ROUTING_DELETE: string = "/delete";
+export const ROUTING_REGISTRATION: string = "/registration";
+export const ROUTING_LOGIN: string = "/login";
+export const ROUTING_LOGOUT: string = "/logout";
+export const ROUTING_USERS: string = "/users";
+export const ROUTING_RATINGS: string = "/ratings";
+export const ROUTING_RATING_ENTRIES: string = "/rating-entries";

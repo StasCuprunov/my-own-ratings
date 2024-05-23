@@ -5,7 +5,7 @@ import {LoginPage} from "./LoginPage";
 import {LoginModel} from "../../model/LoginModel"
 import {useAuth} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
-import {WEBSITE_ROUTING_INDEX} from "../../constant/WebsiteRoutingConstants";
+import {WEBSITE_ROUTING_INDEX} from "../../constant/routing/WebsiteRoutingConstants";
 import {setCookieHasLoggedInRecentlyAsRole} from "../../utility/CookieUtility";
 
 export const Login: FunctionComponent<any> = () => {
