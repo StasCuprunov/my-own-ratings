@@ -1,9 +1,9 @@
 import {FunctionComponent} from "react";
-import {Label} from "../component/atom/form/Label";
-import {Input} from "../component/atom/form/Input";
-import {Button} from "../component/atom/button/Button";
+import {Label} from "../../component/atom/form/Label";
+import {Input} from "../../component/atom/form/Input";
+import {Button} from "../../component/atom/button/Button";
 import {getEmailLabelProps, getLoginButtonProps, getPasswordLabelProps} from "./LoginFunctions";
-import {ErrorPage} from "../general-page/ErrorPage";
+import {ErrorPage} from "../../general-page/ErrorPage";
 
 const labelEmail: any = getEmailLabelProps();
 const labelPassword: any = getPasswordLabelProps();

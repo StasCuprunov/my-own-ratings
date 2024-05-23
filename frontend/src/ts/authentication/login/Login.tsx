@@ -2,11 +2,11 @@ import {ChangeEvent, FunctionComponent, useState} from "react";
 import {login} from "./LoginFunctions";
 import {getInputEmailProps, getInputPasswordProps} from "./LoginFunctions";
 import {LoginPage} from "./LoginPage";
-import {LoginModel} from "../model/LoginModel"
-import {useAuth} from "../context/AuthContext";
+import {LoginModel} from "../../model/LoginModel"
+import {useAuth} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
-import {WEBSITE_ROUTING_INDEX} from "../constant/WebsiteRoutingConstants";
-import {setCookieHasLoggedInRecentlyAsRole} from "../utility/CookieUtility";
+import {WEBSITE_ROUTING_INDEX} from "../../constant/WebsiteRoutingConstants";
+import {setCookieHasLoggedInRecentlyAsRole} from "../../utility/CookieUtility";
 
 export const Login: FunctionComponent<any> = () => {
     const navigate = useNavigate();
