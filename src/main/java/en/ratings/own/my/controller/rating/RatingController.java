@@ -1,5 +1,6 @@
 package en.ratings.own.my.controller.rating;
 
+import en.ratings.own.my.dto.rating.CreateRatingDTO;
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.service.rating.RatingService;
 import lombok.NonNull;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static en.ratings.own.my.constant.PermissionConstants.HAS_ROLE_USER_PERMISSION;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_CREATE_RATING;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_DELETE_BY_ID_RATING;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_FIND_BY_ID_RATING;
@@ -49,6 +51,12 @@ public class RatingController {
     @PostMapping(ROUTING_CREATE)
     public ResponseEntity<RatingDTO> create(@RequestBody RatingDTO ratingDTO) throws Exception {
         return createCreatedResponseEntity(ratingService.create(ratingDTO));
+    }
+
+    @PreAuthorize(HAS_ROLE_USER_PERMISSION)
+    @GetMapping(ROUTING_CREATE)
+    public ResponseEntity<CreateRatingDTO> getInfoForCreate() throws Exception {
+        return createOkResponseEntity(ratingService.getInfoForCreate());
     }
 
     @PreAuthorize(USER_HAS_PERMISSION_FOR_UPDATE_RATING)

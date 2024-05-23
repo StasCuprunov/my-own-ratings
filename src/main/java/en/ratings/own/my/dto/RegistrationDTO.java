@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_LENGTH_OF_SMALL_String;
+import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_LENGTH_OF_SMALL_STRING;
 import static en.ratings.own.my.service.user.UserValidation.regexEmailRFC5322;
 import static en.ratings.own.my.utility.StringUtility.enumerateStrings;
 
@@ -16,7 +16,7 @@ import static en.ratings.own.my.utility.StringUtility.enumerateStrings;
 @Setter
 public class RegistrationDTO {
 
-    private int maximumLengthOfString = MAXIMUM_LENGTH_OF_SMALL_String;
+    private int maximumLengthOfString = MAXIMUM_LENGTH_OF_SMALL_STRING;
 
     private String emailRegex = regexEmailRFC5322();
 
