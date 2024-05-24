@@ -32,7 +32,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         useState(new InputValidation());
     const [maximumValidation, setMaximumValidation] =
         useState(new InputValidation());
-    const [stepWidthValidation, setStepWidthValidation] =
+    const [scaleValidation, setScaleValidation] =
         useState(new InputValidation());
 
     const handleRatingChange = (field: string) => {
@@ -57,48 +57,48 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
     }
 
     const handleMinimumBlur = () => {
+        let condition: boolean = false;
+        let text: string = "";
         if (isMinimumTooBig()) {
-            setMinimumValidation({
-                condition: true,
-                text: "Minimum must be real smaller than maximum."
-            });
+            condition = true;
+            text = "Minimum must be real smaller than maximum.";
         }
-        else {
-            setMinimumValidation({
-                ...minimumValidation,
-                condition: false
-            });
-        }
+        setMinimumValidation({
+            condition: condition,
+            text: text
+        });
+        checkIfTheValuesCreateAScale();
     };
 
     const handleMaximumBlur = () => {
+        let condition: boolean = false;
+        let text: string = "";
         if (isMinimumTooBig()) {
-            setMaximumValidation({
-                condition: true,
-                text: "Maximum must be real bigger than minimum."
-            });
+            condition = true;
+            text = "Maximum must be real bigger than minimum.";
         }
-        else {
-            setMaximumValidation({
-                ...maximumValidation,
-                condition: false
-            })
-        }
+        setMaximumValidation({
+            condition: condition,
+            text: text
+        });
+        checkIfTheValuesCreateAScale();
     };
 
     const handleStepWidthBlur = () => {
+        checkIfTheValuesCreateAScale();
+    };
+
+    const checkIfTheValuesCreateAScale = () => {
+        let condition: boolean = false;
+        let text: string = "";
         if (!isScale()) {
-            setStepWidthValidation({
-                condition: true,
-                text: "The specified step width does not create a scale."
-            });
+            condition = true;
+            text = "With the specified values it does not create a scale.";
         }
-        else {
-            setStepWidthValidation({
-                ...stepWidthValidation,
-                condition: false
-            });
-        }
+        setScaleValidation({
+            condition: condition,
+            text: text
+        });
     };
 
     const isScale = (): boolean => {
@@ -112,7 +112,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         if (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
-            stepWidthValidation.condition) {
+            scaleValidation.condition) {
             return;
         }
     };
@@ -136,7 +136,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
             inputName={inputName} textAreaDescription={textAreaDescription} inputMinimum={inputMinimum}
             inputMaximum={inputMaximum} inputStepWidth={inputStepWidth} handleSubmit={handleSubmit}
             nameValidation={nameValidation} minimumValidation={minimumValidation} maximumValidation={maximumValidation}
-            stepWidthValidation={stepWidthValidation}
+            scaleValidation={scaleValidation}
         />
     );
 };
