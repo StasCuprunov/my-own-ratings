@@ -11,6 +11,7 @@ import {
 import {TextArea} from "../../component/atom/form/TextArea";
 import {InputError} from "../../component/atom/form/input/InputError";
 import {CreateButton} from "../../component/atom/button/CreateButton";
+import {ErrorPage} from "../../general-page/ErrorPage";
 
 const labelName: any = getLabelNameProps();
 const labelDescription: any = getLabelDescriptionProps();
@@ -21,7 +22,13 @@ const labelStepWidth: any = getLabelStepWidthProps();
 export const CreateRatingPage: FunctionComponent<any> = ({inputName, textAreaDescription, inputMinimum, inputMaximum,
                                                              inputStepWidth, handleSubmit, nameValidation,
                                                              minimumValidation, maximumValidation,
-                                                             scaleValidation}) => {
+                                                             scaleValidation, backendError}) => {
+    if (backendError) {
+        return (
+            <ErrorPage error={backendError}/>
+        );
+    }
+
     return (
         <div>
             <h1>Create your own rating</h1>

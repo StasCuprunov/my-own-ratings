@@ -6,23 +6,28 @@ import {
     getInputMinimum,
     getInputNameProps,
     getInputStepWidth,
-    getDefaultRangeOfValues
+    getDefaultRangeOfValues,
+    createRating
 } from "./CreateRatingFunctions";
 import {Rating} from "../../model/Rating";
 import {RangeOfValues} from "../../model/RangeOfValues";
 import {getSmallestPositiveNumberWithNumberOfDecimalDigits} from "../../utility/MathUtility";
 import {handleChange} from "../../utility/FormUtility";
 import {InputValidation} from "../../model/InputValidation";
+import {RatingDTO} from "../../dto/RatingDTO";
+import {useNavigate} from "react-router-dom";
+import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
 
 const defaultRangeOfValues: RangeOfValues = getDefaultRangeOfValues();
 
 export const CreateRating: FunctionComponent<any> = ({props}) => {
+    const navigate = useNavigate();
     const rangeOfValuesMinimumBorder: number = props.rangeOfValuesMinimumBorder;
     const rangeOfValuesMaximumBorder: number = props.rangeOfValuesMaximumBorder;
     const step: number= useMemo(() =>
         getSmallestPositiveNumberWithNumberOfDecimalDigits(props.maximumNumberOfDecimalDigits), []);
 
-    const [rating, setRating] = useState(new Rating(props.userId));
+    const [rating, setRating] = useState(new Rating(undefined, props.userId));
     const [rangeOfValues, setRangeOfValues] =
         useState(defaultRangeOfValues);
 
@@ -34,6 +39,8 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         useState(new InputValidation());
     const [scaleValidation, setScaleValidation] =
         useState(new InputValidation());
+
+    const [backendError, setBackendError] = useState(null);
 
     const handleRatingChange = (field: string) => {
         return handleChange(field, setRating);
@@ -109,12 +116,21 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         return (rangeOfValues.minimum - rangeOfValues.maximum) >= 0;
     };
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
         if (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
             scaleValidation.condition) {
             return;
         }
+        let ratingDTO: RatingDTO = new RatingDTO(undefined, rating.userId, rating.name, rating.description,
+            rangeOfValues);
+
+        const {data, error} = await createRating(ratingDTO);
+        if (error) {
+            setBackendError(error);
+            return;
+        }
+        navigate(getWebsiteRoutingRatingsById(data.id));
     };
 
     const inputName: any = useMemo(() =>
@@ -136,7 +152,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
             inputName={inputName} textAreaDescription={textAreaDescription} inputMinimum={inputMinimum}
             inputMaximum={inputMaximum} inputStepWidth={inputStepWidth} handleSubmit={handleSubmit}
             nameValidation={nameValidation} minimumValidation={minimumValidation} maximumValidation={maximumValidation}
-            scaleValidation={scaleValidation}
+            scaleValidation={scaleValidation} backendError={backendError}
         />
     );
 };

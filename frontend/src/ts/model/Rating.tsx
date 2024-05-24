@@ -6,7 +6,7 @@ export class Rating {
     name: string;
     description: string;
 
-    constructor(userId: string);
+    constructor(id?: string, userId?: string);
     constructor(id?: string, userId?: string, name?: string, description?: string) {
         this.id = setIdAttribute(id);
         this.userId = setStringAttribute(userId);
