@@ -66,7 +66,7 @@ export const getTextAreaDescription = (value: string, maxLength: number, handleC
 };
 
 export const getDefaultRangeOfValues = (): RangeOfValues => {
-    return new RangeOfValues(undefined, 0, 5, 0.5);;
+    return new RangeOfValues(undefined, 0, 5, 0.5);
 };
 
 export const getInputMinimum = (minFromInput: number, maxFromInput: number, stepFromInput: number,
@@ -84,7 +84,7 @@ export const getInputMinimum = (minFromInput: number, maxFromInput: number, step
 };
 
 export const getInputMaximum = (minFromInput: number, maxFromInput: number, stepFromInput: number, value: number,
-                                handleChange: any) : any => {
+                                handleChange: any, handleBlur: any) : any => {
     return {
         required: true,
         name: "maximum",
@@ -92,7 +92,8 @@ export const getInputMaximum = (minFromInput: number, maxFromInput: number, step
         max: maxFromInput,
         step: stepFromInput,
         value: value,
-        onChange: handleChange
+        onChange: handleChange,
+        onBlur: handleBlur
     };
 };
 

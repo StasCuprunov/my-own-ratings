@@ -28,6 +28,9 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
 
     const [minimumValidation, setMinimumValidation] =
         useState(new InputValidation());
+    const [maximumValidation, setMaximumValidation] =
+        useState(new InputValidation());
+
     const handleRatingChange = (field: string) => {
         return handleChange(field, setRating);
     };
@@ -37,7 +40,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
     };
 
     const handleMinimumBlur = () => {
-        if (rangeOfValues.minimum >= rangeOfValues.maximum) {
+        if (isMinimumTooBig()) {
             setMinimumValidation({
                 condition: true,
                 text: "Minimum must be real smaller than maximum."
@@ -51,9 +54,28 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         }
     };
 
+    const handleMaximumBlur = () => {
+        if (isMinimumTooBig()) {
+            setMaximumValidation({
+                condition: true,
+                text: "Maximum must be real bigger than minimum."
+            });
+        }
+        else {
+            setMaximumValidation({
+                ...maximumValidation,
+                condition: false
+            })
+        }
+    };
+
+    const isMinimumTooBig = (): boolean => {
+        return rangeOfValues.minimum >= rangeOfValues.maximum;
+    }
+
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        if (minimumValidation.condition) {
+        if (minimumValidation.condition || maximumValidation.condition) {
             return;
         }
     };
@@ -67,7 +89,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
             handleRangeOfValuesChange("minimum"), handleMinimumBlur), [rangeOfValues.minimum]);
     const inputMaximum: any = useMemo(() =>
         getInputMaximum(rangeOfValuesMinimumBorder, rangeOfValuesMaximumBorder, step, rangeOfValues.maximum,
-            handleRangeOfValuesChange("maximum")), [rangeOfValues.maximum]);
+            handleRangeOfValuesChange("maximum"), handleMaximumBlur), [rangeOfValues.maximum]);
     const inputStepWidth: any = useMemo(() =>
         getInputStepWidth(step, rangeOfValuesMaximumBorder, step, rangeOfValues.stepWidth,
             handleRangeOfValuesChange("stepWidth")), [rangeOfValues.stepWidth]);
@@ -75,7 +97,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         <CreateRatingPage
             inputName={inputName} textAreaDescription={textAreaDescription} inputMinimum={inputMinimum}
             inputMaximum={inputMaximum} inputStepWidth={inputStepWidth} handleSubmit={handleSubmit}
-            minimumValidation={minimumValidation}
+            minimumValidation={minimumValidation} maximumValidation={maximumValidation}
         />
     );
 };
