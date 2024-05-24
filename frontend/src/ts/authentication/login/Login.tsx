@@ -1,4 +1,4 @@
-import {ChangeEvent, FunctionComponent, useState} from "react";
+import {FunctionComponent, useState} from "react";
 import {login} from "./LoginFunctions";
 import {getInputEmailProps, getInputPasswordProps} from "./LoginFunctions";
 import {LoginPage} from "./LoginPage";
@@ -7,6 +7,7 @@ import {useAuth} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
 import {WEBSITE_ROUTING_INDEX} from "../../constant/routing/WebsiteRoutingConstants";
 import {setCookieHasLoggedInRecentlyAsRole} from "../../utility/CookieUtility";
+import {handleChange} from "../../utility/FormUtility";
 
 export const Login: FunctionComponent<any> = () => {
     const navigate = useNavigate();
@@ -14,13 +15,8 @@ export const Login: FunctionComponent<any> = () => {
     const [backendError, setBackendError] = useState(null);
     const {setAuthenticated} = useAuth();
 
-    const handleChange = (field: string) => {
-        return (e: ChangeEvent<HTMLInputElement>) => {
-            setLoginData((prev: any) => ({
-                ...prev,
-                [field]: e.target.value
-            }));
-        };
+    const handleLoginDataChange = (field: string) => {
+        return handleChange(field, setLoginData);
     };
 
     const handleSubmit = async (event: any) => {
@@ -37,8 +33,8 @@ export const Login: FunctionComponent<any> = () => {
         navigate(WEBSITE_ROUTING_INDEX);
     };
 
-    let inputEmail: any = getInputEmailProps(loginData.email, handleChange("email"));
-    let inputPassword: any = getInputPasswordProps(loginData.password, handleChange("password"));
+    let inputEmail: any = getInputEmailProps(loginData.email, handleLoginDataChange("email"));
+    let inputPassword: any = getInputPasswordProps(loginData.password, handleLoginDataChange("password"));
 
     return (
         <LoginPage backendError={backendError} handleSubmit={handleSubmit} inputEmail={inputEmail}

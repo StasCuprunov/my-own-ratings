@@ -12,6 +12,7 @@ import {
 } from "./RegistrationFunctions";
 import {WEBSITE_ROUTING_INDEX} from "../constant/routing/WebsiteRoutingConstants";
 import {RegistrationPage} from "./RegistrationPage";
+import {handleChange} from "../utility/FormUtility";
 
 export const Registration: FunctionComponent<any> = ({props}) => {
     const navigate = useNavigate();
@@ -33,12 +34,7 @@ export const Registration: FunctionComponent<any> = ({props}) => {
     const [backendError, setBackendError] = useState(null);
 
     const handleUserChange = (field: string) => {
-        return (e: ChangeEvent<HTMLInputElement>) => {
-            setUser((prev: any) => ({
-                ...prev,
-                [field]: e.target.value
-            }));
-        };
+        return handleChange(field, setUser);
     };
 
     const handlePasswordConfirmationChange = (event: any) => {

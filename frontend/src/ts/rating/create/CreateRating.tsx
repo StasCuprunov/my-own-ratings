@@ -1,4 +1,4 @@
-import {ChangeEvent, FunctionComponent, useMemo, useState} from "react";
+import {FunctionComponent, useMemo, useState} from "react";
 import {CreateRatingPage} from "./CreateRatingPage";
 import {
     getTextAreaDescription,
@@ -10,6 +10,7 @@ import {
 import {Rating} from "../../model/Rating";
 import {RangeOfValues} from "../../model/RangeOfValues";
 import {getSmallestPositiveNumberWithNumberOfDecimalDigits} from "../../utility/MathUtility";
+import {handleChange} from "../../utility/FormUtility";
 
 export const CreateRating: FunctionComponent<any> = ({props}) => {
     const rangeOfValuesMinimumBorder: number = props.rangeOfValuesMinimumBorder;
@@ -21,21 +22,11 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
     const [rangeOfValues, setRangeOfValues] = useState(new RangeOfValues());
 
     const handleRatingChange = (field: string) => {
-        return (e: ChangeEvent<HTMLInputElement>) => {
-            setRating((prev: any) => ({
-                ...prev,
-                [field]: e.target.value
-            }));
-        };
+        return handleChange(field, setRating);
     };
 
     const handleRangeOfValuesChange = (field: string) => {
-        return (e: ChangeEvent<HTMLInputElement>) => {
-            setRangeOfValues((prev: any) => ({
-                ...prev,
-                [field]: e.target.value
-            }));
-        };
+        return handleChange(field, setRangeOfValues);
     };
 
     const inputName: any = useMemo(() =>
