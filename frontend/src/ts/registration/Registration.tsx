@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {PasswordRegex} from "./PasswordRegex";
-import {ChangeEvent, FunctionComponent, useMemo, useState, useEffect} from "react";
+import {FunctionComponent, useMemo, useState, useEffect} from "react";
 import {User} from "../model/User";
 import {
     createUser,
@@ -10,8 +10,9 @@ import {
     getInputPasswordProps,
     getInputSurnameProps
 } from "./RegistrationFunctions";
-import {WEBSITE_ROUTING_INDEX} from "../constant/WebsiteRoutingConstants";
+import {WEBSITE_ROUTING_INDEX} from "../constant/routing/WebsiteRoutingConstants";
 import {RegistrationPage} from "./RegistrationPage";
+import {handleChange} from "../utility/FormUtility";
 
 export const Registration: FunctionComponent<any> = ({props}) => {
     const navigate = useNavigate();
@@ -33,12 +34,7 @@ export const Registration: FunctionComponent<any> = ({props}) => {
     const [backendError, setBackendError] = useState(null);
 
     const handleUserChange = (field: string) => {
-        return (e: ChangeEvent<HTMLInputElement>) => {
-            setUser((prev: any) => ({
-                ...prev,
-                [field]: e.target.value
-            }));
-        };
+        return handleChange(field, setUser);
     };
 
     const handlePasswordConfirmationChange = (event: any) => {

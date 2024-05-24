@@ -1,6 +1,6 @@
 import {FunctionComponent} from "react";
 import {Label} from "../component/atom/form/Label";
-import {Input} from "../component/atom/form/Input";
+import {Input} from "../component/atom/form/input/Input";
 import {
     getCreateAccountButtonProps,
     getInputErrorPasswordConfirmationProps,
@@ -12,7 +12,7 @@ import {
     getLabelSurnameProps
 } from "./RegistrationFunctions";
 import {Button} from "../component/atom/button/Button";
-import {InputError} from "../component/atom/form/InputError";
+import {InputError} from "../component/atom/form/input/InputError";
 import {ErrorPage} from "../general-page/ErrorPage";
 
 const labelEmail: any = getLabelEmailProps();

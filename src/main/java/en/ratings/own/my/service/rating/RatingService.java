@@ -1,11 +1,13 @@
 package en.ratings.own.my.service.rating;
 
+import en.ratings.own.my.dto.rating.CreateRatingDTO;
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
 import en.ratings.own.my.model.rating.RangeOfValues;
 import en.ratings.own.my.model.rating.Rating;
 import en.ratings.own.my.model.rating.RatingEntry;
+import en.ratings.own.my.service.authentication.AuthenticationService;
 import en.ratings.own.my.service.repository.UserRepositoryService;
 import en.ratings.own.my.service.repository.rating.RangeOfValuesRepositoryService;
 import en.ratings.own.my.service.repository.rating.RatingEntryRepositoryService;
@@ -36,14 +38,18 @@ public class RatingService {
 
     private final RatingEntryRepositoryService ratingEntryRepositoryService;
 
+    private final AuthenticationService authenticationService;
+
     @Autowired
     public RatingService(UserRepositoryService userRepositoryService, RatingRepositoryService ratingRepositoryService,
                          RangeOfValuesRepositoryService rangeOfValuesRepositoryService,
-                         RatingEntryRepositoryService ratingEntryRepositoryService) {
+                         RatingEntryRepositoryService ratingEntryRepositoryService,
+                         AuthenticationService authenticationService) {
         this.userRepositoryService = userRepositoryService;
         this.ratingRepositoryService = ratingRepositoryService;
         this.rangeOfValuesRepositoryService = rangeOfValuesRepositoryService;
         this.ratingEntryRepositoryService = ratingEntryRepositoryService;
+        this.authenticationService = authenticationService;
     }
 
     public RatingDTO findById(String id) throws Exception {
@@ -63,6 +69,10 @@ public class RatingService {
         checkIfRatingNameIsValid(ratingDTO.getUserId(), ratingDTO.getName());
 
         return createRating(ratingDTO);
+    }
+
+    public CreateRatingDTO getInfoForCreate() throws Exception {
+        return new CreateRatingDTO(findActualUserId());
     }
 
     public RatingDTO update(RatingDTO ratingDTO) throws Exception {
@@ -231,6 +241,11 @@ public class RatingService {
         if (!ratingRepositoryService.existsByRangeOfValuesId(id)) {
             rangeOfValuesRepositoryService.deleteById(id);
         }
+    }
+
+    private String findActualUserId() throws Exception {
+        String email = authenticationService.getAuthentication().getName();
+        return userRepositoryService.findByEmail(email).getId();
     }
 
 }

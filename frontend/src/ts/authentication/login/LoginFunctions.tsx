@@ -1,9 +1,9 @@
 import {LoginModel} from "../../model/LoginModel";
 import {postAxios} from "../../interface/BackendCalls";
-import {ROUTING_LOGIN} from "../../interface/APIConstants";
+import {API_ROUTING_LOGIN} from "../../constant/routing/APIConstants";
 
 export const login = async (login: LoginModel) => {
-    return await postAxios(ROUTING_LOGIN, login);
+    return await postAxios(API_ROUTING_LOGIN, login);
 };
 
 export const getEmailLabelProps = () => {

@@ -15,7 +15,7 @@ public class AttributeConstants {
 
     public static final long EXPIRATION_TIME_IN_SECONDS = 86400 + ADAPT_GMT_TIME_TO_GERMANY_TIME_IN_SECONDS; // 1 day
 
-    public static final int MAXIMUM_LENGTH_OF_SMALL_String = (int) twoPow(6);
+    public static final int MAXIMUM_LENGTH_OF_SMALL_STRING = (int) twoPow(6);
 
     public static final int MAXIMUM_LENGTH_OF_BIG_STRING = (int) twoPow(10);
 }
