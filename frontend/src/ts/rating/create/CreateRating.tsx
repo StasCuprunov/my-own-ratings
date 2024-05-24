@@ -30,6 +30,8 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         useState(new InputValidation());
     const [maximumValidation, setMaximumValidation] =
         useState(new InputValidation());
+    const [stepWidthValidation, setStepWidthValidation] =
+        useState(new InputValidation());
 
     const handleRatingChange = (field: string) => {
         return handleChange(field, setRating);
@@ -69,13 +71,32 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         }
     };
 
+    const handleStepWidthBlur = () => {
+        if (!isScale()) {
+            setStepWidthValidation({
+                condition: true,
+                text: "The specified step width does not create a scale."
+            });
+        }
+        else {
+            setStepWidthValidation({
+                ...stepWidthValidation,
+                condition: false
+            });
+        }
+    };
+
+    const isScale = (): boolean => {
+        return Number.isInteger((rangeOfValues.maximum - rangeOfValues.minimum) / rangeOfValues.stepWidth);
+    };
+
     const isMinimumTooBig = (): boolean => {
-        return rangeOfValues.minimum >= rangeOfValues.maximum;
-    }
+        return (rangeOfValues.minimum - rangeOfValues.maximum) >= 0;
+    };
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        if (minimumValidation.condition || maximumValidation.condition) {
+        if (minimumValidation.condition || maximumValidation.condition || stepWidthValidation.condition) {
             return;
         }
     };
@@ -92,12 +113,13 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
             handleRangeOfValuesChange("maximum"), handleMaximumBlur), [rangeOfValues.maximum]);
     const inputStepWidth: any = useMemo(() =>
         getInputStepWidth(step, rangeOfValuesMaximumBorder, step, rangeOfValues.stepWidth,
-            handleRangeOfValuesChange("stepWidth")), [rangeOfValues.stepWidth]);
+            handleRangeOfValuesChange("stepWidth"), handleStepWidthBlur), [rangeOfValues.stepWidth]);
     return (
         <CreateRatingPage
             inputName={inputName} textAreaDescription={textAreaDescription} inputMinimum={inputMinimum}
             inputMaximum={inputMaximum} inputStepWidth={inputStepWidth} handleSubmit={handleSubmit}
             minimumValidation={minimumValidation} maximumValidation={maximumValidation}
+            stepWidthValidation={stepWidthValidation}
         />
     );
 };

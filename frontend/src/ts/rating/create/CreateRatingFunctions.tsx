@@ -98,7 +98,7 @@ export const getInputMaximum = (minFromInput: number, maxFromInput: number, step
 };
 
 export const getInputStepWidth = (minFromInput: number, maxFromInput: number, stepFromInput: number, value: number,
-                                  handleChange: any) : any => {
+                                  handleChange: any, handleBlur: any) : any => {
     return {
         required: true,
         name: "step-width",
@@ -106,6 +106,7 @@ export const getInputStepWidth = (minFromInput: number, maxFromInput: number, st
         max: maxFromInput,
         step: stepFromInput,
         value: value,
-        onChange: handleChange
+        onChange: handleChange,
+        onBlur: handleBlur
     };
 };
