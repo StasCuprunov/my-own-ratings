@@ -9,6 +9,8 @@ import {
     getLabelNameProps, getLabelStepWidthProps
 } from "./CreateRatingFunctions";
 import {TextArea} from "../../component/atom/form/TextArea";
+import {InputError} from "../../component/atom/form/input/InputError";
+import {CreateButton} from "../../component/atom/button/CreateButton";
 
 const labelName: any = getLabelNameProps();
 const labelDescription: any = getLabelDescriptionProps();
@@ -17,11 +19,11 @@ const labelMaximum: any = getLabelMaximumProps();
 const labelStepWidth: any = getLabelStepWidthProps();
 
 export const CreateRatingPage: FunctionComponent<any> = ({inputName, textAreaDescription, inputMinimum, inputMaximum,
-                                                             inputStepWidth}) => {
+                                                             inputStepWidth, handleSubmit, minimumValidation}) => {
     return (
         <div>
             <h1>Create your own rating</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <Label props={labelName}/>
                     <Input props={inputName}/>
@@ -35,6 +37,7 @@ export const CreateRatingPage: FunctionComponent<any> = ({inputName, textAreaDes
                     <div>
                         <Label props={labelMinimum}/>
                         <InputNumber props={inputMinimum}/>
+                        <InputError props={minimumValidation}/>
                     </div>
                     <div>
                         <Label props={labelMaximum}/>
@@ -44,6 +47,9 @@ export const CreateRatingPage: FunctionComponent<any> = ({inputName, textAreaDes
                         <Label props={labelStepWidth}/>
                         <InputNumber props={inputStepWidth}/>
                     </div>
+                </div>
+                <div>
+                    <CreateButton/>
                 </div>
                 <div>
                     <h2>Hints</h2>

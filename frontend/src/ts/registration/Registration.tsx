@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {PasswordRegex} from "./PasswordRegex";
-import {ChangeEvent, FunctionComponent, useMemo, useState, useEffect} from "react";
+import {FunctionComponent, useMemo, useState, useEffect} from "react";
 import {User} from "../model/User";
 import {
     createUser,

@@ -11,6 +11,7 @@ export const InputNumber: FunctionComponent<any> = ({props}) => {
             step={props.step}
             value={props.value}
             onChange={props.onChange}
+            onBlur={props.onBlur}
         />
     );
 };

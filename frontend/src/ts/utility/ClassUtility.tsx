@@ -8,3 +8,7 @@ export const setStringAttribute = (attribute?: string): string => {
 export const setNumberAttribute = (attribute?: number): number => {
     return (attribute == null) ? 0.0 : attribute;
 };
+
+export const setBooleanAttribute = (attribute?: boolean): boolean => {
+    return (attribute == null) ? false : attribute;
+};

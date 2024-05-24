@@ -6,7 +6,6 @@ export class RangeOfValues {
     maximum: number;
     stepWidth: number;
 
-    constructor();
     constructor(id?: string, minimum?: number, maximum?: number, stepWidth?: number) {
         this.id = setIdAttribute(id);
         this.minimum = setNumberAttribute(minimum);
