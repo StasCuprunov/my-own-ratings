@@ -19,9 +19,9 @@ const labelMinimum: any = getLabelMinimumProps();
 const labelMaximum: any = getLabelMaximumProps();
 const labelStepWidth: any = getLabelStepWidthProps();
 
-export const CreateRatingPage: FunctionComponent<any> = ({inputName, textAreaDescription, inputMinimum, inputMaximum,
-                                                             inputStepWidth, handleSubmit, nameValidation,
-                                                             minimumValidation, maximumValidation,
+export const CreateRatingPage: FunctionComponent<any> = ({maximumNumberOfDecimalDigits, inputName, textAreaDescription,
+                                                             inputMinimum, inputMaximum, inputStepWidth, handleSubmit,
+                                                             nameValidation, minimumValidation, maximumValidation,
                                                              scaleValidation, backendError}) => {
     if (backendError) {
         return (
@@ -43,7 +43,7 @@ export const CreateRatingPage: FunctionComponent<any> = ({inputName, textAreaDes
                     <TextArea props={textAreaDescription}/>
                 </div>
                 <div>
-                    <h2>Scale<sup>3</sup></h2>
+                    <h2>Scale<sup>3, 4</sup></h2>
                     <div>
                         <Label props={labelMinimum}/>
                         <InputNumber props={inputMinimum}/>
@@ -70,10 +70,15 @@ export const CreateRatingPage: FunctionComponent<any> = ({inputName, textAreaDes
                             <sup>1</sup>Required
                         </li>
                         <li>
-                            <sup>2</sup>Unique for every rating
+                            <sup>2</sup>Has to be unique for every rating
                         </li>
                         <li>
-                            <sup>3</sup>...
+                            <sup>3</sup>A scale has a minimum, maximum and other values which are in the scale.
+                            Every value excludes the minimum and maximum has a previous and following value with the
+                            same distance to each other which is described by the step width.
+                        </li>
+                        <li>
+                            <sup>4</sup>Every attribute may have maximum {maximumNumberOfDecimalDigits} decimal places.
                         </li>
                     </ul>
                 </div>

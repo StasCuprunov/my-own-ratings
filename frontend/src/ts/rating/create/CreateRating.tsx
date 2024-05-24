@@ -22,10 +22,11 @@ const defaultRangeOfValues: RangeOfValues = getDefaultRangeOfValues();
 
 export const CreateRating: FunctionComponent<any> = ({props}) => {
     const navigate = useNavigate();
+    const maximumNumberOfDecimalDigits: number = props.maximumNumberOfDecimalDigits;
     const rangeOfValuesMinimumBorder: number = props.rangeOfValuesMinimumBorder;
     const rangeOfValuesMaximumBorder: number = props.rangeOfValuesMaximumBorder;
     const step: number= useMemo(() =>
-        getSmallestPositiveNumberWithNumberOfDecimalDigits(props.maximumNumberOfDecimalDigits), []);
+        getSmallestPositiveNumberWithNumberOfDecimalDigits(maximumNumberOfDecimalDigits), []);
 
     const [rating, setRating] = useState(new Rating(undefined, props.userId));
     const [rangeOfValues, setRangeOfValues] =
@@ -68,7 +69,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         let text: string = "";
         if (isMinimumTooBig()) {
             condition = true;
-            text = "Minimum must be real smaller than maximum.";
+            text = "Minimum must be really smaller than maximum.";
         }
         setMinimumValidation({
             condition: condition,
@@ -82,7 +83,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         let text: string = "";
         if (isMinimumTooBig()) {
             condition = true;
-            text = "Maximum must be real bigger than minimum.";
+            text = "Maximum must be really bigger than minimum.";
         }
         setMaximumValidation({
             condition: condition,
@@ -100,7 +101,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         let text: string = "";
         if (!isScale()) {
             condition = true;
-            text = "With the specified values it does not create a scale.";
+            text = "With the specified attributes it does not build a scale.";
         }
         setScaleValidation({
             condition: condition,
@@ -149,7 +150,8 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
             handleRangeOfValuesChange("stepWidth"), handleStepWidthBlur), [rangeOfValues.stepWidth]);
     return (
         <CreateRatingPage
-            inputName={inputName} textAreaDescription={textAreaDescription} inputMinimum={inputMinimum}
+            maximumNumberOfDecimalDigits={maximumNumberOfDecimalDigits} inputName={inputName}
+            textAreaDescription={textAreaDescription} inputMinimum={inputMinimum}
             inputMaximum={inputMaximum} inputStepWidth={inputStepWidth} handleSubmit={handleSubmit}
             nameValidation={nameValidation} minimumValidation={minimumValidation} maximumValidation={maximumValidation}
             scaleValidation={scaleValidation} backendError={backendError}
