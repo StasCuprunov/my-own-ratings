@@ -26,6 +26,8 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
     const [rangeOfValues, setRangeOfValues] =
         useState(defaultRangeOfValues);
 
+    const [nameValidation, setNameValidation] =
+        useState(new InputValidation());
     const [minimumValidation, setMinimumValidation] =
         useState(new InputValidation());
     const [maximumValidation, setMaximumValidation] =
@@ -40,6 +42,19 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
     const handleRangeOfValuesChange = (field: string) => {
         return handleChange(field, setRangeOfValues);
     };
+
+    const handleNameBlur = () => {
+        let condition: boolean = false;
+        let text: string = "";
+        if (!rating.name.trim()) {
+            condition = true;
+            text = "The name may not be empty.";
+        }
+        setNameValidation({
+            condition: condition,
+            text: text
+        });
+    }
 
     const handleMinimumBlur = () => {
         if (isMinimumTooBig()) {
@@ -96,13 +111,15 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        if (minimumValidation.condition || maximumValidation.condition || stepWidthValidation.condition) {
+        if (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
+            stepWidthValidation.condition) {
             return;
         }
     };
 
     const inputName: any = useMemo(() =>
-        getInputNameProps(rating.name, props.maximumLengthOfName, handleRatingChange("name")), [rating.name]);
+        getInputNameProps(rating.name, props.maximumLengthOfName, handleRatingChange("name"), handleNameBlur),
+        [rating.name]);
     const textAreaDescription: any = useMemo(() => getTextAreaDescription(rating.description,
         props.maximumLengthOfDescription, handleRatingChange("description")), [rating.description]);
     const inputMinimum: any = useMemo(() =>
@@ -118,7 +135,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         <CreateRatingPage
             inputName={inputName} textAreaDescription={textAreaDescription} inputMinimum={inputMinimum}
             inputMaximum={inputMaximum} inputStepWidth={inputStepWidth} handleSubmit={handleSubmit}
-            minimumValidation={minimumValidation} maximumValidation={maximumValidation}
+            nameValidation={nameValidation} minimumValidation={minimumValidation} maximumValidation={maximumValidation}
             stepWidthValidation={stepWidthValidation}
         />
     );

@@ -10,6 +10,7 @@ export const Input: FunctionComponent<any> = ({props}) => {
             maxLength={props.maxLength}
             pattern={props.pattern}
             onChange={props.onChange}
+            onBlur={props.onBlur}
         />
     );
 };

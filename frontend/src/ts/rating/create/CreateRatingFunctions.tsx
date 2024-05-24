@@ -45,14 +45,15 @@ export const getLabelStepWidthProps = () : any => {
     };
 };
 
-export const getInputNameProps = (value: string, maxLength: number, handleChange: any) : any => {
+export const getInputNameProps = (value: string, maxLength: number, handleChange: any, handleBlur: any) : any => {
     return {
         required: true,
         name: "name",
         type: "text",
         value: value,
         maxLength: maxLength,
-        onChange: handleChange
+        onChange: handleChange,
+        onBlur: handleBlur
     };
 };
 

@@ -19,8 +19,9 @@ const labelMaximum: any = getLabelMaximumProps();
 const labelStepWidth: any = getLabelStepWidthProps();
 
 export const CreateRatingPage: FunctionComponent<any> = ({inputName, textAreaDescription, inputMinimum, inputMaximum,
-                                                             inputStepWidth, handleSubmit, minimumValidation,
-                                                             maximumValidation, stepWidthValidation}) => {
+                                                             inputStepWidth, handleSubmit, nameValidation,
+                                                             minimumValidation, maximumValidation,
+                                                             stepWidthValidation}) => {
     return (
         <div>
             <h1>Create your own rating</h1>
@@ -28,6 +29,7 @@ export const CreateRatingPage: FunctionComponent<any> = ({inputName, textAreaDes
                 <div>
                     <Label props={labelName}/>
                     <Input props={inputName}/>
+                    <InputError props={nameValidation}/>
                 </div>
                 <div>
                     <Label props={labelDescription}/>
