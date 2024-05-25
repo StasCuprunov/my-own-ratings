@@ -1,9 +1,9 @@
 import {FunctionComponent} from "react";
+import {StartPagePage} from "./StartPagePage";
 
 export const StartPage: FunctionComponent<any> = () => {
+
     return (
-        <div>
-            <h1>Start page</h1>
-        </div>
+        <StartPagePage/>
     );
 };

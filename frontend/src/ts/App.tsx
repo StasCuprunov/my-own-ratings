@@ -12,7 +12,6 @@ import {
     WEBSITE_ROUTING_RATINGS_CREATE,
     WEBSITE_ROUTING_REGISTRATION
 } from "./constant/routing/WebsiteRoutingConstants";
-import {StartPage} from "./start-page/StartPage";
 import {AuthContext} from "./context/AuthContext";
 import {hasRecentlyLoggedIn} from "./utility/CookieUtility";
 import {NavBar} from "./component/organism/navbar/NavBar";
@@ -20,6 +19,7 @@ import {NotFoundPage} from "./general-page/NotFoundPage";
 import {LoadCreateRating} from "./rating/create/LoadCreateRating";
 import {NotAuthorizedPage} from "./general-page/NotAuthorizedPage";
 import {LoadRating} from "./rating/get/LoadRating";
+import {LoadStartPage} from "./start-page/LoadStartPage";
 
 export const App = () => {
     const [authenticated, setAuthenticated] = useState(hasRecentlyLoggedIn());
@@ -30,7 +30,7 @@ export const App = () => {
                 <Routes>
                     <Route path={WEBSITE_ROUTING_LOGIN} element={<Login />} />)
                     <Route path={WEBSITE_ROUTING_LOGOUT} element={<Logout />}/>
-                    <Route path={WEBSITE_ROUTING_INDEX} element={authenticated ? <StartPage/> : <Login/>}/>
+                    <Route path={WEBSITE_ROUTING_INDEX} element={authenticated ? <LoadStartPage/> : <Login/>}/>
                     <Route path={WEBSITE_ROUTING_REGISTRATION} element={<LoadRegistration />} />
                     <Route path={WEBSITE_ROUTING_RATINGS_CREATE}
                            element={authenticated ? <LoadCreateRating/> : <NotAuthorizedPage/>}/>
