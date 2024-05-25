@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @Setter
 public class StartPageDTO {
 
-    private UserDTO UserDTO;
+    private UserDTO userDTO;
 
     private ArrayList<RatingForStartPageDTO> ratingDTOs;
 }
