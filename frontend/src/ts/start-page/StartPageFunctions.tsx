@@ -1,5 +1,6 @@
 import {useGet} from "../interface/useGet";
 import {API_ROUTING_START_PAGE} from "../constant/routing/APIConstants";
+import {getWebsiteRoutingRatingsById} from "../constant/routing/WebsiteRoutingConstants";
 
 export const useStartPage = () => {
     return useGet(API_ROUTING_START_PAGE);
@@ -18,4 +19,12 @@ export const getGreetingName = (firstName: string | null, surname: string | null
         name = surname
     }
     return name;
+};
+
+export const getButtonLinkToRating = (id: string) => {
+    return {
+        type: "button",
+        text: "Link",
+        to: getWebsiteRoutingRatingsById(id)
+    };
 };
