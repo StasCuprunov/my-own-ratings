@@ -1,5 +1,5 @@
 import {useGet} from "../interface/useGet";
-import {API_ROUTING_REGISTRATION, API_ROUTING_USERS_CREATE} from "../constant/routing/APIConstants";
+import {API_ROUTING_REGISTRATION, API_ROUTING_USERS_CREATE} from "../constant/routing/APIRoutingConstants";
 import {postAxios} from "../interface/BackendCalls";
 import {User} from "../model/User";
 

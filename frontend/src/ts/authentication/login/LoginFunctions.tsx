@@ -1,6 +1,6 @@
 import {LoginModel} from "../../model/LoginModel";
 import {postAxios} from "../../interface/BackendCalls";
-import {API_ROUTING_LOGIN} from "../../constant/routing/APIConstants";
+import {API_ROUTING_LOGIN} from "../../constant/routing/APIRoutingConstants";
 
 export const login = async (login: LoginModel) => {
     return await postAxios(API_ROUTING_LOGIN, login);

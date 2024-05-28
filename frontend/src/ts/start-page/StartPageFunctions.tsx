@@ -1,7 +1,7 @@
 import {GridColDef } from '@mui/x-data-grid';
 
 import {useGet} from "../interface/useGet";
-import {API_ROUTING_START_PAGE} from "../constant/routing/APIConstants";
+import {API_ROUTING_START_PAGE} from "../constant/routing/APIRoutingConstants";
 import {getWebsiteRoutingRatingsById} from "../constant/routing/WebsiteRoutingConstants";
 import {ButtonLink} from "../component/atom/button/ButtonLink";
 

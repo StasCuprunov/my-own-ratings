@@ -1,5 +1,5 @@
 import {useGet} from "../../interface/useGet";
-import {API_ROUTING_RATINGS_CREATE} from "../../constant/routing/APIConstants";
+import {API_ROUTING_RATINGS_CREATE} from "../../constant/routing/APIRoutingConstants";
 import {RangeOfValues} from "../../model/RangeOfValues";
 import {RatingDTO} from "../../dto/RatingDTO";
 import {postAxios} from "../../interface/BackendCalls";
