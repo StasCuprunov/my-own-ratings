@@ -11,7 +11,7 @@ import {
 import {TextArea} from "../../component/atom/form/TextArea";
 import {InputError} from "../../component/atom/form/input/InputError";
 import {CreateButton} from "../../component/atom/button/CreateButton";
-import {ErrorPage} from "../../general-page/ErrorPage";
+import {Error} from "../../general-page/error/Error";
 
 const labelName: any = getLabelNameProps();
 const labelDescription: any = getLabelDescriptionProps();
@@ -25,7 +25,7 @@ export const CreateRatingPage: FunctionComponent<any> = ({maximumNumberOfDecimal
                                                              scaleValidation, backendError}) => {
     if (backendError) {
         return (
-            <ErrorPage error={backendError}/>
+            <Error error={backendError}/>
         );
     }
 
