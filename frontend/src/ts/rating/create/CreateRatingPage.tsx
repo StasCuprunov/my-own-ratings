@@ -12,6 +12,12 @@ import {TextArea} from "../../component/atom/form/TextArea";
 import {InputError} from "../../component/atom/form/input/InputError";
 import {CreateButton} from "../../component/atom/button/CreateButton";
 import {Error} from "../../general-page/error/Error";
+import {
+    getHintMaximumDecimalPlaces,
+    getHintRatingNameMustBeUnique,
+    getHintRequired,
+    getHintWhatIsAScale
+} from "../RatingHints";
 
 const labelName: any = getLabelNameProps();
 const labelDescription: any = getLabelDescriptionProps();
@@ -66,20 +72,10 @@ export const CreateRatingPage: FunctionComponent<any> = ({maximumNumberOfDecimal
                 <div>
                     <h2>Hints</h2>
                     <ul>
-                        <li>
-                            <sup>1</sup>Required
-                        </li>
-                        <li>
-                            <sup>2</sup>Has to be unique for every rating
-                        </li>
-                        <li>
-                            <sup>3</sup>A scale has a minimum, maximum and other values which are in the scale.
-                            Every value excludes the minimum and maximum has a previous and following value with the
-                            same distance to each other which is described by the step width.
-                        </li>
-                        <li>
-                            <sup>4</sup>Every attribute may have maximum {maximumNumberOfDecimalDigits} decimal places.
-                        </li>
+                        {getHintRequired()}
+                        {getHintRatingNameMustBeUnique()}
+                        {getHintWhatIsAScale()}
+                        {getHintMaximumDecimalPlaces(maximumNumberOfDecimalDigits)}
                     </ul>
                 </div>
             </form>
