@@ -13,7 +13,7 @@ import {
 } from "./RegistrationFunctions";
 import {Button} from "../component/atom/button/Button";
 import {InputError} from "../component/atom/form/input/InputError";
-import {ErrorPage} from "../general-page/ErrorPage";
+import {Error} from "../general-page/error/Error";
 
 const labelEmail: any = getLabelEmailProps();
 const labelFirstName: any = getLabelFirstNameProps();
@@ -27,7 +27,7 @@ export const RegistrationPage: FunctionComponent<any> = ({backendError, handleSu
                                                              inputSurname, inputPassword, isPasswordValid, passwordErrorText, inputPasswordConfirmation, isPasswordConfirmationValid}) => {
     if (backendError) {
         return (
-          <ErrorPage error={backendError}/>
+            <Error error={backendError}/>
         );
     }
 

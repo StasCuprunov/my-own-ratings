@@ -3,7 +3,7 @@ import {Label} from "../../component/atom/form/Label";
 import {Input} from "../../component/atom/form/input/Input";
 import {Button} from "../../component/atom/button/Button";
 import {getEmailLabelProps, getLoginButtonProps, getPasswordLabelProps} from "./LoginFunctions";
-import {ErrorPage} from "../../general-page/ErrorPage";
+import {Error} from "../../general-page/error/Error";
 
 const labelEmail: any = getEmailLabelProps();
 const labelPassword: any = getPasswordLabelProps();
@@ -13,7 +13,7 @@ export const LoginPage: FunctionComponent<any> = ({backendError, handleSubmit, i
 
     if (backendError) {
         return (
-            <ErrorPage error={backendError}/>
+            <Error error={backendError}/>
         );
     }
 
