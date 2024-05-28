@@ -10,6 +10,7 @@ import {
     WEBSITE_ROUTING_NOT_FOUND,
     WEBSITE_ROUTING_RATINGS_BY_ID,
     WEBSITE_ROUTING_RATINGS_CREATE,
+    WEBSITE_ROUTING_RATINGS_EDIT_BY_ID,
     WEBSITE_ROUTING_REGISTRATION
 } from "./constant/routing/WebsiteRoutingConstants";
 import {AuthContext} from "./context/AuthContext";
@@ -20,6 +21,7 @@ import {LoadCreateRating} from "./rating/create/LoadCreateRating";
 import {NotAuthorizedPage} from "./general-page/NotAuthorizedPage";
 import {LoadRating} from "./rating/get/LoadRating";
 import {LoadStartPage} from "./start-page/LoadStartPage";
+import {LoadEditRating} from "./rating/edit/LoadEditRating";
 
 export const App = () => {
     const [authenticated, setAuthenticated] = useState(hasRecentlyLoggedIn());
@@ -36,6 +38,9 @@ export const App = () => {
                            element={authenticated ? <LoadCreateRating/> : <NotAuthorizedPage/>}/>
                     <Route path={WEBSITE_ROUTING_RATINGS_BY_ID}
                            element={authenticated ? <LoadRating/> : <NotAuthorizedPage/>}
+                    />
+                    <Route path={WEBSITE_ROUTING_RATINGS_EDIT_BY_ID}
+                        element={authenticated ? <LoadEditRating/> : <NotAuthorizedPage/>}
                     />
                     <Route path={WEBSITE_ROUTING_NOT_FOUND} element={<NotFoundPage/>}/>
                 </Routes>
