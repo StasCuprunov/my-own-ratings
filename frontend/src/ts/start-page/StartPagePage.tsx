@@ -1,6 +1,6 @@
 import {FunctionComponent} from "react";
 
-import {CreateButtonLink} from "../component/atom/button/CreateButtonLink";
+import {CreateButtonLink} from "../component/atom/button/link/CreateButtonLink";
 import {WEBSITE_ROUTING_RATINGS_CREATE} from "../constant/routing/WebsiteRoutingConstants";
 import {getColumns} from "./StartPageFunctions";
 import {DataGrid} from "@mui/x-data-grid";
@@ -26,7 +26,7 @@ export const StartPagePage: FunctionComponent<any> = ({name, ratingDTOs}) => {
             </div>
             <div>
                 <h2>Your ratings</h2>
-                <DataGrid rows={ratingDTOs} columns={columns} initialState={initialState}
+                <DataGrid autoHeight rows={ratingDTOs} columns={columns} initialState={initialState}
                           pageSizeOptions={PAGINATION_SIZE_LIST} disableRowSelectionOnClick
                 />
             </div>

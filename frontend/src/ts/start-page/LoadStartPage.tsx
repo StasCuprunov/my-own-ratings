@@ -5,7 +5,6 @@ import {useStartPage} from "./StartPageFunctions";
 
 export const LoadStartPage: FunctionComponent<any> = () => {
     const {data, error} = useStartPage();
-    console.log(data);
 
     return (
         <LoadComponentHandling Component={StartPage} props={data} error={error}/>

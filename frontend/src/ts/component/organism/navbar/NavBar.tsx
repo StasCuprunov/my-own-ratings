@@ -1,6 +1,6 @@
 import {FunctionComponent} from "react";
 import {useAuth} from "../../../context/AuthContext";
-import {ButtonLink} from "../../atom/button/ButtonLink";
+import {ButtonLink} from "../../atom/button/link/ButtonLink";
 import {getLogoutObject} from "./NavBarFunctions";
 
 const logout: any = getLogoutObject();
