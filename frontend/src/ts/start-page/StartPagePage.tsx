@@ -1,6 +1,6 @@
 import {FunctionComponent} from "react";
 
-import {CreateButtonLink} from "../component/atom/button/CreateButtonLink";
+import {CreateButtonLink} from "../component/atom/button/link/CreateButtonLink";
 import {WEBSITE_ROUTING_RATINGS_CREATE} from "../constant/routing/WebsiteRoutingConstants";
 import {getColumns} from "./StartPageFunctions";
 import {DataGrid} from "@mui/x-data-grid";
