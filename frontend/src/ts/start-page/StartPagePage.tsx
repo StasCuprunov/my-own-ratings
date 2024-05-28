@@ -26,7 +26,7 @@ export const StartPagePage: FunctionComponent<any> = ({name, ratingDTOs}) => {
             </div>
             <div>
                 <h2>Your ratings</h2>
-                <DataGrid rows={ratingDTOs} columns={columns} initialState={initialState}
+                <DataGrid autoHeight rows={ratingDTOs} columns={columns} initialState={initialState}
                           pageSizeOptions={PAGINATION_SIZE_LIST} disableRowSelectionOnClick
                 />
             </div>

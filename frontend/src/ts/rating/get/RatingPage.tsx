@@ -36,7 +36,7 @@ export const RatingPage: FunctionComponent<any> = ({id, name, description, range
                     <Button props={createRatingEntryButton}/>
                 </div>
                 <div>
-                    <DataGrid rows={ratingEntries} columns={columns} initialState={initialState}
+                    <DataGrid autoHeight rows={ratingEntries} columns={columns} initialState={initialState}
                               pageSizeOptions={PAGINATION_SIZE_LIST} disableRowSelectionOnClick
                     />
                 </div>
