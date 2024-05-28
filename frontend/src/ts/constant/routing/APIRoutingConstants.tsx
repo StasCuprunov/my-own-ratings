@@ -31,6 +31,6 @@ export const API_ROUTING_USERS_CREATE: string = routingCreate(API_ROUTING_USERS)
 
 export const API_ROUTING_RATINGS_CREATE: string = routingCreate(API_ROUTING_RATINGS);
 
-export const getApiRoutingRatingsFindById = (id: string) => {
+export const getApiRoutingRatingsFindById = (id: string | undefined) => {
     return routingGetById(API_ROUTING_RATINGS, id);
 };

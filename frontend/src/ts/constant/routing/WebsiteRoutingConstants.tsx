@@ -3,12 +3,11 @@ import {
     ROUTING_LOGOUT,
     ROUTING_RATINGS,
     ROUTING_REGISTRATION,
-    ROUTING_SEPARATOR,
     routingById,
     routingCreate
 } from "./RoutingConstants";
 
-const ROUTING_GENERAL_ID: string = ROUTING_SEPARATOR + ":id";
+const ROUTING_GENERAL_ID: string = ":id";
 
 export const WEBSITE_ROUTING_INDEX: string = "/";
 export const WEBSITE_ROUTING_LOGIN: string = ROUTING_LOGIN;

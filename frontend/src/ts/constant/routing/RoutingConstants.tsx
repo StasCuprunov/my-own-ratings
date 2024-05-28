@@ -18,7 +18,7 @@ export const routingById = (path: string, id: string): string => {
     return path + ROUTING_SEPARATOR + id;
 };
 
-export const routingGetById = (path: string, id: string): string => {
+export const routingGetById = (path: string, id: string | undefined): string => {
     return routingByVariable(path, ROUTING_GET, id);
 };
 
@@ -30,6 +30,6 @@ export const routingDeleteById = (path: string, id: string): string => {
     return routingByVariable(path, ROUTING_DELETE, id);
 };
 
-const routingByVariable = (path: string, operator: string, variable: string): string => {
+const routingByVariable = (path: string, operator: string, variable: string | undefined): string => {
     return path + operator + ROUTING_SEPARATOR + variable;
 };
