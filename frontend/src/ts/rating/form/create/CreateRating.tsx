@@ -1,5 +1,5 @@
 import {FunctionComponent, useMemo, useState} from "react";
-import {CreateRatingPage} from "./CreateRatingPage";
+import {RatingFormPage} from "../RatingFormPage";
 import {createRating} from "./CreateRatingFunctions";
 import {Rating} from "../../../model/Rating";
 import {RangeOfValues} from "../../../model/RangeOfValues";
@@ -25,7 +25,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
     const maximumNumberOfDecimalDigits: number = props.maximumNumberOfDecimalDigits;
     const rangeOfValuesMinimumBorder: number = props.rangeOfValuesMinimumBorder;
     const rangeOfValuesMaximumBorder: number = props.rangeOfValuesMaximumBorder;
-    const step: number= useMemo(() =>
+    const step: number = useMemo(() =>
         getSmallestPositiveNumberWithNumberOfDecimalDigits(maximumNumberOfDecimalDigits), []);
 
     const [rating, setRating] = useState(new Rating(undefined, props.userId));
@@ -148,13 +148,25 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
     const inputStepWidth: any = useMemo(() =>
         getInputStepWidth(step, rangeOfValuesMaximumBorder, step, rangeOfValues.stepWidth,
             handleRangeOfValuesChange("stepWidth"), handleStepWidthBlur), [rangeOfValues.stepWidth]);
+
+    const propsPage: any = {
+        isEdit: false,
+        title: "Create your own rating",
+        maximumNumberOfDecimalDigits: maximumNumberOfDecimalDigits,
+        inputName: inputName,
+        textAreaDescription: textAreaDescription,
+        inputMinimum: inputMinimum,
+        inputMaximum: inputMaximum,
+        inputStepWidth: inputStepWidth,
+        handleSubmit: handleSubmit,
+        nameValidation: nameValidation,
+        minimumValidation: minimumValidation,
+        maximumValidation: maximumValidation,
+        scaleValidation: scaleValidation,
+        backendError: backendError
+    };
+
     return (
-        <CreateRatingPage
-            maximumNumberOfDecimalDigits={maximumNumberOfDecimalDigits} inputName={inputName}
-            textAreaDescription={textAreaDescription} inputMinimum={inputMinimum}
-            inputMaximum={inputMaximum} inputStepWidth={inputStepWidth} handleSubmit={handleSubmit}
-            nameValidation={nameValidation} minimumValidation={minimumValidation} maximumValidation={maximumValidation}
-            scaleValidation={scaleValidation} backendError={backendError}
-        />
+        <RatingFormPage props={propsPage}/>
     );
 };
