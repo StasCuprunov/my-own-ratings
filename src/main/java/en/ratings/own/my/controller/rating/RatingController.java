@@ -1,6 +1,7 @@
 package en.ratings.own.my.controller.rating;
 
-import en.ratings.own.my.dto.rating.CreateRatingDTO;
+import en.ratings.own.my.dto.rating.form.EditRatingDTO;
+import en.ratings.own.my.dto.rating.form.RatingValidationDTO;
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.service.rating.RatingService;
 import lombok.NonNull;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static en.ratings.own.my.constant.PermissionConstants.HAS_ROLE_USER_PERMISSION;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_CREATE_RATING;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_DELETE_BY_ID_RATING;
+import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_EDIT_BY_ID_RATING;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_FIND_BY_ID_RATING;
 import static en.ratings.own.my.constant.PermissionConstants.USER_HAS_PERMISSION_FOR_UPDATE_RATING;
 import static en.ratings.own.my.constant.RoutingConstants.ROUTING_CREATE;
@@ -55,7 +57,7 @@ public class RatingController {
 
     @PreAuthorize(HAS_ROLE_USER_PERMISSION)
     @GetMapping(ROUTING_CREATE)
-    public ResponseEntity<CreateRatingDTO> getInfoForCreate() throws Exception {
+    public ResponseEntity<RatingValidationDTO> getInfoForCreate() throws Exception {
         return createOkResponseEntity(ratingService.getInfoForCreate());
     }
 
@@ -63,6 +65,12 @@ public class RatingController {
     @PutMapping(ROUTING_EDIT)
     public ResponseEntity<RatingDTO> update(@RequestBody RatingDTO ratingDTO) throws Exception {
         return createOkResponseEntity(ratingService.update(ratingDTO));
+    }
+
+    @PreAuthorize(USER_HAS_PERMISSION_FOR_EDIT_BY_ID_RATING)
+    @GetMapping(ROUTING_EDIT)
+    public ResponseEntity<EditRatingDTO> getInfoForEdit(@PathVariable @NonNull String id) throws Exception {
+        return createOkResponseEntity(ratingService.getInfoForEdit(id));
     }
 
     @PreAuthorize(USER_HAS_PERMISSION_FOR_DELETE_BY_ID_RATING)

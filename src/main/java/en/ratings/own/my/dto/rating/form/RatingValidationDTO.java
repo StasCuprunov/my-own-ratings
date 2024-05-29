@@ -1,4 +1,4 @@
-package en.ratings.own.my.dto.rating;
+package en.ratings.own.my.dto.rating.form;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import static en.ratings.own.my.constant.AttributeConstants.STEP_WIDTH_BORDER;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreateRatingDTO {
+public class RatingValidationDTO {
 
     private String userId;
 
@@ -32,7 +32,7 @@ public class CreateRatingDTO {
 
     private double rangeOfValuesMinimumBorder = RANGE_OF_VALUES_MINIMUM_BORDER;
 
-    public CreateRatingDTO(String userId) {
+    public RatingValidationDTO(String userId) {
         setUserId(userId);
     }
 }
