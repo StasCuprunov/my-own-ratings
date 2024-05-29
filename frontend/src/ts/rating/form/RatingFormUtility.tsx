@@ -105,3 +105,10 @@ export const getScaleTitle = (isEdit: boolean) => {
         <h2>Scale<sup>{hintList}</sup></h2>
     );
 };
+
+export const getTitle = (isEdit: boolean, name?: string): string => {
+    if (isEdit) {
+        return "Edit the rating " + name;
+    }
+    return "Create your own rating";
+};

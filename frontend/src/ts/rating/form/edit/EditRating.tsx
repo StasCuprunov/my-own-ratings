@@ -1,16 +1,14 @@
 import {FunctionComponent} from "react";
-import {EditRatingPage} from "./EditRatingPage";
+import {RatingForm} from "../RatingForm";
 
 export const EditRating: FunctionComponent<any> = ({props}) => {
-    const id: string = props.id;
-    const name: string = "test";
-    const description: string = "test";
 
-    const handleSubmit = (event: any) => {
-        event.preventDefault();
+    const ratingFormProps: any = {
+        ...props,
+        isEdit: true
     };
 
     return (
-        <EditRatingPage name={name} description={description} handleSubmit={handleSubmit}/>
+        <RatingForm props={ratingFormProps}/>
     );
 };

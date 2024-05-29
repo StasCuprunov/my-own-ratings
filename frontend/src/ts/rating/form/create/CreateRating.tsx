@@ -5,8 +5,7 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
 
     const ratingFormProps: any = {
         ...props,
-        isEdit: false,
-        title: "Create your own rating"
+        isEdit: false
     };
 
     return (

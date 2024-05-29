@@ -5,7 +5,8 @@ import {
     getInputMinimum,
     getInputNameProps,
     getInputStepWidth,
-    getTextAreaDescription
+    getTextAreaDescription,
+    getTitle
 } from "./RatingFormUtility";
 import {useNavigate} from "react-router-dom";
 import {getSmallestPositiveNumberWithNumberOfDecimalDigits} from "../../utility/MathUtility";
@@ -18,9 +19,14 @@ import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutin
 import {RatingFormPage} from "./RatingFormPage";
 import {RangeOfValues} from "../../model/RangeOfValues";
 
-const defaultRangeOfValues: RangeOfValues = getDefaultRangeOfValues();
-
 export const RatingForm: FunctionComponent<any> = ({props}) => {
+    const isEdit: boolean = props.isEdit;
+    const ratingDTO: any = props.ratingDTO;
+    const initializeRangeOfValues: RangeOfValues = (isEdit) ? ratingDTO.rangeOfValues : getDefaultRangeOfValues();
+    const initializeRating: Rating = (isEdit) ?
+        new Rating(ratingDTO.id, ratingDTO.userId, ratingDTO.name, ratingDTO.description) :
+        new Rating(undefined, props.userId);
+
     const navigate = useNavigate();
     const maximumNumberOfDecimalDigits: number = props.maximumNumberOfDecimalDigits;
     const rangeOfValuesMinimumBorder: number = props.rangeOfValuesMinimumBorder;
@@ -28,9 +34,9 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     const step: number = useMemo(() =>
         getSmallestPositiveNumberWithNumberOfDecimalDigits(maximumNumberOfDecimalDigits), []);
 
-    const [rating, setRating] = useState(new Rating(undefined, props.userId));
+    const [rating, setRating] = useState(initializeRating);
     const [rangeOfValues, setRangeOfValues] =
-        useState(defaultRangeOfValues);
+        useState(initializeRangeOfValues);
 
     const [nameValidation, setNameValidation] =
         useState(new InputValidation());
@@ -150,8 +156,8 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
             handleRangeOfValuesChange("stepWidth"), handleStepWidthBlur), [rangeOfValues.stepWidth]);
 
     const propsPage: any = {
-        isEdit: props.isEdit,
-        title: props.title,
+        isEdit: isEdit,
+        title: getTitle(isEdit, props.ratingDTO?.name),
         maximumNumberOfDecimalDigits: maximumNumberOfDecimalDigits,
         inputName: inputName,
         textAreaDescription: textAreaDescription,
