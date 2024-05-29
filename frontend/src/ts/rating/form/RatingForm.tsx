@@ -165,7 +165,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
 
     const propsPage: any = {
         isEdit: isEdit,
-        id: ratingDTO.id,
+        id: ratingDTO?.id,
         title: getTitle(isEdit, props.ratingDTO?.name),
         maximumNumberOfDecimalDigits: maximumNumberOfDecimalDigits,
         inputName: inputName,
