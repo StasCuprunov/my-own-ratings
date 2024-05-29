@@ -19,6 +19,7 @@ import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutin
 import {RatingFormPage} from "./RatingFormPage";
 import {RangeOfValues} from "../../model/RangeOfValues";
 import {editRating} from "./edit/EditRatingFunctions";
+import {mapRatingDTOToRating} from "../../utility/MapperUtility";
 
 export const RatingForm: FunctionComponent<any> = ({props}) => {
     const isEdit: boolean = props.isEdit;
@@ -28,8 +29,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     const rangeOfValuesMaximumBorder: number = props.rangeOfValuesMaximumBorder;
 
     const initializeRangeOfValues: RangeOfValues = (isEdit) ? ratingDTO.rangeOfValues : getDefaultRangeOfValues();
-    const initializeRating: Rating = (isEdit) ?
-        new Rating(ratingDTO.id, ratingDTO.userId, ratingDTO.name, ratingDTO.description) :
+    const initializeRating: Rating = (isEdit) ? mapRatingDTOToRating(ratingDTO) :
         new Rating(undefined, props.userId);
 
     const navigate = useNavigate();
@@ -119,8 +119,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        if (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
-            scaleValidation.condition) {
+        if (areAttributesNotValid()) {
             return;
         }
 
@@ -134,6 +133,11 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
             return;
         }
         navigate(getWebsiteRoutingRatingsById(data.id));
+    };
+
+    const areAttributesNotValid = () => {
+        return (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
+            scaleValidation.condition);
     };
 
     const isScale = (): boolean => {
