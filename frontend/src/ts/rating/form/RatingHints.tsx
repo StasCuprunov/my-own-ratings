@@ -21,7 +21,9 @@ export const getHintMaximumDecimalPlaces = (maximumNumberOfDecimalDigits: number
 };
 
 export const getHintAdaptionRatingEntries = () => {
-    return createHint("5", "...");
+    let text: string = "If you adapt the scale then you have to check if every rating entry is in the new scale. " +
+        "If not then the new scale is invalid and you have to adapt or delete the relevant rating entries."
+    return createHint("5", text);
 };
 
 const createHint = (hintSymbol: string, text: string) => {

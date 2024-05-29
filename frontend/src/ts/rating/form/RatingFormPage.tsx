@@ -20,7 +20,7 @@ import {
     getLabelNameProps,
     getLabelStepWidthProps,
     getScaleTitle
-} from "./RatingFormUtility";
+} from "./RatingFormFunctions";
 
 const labelName: any = getLabelNameProps();
 const labelDescription: any = getLabelDescriptionProps();

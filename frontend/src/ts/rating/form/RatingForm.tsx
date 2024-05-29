@@ -7,7 +7,7 @@ import {
     getInputStepWidth,
     getTextAreaDescription,
     getTitle
-} from "./RatingFormUtility";
+} from "./RatingFormFunctions";
 import {useNavigate} from "react-router-dom";
 import {getSmallestPositiveNumberWithNumberOfDecimalDigits} from "../../utility/MathUtility";
 import {Rating} from "../../model/Rating";
@@ -18,19 +18,21 @@ import {createRating} from "./create/CreateRatingFunctions";
 import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
 import {RatingFormPage} from "./RatingFormPage";
 import {RangeOfValues} from "../../model/RangeOfValues";
+import {editRating} from "./edit/EditRatingFunctions";
 
 export const RatingForm: FunctionComponent<any> = ({props}) => {
     const isEdit: boolean = props.isEdit;
     const ratingDTO: any = props.ratingDTO;
+    const maximumNumberOfDecimalDigits: number = props.maximumNumberOfDecimalDigits;
+    const rangeOfValuesMinimumBorder: number = props.rangeOfValuesMinimumBorder;
+    const rangeOfValuesMaximumBorder: number = props.rangeOfValuesMaximumBorder;
+
     const initializeRangeOfValues: RangeOfValues = (isEdit) ? ratingDTO.rangeOfValues : getDefaultRangeOfValues();
     const initializeRating: Rating = (isEdit) ?
         new Rating(ratingDTO.id, ratingDTO.userId, ratingDTO.name, ratingDTO.description) :
         new Rating(undefined, props.userId);
 
     const navigate = useNavigate();
-    const maximumNumberOfDecimalDigits: number = props.maximumNumberOfDecimalDigits;
-    const rangeOfValuesMinimumBorder: number = props.rangeOfValuesMinimumBorder;
-    const rangeOfValuesMaximumBorder: number = props.rangeOfValuesMaximumBorder;
     const step: number = useMemo(() =>
         getSmallestPositiveNumberWithNumberOfDecimalDigits(maximumNumberOfDecimalDigits), []);
 
@@ -115,29 +117,31 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
         });
     };
 
-    const isScale = (): boolean => {
-        return Number.isInteger((rangeOfValues.maximum - rangeOfValues.minimum) / rangeOfValues.stepWidth);
-    };
-
-    const isMinimumTooBig = (): boolean => {
-        return (rangeOfValues.minimum - rangeOfValues.maximum) >= 0;
-    };
-
     const handleSubmit = async (event: any) => {
         event.preventDefault();
         if (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
             scaleValidation.condition) {
             return;
         }
-        let ratingDTO: RatingDTO = new RatingDTO(undefined, rating.userId, rating.name, rating.description,
-            rangeOfValues);
 
-        const {data, error} = await createRating(ratingDTO);
+        let id: string = (isEdit) ? ratingDTO.id : undefined;
+        let newRatingDTO: RatingDTO = new RatingDTO(id, rating.userId, rating.name, rating.description, rangeOfValues);
+
+        const {data, error} = (isEdit) ? await editRating(newRatingDTO) : await createRating(newRatingDTO);
+
         if (error) {
             setBackendError(error);
             return;
         }
         navigate(getWebsiteRoutingRatingsById(data.id));
+    };
+
+    const isScale = (): boolean => {
+        return Number.isInteger((rangeOfValues.maximum - rangeOfValues.minimum) / rangeOfValues.stepWidth);
+    };
+
+    const isMinimumTooBig = (): boolean => {
+        return (rangeOfValues.minimum - rangeOfValues.maximum) >= 0;
     };
 
     const inputName: any = useMemo(() =>
