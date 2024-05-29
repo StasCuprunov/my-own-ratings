@@ -20,6 +20,10 @@ export const getHintMaximumDecimalPlaces = (maximumNumberOfDecimalDigits: number
     return createHint("4", getText(maximumNumberOfDecimalDigits));
 };
 
+export const getHintAdaptionRatingEntries = () => {
+    return createHint("5", "...");
+};
+
 const createHint = (hintSymbol: string, text: string) => {
     return (
         <li>

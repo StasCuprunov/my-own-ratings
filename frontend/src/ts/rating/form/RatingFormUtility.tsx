@@ -95,3 +95,13 @@ export const getInputStepWidth = (minFromInput: number, maxFromInput: number, st
         onBlur: handleBlur
     };
 };
+
+export const getScaleTitle = (isEdit: boolean) => {
+    let hintList: string = "3, 4";
+    if (isEdit) {
+        hintList += ", 5";
+    }
+    return (
+        <h2>Scale<sup>{hintList}</sup></h2>
+    );
+};
