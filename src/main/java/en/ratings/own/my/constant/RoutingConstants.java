@@ -12,7 +12,9 @@ public class RoutingConstants {
 
     public static final String ROUTING_GET_BY_EMAIL = "/get-by-email" + ROUTING_EMAIL;
 
-    public static final String ROUTING_EDIT = "/edit" + ROUTING_ID;
+    public static final String ROUTING_EDIT = "/edit";
+
+    public static final String ROUTING_EDIT_BY_ID = ROUTING_EDIT + ROUTING_ID;
 
     public static final String ROUTING_DELETE = "/delete" + ROUTING_ID;
 
