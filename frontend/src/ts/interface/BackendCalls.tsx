@@ -51,3 +51,19 @@ export const putAxios = async (url: string, input: any) => {
         error: errorResult
     }
 };
+
+export const deleteAxios = async (url: string) => {
+    let data: any = null;
+    let errorResult: any = null;
+    await api.delete(url)
+        .then((response) => {
+            data = response.data;
+        })
+        .catch(error => {
+            errorResult = error;
+        });
+    return {
+        data: data,
+        error: errorResult
+    }
+};
