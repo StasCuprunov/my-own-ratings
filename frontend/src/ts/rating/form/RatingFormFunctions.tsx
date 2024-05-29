@@ -1,4 +1,8 @@
 import {RangeOfValues} from "../../model/RangeOfValues";
+import {CreateButton} from "../../component/atom/button/CreateButton";
+import {EditButton} from "../../component/atom/button/EditButton";
+import {CancelButtonLink} from "../../component/atom/button/link/CancelButtonLink";
+import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
 
 export const getLabelNameProps = (): any => {
     return {
@@ -111,4 +115,20 @@ export const getTitle = (isEdit: boolean, name?: string): string => {
         return "Edit the rating " + name;
     }
     return "Create your own rating";
+};
+
+export const getButtons = (isEdit: boolean, ratingId: string) => {
+    if (isEdit) {
+        return (
+            <div>
+                <EditButton/>
+                <CancelButtonLink to={getWebsiteRoutingRatingsById(ratingId)}/>
+            </div>
+        );
+    }
+    return (
+        <div>
+            <CreateButton/>
+        </div>
+    );
 };

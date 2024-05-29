@@ -5,7 +5,6 @@ import {Input} from "../../component/atom/form/input/Input";
 import {InputError} from "../../component/atom/form/input/InputError";
 import {TextArea} from "../../component/atom/form/TextArea";
 import {InputNumber} from "../../component/atom/form/input/InputNumber";
-import {CreateButton} from "../../component/atom/button/CreateButton";
 import {
     getHintAdaptionRatingEntries,
     getHintMaximumDecimalPlaces,
@@ -14,6 +13,7 @@ import {
     getHintWhatIsAScale
 } from "./RatingHints";
 import {
+    getButtons,
     getLabelDescriptionProps,
     getLabelMaximumProps,
     getLabelMinimumProps,
@@ -68,14 +68,7 @@ export const RatingFormPage: FunctionComponent<any> = ({props}) => {
                     </div>
                     <InputError props={props.scaleValidation}/>
                 </div>
-                <div>
-                    {!isEdit &&
-                        <CreateButton/>
-                    }
-                    {isEdit &&
-                        <div>Buttons for edit</div>
-                    }
-                </div>
+                {getButtons(isEdit, props.id)}
                 <div>
                     <h2>Hints</h2>
                     <ul>
