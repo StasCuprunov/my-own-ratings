@@ -1,14 +1,6 @@
 import {FunctionComponent, useMemo, useState} from "react";
 import {CreateRatingPage} from "./CreateRatingPage";
-import {
-    getTextAreaDescription,
-    getInputMaximum,
-    getInputMinimum,
-    getInputNameProps,
-    getInputStepWidth,
-    getDefaultRangeOfValues,
-    createRating
-} from "./CreateRatingFunctions";
+import {createRating} from "./CreateRatingFunctions";
 import {Rating} from "../../model/Rating";
 import {RangeOfValues} from "../../model/RangeOfValues";
 import {getSmallestPositiveNumberWithNumberOfDecimalDigits} from "../../utility/MathUtility";
@@ -17,6 +9,14 @@ import {InputValidation} from "../../model/InputValidation";
 import {RatingDTO} from "../../dto/RatingDTO";
 import {useNavigate} from "react-router-dom";
 import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
+import {
+    getDefaultRangeOfValues,
+    getInputMaximum,
+    getInputMinimum,
+    getInputNameProps,
+    getInputStepWidth,
+    getTextAreaDescription
+} from "../RatingFormUtility";
 
 const defaultRangeOfValues: RangeOfValues = getDefaultRangeOfValues();
 

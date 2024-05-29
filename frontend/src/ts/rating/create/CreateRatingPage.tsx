@@ -2,12 +2,6 @@ import {FunctionComponent} from "react";
 import {Label} from "../../component/atom/form/Label";
 import {Input} from "../../component/atom/form/input/Input";
 import {InputNumber} from "../../component/atom/form/input/InputNumber";
-import {
-    getLabelDescriptionProps,
-    getLabelMaximumProps,
-    getLabelMinimumProps,
-    getLabelNameProps, getLabelStepWidthProps
-} from "./CreateRatingFunctions";
 import {TextArea} from "../../component/atom/form/TextArea";
 import {InputError} from "../../component/atom/form/input/InputError";
 import {CreateButton} from "../../component/atom/button/CreateButton";
@@ -18,6 +12,12 @@ import {
     getHintRequired,
     getHintWhatIsAScale
 } from "../RatingHints";
+import {
+    getLabelDescriptionProps,
+    getLabelMaximumProps,
+    getLabelMinimumProps, getLabelNameProps,
+    getLabelStepWidthProps
+} from "../RatingFormUtility";
 
 const labelName: any = getLabelNameProps();
 const labelDescription: any = getLabelDescriptionProps();
