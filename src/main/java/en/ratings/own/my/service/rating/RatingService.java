@@ -61,6 +61,13 @@ public class RatingService {
         return new RatingDTO(rating, rangeOfValues, ratingEntries);
     }
 
+    public RatingDTO findByIdWithoutRatingEntries(String id) throws Exception {
+        Rating rating = ratingRepositoryService.findById(id);
+        RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rating.getRangeOfValuesId());
+
+        return new RatingDTO(rating, rangeOfValues);
+    }
+
     public ArrayList<Rating> findAllByUserId(String userId) {
         return ratingRepositoryService.findAllByUserId(userId);
     }
@@ -88,7 +95,7 @@ public class RatingService {
     }
 
     public EditRatingDTO getInfoForEdit(String id) throws Exception {
-        RatingDTO ratingDTO = findById(id);
+        RatingDTO ratingDTO = findByIdWithoutRatingEntries(id);
         return new EditRatingDTO(findActualUserId(), ratingDTO);
     }
 
