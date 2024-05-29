@@ -1,5 +1,5 @@
 import {FunctionComponent} from "react";
-import {LoadComponentHandling} from "../../component/LoadComponentHandling";
+import {LoadComponentHandling} from "../../../component/LoadComponentHandling";
 import {CreateRating} from "./CreateRating";
 import {useCreateRatingInfo} from "./CreateRatingFunctions";
 

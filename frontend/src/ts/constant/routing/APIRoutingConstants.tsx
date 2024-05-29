@@ -4,7 +4,11 @@ import {
     ROUTING_RATING_ENTRIES,
     ROUTING_RATINGS,
     ROUTING_REGISTRATION,
-    ROUTING_USERS, routingCreate, routingGetById
+    ROUTING_USERS,
+    routingCreate,
+    routingEdit,
+    routingEditById,
+    routingGetById
 } from "./RoutingConstants";
 
 const API_URL: string = "http://localhost:1234";
@@ -31,6 +35,12 @@ export const API_ROUTING_USERS_CREATE: string = routingCreate(API_ROUTING_USERS)
 
 export const API_ROUTING_RATINGS_CREATE: string = routingCreate(API_ROUTING_RATINGS);
 
+export const API_ROUTING_RATINGS_EDIT: string = routingEdit(API_ROUTING_RATINGS);
+
 export const getApiRoutingRatingsFindById = (id: string | undefined) => {
     return routingGetById(API_ROUTING_RATINGS, id);
+};
+
+export const getApiRoutingRatingsEditById = (id: string | undefined) => {
+    return routingEditById(API_ROUTING_RATINGS, id);
 };

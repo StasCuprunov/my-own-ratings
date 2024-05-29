@@ -35,3 +35,19 @@ export const postAxios = async (url: string, input: any) => {
         error: errorResult
     }
 };
+
+export const putAxios = async (url: string, input: any) => {
+    let data: any = null;
+    let errorResult: any = null;
+    await api.put(url, input)
+        .then((response) => {
+            data = response.data;
+        })
+        .catch(error => {
+            errorResult = error;
+        });
+    return {
+        data: data,
+        error: errorResult
+    }
+};

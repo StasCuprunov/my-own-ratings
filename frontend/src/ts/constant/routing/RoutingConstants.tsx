@@ -22,8 +22,12 @@ export const routingGetById = (path: string, id: string | undefined): string => 
     return routingByVariable(path, ROUTING_GET, id);
 };
 
-export const routingEditById = (path: string, id: string): string => {
+export const routingEditById = (path: string, id: string | undefined): string => {
     return routingByVariable(path, ROUTING_EDIT, id);
+};
+
+export const routingEdit = (path: string): string => {
+    return path + ROUTING_EDIT;
 };
 
 export const routingDeleteById = (path: string, id: string): string => {

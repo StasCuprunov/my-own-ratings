@@ -1,6 +1,7 @@
 package en.ratings.own.my.service.rating;
 
-import en.ratings.own.my.dto.rating.CreateRatingDTO;
+import en.ratings.own.my.dto.rating.form.EditRatingDTO;
+import en.ratings.own.my.dto.rating.form.RatingValidationDTO;
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.exception.rating.creation.RatingCreationFailedException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
@@ -60,6 +61,13 @@ public class RatingService {
         return new RatingDTO(rating, rangeOfValues, ratingEntries);
     }
 
+    public RatingDTO findByIdWithoutRatingEntries(String id) throws Exception {
+        Rating rating = ratingRepositoryService.findById(id);
+        RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rating.getRangeOfValuesId());
+
+        return new RatingDTO(rating, rangeOfValues);
+    }
+
     public ArrayList<Rating> findAllByUserId(String userId) {
         return ratingRepositoryService.findAllByUserId(userId);
     }
@@ -71,8 +79,8 @@ public class RatingService {
         return createRating(ratingDTO);
     }
 
-    public CreateRatingDTO getInfoForCreate() throws Exception {
-        return new CreateRatingDTO(findActualUserId());
+    public RatingValidationDTO getInfoForCreate() throws Exception {
+        return new RatingValidationDTO(findActualUserId());
     }
 
     public RatingDTO update(RatingDTO ratingDTO) throws Exception {
@@ -84,6 +92,11 @@ public class RatingService {
         checkIfRatingNameIsValidAndNoInconsistentWithRatingEntries(id, userId, rangeOfValues, ratingDTO.getName());
 
         return updateRating(ratingDTO);
+    }
+
+    public EditRatingDTO getInfoForEdit(String id) throws Exception {
+        RatingDTO ratingDTO = findByIdWithoutRatingEntries(id);
+        return new EditRatingDTO(findActualUserId(), ratingDTO);
     }
 
     public void deleteById(String id) throws Exception {

@@ -1,36 +1,44 @@
 import {FunctionComponent, useMemo, useState} from "react";
-import {CreateRatingPage} from "./CreateRatingPage";
 import {
-    getTextAreaDescription,
+    getDefaultRangeOfValues,
     getInputMaximum,
     getInputMinimum,
     getInputNameProps,
     getInputStepWidth,
-    getDefaultRangeOfValues,
-    createRating
-} from "./CreateRatingFunctions";
-import {Rating} from "../../model/Rating";
-import {RangeOfValues} from "../../model/RangeOfValues";
-import {getSmallestPositiveNumberWithNumberOfDecimalDigits} from "../../utility/MathUtility";
-import {handleChange} from "../../utility/FormUtility";
-import {InputValidation} from "../../model/InputValidation";
-import {RatingDTO} from "../../dto/RatingDTO";
+    getTextAreaDescription,
+    getTitle
+} from "./RatingFormFunctions";
 import {useNavigate} from "react-router-dom";
+import {getSmallestPositiveNumberWithNumberOfDecimalDigits} from "../../utility/MathUtility";
+import {Rating} from "../../model/Rating";
+import {InputValidation} from "../../model/InputValidation";
+import {handleChange} from "../../utility/FormUtility";
+import {RatingDTO} from "../../dto/RatingDTO";
+import {createRating} from "./create/CreateRatingFunctions";
 import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
+import {RatingFormPage} from "./RatingFormPage";
+import {RangeOfValues} from "../../model/RangeOfValues";
+import {editRating} from "./edit/EditRatingFunctions";
+import {mapRatingDTOToRating} from "../../utility/MapperUtility";
 
-const defaultRangeOfValues: RangeOfValues = getDefaultRangeOfValues();
-
-export const CreateRating: FunctionComponent<any> = ({props}) => {
-    const navigate = useNavigate();
+export const RatingForm: FunctionComponent<any> = ({props}) => {
+    const isEdit: boolean = props.isEdit;
+    const ratingDTO: any = props.ratingDTO;
     const maximumNumberOfDecimalDigits: number = props.maximumNumberOfDecimalDigits;
     const rangeOfValuesMinimumBorder: number = props.rangeOfValuesMinimumBorder;
     const rangeOfValuesMaximumBorder: number = props.rangeOfValuesMaximumBorder;
-    const step: number= useMemo(() =>
+
+    const initializeRangeOfValues: RangeOfValues = (isEdit) ? ratingDTO.rangeOfValues : getDefaultRangeOfValues();
+    const initializeRating: Rating = (isEdit) ? mapRatingDTOToRating(ratingDTO) :
+        new Rating(undefined, props.userId);
+
+    const navigate = useNavigate();
+    const step: number = useMemo(() =>
         getSmallestPositiveNumberWithNumberOfDecimalDigits(maximumNumberOfDecimalDigits), []);
 
-    const [rating, setRating] = useState(new Rating(undefined, props.userId));
+    const [rating, setRating] = useState(initializeRating);
     const [rangeOfValues, setRangeOfValues] =
-        useState(defaultRangeOfValues);
+        useState(initializeRangeOfValues);
 
     const [nameValidation, setNameValidation] =
         useState(new InputValidation());
@@ -109,6 +117,29 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         });
     };
 
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        if (areAttributesNotValid()) {
+            return;
+        }
+
+        let id: string = (isEdit) ? ratingDTO.id : undefined;
+        let newRatingDTO: RatingDTO = new RatingDTO(id, rating.userId, rating.name, rating.description, rangeOfValues);
+
+        const {data, error} = (isEdit) ? await editRating(newRatingDTO) : await createRating(newRatingDTO);
+
+        if (error) {
+            setBackendError(error);
+            return;
+        }
+        navigate(getWebsiteRoutingRatingsById(data.id));
+    };
+
+    const areAttributesNotValid = () => {
+        return (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
+            scaleValidation.condition);
+    };
+
     const isScale = (): boolean => {
         return Number.isInteger((rangeOfValues.maximum - rangeOfValues.minimum) / rangeOfValues.stepWidth);
     };
@@ -117,25 +148,8 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
         return (rangeOfValues.minimum - rangeOfValues.maximum) >= 0;
     };
 
-    const handleSubmit = async (event: any) => {
-        event.preventDefault();
-        if (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
-            scaleValidation.condition) {
-            return;
-        }
-        let ratingDTO: RatingDTO = new RatingDTO(undefined, rating.userId, rating.name, rating.description,
-            rangeOfValues);
-
-        const {data, error} = await createRating(ratingDTO);
-        if (error) {
-            setBackendError(error);
-            return;
-        }
-        navigate(getWebsiteRoutingRatingsById(data.id));
-    };
-
     const inputName: any = useMemo(() =>
-        getInputNameProps(rating.name, props.maximumLengthOfName, handleRatingChange("name"), handleNameBlur),
+            getInputNameProps(rating.name, props.maximumLengthOfName, handleRatingChange("name"), handleNameBlur),
         [rating.name]);
     const textAreaDescription: any = useMemo(() => getTextAreaDescription(rating.description,
         props.maximumLengthOfDescription, handleRatingChange("description")), [rating.description]);
@@ -148,13 +162,26 @@ export const CreateRating: FunctionComponent<any> = ({props}) => {
     const inputStepWidth: any = useMemo(() =>
         getInputStepWidth(step, rangeOfValuesMaximumBorder, step, rangeOfValues.stepWidth,
             handleRangeOfValuesChange("stepWidth"), handleStepWidthBlur), [rangeOfValues.stepWidth]);
+
+    const propsPage: any = {
+        isEdit: isEdit,
+        id: ratingDTO?.id,
+        title: getTitle(isEdit, props.ratingDTO?.name),
+        maximumNumberOfDecimalDigits: maximumNumberOfDecimalDigits,
+        inputName: inputName,
+        textAreaDescription: textAreaDescription,
+        inputMinimum: inputMinimum,
+        inputMaximum: inputMaximum,
+        inputStepWidth: inputStepWidth,
+        handleSubmit: handleSubmit,
+        nameValidation: nameValidation,
+        minimumValidation: minimumValidation,
+        maximumValidation: maximumValidation,
+        scaleValidation: scaleValidation,
+        backendError: backendError
+    };
+
     return (
-        <CreateRatingPage
-            maximumNumberOfDecimalDigits={maximumNumberOfDecimalDigits} inputName={inputName}
-            textAreaDescription={textAreaDescription} inputMinimum={inputMinimum}
-            inputMaximum={inputMaximum} inputStepWidth={inputStepWidth} handleSubmit={handleSubmit}
-            nameValidation={nameValidation} minimumValidation={minimumValidation} maximumValidation={maximumValidation}
-            scaleValidation={scaleValidation} backendError={backendError}
-        />
+        <RatingFormPage props={propsPage}/>
     );
 };
