@@ -1,11 +1,11 @@
 import {FunctionComponent} from "react";
-import {Label} from "../../component/atom/form/Label";
-import {Input} from "../../component/atom/form/input/Input";
-import {InputNumber} from "../../component/atom/form/input/InputNumber";
-import {TextArea} from "../../component/atom/form/TextArea";
-import {InputError} from "../../component/atom/form/input/InputError";
-import {CreateButton} from "../../component/atom/button/CreateButton";
-import {Error} from "../../general-page/error/Error";
+import {Label} from "../../../component/atom/form/Label";
+import {Input} from "../../../component/atom/form/input/Input";
+import {InputNumber} from "../../../component/atom/form/input/InputNumber";
+import {TextArea} from "../../../component/atom/form/TextArea";
+import {InputError} from "../../../component/atom/form/input/InputError";
+import {CreateButton} from "../../../component/atom/button/CreateButton";
+import {Error} from "../../../general-page/error/Error";
 import {
     getHintMaximumDecimalPlaces,
     getHintRatingNameMustBeUnique,

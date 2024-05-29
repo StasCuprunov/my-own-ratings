@@ -1,4 +1,4 @@
-import {RangeOfValues} from "../model/RangeOfValues";
+import {RangeOfValues} from "../../model/RangeOfValues";
 
 export const getLabelNameProps = (): any => {
     return {
