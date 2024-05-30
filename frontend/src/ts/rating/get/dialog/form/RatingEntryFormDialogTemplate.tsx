@@ -38,7 +38,6 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                             <div>
                                 <Label props={labelValue}/>
                                 <InputNumber props={props.inputValue}/>
-                                <InputError props={props.valueValidation}/>
                             </div>
                             <div>
                                 <h4>Hints</h4>
@@ -47,10 +46,10 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                                         <sup>1</sup>Required
                                     </li>
                                     <li>
-                                        <sup>2</sup>The name must be unique for the rating.
+                                        <sup>2</sup>The name must be unique within the rating.
                                     </li>
                                     <li>
-                                        <sup>3</sup>It must be possible to accept the value in the scale.
+                                        <sup>3</sup>It must be possible to accept the value within the scale.
                                     </li>
                                 </ul>
                             </div>

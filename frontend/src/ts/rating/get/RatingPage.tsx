@@ -16,14 +16,14 @@ const initialState: any = customizePaginationDefault();
 
 export const RatingPage: FunctionComponent<any> = ({id, name, description, rangeOfValues, ratingEntries,
                                                        deleteRatingButton, deleteRatingDialogProps, maximumLengthOfName,
-                                                       backendError}) => {
+                                                       backendError, setBackendError}) => {
 
     const createRatingEntryDialogProps: any = {
         ratingId: id,
         rangeOfValues: rangeOfValues,
         ratingEntries: ratingEntries,
         maximumLengthOfName: maximumLengthOfName,
-        backendError: backendError
+        setBackendError: setBackendError
     };
 
     if (backendError) {

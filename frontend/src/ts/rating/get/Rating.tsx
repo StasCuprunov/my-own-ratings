@@ -44,7 +44,8 @@ export const Rating: FunctionComponent<any> = ({props}) => {
         <RatingPage id={id} name={props.name} description={props.description}
                     rangeOfValues={props.rangeOfValues} ratingEntries={props.ratingEntries}
                     deleteRatingButton={deleteRatingButton} deleteRatingDialogProps={deleteRatingDialogProps}
-                    backendError={backendError} maximumLengthOfName={props.maximumLengthOfName}
+                    backendError={backendError} setBackendError={setBackendError}
+                    maximumLengthOfName={props.maximumLengthOfName}
         />
     );
 };

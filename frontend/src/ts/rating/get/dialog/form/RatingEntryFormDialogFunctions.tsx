@@ -1,5 +1,11 @@
 import {RatingEntry} from "../../../../model/RatingEntry";
 import {getInputNumberProps} from "../../../../utility/FormUtility";
+import {API_ROUTING_RATING_ENTRIES_CREATE} from "../../../../constant/routing/APIRoutingConstants";
+import {postAxios} from "../../../../interface/BackendCalls";
+
+export const createRatingEntry = async (ratingEntry: RatingEntry) => {
+    return await postAxios(API_ROUTING_RATING_ENTRIES_CREATE, ratingEntry);
+};
 
 export const getSubmitButtonProps = (text: string) => {
     return {
@@ -38,5 +44,6 @@ export const getInputValueProps = (min: number, max: number, step: number, value
 
 export const hasAlreadyRatingEntryWithName = (name: string, ratingEntries: RatingEntry[]): boolean => {
     let foundRatingEntries: RatingEntry[] = ratingEntries.filter(entry => entry.name === name);
+
     return (foundRatingEntries.length > 0);
 };
