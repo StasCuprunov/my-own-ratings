@@ -3,6 +3,7 @@ import {CreateButton} from "../../component/atom/button/CreateButton";
 import {EditButton} from "../../component/atom/button/EditButton";
 import {CancelButtonLink} from "../../component/atom/button/link/CancelButtonLink";
 import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
+import {getInputNumberProps, getInputTextProps} from "../../utility/FormUtility";
 
 export const getLabelNameProps = (): any => {
     return {
@@ -39,15 +40,7 @@ export const getLabelStepWidthProps = (): any => {
     };
 };
 export const getInputNameProps = (value: string, maxLength: number, handleChange: any, handleBlur: any): any => {
-    return {
-        required: true,
-        name: "name",
-        type: "text",
-        value: value,
-        maxLength: maxLength,
-        onChange: handleChange,
-        onBlur: handleBlur
-    };
+    return getInputTextProps("name", value, maxLength, handleChange, handleBlur);
 };
 export const getTextAreaDescription = (value: string, maxLength: number, handleChange: any): any => {
     return {
@@ -62,42 +55,18 @@ export const getDefaultRangeOfValues = (): RangeOfValues => {
 };
 export const getInputMinimum = (minFromInput: number, maxFromInput: number, stepFromInput: number,
                                 value: number, handleChange: any, handleBlur: any): any => {
-    return {
-        required: true,
-        name: "minimum",
-        min: minFromInput,
-        max: maxFromInput,
-        step: stepFromInput,
-        value: value,
-        onChange: handleChange,
-        onBlur: handleBlur
-    };
+    return getInputNumberProps("minimum", true, minFromInput, maxFromInput, stepFromInput, value,
+        handleChange, handleBlur);
 };
 export const getInputMaximum = (minFromInput: number, maxFromInput: number, stepFromInput: number, value: number,
                                 handleChange: any, handleBlur: any): any => {
-    return {
-        required: true,
-        name: "maximum",
-        min: minFromInput,
-        max: maxFromInput,
-        step: stepFromInput,
-        value: value,
-        onChange: handleChange,
-        onBlur: handleBlur
-    };
+    return getInputNumberProps("maximum", true, minFromInput, maxFromInput, stepFromInput, value,
+        handleChange, handleBlur);
 };
 export const getInputStepWidth = (minFromInput: number, maxFromInput: number, stepFromInput: number, value: number,
                                   handleChange: any, handleBlur: any): any => {
-    return {
-        required: true,
-        name: "step-width",
-        min: minFromInput,
-        max: maxFromInput,
-        step: stepFromInput,
-        value: value,
-        onChange: handleChange,
-        onBlur: handleBlur
-    };
+    return getInputNumberProps("step-width", true, minFromInput, maxFromInput, stepFromInput, value,
+        handleChange, handleBlur);
 };
 
 export const getScaleTitle = (isEdit: boolean) => {

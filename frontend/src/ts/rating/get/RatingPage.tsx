@@ -8,14 +8,24 @@ import {EditButtonLink} from "../../component/atom/button/link/EditButtonLink";
 import {getWebsiteRoutingRatingsEditById} from "../../constant/routing/WebsiteRoutingConstants";
 import {DeleteRatingDialog} from "./dialog/DeleteRatingDialog";
 import {Error} from "../../general-page/error/Error";
+import {CreateRatingEntryDialog} from "./dialog/form/CreateRatingEntryDialog";
 
 const columns: any = getColumns();
 
 const initialState: any = customizePaginationDefault();
 
 export const RatingPage: FunctionComponent<any> = ({id, name, description, rangeOfValues, ratingEntries,
-                                                       deleteRatingButton, createRatingEntryButton,
-                                                       deleteRatingDialogProps, backendError}) => {
+                                                       deleteRatingButton, deleteRatingDialogProps, maximumLengthOfName,
+                                                       backendError}) => {
+
+    const createRatingEntryDialogProps: any = {
+        ratingId: id,
+        rangeOfValues: rangeOfValues,
+        ratingEntries: ratingEntries,
+        maximumLengthOfName: maximumLengthOfName,
+        backendError: backendError
+    };
+
     if (backendError) {
         return (
             <Error error={backendError}/>
@@ -42,9 +52,7 @@ export const RatingPage: FunctionComponent<any> = ({id, name, description, range
             </div>
             <div>
                 <h2>Rating entries</h2>
-                <div>
-                    <Button props={createRatingEntryButton}/>
-                </div>
+                <CreateRatingEntryDialog props={createRatingEntryDialogProps}/>
                 <div>
                     <DataGrid autoHeight rows={ratingEntries} columns={columns} initialState={initialState}
                               pageSizeOptions={PAGINATION_SIZE_LIST} disableRowSelectionOnClick

@@ -70,7 +70,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
             condition: condition,
             text: text
         });
-    }
+    };
 
     const handleMinimumBlur = () => {
         let condition: boolean = false;
