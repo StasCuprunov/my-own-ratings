@@ -3,20 +3,19 @@ import {DataGrid} from "@mui/x-data-grid";
 import {PAGINATION_SIZE_LIST} from "../../constant/DataGridConstants";
 import {customizePaginationDefault} from "../../utility/DataGridUtility";
 import {getColumns} from "./RatingFunctions";
-import {Button} from "../../component/atom/button/Button";
 import {EditButtonLink} from "../../component/atom/button/link/EditButtonLink";
 import {getWebsiteRoutingRatingsEditById} from "../../constant/routing/WebsiteRoutingConstants";
-import {DeleteRatingDialog} from "./dialog/DeleteRatingDialog";
+import {DeleteRatingDialog} from "./dialog/delete-rating/DeleteRatingDialog";
 import {Error} from "../../general-page/error/Error";
-import {CreateRatingEntryDialog} from "./dialog/form/CreateRatingEntryDialog";
-import {EditRatingEntryDialog} from "./dialog/form/EditRatingEntryDialog";
+import {CreateRatingEntryDialog} from "./dialog/rating-entry/CreateRatingEntryDialog";
+import {EditRatingEntryDialog} from "./dialog/rating-entry/EditRatingEntryDialog";
 
 const columns: any = getColumns();
 
 const initialState: any = customizePaginationDefault();
 
 export const RatingPage: FunctionComponent<any> = ({id, name, description, rangeOfValues, ratingEntries,
-                                                       deleteRatingButton, deleteRatingDialogProps, backendError,
+                                                       deleteRatingDialogProps, backendError,
                                                        handleOnCellClick, createRatingEntryDialogProps,
                                                        editRatingEntryDialogProps}) => {
 
@@ -41,7 +40,6 @@ export const RatingPage: FunctionComponent<any> = ({id, name, description, range
             <div>
                 <h2>Edit or delete rating</h2>
                 <EditButtonLink to={getWebsiteRoutingRatingsEditById(id)}/>
-                <Button props={deleteRatingButton}/>
                 <DeleteRatingDialog props={deleteRatingDialogProps}/>
             </div>
             <div>

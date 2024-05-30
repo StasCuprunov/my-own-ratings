@@ -36,3 +36,16 @@ export const getInputNumberProps = (name: string, required: boolean, min: number
         onBlur: handleBlur
     };
 };
+export const getCancelButtonProps = (handleOnClick: Function) => {
+    return {
+        type: "button",
+        text: "Cancel",
+        onClick: handleOnClick
+    };
+};
+export const getSubmitButtonProps = (text: string) => {
+    return {
+        type: "submit",
+        text: text
+    };
+};

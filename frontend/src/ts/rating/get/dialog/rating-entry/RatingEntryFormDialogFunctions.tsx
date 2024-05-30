@@ -14,21 +14,6 @@ export const editRatingEntry = async (ratingEntry: RatingEntry) => {
     return await putAxios(API_ROUTING_RATING_ENTRIES_EDIT, ratingEntry);
 };
 
-export const getSubmitButtonProps = (text: string) => {
-    return {
-        type: "submit",
-        text: text
-    };
-};
-
-export const getCancelButtonProps = (handleClose: Function) => {
-    return {
-        type: "button",
-        text: "Cancel",
-        onClick: handleClose
-    };
-};
-
 export const getLabelNameProps = (): any => {
     return {
         htmlFor: "name",

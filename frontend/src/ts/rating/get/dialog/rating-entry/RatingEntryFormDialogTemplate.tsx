@@ -9,12 +9,11 @@ import {Label} from "../../../../component/atom/form/Label";
 import {Input} from "../../../../component/atom/form/input/Input";
 import {InputError} from "../../../../component/atom/form/input/InputError";
 import {
-    getCancelButtonProps,
     getLabelNameProps,
-    getLabelValueProps,
-    getSubmitButtonProps
+    getLabelValueProps
 } from "./RatingEntryFormDialogFunctions";
 import {InputNumber} from "../../../../component/atom/form/input/InputNumber";
+import {getCancelButtonProps, getSubmitButtonProps} from "../../../../utility/FormUtility";
 
 const labelName: any = getLabelNameProps();
 const labelValue: any = getLabelValueProps();
