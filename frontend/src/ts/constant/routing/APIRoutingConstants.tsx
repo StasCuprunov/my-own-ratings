@@ -53,3 +53,7 @@ export const getApiRoutingRatingsEditById = (id: string | undefined) => {
 export const getApiRoutingRatingsDeleteById = (id: string) => {
     return routingDeleteById(API_ROUTING_RATINGS, id);
 };
+
+export const getApiRoutingRatingEntriesDeleteById = (id: string) => {
+    return routingDeleteById(API_ROUTING_RATING_ENTRIES, id);
+};

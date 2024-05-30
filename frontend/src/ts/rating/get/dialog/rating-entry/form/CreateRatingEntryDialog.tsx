@@ -1,6 +1,6 @@
 import {FunctionComponent} from "react";
 import {RatingEntryFormDialog} from "./RatingEntryFormDialog";
-import {RatingEntry} from "../../../../model/RatingEntry";
+import {RatingEntry} from "../../../../../model/RatingEntry";
 
 export const CreateRatingEntryDialog: FunctionComponent<any> = ({props}) => {
     const ratingEntryFormDialogProps: any = {

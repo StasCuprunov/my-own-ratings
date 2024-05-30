@@ -4,16 +4,16 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {Button} from "../../../../component/atom/button/Button";
-import {Label} from "../../../../component/atom/form/Label";
-import {Input} from "../../../../component/atom/form/input/Input";
-import {InputError} from "../../../../component/atom/form/input/InputError";
+import {Button} from "../../../../../component/atom/button/Button";
+import {Label} from "../../../../../component/atom/form/Label";
+import {Input} from "../../../../../component/atom/form/input/Input";
+import {InputError} from "../../../../../component/atom/form/input/InputError";
 import {
     getLabelNameProps,
     getLabelValueProps
 } from "./RatingEntryFormDialogFunctions";
-import {InputNumber} from "../../../../component/atom/form/input/InputNumber";
-import {getCancelButtonProps, getSubmitButtonProps} from "../../../../utility/FormUtility";
+import {InputNumber} from "../../../../../component/atom/form/input/InputNumber";
+import {getCancelButtonProps, getSubmitButtonProps} from "../../../../../utility/FormUtility";
 
 const labelName: any = getLabelNameProps();
 const labelValue: any = getLabelValueProps();

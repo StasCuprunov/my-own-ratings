@@ -1,18 +1,18 @@
 import {FunctionComponent, useEffect, useMemo, useState} from "react";
 import {RatingEntryFormDialogTemplate} from "./RatingEntryFormDialogTemplate";
-import {RangeOfValues} from "../../../../model/RangeOfValues";
-import {InputValidation} from "../../../../model/InputValidation";
-import {handleChange} from "../../../../utility/FormUtility";
+import {RangeOfValues} from "../../../../../model/RangeOfValues";
+import {InputValidation} from "../../../../../model/InputValidation";
+import {handleChange} from "../../../../../utility/FormUtility";
 import {
     createRatingEntry,
     editRatingEntry,
     getInputValueProps,
     hasAlreadyRatingEntryWithName
 } from "./RatingEntryFormDialogFunctions";
-import {getInputNameProps} from "../../../form/RatingFormFunctions";
+import {getInputNameProps} from "../../../../form/RatingFormFunctions";
 import {useNavigate} from "react-router-dom";
-import {WEBSITE_ROUTING_REFRESH} from "../../../../constant/routing/WebsiteRoutingConstants";
-import {RatingEntry} from "../../../../model/RatingEntry";
+import {WEBSITE_ROUTING_REFRESH} from "../../../../../constant/routing/WebsiteRoutingConstants";
+import {RatingEntry} from "../../../../../model/RatingEntry";
 
 export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     const isEdit: boolean = props.isEdit;
