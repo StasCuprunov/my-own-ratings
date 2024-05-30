@@ -1,10 +1,12 @@
 package en.ratings.own.my.test.integration.controller.rating;
 
 import en.ratings.own.my.dto.rating.RatingDTO;
+import en.ratings.own.my.dto.rating.ShowRatingDTO;
 import en.ratings.own.my.model.rating.RatingEntry;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
+import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_LENGTH_OF_SMALL_STRING;
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
 import static en.ratings.own.my.test.utility.GeneratorUtility.createNotExistentId;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
@@ -60,16 +62,17 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
     }
 
     private void testValidFindById(RatingDTO input) {
-        ResponseEntity<RatingDTO> responseEntity = findByIdSuccessful(input.getId());
-        ResponseEntity<RatingDTO> resultResponseEntity = responseEntity;
+        ResponseEntity<ShowRatingDTO> responseEntity = findByIdSuccessful(input.getId());
+        ResponseEntity<ShowRatingDTO> resultResponseEntity = responseEntity;
         assertAll("Test valid findById rating",
                 () -> assertThatStatusCodeIsOk(resultResponseEntity),
                 () -> compareWithFoundById(input, resultResponseEntity.getBody())
         );
     }
 
-    private void compareWithFoundById(RatingDTO input, RatingDTO foundRatingDTO) {
+    private void compareWithFoundById(RatingDTO input, ShowRatingDTO foundRatingDTO) {
         assertAll(
+                () -> assertThat(foundRatingDTO.getMaximumLengthOfName()).isEqualTo(MAXIMUM_LENGTH_OF_SMALL_STRING),
                 () -> assertThat(foundRatingDTO.getId()).isEqualTo(input.getId()),
                 () -> assertThat(foundRatingDTO.getUserId()).isEqualTo(input.getUserId()),
                 () -> assertThat(foundRatingDTO.getName()).isEqualTo(input.getName()),
@@ -79,7 +82,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
         compareFoundRatingEntries(foundRatingDTO);
     }
 
-    private void compareFoundRatingEntries(RatingDTO foundRatingDTO) {
+    private void compareFoundRatingEntries(ShowRatingDTO foundRatingDTO) {
         for (RatingEntry foundRatingEntry: foundRatingDTO.getRatingEntries()) {
             int numberOfEqualRatingEntry = 0;
             for (RatingEntry storedRatingEntry: findAllByRatingIdRatingEntryRepository(foundRatingDTO.getId())) {
@@ -100,7 +103,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
         return new Exception();
     }
 
-    private ResponseEntity<RatingDTO> findByIdSuccessful(String id) {
+    private ResponseEntity<ShowRatingDTO> findByIdSuccessful(String id) {
         try {
             return ratingController.findById(id);
         } catch (Exception e) {

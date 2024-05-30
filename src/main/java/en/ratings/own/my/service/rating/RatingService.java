@@ -1,5 +1,6 @@
 package en.ratings.own.my.service.rating;
 
+import en.ratings.own.my.dto.rating.ShowRatingDTO;
 import en.ratings.own.my.dto.rating.form.EditRatingDTO;
 import en.ratings.own.my.dto.rating.form.RatingValidationDTO;
 import en.ratings.own.my.dto.rating.RatingDTO;
@@ -53,12 +54,12 @@ public class RatingService {
         this.authenticationService = authenticationService;
     }
 
-    public RatingDTO findById(String id) throws Exception {
+    public ShowRatingDTO findById(String id) throws Exception {
         Rating rating = ratingRepositoryService.findById(id);
         RangeOfValues rangeOfValues = rangeOfValuesRepositoryService.findById(rating.getRangeOfValuesId());
         ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.findAllByRatingId(id);
 
-        return new RatingDTO(rating, rangeOfValues, ratingEntries);
+        return new ShowRatingDTO(rating, rangeOfValues, ratingEntries);
     }
 
     public RatingDTO findByIdWithoutRatingEntries(String id) throws Exception {

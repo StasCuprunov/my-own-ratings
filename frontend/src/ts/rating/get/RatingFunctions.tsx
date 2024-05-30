@@ -20,13 +20,6 @@ export const getDeleteRatingButtonObject = (handleOnClick: Function) => {
     };
 };
 
-export const getCreateRatingEntryButtonObject = (ratingId: string) => {
-    return {
-        type: "button",
-        text: "Create"
-    }
-};
-
 export const getColumns = (): GridColDef[] => {
     return [
         {

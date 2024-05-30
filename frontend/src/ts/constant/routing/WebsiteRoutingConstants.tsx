@@ -18,6 +18,7 @@ export const WEBSITE_ROUTING_RATINGS_CREATE: string = routingCreate(ROUTING_RATI
 export const WEBSITE_ROUTING_RATINGS_BY_ID: string = routingById(ROUTING_RATINGS, ROUTING_GENERAL_ID);
 export const WEBSITE_ROUTING_RATINGS_EDIT_BY_ID: string = routingEditById(ROUTING_RATINGS, ROUTING_GENERAL_ID);
 export const WEBSITE_ROUTING_NOT_FOUND: string = "*";
+export const WEBSITE_ROUTING_REFRESH: number = 0;
 
 export const getWebsiteRoutingRatingsById = (id: string) => {
     return routingById(ROUTING_RATINGS, id);

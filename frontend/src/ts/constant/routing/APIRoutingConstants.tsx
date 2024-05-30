@@ -38,6 +38,8 @@ export const API_ROUTING_RATINGS_CREATE: string = routingCreate(API_ROUTING_RATI
 
 export const API_ROUTING_RATINGS_EDIT: string = routingEdit(API_ROUTING_RATINGS);
 
+export const API_ROUTING_RATING_ENTRIES_CREATE: string = routingCreate(API_ROUTING_RATING_ENTRIES);
+
 export const getApiRoutingRatingsFindById = (id: string | undefined) => {
     return routingGetById(API_ROUTING_RATINGS, id);
 };

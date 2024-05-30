@@ -1,6 +1,6 @@
 import {FunctionComponent, useState} from "react";
 import {RatingPage} from "./RatingPage";
-import {deleteRating, getCreateRatingEntryButtonObject, getDeleteRatingButtonObject} from "./RatingFunctions";
+import {deleteRating, getDeleteRatingButtonObject} from "./RatingFunctions";
 import {useNavigate} from "react-router-dom";
 import {WEBSITE_ROUTING_INDEX} from "../../constant/routing/WebsiteRoutingConstants";
 
@@ -33,7 +33,6 @@ export const Rating: FunctionComponent<any> = ({props}) => {
     };
 
     const deleteRatingButton: any = getDeleteRatingButtonObject(handleDeleteButtonOnClick);
-    const createRatingEntryButton: any = getCreateRatingEntryButtonObject(id);
 
     const deleteRatingDialogProps: any = {
         isOpen: isDeleteRatingDialogOpen,
@@ -44,8 +43,9 @@ export const Rating: FunctionComponent<any> = ({props}) => {
     return (
         <RatingPage id={id} name={props.name} description={props.description}
                     rangeOfValues={props.rangeOfValues} ratingEntries={props.ratingEntries}
-                    deleteRatingButton={deleteRatingButton} createRatingEntryButton={createRatingEntryButton}
-                    deleteRatingDialogProps={deleteRatingDialogProps} backendError={backendError}
+                    deleteRatingButton={deleteRatingButton} deleteRatingDialogProps={deleteRatingDialogProps}
+                    backendError={backendError} setBackendError={setBackendError}
+                    maximumLengthOfName={props.maximumLengthOfName}
         />
     );
 };
