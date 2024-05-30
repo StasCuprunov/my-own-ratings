@@ -1,15 +1,10 @@
 import {FunctionComponent, useState} from "react";
 import {RatingPage} from "./RatingPage";
-import {deleteRating, getDeleteRatingButtonObject} from "./RatingFunctions";
-import {useNavigate} from "react-router-dom";
-import {WEBSITE_ROUTING_INDEX} from "../../constant/routing/WebsiteRoutingConstants";
 import {GridCellParams} from "@mui/x-data-grid";
 import {RatingEntry} from "../../model/RatingEntry";
 
 export const Rating: FunctionComponent<any> = ({props}) => {
     const id: string = props.id;
-
-    const navigate = useNavigate();
 
     const [isDeleteRatingDialogOpen, setIsDeleteRatingDialogOpen] =
         useState(false);
@@ -20,32 +15,6 @@ export const Rating: FunctionComponent<any> = ({props}) => {
 
     const [backendError, setBackendError] = useState(null);
 
-    const handleDeleteButtonOnClick = (): void => {
-        setIsDeleteRatingDialogOpen(true);
-    };
-
-    const handleClose = (): void => {
-        setIsDeleteRatingDialogOpen(false);
-    };
-
-    const deleteHandleOnClick = async () => {
-        const {error} = await deleteRating(id);
-
-        if (error) {
-            setBackendError(error);
-            return;
-        }
-        navigate(WEBSITE_ROUTING_INDEX);
-    };
-
-    const deleteRatingButton: any = getDeleteRatingButtonObject(handleDeleteButtonOnClick);
-
-    const deleteRatingDialogProps: any = {
-        isOpen: isDeleteRatingDialogOpen,
-        handleClose: handleClose,
-        deleteHandleOnClick: deleteHandleOnClick
-    };
-
     const [ratingEntry, setRatingEntry] = useState(new RatingEntry());
 
     const handleOnCellClick = (params: GridCellParams) => {
@@ -55,12 +24,22 @@ export const Rating: FunctionComponent<any> = ({props}) => {
         }
     };
 
-    const ratingEntryFormDialogProps: any = {
+    const dialogProps: any = {
         ratingId: id,
+        setBackendError: setBackendError
+    };
+
+    const deleteRatingDialogProps: any = {
+        ...dialogProps,
+        isOpen: isDeleteRatingDialogOpen,
+        setIsOpen: setIsDeleteRatingDialogOpen
+    };
+
+    const ratingEntryFormDialogProps: any = {
+        ...dialogProps,
         rangeOfValues: props.rangeOfValues,
         ratingEntries: props.ratingEntries,
-        maximumLengthOfName: props.maximumLengthOfName,
-        setBackendError: setBackendError
+        maximumLengthOfName: props.maximumLengthOfName
     };
 
     const createRatingEntryDialogProps: any = {
@@ -78,8 +57,8 @@ export const Rating: FunctionComponent<any> = ({props}) => {
     return (
         <RatingPage id={id} name={props.name} description={props.description}
                     rangeOfValues={props.rangeOfValues} ratingEntries={props.ratingEntries}
-                    deleteRatingButton={deleteRatingButton} deleteRatingDialogProps={deleteRatingDialogProps}
                     backendError={backendError} handleOnCellClick={handleOnCellClick}
+                    deleteRatingDialogProps={deleteRatingDialogProps}
                     createRatingEntryDialogProps={createRatingEntryDialogProps}
                     editRatingEntryDialogProps={editRatingEntryDialogProps}
         />
