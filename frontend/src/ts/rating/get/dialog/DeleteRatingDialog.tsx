@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import {Button} from "../../component/atom/button/Button";
+import {Button} from "../../../component/atom/button/Button";
 
 export const DeleteRatingDialog: FunctionComponent<any> = ({props}) => {
     const deleteButtonProps: any = {
@@ -17,7 +17,7 @@ export const DeleteRatingDialog: FunctionComponent<any> = ({props}) => {
     const cancelButtonProps: any = {
         type: "button",
         text: "Cancel",
-        onClick: props.cancelHandleOnClick
+        onClick: props.handleClose
     };
 
     return (

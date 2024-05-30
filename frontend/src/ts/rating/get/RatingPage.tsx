@@ -6,7 +6,8 @@ import {getColumns} from "./RatingFunctions";
 import {Button} from "../../component/atom/button/Button";
 import {EditButtonLink} from "../../component/atom/button/link/EditButtonLink";
 import {getWebsiteRoutingRatingsEditById} from "../../constant/routing/WebsiteRoutingConstants";
-import {DeleteRatingDialog} from "./DeleteRatingDialog";
+import {DeleteRatingDialog} from "./dialog/DeleteRatingDialog";
+import {Error} from "../../general-page/error/Error";
 
 const columns: any = getColumns();
 
@@ -14,7 +15,13 @@ const initialState: any = customizePaginationDefault();
 
 export const RatingPage: FunctionComponent<any> = ({id, name, description, rangeOfValues, ratingEntries,
                                                        deleteRatingButton, createRatingEntryButton,
-                                                       deleteRatingDialogProps}) => {
+                                                       deleteRatingDialogProps, backendError}) => {
+    if (backendError) {
+        return (
+            <Error error={backendError}/>
+        );
+    }
+
     return (
         <div>
             <h1>{name}</h1>
