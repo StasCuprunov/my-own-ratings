@@ -6,6 +6,7 @@ import {
     ROUTING_REGISTRATION,
     ROUTING_USERS,
     routingCreate,
+    routingDeleteById,
     routingEdit,
     routingEditById,
     routingGetById
@@ -43,4 +44,8 @@ export const getApiRoutingRatingsFindById = (id: string | undefined) => {
 
 export const getApiRoutingRatingsEditById = (id: string | undefined) => {
     return routingEditById(API_ROUTING_RATINGS, id);
+};
+
+export const getApiRoutingRatingsDeleteById = (id: string) => {
+    return routingDeleteById(API_ROUTING_RATINGS, id);
 };
