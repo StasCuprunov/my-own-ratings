@@ -1,35 +1,43 @@
-import {FunctionComponent, useMemo, useState} from "react";
+import {FunctionComponent, useEffect, useMemo, useState} from "react";
 import {RatingEntryFormDialogTemplate} from "./RatingEntryFormDialogTemplate";
 import {RangeOfValues} from "../../../../model/RangeOfValues";
 import {InputValidation} from "../../../../model/InputValidation";
 import {handleChange} from "../../../../utility/FormUtility";
-import {createRatingEntry, getInputValueProps, hasAlreadyRatingEntryWithName} from "./RatingEntryFormDialogFunctions";
+import {
+    createRatingEntry,
+    editRatingEntry,
+    getInputValueProps,
+    hasAlreadyRatingEntryWithName
+} from "./RatingEntryFormDialogFunctions";
 import {getInputNameProps} from "../../../form/RatingFormFunctions";
 import {useNavigate} from "react-router-dom";
-import {
-    WEBSITE_ROUTING_REFRESH
-} from "../../../../constant/routing/WebsiteRoutingConstants";
+import {WEBSITE_ROUTING_REFRESH} from "../../../../constant/routing/WebsiteRoutingConstants";
+import {RatingEntry} from "../../../../model/RatingEntry";
 
 export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
+    const isEdit: boolean = props.isEdit;
     const rangeOfValues: RangeOfValues = props.rangeOfValues;
+    const defaultRatingEntry: RatingEntry = props.ratingEntry;
 
     const navigate = useNavigate();
 
-    const [ratingEntry, setRatingEntry] = useState(props.initializeRatingEntry);
+    const [ratingEntry, setRatingEntry] = useState(defaultRatingEntry);
 
     const [nameValidation, setNameValidation] =
         useState(new InputValidation());
 
-    const [isOpen, setIsOpen] = useState(false);
+    useEffect(() => {
+        setRatingEntry(defaultRatingEntry);
+    }, [defaultRatingEntry]);
 
     const handleOpenDialogButtonOnClick = () => {
-        setIsOpen(true);
+        props.setIsOpen(true);
     };
 
     const handleClose = () => {
-        setIsOpen(false);
+        props.setIsOpen(false);
 
-        setRatingEntry(props.initializeRatingEntry);
+        setRatingEntry(defaultRatingEntry);
 
         setNameValidation({
             ...nameValidation,
@@ -49,7 +57,7 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
             condition = true;
             text = "The name may not be empty.";
         }
-        else if (hasAlreadyRatingEntryWithName(name, props.ratingEntries)) {
+        else if (hasAlreadyRatingEntryWithName(name, props.ratingEntries, ratingEntry.id)) {
             condition = true;
             text = "The name is already used by another rating entry.";
         }
@@ -66,7 +74,7 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
             return;
         }
 
-        const {error} = await createRatingEntry(ratingEntry);
+        const {error} = (isEdit) ? await editRatingEntry(ratingEntry) : await createRatingEntry(ratingEntry);
 
         if (error) {
             props.setBackendError(error);
@@ -91,8 +99,8 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     const ratingEntryFormDialogProps: any = {
         title: props.title,
         submitButtonText: props.submitButtonText,
-        openDialogButton: openDialogButton,
-        isOpen: isOpen,
+        openDialogButton: (isEdit) ? null : openDialogButton,
+        isOpen: props.isOpen,
         handleClose: handleClose,
         handleSubmit: handleSubmit,
         inputName: inputName,

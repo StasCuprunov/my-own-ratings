@@ -5,9 +5,8 @@ import {RatingEntry} from "../../../../model/RatingEntry";
 export const CreateRatingEntryDialog: FunctionComponent<any> = ({props}) => {
     const ratingEntryFormDialogProps: any = {
         ...props,
-        initializeRatingEntry: new RatingEntry(undefined, props.ratingId, undefined,
-            props.rangeOfValues.minimum),
         title: "Create a new rating entry",
+        ratingEntry: new RatingEntry(undefined, props.ratingId, undefined, props.rangeOfValues.minimum),
         submitButtonText: "Create"
     };
 

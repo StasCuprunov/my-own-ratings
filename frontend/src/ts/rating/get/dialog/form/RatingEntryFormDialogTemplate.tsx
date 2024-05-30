@@ -22,7 +22,9 @@ const labelValue: any = getLabelValueProps();
 export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) => {
     return (
         <div>
-            <Button props={props.openDialogButton}/>
+            {props.openDialogButton &&
+                <Button props={props.openDialogButton}/>
+            }
             <Dialog open={props.isOpen} onClose={props.handleClose}>
                 <form onSubmit={props.handleSubmit}>
                     <DialogTitle>
