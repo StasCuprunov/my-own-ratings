@@ -9,22 +9,16 @@ import {getWebsiteRoutingRatingsEditById} from "../../constant/routing/WebsiteRo
 import {DeleteRatingDialog} from "./dialog/DeleteRatingDialog";
 import {Error} from "../../general-page/error/Error";
 import {CreateRatingEntryDialog} from "./dialog/form/CreateRatingEntryDialog";
+import {EditRatingEntryDialog} from "./dialog/form/EditRatingEntryDialog";
 
 const columns: any = getColumns();
 
 const initialState: any = customizePaginationDefault();
 
 export const RatingPage: FunctionComponent<any> = ({id, name, description, rangeOfValues, ratingEntries,
-                                                       deleteRatingButton, deleteRatingDialogProps, maximumLengthOfName,
-                                                       backendError, setBackendError}) => {
-
-    const createRatingEntryDialogProps: any = {
-        ratingId: id,
-        rangeOfValues: rangeOfValues,
-        ratingEntries: ratingEntries,
-        maximumLengthOfName: maximumLengthOfName,
-        setBackendError: setBackendError
-    };
+                                                       deleteRatingButton, deleteRatingDialogProps, backendError,
+                                                       handleOnCellClick, createRatingEntryDialogProps,
+                                                       editRatingEntryDialogProps}) => {
 
     if (backendError) {
         return (
@@ -53,9 +47,11 @@ export const RatingPage: FunctionComponent<any> = ({id, name, description, range
             <div>
                 <h2>Rating entries</h2>
                 <CreateRatingEntryDialog props={createRatingEntryDialogProps}/>
+                <EditRatingEntryDialog props={editRatingEntryDialogProps}/>
                 <div>
                     <DataGrid autoHeight rows={ratingEntries} columns={columns} initialState={initialState}
                               pageSizeOptions={PAGINATION_SIZE_LIST} disableRowSelectionOnClick
+                              onCellClick={handleOnCellClick}
                     />
                 </div>
             </div>

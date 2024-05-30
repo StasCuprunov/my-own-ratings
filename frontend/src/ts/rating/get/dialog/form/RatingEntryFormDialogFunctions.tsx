@@ -1,10 +1,17 @@
 import {RatingEntry} from "../../../../model/RatingEntry";
 import {getInputNumberProps} from "../../../../utility/FormUtility";
-import {API_ROUTING_RATING_ENTRIES_CREATE} from "../../../../constant/routing/APIRoutingConstants";
-import {postAxios} from "../../../../interface/BackendCalls";
+import {
+    API_ROUTING_RATING_ENTRIES_CREATE,
+    API_ROUTING_RATING_ENTRIES_EDIT
+} from "../../../../constant/routing/APIRoutingConstants";
+import {postAxios, putAxios} from "../../../../interface/BackendCalls";
 
 export const createRatingEntry = async (ratingEntry: RatingEntry) => {
     return await postAxios(API_ROUTING_RATING_ENTRIES_CREATE, ratingEntry);
+};
+
+export const editRatingEntry = async (ratingEntry: RatingEntry) => {
+    return await putAxios(API_ROUTING_RATING_ENTRIES_EDIT, ratingEntry);
 };
 
 export const getSubmitButtonProps = (text: string) => {
@@ -42,8 +49,15 @@ export const getInputValueProps = (min: number, max: number, step: number, value
     return getInputNumberProps("value", true, min, max, step, value, handleChange);
 };
 
-export const hasAlreadyRatingEntryWithName = (name: string, ratingEntries: RatingEntry[]): boolean => {
+export const hasAlreadyRatingEntryWithName = (name: string, ratingEntries: RatingEntry[],
+                                              id: string | null): boolean => {
     let foundRatingEntries: RatingEntry[] = ratingEntries.filter(entry => entry.name === name);
 
-    return (foundRatingEntries.length > 0);
+    if (foundRatingEntries.length > 0) {
+        if (id) {
+            return foundRatingEntries[0].id !== id;
+        }
+        return true;
+    }
+    return false;
 };

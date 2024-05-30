@@ -51,11 +51,11 @@ export const getColumns = (): GridColDef[] => {
 
 const editButton = (params: any) => {
     return (
-        <Button props={getEditButtonObject(params.row.id)}/>
+        <Button props={getEditButtonObject()}/>
     );
 };
 
-const getEditButtonObject = (id: string) => {
+const getEditButtonObject = () => {
     return {
         type: "button",
         text: "Edit"
