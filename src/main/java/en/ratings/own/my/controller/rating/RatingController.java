@@ -1,5 +1,6 @@
 package en.ratings.own.my.controller.rating;
 
+import en.ratings.own.my.dto.rating.ShowRatingDTO;
 import en.ratings.own.my.dto.rating.form.EditRatingDTO;
 import en.ratings.own.my.dto.rating.form.RatingValidationDTO;
 import en.ratings.own.my.dto.rating.RatingDTO;
@@ -46,7 +47,7 @@ public class RatingController {
 
     @PreAuthorize(USER_HAS_PERMISSION_FOR_FIND_BY_ID_RATING)
     @GetMapping(ROUTING_GET)
-    public ResponseEntity<RatingDTO> findById(@PathVariable @NonNull String id) throws Exception {
+    public ResponseEntity<ShowRatingDTO> findById(@PathVariable @NonNull String id) throws Exception {
         return createOkResponseEntity(ratingService.findById(id));
     }
 
