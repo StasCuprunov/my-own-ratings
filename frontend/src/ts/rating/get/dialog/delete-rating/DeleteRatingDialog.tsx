@@ -3,7 +3,7 @@ import {DeleteRatingDialogTemplate} from "./DeleteRatingDialogTemplate";
 import {deleteRating} from "../../RatingFunctions";
 import {WEBSITE_ROUTING_INDEX} from "../../../../constant/routing/WebsiteRoutingConstants";
 import {useNavigate} from "react-router-dom";
-import {getDeleteDialogButton, getDeleteOpenButton} from "./DeleteRatingDialogFunctions";
+import {getDeleteButtonProps} from "../../../../utility/FormUtility";
 
 export const DeleteRatingDialog: FunctionComponent<any> = ({props}) => {
     const setIsOpen = props.setIsOpen;
@@ -27,8 +27,8 @@ export const DeleteRatingDialog: FunctionComponent<any> = ({props}) => {
         navigate(WEBSITE_ROUTING_INDEX);
     };
 
-    const deleteDialogButton: any = getDeleteDialogButton(handleDelete);
-    const deleteOpenButton: any = getDeleteOpenButton(handleOpenDialog)
+    const deleteDialogButton: any = getDeleteButtonProps(handleDelete);
+    const deleteOpenButton: any = getDeleteButtonProps(handleOpenDialog);
 
     const templateProps: any = {
         isOpen: props.isOpen,

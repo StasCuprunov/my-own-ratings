@@ -12,6 +12,8 @@ export const Rating: FunctionComponent<any> = ({props}) => {
         useState(false);
     const [isEditRatingEntryDialogOpen, setIsEditRatingEntryDialogOpen] =
         useState(false);
+    const [isDeleteRatingEntryDialogOpen, setIsDeleteRatingEntryDialogOpen] =
+        useState(false);
 
     const [backendError, setBackendError] = useState(null);
 
@@ -21,6 +23,10 @@ export const Rating: FunctionComponent<any> = ({props}) => {
         if (params.field === "edit") {
             setRatingEntry(params.row);
             setIsEditRatingEntryDialogOpen(true);
+        }
+        else if (params.field === "delete") {
+            setRatingEntry(params.row);
+            setIsDeleteRatingEntryDialogOpen(true);
         }
     };
 
@@ -54,6 +60,14 @@ export const Rating: FunctionComponent<any> = ({props}) => {
         isOpen: isEditRatingEntryDialogOpen,
         setIsOpen: setIsEditRatingEntryDialogOpen
     };
+
+    const deleteRatingEntryDialogProps: any = {
+        ...dialogProps,
+        ratingEntry: ratingEntry,
+        isOpen: isDeleteRatingEntryDialogOpen,
+        setIsOpen: setIsDeleteRatingEntryDialogOpen
+    };
+
     return (
         <RatingPage id={id} name={props.name} description={props.description}
                     rangeOfValues={props.rangeOfValues} ratingEntries={props.ratingEntries}
@@ -61,6 +75,7 @@ export const Rating: FunctionComponent<any> = ({props}) => {
                     deleteRatingDialogProps={deleteRatingDialogProps}
                     createRatingEntryDialogProps={createRatingEntryDialogProps}
                     editRatingEntryDialogProps={editRatingEntryDialogProps}
+                    deleteRatingEntryDialogProps={deleteRatingEntryDialogProps}
         />
     );
 };

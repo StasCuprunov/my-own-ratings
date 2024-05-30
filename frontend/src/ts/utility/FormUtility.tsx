@@ -43,6 +43,15 @@ export const getCancelButtonProps = (handleOnClick: Function) => {
         onClick: handleOnClick
     };
 };
+
+export const getDeleteButtonProps = (handleOnClick: Function) => {
+    return {
+        type: "button",
+        text: "Delete",
+        onClick: handleOnClick
+    }
+};
+
 export const getSubmitButtonProps = (text: string) => {
     return {
         type: "submit",

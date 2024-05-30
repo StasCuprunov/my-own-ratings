@@ -1,10 +1,10 @@
-import {RatingEntry} from "../../../../model/RatingEntry";
-import {getInputNumberProps} from "../../../../utility/FormUtility";
+import {RatingEntry} from "../../../../../model/RatingEntry";
+import {getInputNumberProps} from "../../../../../utility/FormUtility";
 import {
     API_ROUTING_RATING_ENTRIES_CREATE,
     API_ROUTING_RATING_ENTRIES_EDIT
-} from "../../../../constant/routing/APIRoutingConstants";
-import {postAxios, putAxios} from "../../../../interface/BackendCalls";
+} from "../../../../../constant/routing/APIRoutingConstants";
+import {postAxios, putAxios} from "../../../../../interface/BackendCalls";
 
 export const createRatingEntry = async (ratingEntry: RatingEntry) => {
     return await postAxios(API_ROUTING_RATING_ENTRIES_CREATE, ratingEntry);

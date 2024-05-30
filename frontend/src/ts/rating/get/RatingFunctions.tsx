@@ -1,4 +1,8 @@
-import {getApiRoutingRatingsDeleteById, getApiRoutingRatingsFindById} from "../../constant/routing/APIRoutingConstants";
+import {
+    getApiRoutingRatingEntriesDeleteById,
+    getApiRoutingRatingsDeleteById,
+    getApiRoutingRatingsFindById
+} from "../../constant/routing/APIRoutingConstants";
 import {useGet} from "../../interface/useGet";
 import {GridColDef} from "@mui/x-data-grid";
 import {Button} from "../../component/atom/button/Button";
@@ -10,6 +14,10 @@ export const useRating = (id: string | undefined) => {
 
 export const deleteRating = async (id: string) => {
     return await deleteAxios(getApiRoutingRatingsDeleteById(id));
+};
+
+export const deleteRatingEntry = async (id: string) => {
+    return await deleteAxios(getApiRoutingRatingEntriesDeleteById(id));
 };
 
 export const getDeleteRatingButtonObject = (handleOnClick: Function) => {
