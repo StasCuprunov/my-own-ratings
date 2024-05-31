@@ -6,7 +6,9 @@ import {
 import {useGet} from "../../interface/useGet";
 import {GridColDef} from "@mui/x-data-grid";
 import {Button} from "../../component/atom/button/Button";
+import {ButtonLink} from "../../component/atom/button/link/ButtonLink";
 import {deleteAxios} from "../../interface/BackendCalls";
+import {WEBSITE_ROUTING_RATINGS} from "../../constant/routing/WebsiteRoutingConstants";
 
 export const useRating = (id: string | undefined) => {
     return useGet(getApiRoutingRatingsFindById(id));
@@ -20,12 +22,15 @@ export const deleteRatingEntry = async (id: string) => {
     return await deleteAxios(getApiRoutingRatingEntriesDeleteById(id));
 };
 
-export const getDeleteRatingButtonObject = (handleOnClick: Function) => {
-    return {
+export const goToRatingsButtonLink = () => {
+    const props: any = {
         type: "button",
-        text: "Delete",
-        onClick: handleOnClick
+        text: "Go to ratings",
+        to: WEBSITE_ROUTING_RATINGS
     };
+    return (
+        <ButtonLink props={props}/>
+    );
 };
 
 export const getColumns = (): GridColDef[] => {

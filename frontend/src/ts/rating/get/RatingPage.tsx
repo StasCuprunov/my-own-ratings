@@ -2,7 +2,7 @@ import {FunctionComponent} from "react";
 import {DataGrid} from "@mui/x-data-grid";
 import {PAGINATION_SIZE_LIST} from "../../constant/DataGridConstants";
 import {customizePaginationDefault} from "../../utility/DataGridUtility";
-import {getColumns} from "./RatingFunctions";
+import {getColumns, goToRatingsButtonLink} from "./RatingFunctions";
 import {EditButtonLink} from "../../component/atom/button/link/EditButtonLink";
 import {getWebsiteRoutingRatingsEditById} from "../../constant/routing/WebsiteRoutingConstants";
 import {DeleteRatingDialog} from "./dialog/delete-rating/DeleteRatingDialog";
@@ -40,9 +40,10 @@ export const RatingPage: FunctionComponent<any> = ({id, name, description, range
                 </ul>
             </div>
             <div>
-                <h2>Edit or delete rating</h2>
+                <h2>Buttons for Rating</h2>
                 <EditButtonLink to={getWebsiteRoutingRatingsEditById(id)}/>
                 <DeleteRatingDialog props={deleteRatingDialogProps}/>
+                {goToRatingsButtonLink()}
             </div>
             <div>
                 <h2>Rating entries</h2>

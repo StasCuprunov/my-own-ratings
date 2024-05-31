@@ -4,6 +4,7 @@ import {EditButton} from "../../component/atom/button/EditButton";
 import {CancelButtonLink} from "../../component/atom/button/link/CancelButtonLink";
 import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
 import {getInputNumberProps, getInputTextProps} from "../../utility/FormUtility";
+import {goToRatingsButtonLink} from "../get/RatingFunctions";
 
 export const getLabelNameProps = (): any => {
     return {
@@ -98,6 +99,7 @@ export const getButtons = (isEdit: boolean, ratingId: string) => {
     return (
         <div>
             <CreateButton/>
+            {goToRatingsButtonLink()}
         </div>
     );
 };

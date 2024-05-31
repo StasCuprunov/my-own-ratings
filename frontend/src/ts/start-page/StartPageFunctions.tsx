@@ -55,7 +55,7 @@ const buttonLink = (params: any) => {
 const getButtonLinkToRatingObject = (id: string) => {
     return {
         type: "button",
-        text: "Link",
+        text: "Go",
         to: getWebsiteRoutingRatingsById(id)
     };
 };
