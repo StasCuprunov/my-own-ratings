@@ -62,6 +62,7 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Override
     @After
     public void clean() {
         deleteAllUserRepository();

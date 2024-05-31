@@ -39,12 +39,6 @@ public class AuthenticationIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     private JwtService jwtService;
 
-    @After
-    public void clean() {
-        deleteAllUserRepository();
-    }
-
-
     @Test
     public void testValidLoginWithValidAccount() {
         Login login = createLoginDTOForFalakNoorahKhoury();
