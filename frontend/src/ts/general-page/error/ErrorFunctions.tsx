@@ -1,3 +1,10 @@
+export const getReloadButtonProps = (handleClick: Function) => {
+    return {
+        type: "button",
+        text: "Reload page",
+        onClick: handleClick
+    };
+};
 export const getDescription = (error: any): string => {
     let description: string = "";
 
