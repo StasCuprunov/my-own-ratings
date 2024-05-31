@@ -41,6 +41,7 @@ public abstract class RatingControllerIntegrationTest extends AbstractIntegratio
     @Autowired
     protected RatingEntryRepository ratingEntryRepository;
 
+    @Override
     @After
     public void clean() {
         deleteAllUserRepository();

@@ -45,6 +45,7 @@ public class StartPageControllerIntegrationTest extends AbstractIntegrationTest 
     @Autowired
     protected RatingEntryRepository ratingEntryRepository;
 
+    @Override
     @After
     public void clean() {
         deleteAllUserRepository();

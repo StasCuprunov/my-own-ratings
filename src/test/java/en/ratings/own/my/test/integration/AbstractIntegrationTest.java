@@ -5,6 +5,7 @@ import en.ratings.own.my.controller.UserController;
 import en.ratings.own.my.model.Login;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.repository.UserRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,11 @@ public abstract class AbstractIntegrationTest {
     public void setup() {
         userStevenWorm = storeUserInDatabase(createUserStevenWorm());
         userFalakNoorahKhoury = storeUserInDatabase(createUserFalakNoorahKhoury());
+    }
+
+    @After
+    public void clean() {
+        deleteAllUserRepository();
     }
 
     protected void login(User user) {
