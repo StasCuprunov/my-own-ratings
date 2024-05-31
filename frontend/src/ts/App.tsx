@@ -8,6 +8,7 @@ import {
     WEBSITE_ROUTING_LOGIN,
     WEBSITE_ROUTING_LOGOUT,
     WEBSITE_ROUTING_NOT_FOUND,
+    WEBSITE_ROUTING_RATINGS,
     WEBSITE_ROUTING_RATINGS_BY_ID,
     WEBSITE_ROUTING_RATINGS_CREATE,
     WEBSITE_ROUTING_RATINGS_EDIT_BY_ID,
@@ -33,6 +34,9 @@ export const App = () => {
                     <Route path={WEBSITE_ROUTING_LOGIN} element={<Login />} />)
                     <Route path={WEBSITE_ROUTING_LOGOUT} element={<Logout />}/>
                     <Route path={WEBSITE_ROUTING_INDEX} element={authenticated ? <LoadStartPage/> : <Login/>}/>
+                    <Route path={WEBSITE_ROUTING_RATINGS} element={authenticated ?
+                        <LoadStartPage/> : <NotAuthorizedPage/>}
+                    />
                     <Route path={WEBSITE_ROUTING_REGISTRATION} element={<LoadRegistration />} />
                     <Route path={WEBSITE_ROUTING_RATINGS_CREATE}
                            element={authenticated ? <LoadCreateRating/> : <NotAuthorizedPage/>}/>

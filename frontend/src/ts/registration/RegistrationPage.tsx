@@ -9,7 +9,8 @@ import {
     getLabelFirstNameProps,
     getLabelPasswordConfirmationProps,
     getLabelPasswordProps,
-    getLabelSurnameProps
+    getLabelSurnameProps,
+    getLoginButtonLink
 } from "./RegistrationFunctions";
 import {Button} from "../component/atom/button/Button";
 import {InputError} from "../component/atom/form/input/InputError";
@@ -59,6 +60,10 @@ export const RegistrationPage: FunctionComponent<any> = ({backendError, handleSu
                 </div>
                 <div>
                     <Button props={createAccountButton}/>
+                </div>
+                <div>
+                    <h2>Are you already registered?</h2>
+                    {getLoginButtonLink()}
                 </div>
                 <div>
                     <h2>Hints</h2>
