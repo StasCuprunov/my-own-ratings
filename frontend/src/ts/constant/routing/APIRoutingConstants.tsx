@@ -12,7 +12,7 @@ import {
     routingGetById
 } from "./RoutingConstants";
 
-const API_URL: string = "http://localhost:1234";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const getRoutingPath = (path: string): string => {
     return API_URL + path;
