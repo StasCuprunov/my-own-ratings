@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import "../css/bundle-min.css";
 import {LoadRegistration} from "./registration/LoadRegistration";
 import {Login} from "./authentication/login/Login";
 import {Logout} from "./authentication/logout/Logout";
