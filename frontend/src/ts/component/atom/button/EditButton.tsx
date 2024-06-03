@@ -1,5 +1,5 @@
 import {FunctionComponent} from "react";
-import {Button} from "./Button";
+import {CustomButton} from "./CustomButton";
 
 export const EditButton: FunctionComponent<any> = () => {
     const props: any = {
@@ -7,6 +7,6 @@ export const EditButton: FunctionComponent<any> = () => {
         text: "Edit"
     };
     return (
-        <Button props={props}/>
+        <CustomButton props={props}/>
     );
 };

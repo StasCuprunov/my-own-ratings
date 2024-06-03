@@ -1,5 +1,5 @@
 import {FunctionComponent} from "react";
-import {Button} from "../../component/atom/button/Button";
+import {CustomButton} from "../../component/atom/button/CustomButton";
 
 export const ErrorPage: FunctionComponent<any> = ({message, description, reloadButtonProps}) => {
     return (
@@ -8,7 +8,7 @@ export const ErrorPage: FunctionComponent<any> = ({message, description, reloadB
             <ul>
                 <li>{description}</li>
             </ul>
-            <Button props={reloadButtonProps}/>
+            <CustomButton props={reloadButtonProps}/>
         </div>
     );
 };

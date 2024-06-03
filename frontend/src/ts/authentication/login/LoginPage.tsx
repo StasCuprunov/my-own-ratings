@@ -1,7 +1,7 @@
 import {FunctionComponent} from "react";
 import {Label} from "../../component/atom/form/Label";
 import {Input} from "../../component/atom/form/input/Input";
-import {Button} from "../../component/atom/button/Button";
+import {CustomButton} from "../../component/atom/button/CustomButton";
 import {ButtonLink} from "../../component/atom/button/link/ButtonLink";
 import {
     getEmailLabelProps,
@@ -37,7 +37,7 @@ export const LoginPage: FunctionComponent<any> = ({backendError, handleSubmit, i
                         <Input props={inputPassword}/>
                     </div>
                     <div>
-                        <Button props={loginButton}/>
+                        <CustomButton props={loginButton}/>
                     </div>
                 </form>
             </div>

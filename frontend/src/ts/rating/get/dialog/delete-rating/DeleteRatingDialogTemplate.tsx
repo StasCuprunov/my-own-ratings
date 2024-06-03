@@ -4,13 +4,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {Button} from "../../../../component/atom/button/Button";
+import {CustomButton} from "../../../../component/atom/button/CustomButton";
 import {getCancelButtonProps} from "../../../../utility/FormUtility";
 
 export const DeleteRatingDialogTemplate: FunctionComponent<any> = ({props}) => {
     return (
         <div>
-            <Button props={props.deleteOpenButton}/>
+            <CustomButton props={props.deleteOpenButton}/>
             <Dialog open={props.isOpen} onClose={props.handleClose}>
                 <DialogTitle>
                     Do you really want to delete the rating?
@@ -21,8 +21,8 @@ export const DeleteRatingDialogTemplate: FunctionComponent<any> = ({props}) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button props={props.deleteDialogButton}/>
-                    <Button props={getCancelButtonProps(props.handleClose)}/>
+                    <CustomButton props={props.deleteDialogButton}/>
+                    <CustomButton props={getCancelButtonProps(props.handleClose)}/>
                 </DialogActions>
             </Dialog>
         </div>

@@ -3,4 +3,30 @@
 body {
   background-color: $background-color;
   color: $primary-color;
+  font-family: Roboto, sans-serif;
+  font-size: $default-font-size;
+}
+
+h1 {
+  font-size: calc(3 * $default-font-size);
+}
+
+h2 {
+  font-size: calc(2.5 * $default-font-size);
+}
+
+h3 {
+  font-size: calc(2 * $default-font-size);
+}
+
+h4 {
+  font-size: calc(1.75 * $default-font-size);
+}
+
+h5 {
+  font-size: calc(1.5 * $default-font-size);
+}
+
+h6 {
+  font-size: calc(1.25 * $default-font-size);
 }

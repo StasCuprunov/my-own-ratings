@@ -4,7 +4,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {Button} from "../../../../../component/atom/button/Button";
+import {CustomButton} from "../../../../../component/atom/button/CustomButton";
 import {Label} from "../../../../../component/atom/form/Label";
 import {Input} from "../../../../../component/atom/form/input/Input";
 import {InputError} from "../../../../../component/atom/form/input/InputError";
@@ -22,7 +22,7 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
     return (
         <div>
             {props.openDialogButton &&
-                <Button props={props.openDialogButton}/>
+                <CustomButton props={props.openDialogButton}/>
             }
             <Dialog open={props.isOpen} onClose={props.handleClose}>
                 <form onSubmit={props.handleSubmit}>
@@ -57,8 +57,8 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button props={getSubmitButtonProps(props.submitButtonText)}/>
-                        <Button props={getCancelButtonProps(props.handleClose)}/>
+                        <CustomButton props={getSubmitButtonProps(props.submitButtonText)}/>
+                        <CustomButton props={getCancelButtonProps(props.handleClose)}/>
                     </DialogActions>
                 </form>
             </Dialog>

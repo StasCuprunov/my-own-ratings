@@ -5,7 +5,7 @@ import {
 } from "../../constant/routing/APIRoutingConstants";
 import {useGet} from "../../interface/useGet";
 import {GridColDef} from "@mui/x-data-grid";
-import {Button} from "../../component/atom/button/Button";
+import {CustomButton} from "../../component/atom/button/CustomButton";
 import {ButtonLink} from "../../component/atom/button/link/ButtonLink";
 import {deleteAxios} from "../../interface/BackendCalls";
 import {WEBSITE_ROUTING_RATINGS} from "../../constant/routing/WebsiteRoutingConstants";
@@ -64,7 +64,7 @@ export const getColumns = (): GridColDef[] => {
 
 const editButton = (params: any) => {
     return (
-        <Button props={getEditButtonObject()}/>
+        <CustomButton props={getEditButtonObject()}/>
     );
 };
 
@@ -77,7 +77,7 @@ const getEditButtonObject = () => {
 
 const deleteButton = (params: any) => {
     return (
-        <Button props={getDeleteButtonObject(params.row.id)}/>
+        <CustomButton props={getDeleteButtonObject(params.row.id)}/>
     );
 };
 
