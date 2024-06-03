@@ -5,6 +5,7 @@ import {CustomButton} from "../CustomButton";
 export const ButtonLink: FunctionComponent<any> = ({props}) => {
     const button: any = {
         type: props.type,
+        variant: props.variant,
         text: props.text
     };
     return (

@@ -18,7 +18,7 @@ const initialState: any = customizePaginationDefault();
 export const StartPagePage: FunctionComponent<any> = ({name, ratingDTOs}) => {
 
     return (
-        <div>
+        <div className={"website-container"}>
             <h1>Hello {name}!</h1>
             <div>
                 <h2>Create a new rating</h2>
