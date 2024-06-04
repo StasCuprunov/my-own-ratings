@@ -7,12 +7,17 @@ import {
     createRatingEntry,
     editRatingEntry,
     getInputValueProps,
+    getLabelNameProps,
+    getLabelValueProps,
     hasAlreadyRatingEntryWithName
 } from "./RatingEntryFormDialogFunctions";
 import {getInputNameProps} from "../../../../form/RatingFormFunctions";
 import {useNavigate} from "react-router-dom";
 import {WEBSITE_ROUTING_REFRESH} from "../../../../../constant/routing/WebsiteRoutingConstants";
 import {RatingEntry} from "../../../../../model/rating-entry/RatingEntry";
+
+const labelName: any = getLabelNameProps();
+const labelValue: any = getLabelValueProps();
 
 export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     const isEdit: boolean = props.isEdit;
@@ -96,6 +101,17 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
         getInputValueProps(rangeOfValues.minimum, rangeOfValues.maximum, rangeOfValues.stepWidth, ratingEntry.value,
             handleRatingEntryChange("value")), [ratingEntry.value]);
 
+    const formForName: any = {
+        label: labelName,
+        input: inputName,
+        inputError: nameValidation
+    };
+
+    const formForValue: any = {
+        label: labelValue,
+        inputNumber: inputValue
+    };
+
     const ratingEntryFormDialogProps: any = {
         title: props.title,
         submitButton: {
@@ -106,9 +122,8 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
         isOpen: props.isOpen,
         handleClose: handleClose,
         handleSubmit: handleSubmit,
-        inputName: inputName,
-        inputValue: inputValue,
-        nameValidation: nameValidation
+        formForName: formForName,
+        formForValue: formForValue
     };
 
     return (

@@ -1,21 +1,16 @@
 import {FunctionComponent} from "react";
-import {Label} from "../../component/atom/form/Label";
-import {Input} from "../../component/atom/form/input/Input";
 import {CustomButton} from "../../component/atom/button/CustomButton";
 import {ButtonLink} from "../../component/atom/button/link/ButtonLink";
 import {
-    getEmailLabelProps,
     getLoginButtonProps,
-    getPasswordLabelProps,
     registrationButtonLinkProps
 } from "./LoginFunctions";
 import {Error} from "../../general-page/error/Error";
+import {FormForInput} from "../../component/molecule/form-attribute/FormForInput";
 
-const labelEmail: any = getEmailLabelProps();
-const labelPassword: any = getPasswordLabelProps();
 const loginButton: any = getLoginButtonProps();
 
-export const LoginPage: FunctionComponent<any> = ({backendError, handleSubmit, inputEmail, inputPassword}) => {
+export const LoginPage: FunctionComponent<any> = ({backendError, handleSubmit, formForEmail, formForPassword}) => {
 
     if (backendError) {
         return (
@@ -28,14 +23,8 @@ export const LoginPage: FunctionComponent<any> = ({backendError, handleSubmit, i
             <h1>Login</h1>
             <div>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <Label props={labelEmail}/>
-                        <Input props={inputEmail}/>
-                    </div>
-                    <div>
-                        <Label props={labelPassword}/>
-                        <Input props={inputPassword}/>
-                    </div>
+                    <FormForInput props={formForEmail}/>
+                    <FormForInput props={formForPassword}/>
                     <div>
                         <CustomButton props={loginButton}/>
                     </div>

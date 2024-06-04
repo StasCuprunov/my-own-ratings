@@ -1,10 +1,6 @@
 import {FunctionComponent} from "react";
 import {Error} from "../../general-page/error/Error";
-import {Label} from "../../component/atom/form/Label";
-import {Input} from "../../component/atom/form/input/Input";
 import {InputError} from "../../component/atom/form/input/InputError";
-import {TextArea} from "../../component/atom/form/TextArea";
-import {InputNumber} from "../../component/atom/form/input/InputNumber";
 import {
     getHintAdaptionRatingEntries,
     getHintMaximumDecimalPlaces,
@@ -14,19 +10,11 @@ import {
 } from "./RatingHints";
 import {
     getButtons,
-    getLabelDescriptionProps,
-    getLabelMaximumProps,
-    getLabelMinimumProps,
-    getLabelNameProps,
-    getLabelStepWidthProps,
     getScaleTitle
 } from "./RatingFormFunctions";
-
-const labelName: any = getLabelNameProps();
-const labelDescription: any = getLabelDescriptionProps();
-const labelMinimum: any = getLabelMinimumProps();
-const labelMaximum: any = getLabelMaximumProps();
-const labelStepWidth: any = getLabelStepWidthProps();
+import {FormForTextArea} from "../../component/molecule/form-attribute/FormForTextArea";
+import {FormForNumber} from "../../component/molecule/form-attribute/FormForNumber";
+import {FormForInput} from "../../component/molecule/form-attribute/FormForInput";
 
 export const RatingFormPage: FunctionComponent<any> = ({props}) => {
     const isEdit: boolean = props.isEdit;
@@ -41,31 +29,13 @@ export const RatingFormPage: FunctionComponent<any> = ({props}) => {
         <div>
             <h1>{props.title}</h1>
             <form onSubmit={props.handleSubmit}>
-                <div>
-                    <Label props={labelName}/>
-                    <Input props={props.inputName}/>
-                    <InputError props={props.nameValidation}/>
-                </div>
-                <div>
-                    <Label props={labelDescription}/>
-                    <TextArea props={props.textAreaDescription}/>
-                </div>
+                <FormForInput props={props.formForName}/>
+                <FormForTextArea props={props.formForDescription}/>
                 <div>
                     {getScaleTitle(isEdit)}
-                    <div>
-                        <Label props={labelMinimum}/>
-                        <InputNumber props={props.inputMinimum}/>
-                        <InputError props={props.minimumValidation}/>
-                    </div>
-                    <div>
-                        <Label props={labelMaximum}/>
-                        <InputNumber props={props.inputMaximum}/>
-                        <InputError props={props.maximumValidation}/>
-                    </div>
-                    <div>
-                        <Label props={labelStepWidth}/>
-                        <InputNumber props={props.inputStepWidth}/>
-                    </div>
+                    <FormForNumber props={props.formForMinimum}/>
+                    <FormForNumber props={props.formForMaximum}/>
+                    <FormForNumber props={props.formForStepWidth}/>
                     <InputError props={props.scaleValidation}/>
                 </div>
                 {getButtons(isEdit, props.id)}

@@ -5,6 +5,11 @@ import {
     getInputMinimum,
     getInputNameProps,
     getInputStepWidth,
+    getLabelDescriptionProps,
+    getLabelMaximumProps,
+    getLabelMinimumProps,
+    getLabelNameProps,
+    getLabelStepWidthProps,
     getTextAreaDescription,
     getTitle
 } from "./RatingFormFunctions";
@@ -20,6 +25,12 @@ import {RatingFormPage} from "./RatingFormPage";
 import {RangeOfValues} from "../../model/RangeOfValues";
 import {editRating} from "./edit/EditRatingFunctions";
 import {mapRatingDTOToRating} from "../../utility/MapperUtility";
+
+const labelName: any = getLabelNameProps();
+const labelDescription: any = getLabelDescriptionProps();
+const labelMinimum: any = getLabelMinimumProps();
+const labelMaximum: any = getLabelMaximumProps();
+const labelStepWidth: any = getLabelStepWidthProps();
 
 export const RatingForm: FunctionComponent<any> = ({props}) => {
     const isEdit: boolean = props.isEdit;
@@ -163,20 +174,45 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
         getInputStepWidth(step, rangeOfValuesMaximumBorder, step, rangeOfValues.stepWidth,
             handleRangeOfValuesChange("stepWidth"), handleStepWidthBlur), [rangeOfValues.stepWidth]);
 
+    const formForName: any = {
+        label: labelName,
+        input: inputName,
+        inputError: nameValidation
+    };
+
+    const formForDescription: any = {
+        label: labelDescription,
+        textArea: textAreaDescription
+    };
+
+    const formForMinimum: any = {
+        label: labelMinimum,
+        inputNumber: inputMinimum,
+        inputError: minimumValidation
+    };
+
+    const formForMaximum: any = {
+        label: labelMaximum,
+        inputNumber: inputMaximum,
+        inputError: maximumValidation
+    };
+
+    const formForStepWidth: any = {
+        label: labelStepWidth,
+        inputNumber: inputStepWidth
+    };
+
     const propsPage: any = {
         isEdit: isEdit,
         id: ratingDTO?.id,
         title: getTitle(isEdit, props.ratingDTO?.name),
         maximumNumberOfDecimalDigits: maximumNumberOfDecimalDigits,
-        inputName: inputName,
-        textAreaDescription: textAreaDescription,
-        inputMinimum: inputMinimum,
-        inputMaximum: inputMaximum,
-        inputStepWidth: inputStepWidth,
+        formForName: formForName,
+        formForDescription: formForDescription,
+        formForMinimum: formForMinimum,
+        formForMaximum: formForMaximum,
+        formForStepWidth: formForStepWidth,
         handleSubmit: handleSubmit,
-        nameValidation: nameValidation,
-        minimumValidation: minimumValidation,
-        maximumValidation: maximumValidation,
         scaleValidation: scaleValidation,
         backendError: backendError
     };

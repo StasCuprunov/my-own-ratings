@@ -5,14 +5,27 @@ import {User} from "../model/User";
 import {
     createUser,
     getInputEmailProps,
+    getInputErrorPasswordConfirmationProps,
+    getInputErrorPasswordProps,
     getInputFirstNameProps,
     getInputPasswordConfirmationProps,
     getInputPasswordProps,
-    getInputSurnameProps
+    getInputSurnameProps,
+    getLabelEmailProps,
+    getLabelFirstNameProps,
+    getLabelPasswordConfirmationProps,
+    getLabelPasswordProps,
+    getLabelSurnameProps
 } from "./RegistrationFunctions";
 import {WEBSITE_ROUTING_INDEX} from "../constant/routing/WebsiteRoutingConstants";
 import {RegistrationPage} from "./RegistrationPage";
 import {handleChange} from "../utility/FormUtility";
+
+const labelEmail: any = getLabelEmailProps();
+const labelFirstName: any = getLabelFirstNameProps();
+const labelSurname: any = getLabelSurnameProps();
+const labelPassword: any = getLabelPasswordProps();
+const labelPasswordConfirmation: any = getLabelPasswordConfirmationProps();
 
 export const Registration: FunctionComponent<any> = ({props}) => {
     const navigate = useNavigate();
@@ -102,12 +115,37 @@ export const Registration: FunctionComponent<any> = ({props}) => {
         [passwordConfirmation]
     );
 
+    const formForEmail: any = {
+        label: labelEmail,
+        input: inputEmail
+    };
+
+    const formForFirstName: any = {
+        label: labelFirstName,
+        input: inputFirstName
+    };
+
+    const formForSurname: any = {
+        label: labelSurname,
+        input: inputSurname
+    };
+
+    const formForPassword: any = {
+        label: labelPassword,
+        input: inputPassword,
+        inputError: getInputErrorPasswordProps(!isPasswordValid, passwordErrorText)
+    };
+
+    const formForPasswordConfirmation : any = {
+        label: labelPasswordConfirmation,
+        input: inputPasswordConfirmation,
+        inputError: getInputErrorPasswordConfirmationProps(!isPasswordConfirmationValid)
+    };
+
     return (
-        <RegistrationPage backendError={backendError} handleSubmit={handleSubmit} inputEmail={inputEmail}
-                          inputFirstName={inputFirstName} inputSurname={inputSurname} inputPassword={inputPassword}
-                          isPasswordValid={isPasswordValid} passwordErrorText={passwordErrorText}
-                          inputPasswordConfirmation={inputPasswordConfirmation}
-                          isPasswordConfirmationValid={isPasswordConfirmationValid}
+        <RegistrationPage backendError={backendError} handleSubmit={handleSubmit} formForEmail={formForEmail}
+                          formForFirstName={formForFirstName} formForSurname={formForSurname}
+                          formForPassword={formForPassword} formForPasswordConfirmation={formForPasswordConfirmation}
         />
     );
 };

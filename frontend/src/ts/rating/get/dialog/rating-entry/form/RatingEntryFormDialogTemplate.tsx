@@ -5,18 +5,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import {CustomButton} from "../../../../../component/atom/button/CustomButton";
-import {Label} from "../../../../../component/atom/form/Label";
-import {Input} from "../../../../../component/atom/form/input/Input";
-import {InputError} from "../../../../../component/atom/form/input/InputError";
-import {
-    getLabelNameProps,
-    getLabelValueProps
-} from "./RatingEntryFormDialogFunctions";
-import {InputNumber} from "../../../../../component/atom/form/input/InputNumber";
+import {FormForNumber} from "../../../../../component/molecule/form-attribute/FormForNumber";
+import {FormForInput} from "../../../../../component/molecule/form-attribute/FormForInput";
 import {getCancelButtonProps, getSubmitButtonProps} from "../../../../../utility/FormUtility";
-
-const labelName: any = getLabelNameProps();
-const labelValue: any = getLabelValueProps();
 
 export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) => {
     return (
@@ -31,15 +22,8 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            <div>
-                                <Label props={labelName}/>
-                                <Input props={props.inputName}/>
-                                <InputError props={props.nameValidation}/>
-                            </div>
-                            <div>
-                                <Label props={labelValue}/>
-                                <InputNumber props={props.inputValue}/>
-                            </div>
+                            <FormForInput props={props.formForName}/>
+                            <FormForNumber props={props.formForValue}/>
                             <div>
                                 <h4>Hints</h4>
                                 <ul>

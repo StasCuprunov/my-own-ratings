@@ -1,5 +1,5 @@
 import {FunctionComponent, useState} from "react";
-import {login} from "./LoginFunctions";
+import {getEmailLabelProps, getPasswordLabelProps, login} from "./LoginFunctions";
 import {getInputEmailProps, getInputPasswordProps} from "./LoginFunctions";
 import {LoginPage} from "./LoginPage";
 import {LoginModel} from "../../model/LoginModel"
@@ -8,6 +8,10 @@ import {useNavigate} from "react-router-dom";
 import {WEBSITE_ROUTING_INDEX} from "../../constant/routing/WebsiteRoutingConstants";
 import {setCookieHasLoggedInRecentlyAsRole} from "../../utility/CookieUtility";
 import {handleChange} from "../../utility/FormUtility";
+
+
+const labelEmail: any = getEmailLabelProps();
+const labelPassword: any = getPasswordLabelProps();
 
 export const Login: FunctionComponent<any> = () => {
     const navigate = useNavigate();
@@ -36,9 +40,19 @@ export const Login: FunctionComponent<any> = () => {
     let inputEmail: any = getInputEmailProps(loginData.email, handleLoginDataChange("email"));
     let inputPassword: any = getInputPasswordProps(loginData.password, handleLoginDataChange("password"));
 
+    const formForEmail: any = {
+        label: labelEmail,
+        input: inputEmail
+    };
+
+    const formForPassword: any = {
+        label: labelPassword,
+        input: inputPassword
+    };
+
     return (
-        <LoginPage backendError={backendError} handleSubmit={handleSubmit} inputEmail={inputEmail}
-                   inputPassword={inputPassword}
+        <LoginPage backendError={backendError} handleSubmit={handleSubmit} formForEmail={formForEmail}
+                   formForPassword={formForPassword}
         />
     );
 };
