@@ -3,6 +3,7 @@
 @import "abstracts/components/atom/button";
 @import "abstracts/components/organism/data_grid";
 @import "abstracts/components/organism/table";
+@import "abstracts/components/organism/dialog";
 
 body {
   background-color: $background-color;
@@ -35,7 +36,7 @@ h5 {
 }
 
 h6 {
-  @include title(calc(1.25 * $default-font-size));
+  @include title($font-size-h6);
 }
 
 h1, h2, h3, h4, h5, h6 {

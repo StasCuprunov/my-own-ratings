@@ -10,7 +10,7 @@ export const CustomButton: FunctionComponent<any> = ({props}) => {
   let iconFontSize: any = (iconProps?.fontSize) ? iconProps.fontSize : ICON_SMALL;
 
   return (
-      <Button type={type} variant={variant} onClick={props.onClick}>
+      <Button type={type} variant={variant} className={props.className} onClick={props.onClick}>
         {props.text}
         {props.icon &&
           <props.icon fontSize={iconFontSize}/>

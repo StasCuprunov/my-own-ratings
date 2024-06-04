@@ -1,0 +1,49 @@
+.MuiDialog-container {
+
+  .MuiDialogTitle-root, .MuiDialogContent-root > p {
+    color: $primary-color;
+  }
+
+  .MuiDialogTitle-root, .MuiDialogContent-root {
+    padding: 20px;
+  }
+
+  .MuiDialogTitle-root {
+    font-size: $font-size-h6;
+  }
+
+  .MuiDialogContent-root > p {
+    font-size: $default-font-size;
+  }
+
+  .MuiPaper-root {
+    background-color: $container-background-color;
+    border: 1px solid $primary-color;
+  }
+
+  .MuiDialogActions-root {
+    padding: 0 20px 20px 20px;
+
+    .MuiButtonBase-root.delete-button-dialog {
+      background-color: $danger-color;
+      border: 1px solid $container-background-color;
+
+      &:hover {
+        background-color: $container-background-color;
+        color: $danger-color;
+        border-color: $danger-color;
+      }
+    }
+
+    .MuiButtonBase-root.cancel-button-dialog {
+      background-color: $cancel-color;
+      border: 1px solid $container-background-color;
+
+      &:hover {
+        background-color: $container-background-color;
+        color: $cancel-color;
+        border-color: $cancel-color;
+      }
+    }
+  }
+}
