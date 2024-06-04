@@ -4,7 +4,8 @@ import {EditButton} from "../../component/atom/button/EditButton";
 import {CancelButtonLink} from "../../component/atom/button/link/CancelButtonLink";
 import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
 import {getInputNumberProps, getInputTextProps} from "../../utility/FormUtility";
-import {goToRatingsButtonLink} from "../get/RatingFunctions";
+import {ButtonLinkWithIcon} from "../../component/atom/button/link/ButtonLinkWithIcon";
+import {goToRatingsButtonProps} from "../get/RatingFunctions";
 
 export const getLabelNameProps = (): any => {
     return {
@@ -99,7 +100,7 @@ export const getButtons = (isEdit: boolean, ratingId: string) => {
     return (
         <div>
             <CreateButton/>
-            {goToRatingsButtonLink()}
+            <ButtonLinkWithIcon props={goToRatingsButtonProps()}/>
         </div>
     );
 };

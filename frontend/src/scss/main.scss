@@ -1,6 +1,8 @@
 @import "abstracts/globals/variables";
 @import "abstracts/globals/mixins";
-@import "abstracts/components/data_grid";
+@import "abstracts/components/atom/button";
+@import "abstracts/components/organism/data_grid";
+@import "abstracts/components/organism/table";
 
 body {
   background-color: $background-color;
@@ -44,6 +46,14 @@ h2, h3, h4, h5, h6 {
   margin-bottom: $default-font-size;
 }
 
+#root {
+  width: 65%;
+}
+
+.paragraph {
+  margin: 0;
+}
+
 .link-with-icon {
   display: flex;
   text-decoration: none;
@@ -61,10 +71,6 @@ h2, h3, h4, h5, h6 {
   svg {
     align-self: center;
   }
-}
-
-#root {
-  width: 65%;
 }
 
 .navbar {
@@ -94,28 +100,4 @@ h2, h3, h4, h5, h6 {
 
 .container {
   margin-bottom: $default-font-size;
-}
-
-.MuiButtonBase-root.MuiButton-containedPrimary {
-  background-color: $secondary-color;
-  color: $container-background-color;
-
-  &:hover {
-    background-color: $primary-color;
-    color: $secondary-color;
-  }
-}
-
-.MuiButtonBase-root.MuiButton-containedPrimary, .MuiButton-root.MuiButton-outlined {
-  font-size: $default-font-size;
-  text-transform: none;
-  transition: $default-transition-time;
-
-  svg {
-    margin-left: 5px;
-  }
-
-  &:hover {
-    transition: $default-transition-time;
-  }
 }

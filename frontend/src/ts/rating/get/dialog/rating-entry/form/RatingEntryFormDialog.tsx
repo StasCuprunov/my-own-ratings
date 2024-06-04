@@ -12,7 +12,7 @@ import {
 import {getInputNameProps} from "../../../../form/RatingFormFunctions";
 import {useNavigate} from "react-router-dom";
 import {WEBSITE_ROUTING_REFRESH} from "../../../../../constant/routing/WebsiteRoutingConstants";
-import {RatingEntry} from "../../../../../model/RatingEntry";
+import {RatingEntry} from "../../../../../model/rating-entry/RatingEntry";
 
 export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     const isEdit: boolean = props.isEdit;
@@ -84,9 +84,9 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     };
 
     const openDialogButton: any = {
-        type: "button",
-        text: props.submitButtonText,
-        onClick: handleOpenDialogButtonOnClick
+        text: props.openButtonText,
+        onClick: handleOpenDialogButtonOnClick,
+        icon: props.icon
     };
 
     const inputName: any = useMemo(() =>
@@ -98,7 +98,10 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
 
     const ratingEntryFormDialogProps: any = {
         title: props.title,
-        submitButtonText: props.submitButtonText,
+        submitButton: {
+            text: props.submitButtonText,
+            icon: props.icon
+        },
         openDialogButton: (isEdit) ? null : openDialogButton,
         isOpen: props.isOpen,
         handleClose: handleClose,

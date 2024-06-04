@@ -12,3 +12,7 @@ export const setNumberAttribute = (attribute?: number): number => {
 export const setBooleanAttribute = (attribute?: boolean): boolean => {
     return (attribute == null) ? false : attribute;
 };
+
+export const setFunctionAttribute = (attribute?: Function): Function => {
+    return (attribute == null) ? () => {} : attribute;
+};

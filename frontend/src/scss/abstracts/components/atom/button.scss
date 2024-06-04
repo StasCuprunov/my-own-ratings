@@ -1,0 +1,29 @@
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.MuiButtonBase-root.MuiButton-containedPrimary {
+  background-color: $secondary-color;
+  color: $container-background-color;
+
+  &:hover {
+    background-color: $primary-color;
+    color: $secondary-color;
+  }
+}
+
+.MuiButtonBase-root.MuiButton-containedPrimary, .MuiButton-root.MuiButton-outlined {
+  font-size: $default-font-size;
+  text-transform: none;
+  transition: $default-transition-time;
+  padding: 5px 15px 5px 15px;
+
+  svg {
+    margin-left: 5px;
+  }
+
+  &:hover {
+    transition: $default-transition-time;
+  }
+}

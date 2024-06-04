@@ -57,7 +57,7 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <CustomButton props={getSubmitButtonProps(props.submitButtonText)}/>
+                        <CustomButton props={getSubmitButtonProps(props.submitButton)}/>
                         <CustomButton props={getCancelButtonProps(props.handleClose)}/>
                     </DialogActions>
                 </form>

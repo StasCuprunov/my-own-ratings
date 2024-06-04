@@ -1,4 +1,4 @@
-import {RatingEntry} from "../../../../../model/RatingEntry";
+import {RatingEntry} from "../../../../../model/rating-entry/RatingEntry";
 import {getInputNumberProps} from "../../../../../utility/FormUtility";
 import {
     API_ROUTING_RATING_ENTRIES_CREATE,

@@ -1,14 +1,20 @@
+import {GridColDef} from "@mui/x-data-grid";
+import EditIcon from '@mui/icons-material/Edit';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import {
     getApiRoutingRatingEntriesDeleteById,
     getApiRoutingRatingsDeleteById,
     getApiRoutingRatingsFindById
 } from "../../constant/routing/APIRoutingConstants";
 import {useGet} from "../../interface/useGet";
-import {GridColDef} from "@mui/x-data-grid";
 import {CustomButton} from "../../component/atom/button/CustomButton";
-import {ButtonLink} from "../../component/atom/button/link/ButtonLink";
 import {deleteAxios} from "../../interface/BackendCalls";
-import {WEBSITE_ROUTING_RATINGS} from "../../constant/routing/WebsiteRoutingConstants";
+import {
+    getWebsiteRoutingRatingsEditById,
+    WEBSITE_ROUTING_RATINGS
+} from "../../constant/routing/WebsiteRoutingConstants";
 
 export const useRating = (id: string | undefined) => {
     return useGet(getApiRoutingRatingsFindById(id));
@@ -22,68 +28,75 @@ export const deleteRatingEntry = async (id: string) => {
     return await deleteAxios(getApiRoutingRatingEntriesDeleteById(id));
 };
 
-export const goToRatingsButtonLink = () => {
-    const props: any = {
-        type: "button",
+export const goToRatingsButtonProps = () => {
+    return {
         text: "Go to ratings",
-        to: WEBSITE_ROUTING_RATINGS
+        to: WEBSITE_ROUTING_RATINGS,
+        icon: ViewListIcon
     };
-    return (
-        <ButtonLink props={props}/>
-    );
+};
+
+export const editRatingButtonProps = (id: string) => {
+    return {
+        to: getWebsiteRoutingRatingsEditById(id),
+        text: "Edit rating",
+        icon: EditIcon
+    };
 };
 
 export const getColumns = (): GridColDef[] => {
     return [
         {
-            field: 'name',
-            headerName: 'Name',
-            width: 400
+            field: "name",
+            headerName: "Name",
+            valueGetter: params=> params.row.ratingEntry.name,
+            flex: 1
         },
         {
-            field: 'value',
-            headerName: 'Value',
-            width: 400
+            field: "value",
+            headerName: "Value",
+            valueGetter: params=> params.row.ratingEntry.value,
+            flex: 1
         },
         {
-            field: 'edit',
-            headerName: 'Edit',
+            field: "edit",
+            headerName: "Edit",
             sortable: false,
             filterable: false,
-            renderCell: editButton
+            renderCell: editRatingEntryButton,
+            flex: 1
         },
         {
-            field: 'delete',
-            headerName: 'Delete',
+            field: "delete",
+            headerName: "Delete",
             sortable: false,
             filterable: false,
-            renderCell: deleteButton
+            renderCell: deleteRatingEntryButton,
+            flex: 1
         }
     ];
 };
 
-const editButton = (params: any) => {
+const editRatingEntryButton = (params: any) => {
+    const props: any = {
+        text: "Edit rating entry",
+        icon: EditIcon,
+        onClick: params.row.handleEditClick
+    };
+
     return (
-        <CustomButton props={getEditButtonObject()}/>
+        <CustomButton props={props}/>
     );
 };
 
-const getEditButtonObject = () => {
-    return {
-        type: "button",
-        text: "Edit"
+const deleteRatingEntryButton = (params: any) => {
+    const props: any = {
+        text: "Delete rating entry",
+        icon: DeleteIcon,
+        onClick: params.row.handleDeleteClick
     };
-};
 
-const deleteButton = (params: any) => {
     return (
-        <CustomButton props={getDeleteButtonObject(params.row.id)}/>
+        <CustomButton props={props}/>
     );
-};
-
-const getDeleteButtonObject = (id: string) => {
-    return {
-        type: "button",
-        text: "Delete"
-    };
 };

@@ -1,10 +1,15 @@
-import {FunctionComponent, useState} from "react";
+import {FunctionComponent, useEffect, useState} from "react";
 import {RatingPage} from "./RatingPage";
 import {GridCellParams} from "@mui/x-data-grid";
-import {RatingEntry} from "../../model/RatingEntry";
+import {RatingEntry} from "../../model/rating-entry/RatingEntry";
+import {RatingEntryForDataGrid} from "../../model/rating-entry/RatingEntryForDataGrid";
 
 export const Rating: FunctionComponent<any> = ({props}) => {
     const id: string = props.id;
+    const ratingEntries: RatingEntry[] = props.ratingEntries;
+
+    const [ratingEntriesForDataGrid, setRatingEntriesForDataGrid]
+        = useState<RatingEntryForDataGrid[]>([]);
 
     const [isDeleteRatingDialogOpen, setIsDeleteRatingDialogOpen] =
         useState(false);
@@ -19,14 +24,37 @@ export const Rating: FunctionComponent<any> = ({props}) => {
 
     const [ratingEntry, setRatingEntry] = useState(new RatingEntry());
 
-    const handleOnCellClick = (params: GridCellParams) => {
-        if (params.field === "edit") {
-            setRatingEntry(params.row);
-            setIsEditRatingEntryDialogOpen(true);
+    useEffect(() => {
+        createDataEntries();
+    }, []);
+
+    const createDataEntries = (): void => {
+        const length: number = ratingEntries.length;
+        let dataGridEntries: RatingEntryForDataGrid[] = [];
+        for (let index: number = 0; index < length; index++) {
+            dataGridEntries.push(
+                new RatingEntryForDataGrid(
+                    ratingEntries[index],
+                    handleEditRatingEntryButtonOpenDialogClick,
+                    handleDeleteRatingEntryButtonOpenDialogClick
+                )
+            );
         }
-        else if (params.field === "delete") {
-            setRatingEntry(params.row);
-            setIsDeleteRatingEntryDialogOpen(true);
+        setRatingEntriesForDataGrid(dataGridEntries);
+    };
+
+    const handleEditRatingEntryButtonOpenDialogClick = (): void => {
+        setIsEditRatingEntryDialogOpen(true);
+    };
+
+    const handleDeleteRatingEntryButtonOpenDialogClick = (): void => {
+        setIsDeleteRatingEntryDialogOpen(true);
+    }
+
+    const handleOnCellClick = (params: GridCellParams) => {
+        let field: string = params.field;
+        if (field === "edit" || field === "delete") {
+            setRatingEntry(params.row.ratingEntry);
         }
     };
 
@@ -44,7 +72,7 @@ export const Rating: FunctionComponent<any> = ({props}) => {
     const ratingEntryFormDialogProps: any = {
         ...dialogProps,
         rangeOfValues: props.rangeOfValues,
-        ratingEntries: props.ratingEntries,
+        ratingEntries: ratingEntries,
         maximumLengthOfName: props.maximumLengthOfName
     };
 
@@ -70,7 +98,7 @@ export const Rating: FunctionComponent<any> = ({props}) => {
 
     return (
         <RatingPage id={id} name={props.name} description={props.description}
-                    rangeOfValues={props.rangeOfValues} ratingEntries={props.ratingEntries}
+                    rangeOfValues={props.rangeOfValues} ratingEntriesForDataGrid={ratingEntriesForDataGrid}
                     backendError={backendError} handleOnCellClick={handleOnCellClick}
                     deleteRatingDialogProps={deleteRatingDialogProps}
                     createRatingEntryDialogProps={createRatingEntryDialogProps}

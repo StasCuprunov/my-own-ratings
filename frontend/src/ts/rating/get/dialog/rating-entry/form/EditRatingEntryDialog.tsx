@@ -1,4 +1,6 @@
 import {FunctionComponent} from "react";
+import EditIcon from '@mui/icons-material/Edit';
+
 import {RatingEntryFormDialog} from "./RatingEntryFormDialog";
 
 export const EditRatingEntryDialog: FunctionComponent<any> = ({props}) => {
@@ -6,6 +8,7 @@ export const EditRatingEntryDialog: FunctionComponent<any> = ({props}) => {
         ...props,
         isEdit: true,
         title: "Edit the rating entry " + props.ratingEntry.name,
+        icon: EditIcon,
         submitButtonText: "Edit"
     };
 

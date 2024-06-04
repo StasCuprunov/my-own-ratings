@@ -1,4 +1,4 @@
-import {setIdAttribute, setNumberAttribute, setStringAttribute} from "../utility/ClassUtility";
+import {setIdAttribute, setNumberAttribute, setStringAttribute} from "../../utility/ClassUtility";
 
 export class RatingEntry {
     id: string | null;

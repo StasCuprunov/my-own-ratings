@@ -1,4 +1,6 @@
 import {ChangeEvent} from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export const handleChange: any = (field: string, setObject: any) => {
     return (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,23 +40,31 @@ export const getInputNumberProps = (name: string, required: boolean, min: number
 };
 export const getCancelButtonProps = (handleOnClick: Function) => {
     return {
-        type: "button",
         text: "Cancel",
-        onClick: handleOnClick
+        onClick: handleOnClick,
+        icon: CancelIcon
     };
 };
 
-export const getDeleteButtonProps = (handleOnClick: Function) => {
+export const getDeleteButtonProps = (name: string, handleOnClick: Function) => {
     return {
-        type: "button",
-        text: "Delete",
-        onClick: handleOnClick
-    }
+        text: "Delete " + name,
+        onClick: handleOnClick,
+        icon: DeleteIcon
+    };
 };
 
-export const getSubmitButtonProps = (text: string) => {
+export const getDeleteButtonInDialogProps = (handleOnClick: Function) => {
     return {
-        type: "submit",
-        text: text
+        text: "Delete",
+        onClick: handleOnClick,
+        icon: DeleteIcon
+    };
+};
+
+export const getSubmitButtonProps = (props: any) => {
+    return {
+        ...props,
+        type: "submit"
     };
 };
