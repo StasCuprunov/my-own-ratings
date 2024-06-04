@@ -14,7 +14,7 @@ export const DeleteRatingEntryDialogTemplate: FunctionComponent<any> = ({props})
         <div>
             <Dialog open={props.isOpen} onClose={props.handleClose}>
                 <DialogTitle>
-                    Do you really want to delete the rating entry "{props.name}"?
+                    Do you really want to delete the rating entry <i>{props.name}</i>?
                 </DialogTitle>
                 <DialogActions>
                     <CustomButton props={getDeleteButtonInDialogProps(props.handleDelete)}/>
