@@ -99,7 +99,7 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     const ratingEntryFormDialogProps: any = {
         title: props.title,
         submitButton: {
-            text: props.submitButtonText,
+            ...props.submitButton,
             icon: props.icon
         },
         openDialogButton: (isEdit) ? null : openDialogButton,

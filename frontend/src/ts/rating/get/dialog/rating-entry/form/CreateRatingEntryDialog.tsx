@@ -3,6 +3,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import {RatingEntryFormDialog} from "./RatingEntryFormDialog";
 import {RatingEntry} from "../../../../../model/rating-entry/RatingEntry";
+import {CSS_CLASS_CREATE_BUTTON_DIALOG} from "../../../../../constant/CSSClassNameConstants";
 
 export const CreateRatingEntryDialog: FunctionComponent<any> = ({props}) => {
     const ratingEntryFormDialogProps: any = {
@@ -11,7 +12,10 @@ export const CreateRatingEntryDialog: FunctionComponent<any> = ({props}) => {
         ratingEntry: new RatingEntry(undefined, props.ratingId, undefined, props.rangeOfValues.minimum),
         openButtonText: "Create rating entry",
         icon: AddCircleOutlineIcon,
-        submitButtonText: "Create"
+        submitButton: {
+            text: "Create",
+            className: CSS_CLASS_CREATE_BUTTON_DIALOG
+        }
     };
 
     return (

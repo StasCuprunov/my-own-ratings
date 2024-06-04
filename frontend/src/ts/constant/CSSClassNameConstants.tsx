@@ -7,3 +7,5 @@ export const CSS_CLASS_BUTTON_GROUP: string = "button-group";
 export const CSS_CLASS_TABLE_CONTAINER: string = "table-container";
 export const CSS_CLASS_DELETE_BUTTON_DIALOG: string = "delete-button-dialog";
 export const CSS_CLASS_CANCEL_BUTTON_DIALOG: string = "cancel-button-dialog";
+export const CSS_CLASS_CREATE_BUTTON_DIALOG: string = "create-button-dialog";
+export const CSS_CLASS_EDIT_BUTTON_DIALOG: string = "edit-button-dialog";
