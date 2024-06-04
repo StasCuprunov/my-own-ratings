@@ -1,0 +1,50 @@
+.MuiDataGrid-root.MuiDataGrid-withBorderColor  {
+  border-color: $background-color;
+}
+
+.MuiDataGrid-main {
+  color: $primary-color;
+  font-size: $default-font-size;
+
+  .MuiDataGrid-cell.MuiDataGrid-withBorderColor {
+    border-color: $background-color;
+
+    &:focus {
+      outline-color: $primary-color;
+    }
+  }
+}
+
+.MuiDataGrid-columnHeaders {
+  path {
+    color: $primary-color;
+  }
+}
+
+.MuiDataGrid-footerContainer {
+  .MuiTablePagination-root {
+    color: $primary-color;
+    font-size: $default-font-size;
+
+    p {
+      font-size: $default-font-size;
+    }
+
+    svg {
+      color: $primary-color;
+    }
+  }
+}
+.css-az8st9-MuiDataGrid-root {
+  .MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor,
+  .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
+    border-color: $background-color;
+  }
+
+  .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor {
+    &:focus {
+      outline-color: $primary-color;
+      border-bottom-color: $primary-color;
+    }
+  }
+}

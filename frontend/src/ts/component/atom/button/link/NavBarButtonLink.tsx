@@ -1,12 +1,12 @@
 import {FunctionComponent} from "react";
-import {ButtonLink} from "./ButtonLink";
+import {ButtonLinkWithIcon} from "./ButtonLinkWithIcon";
 
 export const NavBarButtonLink: FunctionComponent<any> = ({props}) => {
-    const buttonLink: any = {
+    const buttonLinkWithIconProps: any = {
         ...props,
         variant: "outlined"
     };
     return (
-        <ButtonLink props={buttonLink}/>
+        <ButtonLinkWithIcon props={buttonLinkWithIconProps}/>
     );
 };

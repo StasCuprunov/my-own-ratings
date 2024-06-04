@@ -1,9 +1,10 @@
 import {GridColDef } from '@mui/x-data-grid';
+import EastIcon from '@mui/icons-material/East';
 
 import {useGet} from "../interface/useGet";
 import {API_ROUTING_START_PAGE} from "../constant/routing/APIRoutingConstants";
 import {getWebsiteRoutingRatingsById} from "../constant/routing/WebsiteRoutingConstants";
-import {ButtonLink} from "../component/atom/button/link/ButtonLink";
+import {LinkWithIcon} from "../component/atom/LinkWithIcon";
 
 export const useStartPage = () => {
     return useGet(API_ROUTING_START_PAGE);
@@ -27,35 +28,33 @@ export const getGreetingName = (firstName: string | null, surname: string | null
 export const getColumns = (): GridColDef[] => {
     return [
         {
-            field: 'name',
-            headerName: 'Name',
-            width: 400
+            field: "name",
+            headerName: "Name",
+            flex: 1
         },
         {
-            field: 'description',
-            headerName: 'Description',
-            width: 400
+            field: "description",
+            headerName: "Description",
+            flex: 1
         },
         {
-            field: 'id',
-            headerName: 'Link',
+            field: "id",
+            headerName: "Link",
             sortable: false,
             filterable: false,
-            renderCell: buttonLink
+            renderCell: link,
+            flex: 1
         }
     ];
 };
 
-const buttonLink = (params: any) => {
-    return (
-        <ButtonLink props={getButtonLinkToRatingObject(params.row.id)}/>
-    );
-};
-
-const getButtonLinkToRatingObject = (id: string) => {
-    return {
-        type: "button",
-        text: "Go",
-        to: getWebsiteRoutingRatingsById(id)
+const link = (params: any) => {
+    const props: any = {
+        to: getWebsiteRoutingRatingsById(params.row.id),
+        text: "Go to rating",
+        icon: EastIcon
     };
+    return (
+        <LinkWithIcon props={props}/>
+    );
 };

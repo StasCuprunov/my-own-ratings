@@ -1,4 +1,6 @@
 @import "abstracts/globals/variables";
+@import "abstracts/globals/mixins";
+@import "abstracts/components/data_grid";
 
 body {
   background-color: $background-color;
@@ -10,27 +12,55 @@ body {
 }
 
 h1 {
-  font-size: calc(3 * $default-font-size);
+  @include title($font-size-h1);
+  margin-bottom: calc(2 * $default-font-size);
 }
 
 h2 {
-  font-size: calc(2.5 * $default-font-size);
+  @include title(calc(2.5 * $default-font-size));
 }
 
 h3 {
-  font-size: calc(2 * $default-font-size);
+  @include title(calc(2 * $default-font-size));
 }
 
 h4 {
-  font-size: calc(1.75 * $default-font-size);
+  @include title(calc(1.75 * $default-font-size));
 }
 
 h5 {
-  font-size: calc(1.5 * $default-font-size);
+  @include title(calc(1.5 * $default-font-size));
 }
 
 h6 {
-  font-size: calc(1.25 * $default-font-size);
+  @include title(calc(1.25 * $default-font-size));
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+}
+
+h2, h3, h4, h5, h6 {
+  margin-bottom: $default-font-size;
+}
+
+.link-with-icon {
+  display: flex;
+  text-decoration: none;
+  color: $primary-color;
+  transition: $default-transition-time;
+
+  &:hover {
+    color: $tertiary-color;
+    transition: $default-transition-time;
+    svg {
+      margin-left: 5px;
+    }
+  }
+
+  svg {
+    align-self: center;
+  }
 }
 
 #root {
@@ -41,7 +71,7 @@ h6 {
   background-color: $container-background-color;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: $default-padding;
   position: sticky;
   top: 0;
 
@@ -58,4 +88,34 @@ h6 {
 
 .website-container {
   background-color: $container-background-color;
+  margin-top: $font-size-h1;
+  padding: calc(2 * $default-padding) $default-padding $default-padding $default-padding;
+}
+
+.container {
+  margin-bottom: $default-font-size;
+}
+
+.MuiButtonBase-root.MuiButton-containedPrimary {
+  background-color: $secondary-color;
+  color: $container-background-color;
+
+  &:hover {
+    background-color: $primary-color;
+    color: $secondary-color;
+  }
+}
+
+.MuiButtonBase-root.MuiButton-containedPrimary, .MuiButton-root.MuiButton-outlined {
+  font-size: $default-font-size;
+  text-transform: none;
+  transition: $default-transition-time;
+
+  svg {
+    margin-left: 5px;
+  }
+
+  &:hover {
+    transition: $default-transition-time;
+  }
 }
