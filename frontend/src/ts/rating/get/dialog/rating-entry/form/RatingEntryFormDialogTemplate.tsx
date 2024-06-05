@@ -17,7 +17,7 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                 <CustomButton props={props.openDialogButton}/>
             }
             <Dialog open={props.isOpen} onClose={props.handleClose}>
-                <form onSubmit={props.handleSubmit}>
+                <form onSubmit={props.handleSubmit} autoComplete={"off"}>
                     <DialogTitle>
                         {props.title}{props.oldName && <i>{props.oldName}</i>}
                     </DialogTitle>
