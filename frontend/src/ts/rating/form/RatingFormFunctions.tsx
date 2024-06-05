@@ -80,9 +80,9 @@ export const getScaleTitle = (isEdit: boolean) => {
     );
 };
 
-export const getTitle = (isEdit: boolean, name?: string): string => {
+export const getTitle = (isEdit: boolean): string => {
     if (isEdit) {
-        return "Edit the rating " + name;
+        return "Edit the rating ";
     }
     return "Create your own rating";
 };

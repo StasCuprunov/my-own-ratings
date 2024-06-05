@@ -35,7 +35,7 @@ export const RatingFormPage: FunctionComponent<any> = ({props}) => {
 
     return (
         <div className={getClassNameAttribute([CSS_CLASS_WEBSITE_CONTAINER, CSS_CLASS_FORM_RATING])}>
-            <h1>{props.title}</h1>
+            <h1>{props.title}{props.oldName && <i>{props.oldName}</i>}</h1>
             <div className={CSS_CLASS_CONTAINER}>
                 <form onSubmit={props.handleSubmit} autoComplete={"off"}>
                     <div className={getClassNameAttribute([CSS_CLASS_CONTAINER, CSS_CLASS_FORM_GROUP])}>

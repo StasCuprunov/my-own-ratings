@@ -214,7 +214,8 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     const propsPage: any = {
         isEdit: isEdit,
         id: ratingDTO?.id,
-        title: getTitle(isEdit, props.ratingDTO?.name),
+        title: getTitle(isEdit),
+        oldName: (isEdit) ? initializeRating.name : null,
         maximumNumberOfDecimalDigits: maximumNumberOfDecimalDigits,
         formForName: formForName,
         formForDescription: formForDescription,
