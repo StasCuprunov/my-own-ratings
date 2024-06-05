@@ -2,3 +2,14 @@
   font-size: $font-size;
   line-height: $font-size;
 }
+
+@mixin operation-button($color, $border-color) {
+  background-color: $color;
+  border: 1px solid $border-color;
+
+  &:hover {
+    background-color: $border-color;
+    color: $color;
+    border-color: $color;
+  }
+}

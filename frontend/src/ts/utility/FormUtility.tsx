@@ -1,7 +1,7 @@
 import {ChangeEvent} from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CancelIcon from '@mui/icons-material/Cancel';
-import {CSS_CLASS_CANCEL_BUTTON_DIALOG, CSS_CLASS_DELETE_BUTTON_DIALOG} from "../constant/CSSClassNameConstants";
+import {CSS_CLASS_CANCEL_BUTTON, CSS_CLASS_DELETE_BUTTON} from "../constant/CSSClassNameConstants";
 
 export const handleChange: any = (field: string, setObject: any) => {
     return (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,7 @@ export const getCancelButtonProps = (handleOnClick: Function) => {
         text: "Cancel",
         onClick: handleOnClick,
         icon: CancelIcon,
-        className: CSS_CLASS_CANCEL_BUTTON_DIALOG
+        className: CSS_CLASS_CANCEL_BUTTON
     };
 };
 
@@ -61,7 +61,7 @@ export const getDeleteButtonInDialogProps = (handleOnClick: Function) => {
         text: "Delete",
         onClick: handleOnClick,
         icon: DeleteIcon,
-        className: CSS_CLASS_DELETE_BUTTON_DIALOG
+        className: CSS_CLASS_DELETE_BUTTON
     };
 };
 

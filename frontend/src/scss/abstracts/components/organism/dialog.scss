@@ -25,37 +25,16 @@
   .MuiDialogActions-root {
     padding: 0 $default-padding $default-padding $default-padding;
 
-    .MuiButtonBase-root.delete-button-dialog {
-      background-color: $danger-color;
-      border: 1px solid $container-background-color;
-
-      &:hover {
-        background-color: $container-background-color;
-        color: $danger-color;
-        border-color: $danger-color;
-      }
+    .MuiButtonBase-root.delete-button {
+      @extend %danger-button;
     }
 
-    .MuiButtonBase-root.cancel-button-dialog {
-      background-color: $warning-color;
-      border: 1px solid $container-background-color;
-
-      &:hover {
-        background-color: $container-background-color;
-        color: $warning-color;
-        border-color: $warning-color;
-      }
+    .MuiButtonBase-root.cancel-button {
+      @extend %warning-button;
     }
 
-    .MuiButtonBase-root.create-button-dialog, .MuiButtonBase-root.edit-button-dialog {
-      background-color: $success-color;
-      border: 1px solid $container-background-color;
-
-      &:hover {
-        background-color: $container-background-color;
-        color: $success-color;
-        border-color: $success-color;
-      }
+    .MuiButtonBase-root.create-button, .MuiButtonBase-root.edit-button {
+      @extend %success-button;
     }
   }
 }

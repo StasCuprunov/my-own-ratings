@@ -3,6 +3,18 @@
   justify-content: space-between;
 }
 
+.cancel-button {
+  @extend %warning-button;
+}
+
+.create-button, .edit-button {
+  @extend %success-button;
+}
+
+.delete-button {
+  @extend %danger-button;
+}
+
 .MuiButtonBase-root.MuiButton-containedPrimary {
   background-color: $secondary-color;
   color: $container-background-color;

@@ -1,0 +1,11 @@
+%warning-button {
+  @include operation-button($warning-color, $container-background-color);
+}
+
+%success-button {
+  @include operation-button($success-color, $container-background-color);
+}
+
+%danger-button {
+  @include operation-button($danger-color, $container-background-color);
+}

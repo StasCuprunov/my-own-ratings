@@ -30,7 +30,7 @@ export const deleteRatingEntry = async (id: string) => {
 
 export const goToRatingsButtonProps = () => {
     return {
-        text: "Go to ratings",
+        text: "Cancel",
         to: WEBSITE_ROUTING_RATINGS,
         icon: ViewListIcon
     };
