@@ -5,26 +5,18 @@ import {
     getLoginButtonProps,
     registrationButtonLinkProps
 } from "./LoginFunctions";
-import {Error} from "../../general-page/error/Error";
 import {FormForInput} from "../../component/molecule/form-attribute/FormForInput";
 
 const loginButton: any = getLoginButtonProps();
 
-export const LoginPage: FunctionComponent<any> = ({backendError, handleSubmit, formForEmail, formForPassword}) => {
-
-    if (backendError) {
-        return (
-            <Error error={backendError}/>
-        );
-    }
-
+export const LoginPage: FunctionComponent<any> = ({props}) => {
     return (
         <div>
             <h1>Login</h1>
             <div>
-                <form onSubmit={handleSubmit}>
-                    <FormForInput props={formForEmail}/>
-                    <FormForInput props={formForPassword}/>
+                <form onSubmit={props.handleSubmit}>
+                    <FormForInput props={props.formForEmail}/>
+                    <FormForInput props={props.formForPassword}/>
                     <div>
                         <CustomButton props={loginButton}/>
                     </div>

@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {WEBSITE_ROUTING_INDEX} from "../../constant/routing/WebsiteRoutingConstants";
 import {setCookieHasLoggedInRecentlyAsRole} from "../../utility/CookieUtility";
 import {handleChange} from "../../utility/FormUtility";
+import {PageTemplate} from "../../component/PageTemplate";
 
 
 const labelEmail: any = getEmailLabelProps();
@@ -50,9 +51,14 @@ export const Login: FunctionComponent<any> = () => {
         input: inputPassword
     };
 
+    const pageProps: any = {
+        backendError: backendError,
+        handleSubmit: handleSubmit,
+        formForEmail: formForEmail,
+        formForPassword: formForPassword
+    };
+
     return (
-        <LoginPage backendError={backendError} handleSubmit={handleSubmit} formForEmail={formForEmail}
-                   formForPassword={formForPassword}
-        />
+        <PageTemplate Component={LoginPage} props={pageProps}/>
     );
 };
