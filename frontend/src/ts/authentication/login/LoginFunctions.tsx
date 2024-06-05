@@ -1,18 +1,11 @@
+import LoginIcon from '@mui/icons-material/Login';
+
 import {LoginModel} from "../../model/LoginModel";
 import {postAxios} from "../../interface/BackendCalls";
 import {API_ROUTING_LOGIN} from "../../constant/routing/APIRoutingConstants";
-import {WEBSITE_ROUTING_REGISTRATION} from "../../constant/routing/WebsiteRoutingConstants";
 
 export const login = async (login: LoginModel) => {
     return await postAxios(API_ROUTING_LOGIN, login);
-};
-
-export const registrationButtonLinkProps = () => {
-    return {
-        type: "button",
-        text: "Sign up here",
-        to: WEBSITE_ROUTING_REGISTRATION
-    };
 };
 
 export const getEmailLabelProps = () => {
@@ -31,8 +24,9 @@ export const getPasswordLabelProps = () => {
 
 export const getLoginButtonProps = () => {
     return {
-      type: "submit",
-      text: "Login"
+        type: "submit",
+        text: "Login",
+        icon: LoginIcon
     };
 };
 

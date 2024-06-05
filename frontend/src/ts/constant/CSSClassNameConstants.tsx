@@ -21,3 +21,5 @@ export const CSS_CLASS_DESCRIPTION: string = "description";
 export const CSS_CLASS_MINIMUM: string = "minimum";
 export const CSS_CLASS_MAXIMUM: string = "maximum";
 export const CSS_CLASS_STEP_WIDTH: string = "step-width";
+export const CSS_CLASS_LINK_WITH_TEXT: string = "link-with-text";
+export const CSS_CLASS_FORM_LOGIN: string = "form-login";

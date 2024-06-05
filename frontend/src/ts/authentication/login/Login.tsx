@@ -5,11 +5,10 @@ import {LoginPage} from "./LoginPage";
 import {LoginModel} from "../../model/LoginModel"
 import {useAuth} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
-import {WEBSITE_ROUTING_INDEX} from "../../constant/routing/WebsiteRoutingConstants";
+import {WEBSITE_ROUTING_INDEX, WEBSITE_ROUTING_REGISTRATION} from "../../constant/routing/WebsiteRoutingConstants";
 import {setCookieHasLoggedInRecentlyAsRole} from "../../utility/CookieUtility";
 import {handleChange} from "../../utility/FormUtility";
 import {PageTemplate} from "../../component/PageTemplate";
-
 
 const labelEmail: any = getEmailLabelProps();
 const labelPassword: any = getPasswordLabelProps();
@@ -51,11 +50,18 @@ export const Login: FunctionComponent<any> = () => {
         input: inputPassword
     };
 
+    const linkToRegistration: any = {
+        textBefore: "Don't you have an account?",
+        to: WEBSITE_ROUTING_REGISTRATION,
+        textLink: "Sign up here"
+    };
+
     const pageProps: any = {
         backendError: backendError,
         handleSubmit: handleSubmit,
         formForEmail: formForEmail,
-        formForPassword: formForPassword
+        formForPassword: formForPassword,
+        linkToRegistration: linkToRegistration
     };
 
     return (

@@ -1,0 +1,74 @@
+input, textarea {
+  font-size: $default-font-size;
+  background-color: $container-background-color;
+  border: 1px solid $background-color;
+  color: $primary-color;
+
+  &:focus-visible {
+    border: 1px solid $primary-color;
+    outline: none;
+  }
+}
+
+textarea {
+  height: calc(5 * $default-font-size);
+}
+
+.input-error {
+  font-size: $small-font-size;
+  color: $danger-light-color;
+  margin-top: 2px;
+}
+
+.form-attribute {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 2px;
+  }
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-area {
+  display: flex;
+}
+
+.form-rating {
+
+  .name {
+    width: 30%;
+  }
+
+  .description {
+    width: 45%;
+  }
+
+  .minimum, .maximum, .step-width {
+    width: 25%;
+  }
+
+  .scale > h2 > sup {
+    font-weight: normal;
+  }
+}
+
+.form-login {
+
+  .form-group {
+    display: block;
+  }
+
+  .form-attribute {
+    width: 30%;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

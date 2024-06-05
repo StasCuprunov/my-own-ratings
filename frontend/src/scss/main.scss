@@ -2,9 +2,11 @@
 @import "abstracts/globals/mixins";
 @import "abstracts/globals/placeholders";
 @import "abstracts/components/atom/button";
+@import "abstracts/components/atom/link";
 @import "abstracts/components/organism/data_grid";
 @import "abstracts/components/organism/table";
 @import "abstracts/components/organism/dialog";
+@import "abstracts/components/organism/form";
 
 body {
   background-color: $background-color;
@@ -48,14 +50,6 @@ h2, h3, h4, h5, h6 {
   margin-bottom: 20px;
 }
 
-input, textarea {
-  @extend %input-field;
-}
-
-textarea {
-  height: calc(5 * $default-font-size);
-}
-
 sup {
   font-size: $small-font-size;
 }
@@ -68,27 +62,9 @@ ul, ol, .paragraph {
   margin: 0;
 }
 
-.link-with-icon {
-  display: flex;
-  text-decoration: none;
-  color: $primary-color;
-  transition: $default-transition-time;
-
-  &:hover {
-    color: $tertiary-color;
-    transition: $default-transition-time;
-    svg {
-      margin-left: $default-svg-margin-left;
-    }
-  }
-
-  svg {
-    align-self: center;
-  }
-}
-
 .navbar {
   background-color: $container-background-color;
+  margin-bottom: $font-size-h1;
   display: flex;
   justify-content: space-between;
   padding: $default-padding;
@@ -108,7 +84,6 @@ ul, ol, .paragraph {
 
 .website-container {
   background-color: $container-background-color;
-  margin-top: $font-size-h1;
   padding: calc(2 * $default-padding) calc(2 * $default-padding) $default-padding calc(2 * $default-padding);
 }
 
@@ -116,51 +91,6 @@ ul, ol, .paragraph {
   margin-bottom: $default-font-size;
 }
 
-.input-error {
-  font-size: $small-font-size;
-  color: $danger-light-color;
-  margin-top: 2px;
-}
-
-.form-attribute {
-  display: flex;
-  flex-direction: column;
-
-  label {
-    margin-bottom: 2px;
-  }
-}
-
 .hints {
   @extend %hints;
 }
-
-.form-group {
-  display: flex;
-  justify-content: space-between;
-}
-
-.text-area {
-  display: flex;
-}
-
-.form-rating {
-
-  .name {
-    width: 30%;
-  }
-
-  .description {
-    width: 45%;
-  }
-
-  .minimum, .maximum, .step-width {
-    width: 25%;
-  }
-
-  .scale > h2 > sup {
-    font-weight: normal;
-  }
-}
-
-

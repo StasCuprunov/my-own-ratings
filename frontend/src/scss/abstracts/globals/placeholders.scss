@@ -28,15 +28,3 @@
     }
   }
 }
-
-%input-field {
-  font-size: $default-font-size;
-  background-color: $container-background-color;
-  border: 1px solid $background-color;
-  color: $primary-color;
-
-  &:focus-visible {
-    border: 1px solid $primary-color;
-    outline: none;
-  }
-}
