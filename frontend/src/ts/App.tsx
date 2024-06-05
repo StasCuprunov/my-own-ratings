@@ -24,6 +24,7 @@ import {NotAuthorizedPage} from "./general-page/NotAuthorizedPage";
 import {LoadRating} from "./rating/get/LoadRating";
 import {LoadStartPage} from "./start-page/LoadStartPage";
 import {LoadEditRating} from "./rating/form/edit/LoadEditRating";
+import {Footer} from "./component/organism/Footer";
 
 export const App = () => {
     const [authenticated, setAuthenticated] = useState(hasRecentlyLoggedIn());
@@ -49,6 +50,7 @@ export const App = () => {
                     />
                     <Route path={WEBSITE_ROUTING_NOT_FOUND} element={<NotFoundPage/>}/>
                 </Routes>
+                <Footer/>
             </BrowserRouter>
         </AuthContext.Provider>
     );

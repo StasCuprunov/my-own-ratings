@@ -3,7 +3,6 @@ import {useAuth} from "../../../context/AuthContext";
 
 import {getCreateRatingProps, getLogoutProps, getStartPageProps} from "./NavBarFunctions";
 import {NavBarButtonLink} from "../../atom/button/link/NavBarButtonLink";
-import {CSS_CLASS_NAV_BAR} from "../../../constant/CSSClassNameConstants";
 
 const logout: any = getLogoutProps();
 const startPage: any = getStartPageProps();
@@ -17,10 +16,10 @@ export const NavBar: FunctionComponent<any> = () => {
     }
 
     return (
-        <div className={CSS_CLASS_NAV_BAR}>
+        <nav>
             <NavBarButtonLink props={startPage}/>
             <NavBarButtonLink props={createRating}/>
             <NavBarButtonLink props={logout}/>
-        </div>
+        </nav>
     );
 };

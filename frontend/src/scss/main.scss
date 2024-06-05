@@ -62,16 +62,20 @@ ul, ol, p {
   margin: 0;
 }
 
-.navbar {
-  background-color: $container-background-color;
-  margin-bottom: $font-size-h1;
+
+ul, ol {
+  padding-left: 20px;
+}
+
+nav {
+  border-bottom: 1px solid $background-color;
   display: flex;
   justify-content: space-between;
-  padding: $default-padding;
   position: sticky;
   top: 0;
+  z-index: $z-index-nav;
 
-  button {
+  .MuiButton-root.MuiButton-outlined {
     color: $secondary-color;
     border-color: $secondary-color;
 
@@ -79,6 +83,29 @@ ul, ol, p {
       color: $tertiary-color;
       border-color: $tertiary-color;
     }
+  }
+}
+
+
+nav, footer {
+  background-color: $container-background-color;
+  $padding: calc(2 * $default-padding);
+  padding: $default-padding $padding $default-padding $padding;
+}
+
+footer {
+  border-top: 1px solid $background-color;
+
+  .title {
+    margin-bottom: 5px;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    font-size: $small-font-size;
   }
 }
 
