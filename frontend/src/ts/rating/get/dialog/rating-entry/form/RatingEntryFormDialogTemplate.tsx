@@ -19,7 +19,7 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
             <Dialog open={props.isOpen} onClose={props.handleClose}>
                 <form onSubmit={props.handleSubmit}>
                     <DialogTitle>
-                        {props.title}
+                        {props.title}{props.name && <i>{props.name}</i>}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>

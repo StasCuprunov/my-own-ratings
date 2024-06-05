@@ -37,24 +37,24 @@
     }
 
     .MuiButtonBase-root.cancel-button-dialog {
-      background-color: $cancel-color;
+      background-color: $warning-color;
       border: 1px solid $container-background-color;
 
       &:hover {
         background-color: $container-background-color;
-        color: $cancel-color;
-        border-color: $cancel-color;
+        color: $warning-color;
+        border-color: $warning-color;
       }
     }
 
-    .MuiButtonBase-root.create-button-dialog {
-      background-color: $create-color;
+    .MuiButtonBase-root.create-button-dialog, .MuiButtonBase-root.edit-button-dialog {
+      background-color: $success-color;
       border: 1px solid $container-background-color;
 
       &:hover {
         background-color: $container-background-color;
-        color: $create-color;
-        border-color: $create-color;
+        color: $success-color;
+        border-color: $success-color;
       }
     }
   }

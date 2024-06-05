@@ -8,7 +8,7 @@ export const EditRatingEntryDialog: FunctionComponent<any> = ({props}) => {
     const ratingEntryFormDialogProps: any = {
         ...props,
         isEdit: true,
-        title: "Edit the rating entry " + props.ratingEntry.name,
+        title: "Edit the rating entry ",
         icon: EditIcon,
         submitButton: {
             text: "Edit",

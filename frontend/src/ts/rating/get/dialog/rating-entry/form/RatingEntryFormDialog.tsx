@@ -114,6 +114,7 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
 
     const ratingEntryFormDialogProps: any = {
         title: props.title,
+        name: ratingEntry.name,
         submitButton: {
             ...props.submitButton,
             icon: props.icon
