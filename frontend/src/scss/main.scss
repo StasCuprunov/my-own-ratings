@@ -16,7 +16,7 @@ body {
 
 h1 {
   @include title($font-size-h1);
-  margin-bottom: calc(2 * $default-font-size);
+  margin-bottom: 40px;
 }
 
 h2 {
@@ -32,7 +32,7 @@ h4 {
 }
 
 h5 {
-  @include title(calc(1.5 * $default-font-size));
+  @include title($font-size-h5);
 }
 
 h6 {
@@ -44,7 +44,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h2, h3, h4, h5, h6 {
-  margin-bottom: $default-font-size;
+  margin-bottom: 20px;
 }
 
 input {
@@ -56,6 +56,10 @@ input {
   &:focus-visible {
     outline: 1px solid $primary-color;
   }
+}
+
+sup {
+  font-size: $small-font-size;
 }
 
 #root {
@@ -76,7 +80,7 @@ input {
     color: $tertiary-color;
     transition: $default-transition-time;
     svg {
-      margin-left: 5px;
+      margin-left: $default-svg-margin-left;
     }
   }
 
@@ -112,4 +116,17 @@ input {
 
 .container {
   margin-bottom: $default-font-size;
+}
+
+.input-error {
+  font-size: $small-font-size;
+  color: $danger-light-color;
+}
+
+.form-attribute {
+  margin-bottom: 10px;
+
+  label {
+    margin-right: 10px;
+  }
 }

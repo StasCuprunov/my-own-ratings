@@ -6,13 +6,18 @@ $secondary-color: #ffb700;
 $tertiary-color: #9abeff;
 
 $danger-color: #de1634;
+$danger-light-color: #f7193a;
 $create-color: #16de5c;
 $cancel-color: #de5c16;
 
 $default-font-size: 20px;
+$small-font-size: calc(0.75 * $default-font-size);
+
 $font-size-h1: calc(3 * $default-font-size);
+$font-size-h5: calc(1.5 * $default-font-size);
 $font-size-h6: calc(1.25 * $default-font-size);
 
 $default-padding: 20px;
-
 $default-transition-time: 250ms;
+
+$default-svg-margin-left: 5px;

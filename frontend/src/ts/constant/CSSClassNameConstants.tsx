@@ -9,3 +9,6 @@ export const CSS_CLASS_DELETE_BUTTON_DIALOG: string = "delete-button-dialog";
 export const CSS_CLASS_CANCEL_BUTTON_DIALOG: string = "cancel-button-dialog";
 export const CSS_CLASS_CREATE_BUTTON_DIALOG: string = "create-button-dialog";
 export const CSS_CLASS_EDIT_BUTTON_DIALOG: string = "edit-button-dialog";
+export const CSS_CLASS_INPUT_ERROR: string = "input-error";
+export const CSS_CLASS_FORM_ATTRIBUTE: string = "form-attribute";
+export const CSS_CLASS_DIALOG_HINTS: string = "dialog-hints";

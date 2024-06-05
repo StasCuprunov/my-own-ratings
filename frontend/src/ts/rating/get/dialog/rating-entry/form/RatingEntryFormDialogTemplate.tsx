@@ -8,6 +8,7 @@ import {CustomButton} from "../../../../../component/atom/button/CustomButton";
 import {FormForNumber} from "../../../../../component/molecule/form-attribute/FormForNumber";
 import {FormForInput} from "../../../../../component/molecule/form-attribute/FormForInput";
 import {getCancelButtonProps, getSubmitButtonProps} from "../../../../../utility/FormUtility";
+import {CSS_CLASS_CONTAINER, CSS_CLASS_DIALOG_HINTS} from "../../../../../constant/CSSClassNameConstants";
 
 export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) => {
     return (
@@ -22,10 +23,12 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            <FormForInput props={props.formForName}/>
-                            <FormForNumber props={props.formForValue}/>
-                            <div>
-                                <h4>Hints</h4>
+                            <div className={CSS_CLASS_CONTAINER}>
+                                <FormForInput props={props.formForName}/>
+                                <FormForNumber props={props.formForValue}/>
+                            </div>
+                            <div className={CSS_CLASS_DIALOG_HINTS}>
+                                <h2>Hints</h2>
                                 <ul>
                                     <li>
                                         <sup>1</sup>Required
