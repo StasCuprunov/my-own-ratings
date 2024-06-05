@@ -17,7 +17,7 @@ import {
     getLabelPasswordProps,
     getLabelSurnameProps
 } from "./RegistrationFunctions";
-import {WEBSITE_ROUTING_INDEX} from "../constant/routing/WebsiteRoutingConstants";
+import {WEBSITE_ROUTING_INDEX, WEBSITE_ROUTING_LOGIN} from "../constant/routing/WebsiteRoutingConstants";
 import {RegistrationPage} from "./RegistrationPage";
 import {handleChange} from "../utility/FormUtility";
 import {PageTemplate} from "../component/PageTemplate";
@@ -143,6 +143,12 @@ export const Registration: FunctionComponent<any> = ({props}) => {
         inputError: getInputErrorPasswordConfirmationProps(!isPasswordConfirmationValid)
     };
 
+    const loginLinkProps: any = {
+        textBefore: "Are you already registered?",
+        textLink: "Go to login",
+        to: WEBSITE_ROUTING_LOGIN
+    };
+
     const pageProps: any = {
         backendError: backendError,
         handleSubmit: handleSubmit,
@@ -150,7 +156,8 @@ export const Registration: FunctionComponent<any> = ({props}) => {
         formForFirstName: formForFirstName,
         formForSurname: formForSurname,
         formForPassword: formForPassword,
-        formForPasswordConfirmation: formForPasswordConfirmation
+        formForPasswordConfirmation: formForPasswordConfirmation,
+        loginLink: loginLinkProps
     };
 
     return (

@@ -14,6 +14,13 @@ textarea {
   height: calc(5 * $default-font-size);
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: $primary-color;
+  -webkit-box-shadow: 0 0 0 40rem $container-background-color inset;
+}
+
 .input-error {
   font-size: $small-font-size;
   color: $danger-light-color;
@@ -70,5 +77,25 @@ textarea {
     &:last-child {
       margin-bottom: 0;
     }
+  }
+}
+
+.form-registration {
+
+  button {
+    margin-bottom: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+  }
+
+  .form-attribute {
+    width: 35%;
   }
 }
