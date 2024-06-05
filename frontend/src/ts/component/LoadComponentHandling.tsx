@@ -1,6 +1,5 @@
 import React, {FunctionComponent} from "react";
 import {Error} from "../general-page/error/Error";
-import {WebsiteLoadingPage} from "../general-page/WebsiteLoadingPage";
 
 export const LoadComponentHandling: FunctionComponent<any> = ({Component, props, error}) =>  {
     if (error) {
@@ -14,6 +13,6 @@ export const LoadComponentHandling: FunctionComponent<any> = ({Component, props,
         );
     }
     return (
-        <WebsiteLoadingPage/>
+        <></>
     );
 }
