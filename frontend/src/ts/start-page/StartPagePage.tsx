@@ -19,20 +19,20 @@ const columns: any = getColumns();
 
 const initialState: any = customizePaginationDefault();
 
-export const StartPagePage: FunctionComponent<any> = ({name, ratingDTOs}) => {
+export const StartPagePage: FunctionComponent<any> = ({props}) => {
 
     return (
-        <div className={CSS_CLASS_WEBSITE_CONTAINER}>
-            <h1>Hello {name}!</h1>
+        <>
+            <h1>Hello {props.name}!</h1>
             <div className={CSS_CLASS_CONTAINER}>
                 <ButtonLinkWithIcon props={createButtonLink}/>
             </div>
             <div className={CSS_CLASS_CONTAINER}>
                 <h2>Your ratings</h2>
-                <DataGrid autoHeight rows={ratingDTOs} columns={columns} initialState={initialState}
+                <DataGrid autoHeight rows={props.ratingDTOs} columns={columns} initialState={initialState}
                           pageSizeOptions={PAGINATION_SIZE_LIST} disableRowSelectionOnClick
                 />
             </div>
-        </div>
+        </>
     );
 };

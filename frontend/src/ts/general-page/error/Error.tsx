@@ -3,6 +3,7 @@ import {getDescription, getReloadButtonProps} from "./ErrorFunctions";
 import {ErrorPage} from "./ErrorPage";
 import {useNavigate} from "react-router-dom";
 import {WEBSITE_ROUTING_REFRESH} from "../../constant/routing/WebsiteRoutingConstants";
+import {PageTemplate} from "../../component/PageTemplate";
 
 export const Error: FunctionComponent<any> = ({error}) => {
     console.log(error);
@@ -13,12 +14,13 @@ export const Error: FunctionComponent<any> = ({error}) => {
         navigate(WEBSITE_ROUTING_REFRESH);
     };
 
-    const reloadButtonProps: any = getReloadButtonProps(handleReloadOnClick);
-
-    const message: string = error.message;
-    const description: string = getDescription(error);
+    const pageProps: any = {
+        message: error.message,
+        description: getDescription(error),
+        reloadButtonProps: getReloadButtonProps(handleReloadOnClick)
+    };
 
     return (
-        <ErrorPage message={message} description={description} reloadButtonProps={reloadButtonProps}/>
+        <PageTemplate Component={ErrorPage} props={pageProps}/>
     );
 };

@@ -4,29 +4,20 @@ import {
     getLoginButtonLink
 } from "./RegistrationFunctions";
 import {CustomButton} from "../component/atom/button/CustomButton";
-import {Error} from "../general-page/error/Error";
 import {FormForInput} from "../component/molecule/form-attribute/FormForInput";
 
 const createAccountButton: any = getCreateAccountButtonProps();
 
-export const RegistrationPage: FunctionComponent<any> = ({backendError, handleSubmit, formForEmail, formForFirstName,
-                                                             formForSurname, formForPassword,
-                                                             formForPasswordConfirmation}) => {
-    if (backendError) {
-        return (
-            <Error error={backendError}/>
-        );
-    }
-
+export const RegistrationPage: FunctionComponent<any> = ({props}) => {
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <>
+            <form onSubmit={props.handleSubmit}>
                 <h1>Registration</h1>
-                <FormForInput props={formForEmail}/>
-                <FormForInput props={formForFirstName}/>
-                <FormForInput props={formForSurname}/>
-                <FormForInput props={formForPassword}/>
-                <FormForInput props={formForPasswordConfirmation}/>
+                <FormForInput props={props.formForEmail}/>
+                <FormForInput props={props.formForFirstName}/>
+                <FormForInput props={props.formForSurname}/>
+                <FormForInput props={props.formForPassword}/>
+                <FormForInput props={props.formForPasswordConfirmation}/>
                 <div>
                     <CustomButton props={createAccountButton}/>
                 </div>
@@ -43,6 +34,6 @@ export const RegistrationPage: FunctionComponent<any> = ({backendError, handleSu
                     </ul>
                 </div>
             </form>
-        </div>
+        </>
     );
 };

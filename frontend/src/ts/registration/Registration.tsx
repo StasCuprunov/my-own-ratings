@@ -20,6 +20,7 @@ import {
 import {WEBSITE_ROUTING_INDEX} from "../constant/routing/WebsiteRoutingConstants";
 import {RegistrationPage} from "./RegistrationPage";
 import {handleChange} from "../utility/FormUtility";
+import {PageTemplate} from "../component/PageTemplate";
 
 const labelEmail: any = getLabelEmailProps();
 const labelFirstName: any = getLabelFirstNameProps();
@@ -142,10 +143,17 @@ export const Registration: FunctionComponent<any> = ({props}) => {
         inputError: getInputErrorPasswordConfirmationProps(!isPasswordConfirmationValid)
     };
 
+    const pageProps: any = {
+        backendError: backendError,
+        handleSubmit: handleSubmit,
+        formForEmail: formForEmail,
+        formForFirstName: formForFirstName,
+        formForSurname: formForSurname,
+        formForPassword: formForPassword,
+        formForPasswordConfirmation: formForPasswordConfirmation
+    };
+
     return (
-        <RegistrationPage backendError={backendError} handleSubmit={handleSubmit} formForEmail={formForEmail}
-                          formForFirstName={formForFirstName} formForSurname={formForSurname}
-                          formForPassword={formForPassword} formForPasswordConfirmation={formForPasswordConfirmation}
-        />
+        <PageTemplate Component={RegistrationPage} props={pageProps}/>
     );
 };

@@ -32,6 +32,7 @@ import {
     CSS_CLASS_NAME,
     CSS_CLASS_STEP_WIDTH
 } from "../../constant/CSSClassNameConstants";
+import {PageTemplate} from "../../component/PageTemplate";
 
 const labelName: any = getLabelNameProps();
 const labelDescription: any = getLabelDescriptionProps();
@@ -211,7 +212,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
         className: CSS_CLASS_STEP_WIDTH
     };
 
-    const propsPage: any = {
+    const pageProps: any = {
         isEdit: isEdit,
         id: ratingDTO?.id,
         title: getTitle(isEdit),
@@ -227,6 +228,6 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     };
 
     return (
-        <RatingFormPage props={propsPage}/>
+        <PageTemplate Component={RatingFormPage} props={pageProps}/>
     );
 };

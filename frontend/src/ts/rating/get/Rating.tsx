@@ -3,6 +3,7 @@ import {RatingPage} from "./RatingPage";
 import {GridCellParams} from "@mui/x-data-grid";
 import {RatingEntry} from "../../model/rating-entry/RatingEntry";
 import {RatingEntryForDataGrid} from "../../model/rating-entry/RatingEntryForDataGrid";
+import {PageTemplate} from "../../component/PageTemplate";
 
 export const Rating: FunctionComponent<any> = ({props}) => {
     const id: string = props.id;
@@ -96,14 +97,21 @@ export const Rating: FunctionComponent<any> = ({props}) => {
         setIsOpen: setIsDeleteRatingEntryDialogOpen
     };
 
+    const pageProps: any = {
+        id: id,
+        name: props.name,
+        description: props.description,
+        rangeOfValues: props.rangeOfValues,
+        ratingEntriesForDataGrid: ratingEntriesForDataGrid,
+        backendError: backendError,
+        handleOnCellClick: handleOnCellClick,
+        deleteRatingDialogProps: deleteRatingDialogProps,
+        createRatingEntryDialogProps: createRatingEntryDialogProps,
+        editRatingEntryDialogProps: editRatingEntryDialogProps,
+        deleteRatingEntryDialogProps: deleteRatingEntryDialogProps
+    };
+
     return (
-        <RatingPage id={id} name={props.name} description={props.description}
-                    rangeOfValues={props.rangeOfValues} ratingEntriesForDataGrid={ratingEntriesForDataGrid}
-                    backendError={backendError} handleOnCellClick={handleOnCellClick}
-                    deleteRatingDialogProps={deleteRatingDialogProps}
-                    createRatingEntryDialogProps={createRatingEntryDialogProps}
-                    editRatingEntryDialogProps={editRatingEntryDialogProps}
-                    deleteRatingEntryDialogProps={deleteRatingEntryDialogProps}
-        />
+        <PageTemplate Component={RatingPage} props={pageProps}/>
     );
 };

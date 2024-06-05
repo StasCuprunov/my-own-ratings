@@ -1,14 +1,14 @@
 import {FunctionComponent} from "react";
 import {CustomButton} from "../../component/atom/button/CustomButton";
 
-export const ErrorPage: FunctionComponent<any> = ({message, description, reloadButtonProps}) => {
+export const ErrorPage: FunctionComponent<any> = ({props}) => {
     return (
-        <div>
-            <h1>{message}</h1>
+        <>
+            <h1>{props.message}</h1>
             <ul>
-                <li>{description}</li>
+                <li>{props.description}</li>
             </ul>
-            <CustomButton props={reloadButtonProps}/>
-        </div>
+            <CustomButton props={props.reloadButtonProps}/>
+        </>
     );
 };
