@@ -8,7 +8,8 @@ export const ButtonLinkWithIcon: FunctionComponent<any> = ({props}) => {
         variant: props.variant,
         text: props.text,
         icon: props.icon,
-        iconProps: props.iconProps
+        iconProps: props.iconProps,
+        className: props.className
     };
 
     return (

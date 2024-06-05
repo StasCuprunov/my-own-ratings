@@ -5,8 +5,14 @@ import {InputError} from "../../atom/form/input/InputError";
 import {CSS_CLASS_FORM_ATTRIBUTE} from "../../../constant/CSSClassNameConstants";
 
 export const FormForNumber: FunctionComponent<any> = ({props}) => {
+    let className: string = CSS_CLASS_FORM_ATTRIBUTE;
+
+    if (props.className) {
+        className += " " + props.className;
+    }
+
     return (
-      <div className={CSS_CLASS_FORM_ATTRIBUTE}>
+      <div className={className}>
           <Label props={props.label}/>
           <InputNumber props={props.inputNumber}/>
           {props.inputError &&

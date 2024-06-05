@@ -9,12 +9,33 @@
   }
 
   .MuiDialogTitle-root {
-    font-size: $font-size-h5;
+    @include title($font-size-h5);
     font-weight: bold;
   }
 
-  .MuiDialogContent-root > p {
-    font-size: $default-font-size;
+  .MuiDialogContent-root {
+
+    p {
+      font-size: $default-font-size;
+    }
+
+    .hints {
+      @extend %hints;
+
+      sup {
+        margin-right: 1px;
+      }
+
+      h2 {
+        @include title($font-size-h6);
+        margin-bottom: 10px;
+      }
+
+      ul {
+        padding-left: 10px;
+        font-size: $small-font-size;
+      }
+    }
   }
 
   .MuiPaper-root {
@@ -36,19 +57,5 @@
     .MuiButtonBase-root.create-button, .MuiButtonBase-root.edit-button {
       @extend %success-button;
     }
-  }
-}
-
-.dialog-hints {
-  h2 {
-    @include title($font-size-h6);
-    margin-bottom: 10px;
-  }
-
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding-left: 10px;
-    font-size: $small-font-size;
   }
 }

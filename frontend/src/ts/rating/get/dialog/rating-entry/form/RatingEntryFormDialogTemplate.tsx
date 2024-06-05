@@ -8,7 +8,7 @@ import {CustomButton} from "../../../../../component/atom/button/CustomButton";
 import {FormForNumber} from "../../../../../component/molecule/form-attribute/FormForNumber";
 import {FormForInput} from "../../../../../component/molecule/form-attribute/FormForInput";
 import {getCancelButtonProps, getSubmitButtonProps} from "../../../../../utility/FormUtility";
-import {CSS_CLASS_CONTAINER, CSS_CLASS_DIALOG_HINTS} from "../../../../../constant/CSSClassNameConstants";
+import {CSS_CLASS_CONTAINER, CSS_CLASS_HINTS} from "../../../../../constant/CSSClassNameConstants";
 
 export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) => {
     return (
@@ -19,7 +19,7 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
             <Dialog open={props.isOpen} onClose={props.handleClose}>
                 <form onSubmit={props.handleSubmit}>
                     <DialogTitle>
-                        {props.title}{props.name && <i>{props.name}</i>}
+                        {props.title}{props.oldName && <i>{props.oldName}</i>}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -27,7 +27,7 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                                 <FormForInput props={props.formForName}/>
                                 <FormForNumber props={props.formForValue}/>
                             </div>
-                            <div className={CSS_CLASS_DIALOG_HINTS}>
+                            <div className={CSS_CLASS_HINTS}>
                                 <h2>Hints</h2>
                                 <ul>
                                     <li>

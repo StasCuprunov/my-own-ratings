@@ -114,7 +114,7 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
 
     const ratingEntryFormDialogProps: any = {
         title: props.title,
-        name: ratingEntry.name,
+        oldName: (isEdit) ? defaultRatingEntry.name : null,
         submitButton: {
             ...props.submitButton,
             icon: props.icon

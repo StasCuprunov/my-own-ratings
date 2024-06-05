@@ -25,6 +25,13 @@ import {RatingFormPage} from "./RatingFormPage";
 import {RangeOfValues} from "../../model/RangeOfValues";
 import {editRating} from "./edit/EditRatingFunctions";
 import {mapRatingDTOToRating} from "../../utility/MapperUtility";
+import {
+    CSS_CLASS_DESCRIPTION,
+    CSS_CLASS_MAXIMUM,
+    CSS_CLASS_MINIMUM,
+    CSS_CLASS_NAME,
+    CSS_CLASS_STEP_WIDTH
+} from "../../constant/CSSClassNameConstants";
 
 const labelName: any = getLabelNameProps();
 const labelDescription: any = getLabelDescriptionProps();
@@ -56,8 +63,6 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     const [minimumValidation, setMinimumValidation] =
         useState(new InputValidation());
     const [maximumValidation, setMaximumValidation] =
-        useState(new InputValidation());
-    const [scaleValidation, setScaleValidation] =
         useState(new InputValidation());
 
     const [backendError, setBackendError] = useState(null);
@@ -122,7 +127,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
             condition = true;
             text = "With the specified attributes it does not build a scale.";
         }
-        setScaleValidation({
+        setMinimumValidation({
             condition: condition,
             text: text
         });
@@ -147,8 +152,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     };
 
     const areAttributesNotValid = () => {
-        return (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
-            scaleValidation.condition);
+        return (nameValidation.condition || minimumValidation.condition || maximumValidation.condition);
     };
 
     const isScale = (): boolean => {
@@ -177,29 +181,34 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     const formForName: any = {
         label: labelName,
         input: inputName,
-        inputError: nameValidation
+        inputError: nameValidation,
+        className: CSS_CLASS_NAME
     };
 
     const formForDescription: any = {
         label: labelDescription,
-        textArea: textAreaDescription
+        textArea: textAreaDescription,
+        className: CSS_CLASS_DESCRIPTION
     };
 
     const formForMinimum: any = {
         label: labelMinimum,
         inputNumber: inputMinimum,
-        inputError: minimumValidation
+        inputError: minimumValidation,
+        className: CSS_CLASS_MINIMUM
     };
 
     const formForMaximum: any = {
         label: labelMaximum,
         inputNumber: inputMaximum,
-        inputError: maximumValidation
+        inputError: maximumValidation,
+        className: CSS_CLASS_MAXIMUM
     };
 
     const formForStepWidth: any = {
         label: labelStepWidth,
-        inputNumber: inputStepWidth
+        inputNumber: inputStepWidth,
+        className: CSS_CLASS_STEP_WIDTH
     };
 
     const propsPage: any = {
@@ -213,7 +222,6 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
         formForMaximum: formForMaximum,
         formForStepWidth: formForStepWidth,
         handleSubmit: handleSubmit,
-        scaleValidation: scaleValidation,
         backendError: backendError
     };
 

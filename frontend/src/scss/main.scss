@@ -21,7 +21,7 @@ h1 {
 }
 
 h2 {
-  @include title(calc(2.5 * $default-font-size));
+  @include title(calc(2.25 * $default-font-size));
 }
 
 h3 {
@@ -48,15 +48,12 @@ h2, h3, h4, h5, h6 {
   margin-bottom: 20px;
 }
 
-input {
-  font-size: $default-font-size;
-  background-color: $container-background-color;
-  border: 1px solid $background-color;
-  color: $primary-color;
+input, textarea {
+  @extend %input-field;
+}
 
-  &:focus-visible {
-    outline: 1px solid $primary-color;
-  }
+textarea {
+  height: calc(5 * $default-font-size);
 }
 
 sup {
@@ -67,7 +64,7 @@ sup {
   width: 65%;
 }
 
-.paragraph {
+ul, ol, .paragraph {
   margin: 0;
 }
 
@@ -112,7 +109,7 @@ sup {
 .website-container {
   background-color: $container-background-color;
   margin-top: $font-size-h1;
-  padding: calc(2 * $default-padding) $default-padding $default-padding $default-padding;
+  padding: calc(2 * $default-padding) calc(2 * $default-padding) $default-padding calc(2 * $default-padding);
 }
 
 .container {
@@ -122,12 +119,48 @@ sup {
 .input-error {
   font-size: $small-font-size;
   color: $danger-light-color;
+  margin-top: 2px;
 }
 
 .form-attribute {
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 
   label {
-    margin-right: 10px;
+    margin-bottom: 2px;
   }
 }
+
+.hints {
+  @extend %hints;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-area {
+  display: flex;
+}
+
+.form-rating {
+
+  .name {
+    width: 30%;
+  }
+
+  .description {
+    width: 45%;
+  }
+
+  .minimum, .maximum, .step-width {
+    width: 25%;
+  }
+
+  .scale > h2 > sup {
+    font-weight: normal;
+  }
+}
+
+

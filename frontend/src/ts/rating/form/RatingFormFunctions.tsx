@@ -2,9 +2,8 @@ import {RangeOfValues} from "../../model/RangeOfValues";
 import {CreateButton} from "../../component/atom/button/CreateButton";
 import {EditButton} from "../../component/atom/button/EditButton";
 import {CancelButtonLink} from "../../component/atom/button/link/CancelButtonLink";
-import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
+import {getWebsiteRoutingRatingsById, WEBSITE_ROUTING_RATINGS} from "../../constant/routing/WebsiteRoutingConstants";
 import {getInputNumberProps, getInputTextProps} from "../../utility/FormUtility";
-import {goToRatingsButtonProps} from "../get/RatingFunctions";
 import {CSS_CLASS_BUTTON_GROUP} from "../../constant/CSSClassNameConstants";
 
 export const getLabelNameProps = (): any => {
@@ -100,7 +99,7 @@ export const getButtons = (isEdit: boolean, ratingId: string) => {
     return (
         <div className={CSS_CLASS_BUTTON_GROUP}>
             <CreateButton/>
-            <CancelButtonLink props={goToRatingsButtonProps()}/>
+            <CancelButtonLink to={WEBSITE_ROUTING_RATINGS}/>
         </div>
     );
 };
