@@ -1,8 +1,10 @@
+import ReplayIcon from '@mui/icons-material/Replay';
+
 export const getReloadButtonProps = (handleClick: Function) => {
     return {
-        type: "button",
         text: "Reload page",
-        onClick: handleClick
+        onClick: handleClick,
+        icon: ReplayIcon
     };
 };
 export const getDescription = (error: any): string => {

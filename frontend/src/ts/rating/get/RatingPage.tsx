@@ -10,8 +10,7 @@ import {EditRatingEntryDialog} from "./dialog/rating-entry/form/EditRatingEntryD
 import {DeleteRatingEntryDialog} from "./dialog/rating-entry/delete/DeleteRatingEntryDialog";
 import {
     CSS_CLASS_BUTTON_GROUP,
-    CSS_CLASS_CONTAINER,
-    CSS_CLASS_PARAGRAPH
+    CSS_CLASS_CONTAINER
 } from "../../constant/CSSClassNameConstants";
 import {ButtonLinkWithIcon} from "../../component/atom/button/link/ButtonLinkWithIcon";
 import {ScaleInformationTemplate} from "./ScaleInformationTemplate";
@@ -25,7 +24,7 @@ export const RatingPage: FunctionComponent<any> = ({props}) => {
         <>
             <div className={CSS_CLASS_CONTAINER}>
                 <h1>Rating: {props.name}</h1>
-                <p className={CSS_CLASS_PARAGRAPH}>{props.description}</p>
+                <p>{props.description}</p>
             </div>
             <div className={CSS_CLASS_CONTAINER}>
                 <h2>Scale information</h2>
