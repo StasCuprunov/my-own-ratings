@@ -23,7 +23,7 @@ export const RatingPage: FunctionComponent<any> = ({props}) => {
     return (
         <>
             <div className={CSS_CLASS_CONTAINER}>
-                <h1>Rating: {props.name}</h1>
+                <h1>My rating <i>{props.name}</i></h1>
                 <p>{props.description}</p>
             </div>
             <div className={CSS_CLASS_CONTAINER}>

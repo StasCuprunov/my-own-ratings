@@ -13,7 +13,7 @@ export const DeleteRatingDialogTemplate: FunctionComponent<any> = ({props}) => {
             <CustomButton props={props.deleteOpenButton}/>
             <Dialog open={props.isOpen} onClose={props.handleClose}>
                 <DialogTitle>
-                    Do you really want to delete the rating?
+                    Do you really want to delete the rating <i>{props.name}</i>?
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>

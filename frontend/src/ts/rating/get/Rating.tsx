@@ -66,6 +66,7 @@ export const Rating: FunctionComponent<any> = ({props}) => {
 
     const deleteRatingDialogProps: any = {
         ...dialogProps,
+        name: props.name,
         isOpen: isDeleteRatingDialogOpen,
         setIsOpen: setIsDeleteRatingDialogOpen
     };

@@ -31,6 +31,7 @@ export const DeleteRatingDialog: FunctionComponent<any> = ({props}) => {
     const deleteOpenButton: any = getDeleteButtonProps("rating", handleOpenDialog);
 
     const templateProps: any = {
+        name: props.name,
         isOpen: props.isOpen,
         handleClose: handleClose,
         deleteOpenButton: deleteOpenButton,
