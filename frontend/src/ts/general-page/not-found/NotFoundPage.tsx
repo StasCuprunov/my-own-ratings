@@ -1,5 +1,5 @@
 import {FunctionComponent} from "react";
-import {CSS_CLASS_CONTAINER, CSS_CLASS_WEBSITE_CONTAINER} from "../constant/CSSClassNameConstants";
+import {CSS_CLASS_CONTAINER, CSS_CLASS_WEBSITE_CONTAINER} from "../../constant/CSSClassNameConstants";
 
 export const NotFoundPage: FunctionComponent<any> = () => {
     return (

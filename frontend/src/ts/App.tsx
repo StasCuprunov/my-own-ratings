@@ -18,9 +18,8 @@ import {
 import {AuthContext} from "./context/AuthContext";
 import {hasRecentlyLoggedIn} from "./utility/CookieUtility";
 import {NavBar} from "./component/organism/navbar/NavBar";
-import {NotFoundPage} from "./general-page/NotFoundPage";
+import {NotFound} from "./general-page/not-found/NotFound";
 import {LoadCreateRating} from "./rating/form/create/LoadCreateRating";
-import {NotAuthorizedPage} from "./general-page/NotAuthorizedPage";
 import {LoadRating} from "./rating/get/LoadRating";
 import {LoadStartPage} from "./start-page/LoadStartPage";
 import {LoadEditRating} from "./rating/form/edit/LoadEditRating";
@@ -36,19 +35,12 @@ export const App = () => {
                     <Route path={WEBSITE_ROUTING_LOGIN} element={<Login />} />)
                     <Route path={WEBSITE_ROUTING_LOGOUT} element={<Logout />}/>
                     <Route path={WEBSITE_ROUTING_INDEX} element={authenticated ? <LoadStartPage/> : <Login/>}/>
-                    <Route path={WEBSITE_ROUTING_RATINGS} element={authenticated ?
-                        <LoadStartPage/> : <NotAuthorizedPage/>}
-                    />
-                    <Route path={WEBSITE_ROUTING_REGISTRATION} element={<LoadRegistration />} />
-                    <Route path={WEBSITE_ROUTING_RATINGS_CREATE}
-                           element={authenticated ? <LoadCreateRating/> : <NotAuthorizedPage/>}/>
-                    <Route path={WEBSITE_ROUTING_RATINGS_BY_ID}
-                           element={authenticated ? <LoadRating/> : <NotAuthorizedPage/>}
-                    />
-                    <Route path={WEBSITE_ROUTING_RATINGS_EDIT_BY_ID}
-                        element={authenticated ? <LoadEditRating/> : <NotAuthorizedPage/>}
-                    />
-                    <Route path={WEBSITE_ROUTING_NOT_FOUND} element={<NotFoundPage/>}/>
+                    <Route path={WEBSITE_ROUTING_RATINGS} element={<LoadStartPage/>} />
+                    <Route path={WEBSITE_ROUTING_REGISTRATION} element={<LoadRegistration/>} />
+                    <Route path={WEBSITE_ROUTING_RATINGS_CREATE} element={<LoadCreateRating/>} />
+                    <Route path={WEBSITE_ROUTING_RATINGS_BY_ID} element={<LoadRating/>} />
+                    <Route path={WEBSITE_ROUTING_RATINGS_EDIT_BY_ID} element={<LoadEditRating/>} />
+                    <Route path={WEBSITE_ROUTING_NOT_FOUND} element={<NotFound/>}/>
                 </Routes>
                 <Footer/>
             </BrowserRouter>

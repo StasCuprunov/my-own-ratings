@@ -1,4 +1,4 @@
-import {FunctionComponent, useState} from "react";
+import {FunctionComponent, useEffect, useState} from "react";
 import {getEmailLabelProps, getPasswordLabelProps, login} from "./LoginFunctions";
 import {getInputEmailProps, getInputPasswordProps} from "./LoginFunctions";
 import {LoginPage} from "./LoginPage";
@@ -9,6 +9,7 @@ import {WEBSITE_ROUTING_INDEX, WEBSITE_ROUTING_REGISTRATION} from "../../constan
 import {setCookieHasLoggedInRecentlyAsRole} from "../../utility/CookieUtility";
 import {handleChange} from "../../utility/FormUtility";
 import {PageTemplate} from "../../component/PageTemplate";
+import {setSiteTitle} from "../../utility/WebsiteUtility";
 
 const labelEmail: any = getEmailLabelProps();
 const labelPassword: any = getPasswordLabelProps();
@@ -18,6 +19,10 @@ export const Login: FunctionComponent<any> = () => {
     const [loginData, setLoginData] = useState(new LoginModel());
     const [backendError, setBackendError] = useState(null);
     const {setAuthenticated} = useAuth();
+
+    useEffect(() => {
+        setSiteTitle("login");
+    }, []);
 
     const handleLoginDataChange = (field: string) => {
         return handleChange(field, setLoginData);
