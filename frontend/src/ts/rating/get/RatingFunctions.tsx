@@ -64,7 +64,8 @@ export const getColumns = (): GridColDef[] => {
             sortable: false,
             filterable: false,
             renderCell: editRatingEntryButton,
-            flex: 1
+            flex: 1,
+            minWidth: 225
         },
         {
             field: "delete",
@@ -72,7 +73,8 @@ export const getColumns = (): GridColDef[] => {
             sortable: false,
             filterable: false,
             renderCell: deleteRatingEntryButton,
-            flex: 1
+            flex: 1,
+            minWidth: 245
         }
     ];
 };
