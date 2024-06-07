@@ -12,6 +12,7 @@ input, textarea {
 
 textarea {
   height: calc(5 * $default-font-size);
+  max-width: 100%;
 }
 
 input:-webkit-autofill,
