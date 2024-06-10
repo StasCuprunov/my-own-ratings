@@ -56,7 +56,9 @@ input:-webkit-autofill:focus {
 }
 
 .ant-input-number {
-  border-radius: 0;
+  $input-border-radius: 0;
+
+  border-radius: $input-border-radius;
   width: 100%;
 
   &:hover, &:focus, &:focus-within {
@@ -71,7 +73,7 @@ input:-webkit-autofill:focus {
   .ant-input-number-handler-up, .ant-input-number-handler.ant-input-number-handler-down {
     background-color: $container-background-color;
     border-color: $primary-color;
-    border-radius: 0;
+    border-radius: $input-border-radius;
   }
 
   .ant-input-number-input-wrap {
