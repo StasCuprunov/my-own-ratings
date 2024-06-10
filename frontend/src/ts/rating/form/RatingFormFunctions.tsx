@@ -55,19 +55,19 @@ export const getDefaultRangeOfValues = (): RangeOfValues => {
     return new RangeOfValues(undefined, 0, 5, 0.5);
 };
 export const getInputMinimum = (minFromInput: number, maxFromInput: number, stepFromInput: number,
-                                value: number, handleChange: any, handleBlur: any): any => {
-    return getInputNumberProps("minimum", true, minFromInput, maxFromInput, stepFromInput, value,
-        handleChange, handleBlur);
+                                value: number, handleChange: any, handleBlur: any, precision: number): any => {
+    return getInputNumberProps("minimum", true, minFromInput, maxFromInput, stepFromInput,
+        value, handleChange, handleBlur, precision);
 };
-export const getInputMaximum = (minFromInput: number, maxFromInput: number, stepFromInput: number, value: number,
-                                handleChange: any, handleBlur: any): any => {
-    return getInputNumberProps("maximum", true, minFromInput, maxFromInput, stepFromInput, value,
-        handleChange, handleBlur);
+export const getInputMaximum = (minFromInput: number, maxFromInput: number, stepFromInput: number,
+                                value: number, handleChange: any, handleBlur: any, precision: number): any => {
+    return getInputNumberProps("maximum", true, minFromInput, maxFromInput, stepFromInput,
+        value, handleChange, handleBlur, precision);
 };
-export const getInputStepWidth = (minFromInput: number, maxFromInput: number, stepFromInput: number, value: number,
-                                  handleChange: any, handleBlur: any): any => {
+export const getInputStepWidth = (minFromInput: number, maxFromInput: number, stepFromInput: number,
+                                  value: number, handleChange: any, handleBlur: any, precision: number): any => {
     return getInputNumberProps("step-width", true, minFromInput, maxFromInput, stepFromInput, value,
-        handleChange, handleBlur);
+        handleChange, handleBlur, precision);
 };
 
 export const getScaleTitle = (isEdit: boolean) => {

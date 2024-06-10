@@ -12,6 +12,13 @@ export const handleChange: any = (field: string, setObject: any) => {
     };
 };
 
+export const handleChangeWithValue: any = (field: string, value: number, setObject: any) => {
+    setObject((prev: any) => ({
+        ...prev,
+        [field]: value
+    }));
+};
+
 export const getInputTextProps = (name: string, value: string, maxLength: number, handleChange: any,
                                   handleBlur: any): any => {
     return {
@@ -26,7 +33,7 @@ export const getInputTextProps = (name: string, value: string, maxLength: number
 };
 
 export const getInputNumberProps = (name: string, required: boolean, min: number, max: number, step: number,
-                                    value: number, handleChange: any, handleBlur?: any): any => {
+                                    value: number, handleChange: any, handleBlur?: any, precision?: number): any => {
     return {
         name: name,
         required: required,
@@ -36,7 +43,8 @@ export const getInputNumberProps = (name: string, required: boolean, min: number
         step: step,
         value: value,
         onChange: handleChange,
-        onBlur: handleBlur
+        onBlur: handleBlur,
+        precision: precision
     };
 };
 export const getCancelButtonProps = (handleOnClick: Function) => {

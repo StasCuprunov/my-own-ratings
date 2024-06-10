@@ -30,7 +30,8 @@ export const getLabelValueProps = (): any => {
     };
 };
 
-export const getInputValueProps = (min: number, max: number, step: number, value: number, handleChange: any): any => {
+export const getInputValueProps = (min: number, max: number, step: number, value: number,
+                                   handleChange: any): any => {
     return getInputNumberProps("value", true, min, max, step, value, handleChange);
 };
 

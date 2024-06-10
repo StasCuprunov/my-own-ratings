@@ -2,7 +2,7 @@ import {FunctionComponent, useEffect, useMemo, useState} from "react";
 import {RatingEntryFormDialogTemplate} from "./RatingEntryFormDialogTemplate";
 import {RangeOfValues} from "../../../../../model/RangeOfValues";
 import {InputValidation} from "../../../../../model/InputValidation";
-import {handleChange} from "../../../../../utility/FormUtility";
+import {handleChange, handleChangeWithValue} from "../../../../../utility/FormUtility";
 import {
     createRatingEntry,
     editRatingEntry,
@@ -20,6 +20,7 @@ const labelName: any = getLabelNameProps();
 const labelValue: any = getLabelValueProps();
 
 export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
+    const attributeValue: string = "value";
     const isEdit: boolean = props.isEdit;
     const rangeOfValues: RangeOfValues = props.rangeOfValues;
     const defaultRatingEntry: RatingEntry = props.ratingEntry;
@@ -50,8 +51,15 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
         });
     };
 
-    const handleRatingEntryChange = (field: string) => {
+    const handleRatingEntryChange = (field: string, value?: any) => {
+        if (value) {
+            handleChangeWithValue(field, value, setRatingEntry);
+        }
         return handleChange(field, setRatingEntry);
+    };
+
+    const handleValueChange = (value: number) => {
+        return handleRatingEntryChange(attributeValue, value);
     };
 
     const handleNameBlur = () => {
@@ -99,7 +107,7 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
             handleNameBlur), [ratingEntry.name]);
     const inputValue: any = useMemo(() =>
         getInputValueProps(rangeOfValues.minimum, rangeOfValues.maximum, rangeOfValues.stepWidth, ratingEntry.value,
-            handleRatingEntryChange("value")), [ratingEntry.value]);
+            handleValueChange), [ratingEntry.value]);
 
     const formForName: any = {
         label: labelName,

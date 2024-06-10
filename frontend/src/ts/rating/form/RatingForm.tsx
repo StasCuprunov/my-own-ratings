@@ -17,7 +17,7 @@ import {useNavigate} from "react-router-dom";
 import {getSmallestPositiveNumberWithNumberOfDecimalDigits} from "../../utility/MathUtility";
 import {Rating} from "../../model/Rating";
 import {InputValidation} from "../../model/InputValidation";
-import {handleChange} from "../../utility/FormUtility";
+import {handleChange, handleChangeWithValue} from "../../utility/FormUtility";
 import {RatingDTO} from "../../dto/RatingDTO";
 import {createRating} from "./create/CreateRatingFunctions";
 import {getWebsiteRoutingRatingsById} from "../../constant/routing/WebsiteRoutingConstants";
@@ -72,8 +72,18 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
         return handleChange(field, setRating);
     };
 
-    const handleRangeOfValuesChange = (field: string) => {
-        return handleChange(field, setRangeOfValues);
+    const handleRangeOfValuesChange = (field: string, value: number) => {
+        return handleChangeWithValue(field, value, setRangeOfValues);
+    };
+
+    const handleMinimumChange = (value: number) => {
+        return handleRangeOfValuesChange("minimum", value);
+    };
+    const handleMaximumChange = (value: number) => {
+        return handleRangeOfValuesChange("maximum", value);
+    };
+    const handleStepWidthChange = (value: number) => {
+        return handleRangeOfValuesChange("stepWidth", value);
     };
 
     const handleNameBlur = () => {
@@ -171,13 +181,13 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
         props.maximumLengthOfDescription, handleRatingChange("description")), [rating.description]);
     const inputMinimum: any = useMemo(() =>
         getInputMinimum(rangeOfValuesMinimumBorder, rangeOfValuesMaximumBorder, step, rangeOfValues.minimum,
-            handleRangeOfValuesChange("minimum"), handleMinimumBlur), [rangeOfValues.minimum]);
+            handleMinimumChange, handleMinimumBlur, maximumNumberOfDecimalDigits), [rangeOfValues.minimum]);
     const inputMaximum: any = useMemo(() =>
         getInputMaximum(rangeOfValuesMinimumBorder, rangeOfValuesMaximumBorder, step, rangeOfValues.maximum,
-            handleRangeOfValuesChange("maximum"), handleMaximumBlur), [rangeOfValues.maximum]);
+            handleMaximumChange, handleMaximumBlur, maximumNumberOfDecimalDigits), [rangeOfValues.maximum]);
     const inputStepWidth: any = useMemo(() =>
         getInputStepWidth(step, rangeOfValuesMaximumBorder, step, rangeOfValues.stepWidth,
-            handleRangeOfValuesChange("stepWidth"), handleStepWidthBlur), [rangeOfValues.stepWidth]);
+            handleStepWidthChange, handleStepWidthBlur, maximumNumberOfDecimalDigits), [rangeOfValues.stepWidth]);
 
     const formForName: any = {
         label: labelName,

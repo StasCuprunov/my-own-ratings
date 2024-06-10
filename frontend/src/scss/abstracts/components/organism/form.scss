@@ -1,12 +1,21 @@
 input, textarea {
-  font-size: $default-font-size;
-  background-color: $container-background-color;
-  border: 1px solid $background-color;
   color: $primary-color;
 
   &:focus-visible {
     border: 1px solid $primary-color;
     outline: none;
+  }
+}
+
+input, textarea, .ant-input-number {
+  font-size: $default-font-size;
+  background-color: $container-background-color;
+  border: 1px solid $background-color;
+}
+
+input, textarea {
+  &:hover {
+    border: 1px solid $primary-color;
   }
 }
 
@@ -44,6 +53,61 @@ input:-webkit-autofill:focus {
 
 .text-area {
   display: flex;
+}
+
+.ant-input-number {
+  border-radius: 0;
+  width: 100%;
+
+  &:hover, &:focus, &:focus-within {
+    background-color: $container-background-color;
+    transition: none;
+  }
+
+  &:focus, &:focus-within {
+    box-shadow: none;
+  }
+
+  .ant-input-number-handler-up, .ant-input-number-handler.ant-input-number-handler-down {
+    background-color: $container-background-color;
+    border-color: $primary-color;
+    border-radius: 0;
+  }
+
+  .ant-input-number-input-wrap {
+    transition: none;
+  }
+
+  .ant-input-number-input-wrap > input, .ant-input-number-handler-up-inner, .ant-input-number-handler-down-inner {
+    color: $primary-color;
+  }
+}
+
+.ant-input-number.ant-input-number-focused {
+  $button-background-color: $container-background-color;
+
+  .ant-input-number-handler-wrap {
+    background-color: $button-background-color;
+    border-radius: 0;
+  }
+
+  .ant-input-number-handler {
+    &:active {
+      .ant-input-number-handler-up-inner, .ant-input-number-handler-down-inner {
+        color: $tertiary-color;
+      }
+    }
+  }
+
+  .ant-input-number-handler-down {
+    $transition: all 0.2 linear;
+    transition: $transition;
+
+    &:active {
+      background-color: $button-background-color;
+      transition: $transition;
+    }
+  }
 }
 
 .form-rating {
