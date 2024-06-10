@@ -31,6 +31,8 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
 
     const [nameValidation, setNameValidation] =
         useState(new InputValidation());
+    const [valueValidation, setValueValidation] =
+        useState(new InputValidation());
 
     useEffect(() => {
         setRatingEntry(defaultRatingEntry);
@@ -80,6 +82,26 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
         });
     };
 
+    const handleValueBlur = () => {
+        let value: number =ratingEntry.value;
+        let condition: boolean = false;
+        let text: string = "";
+
+        if (rangeOfValues.minimum > value) {
+            condition = true;
+            text = "Value is too small."
+        }
+        else if (rangeOfValues.maximum < value) {
+            condition = true;
+            text = "Value is too big."
+        }
+
+        setValueValidation({
+            condition: condition,
+            text: text
+        });
+    };
+
     const handleSubmit = async (event: any) => {
         event.preventDefault();
 
@@ -106,8 +128,8 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
         getInputNameProps(ratingEntry.name, props.maximumLengthOfName, handleRatingEntryChange("name"),
             handleNameBlur), [ratingEntry.name]);
     const inputValue: any = useMemo(() =>
-        getInputValueProps(rangeOfValues.minimum, rangeOfValues.maximum, rangeOfValues.stepWidth, ratingEntry.value,
-            handleValueChange), [ratingEntry.value]);
+        getInputValueProps(rangeOfValues.stepWidth, ratingEntry.value, handleValueChange,
+            handleValueBlur), [ratingEntry.value]);
 
     const formForName: any = {
         label: labelName,
@@ -117,7 +139,8 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
 
     const formForValue: any = {
         label: labelValue,
-        inputNumber: inputValue
+        inputNumber: inputValue,
+        inputError: valueValidation
     };
 
     const ratingEntryFormDialogProps: any = {

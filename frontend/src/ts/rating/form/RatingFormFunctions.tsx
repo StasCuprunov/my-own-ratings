@@ -54,20 +54,17 @@ export const getTextAreaDescription = (value: string, maxLength: number, handleC
 export const getDefaultRangeOfValues = (): RangeOfValues => {
     return new RangeOfValues(undefined, 0, 5, 0.5);
 };
-export const getInputMinimum = (minFromInput: number, maxFromInput: number, stepFromInput: number,
-                                value: number, handleChange: any, handleBlur: any, precision: number): any => {
-    return getInputNumberProps("minimum", true, minFromInput, maxFromInput, stepFromInput,
-        value, handleChange, handleBlur, precision);
+export const getInputMinimum = (stepFromInput: number, value: number, handleChange: any, handleBlur: any,
+                                precision: number): any => {
+    return getInputNumberProps("minimum", stepFromInput, value, handleChange, handleBlur, precision);
 };
-export const getInputMaximum = (minFromInput: number, maxFromInput: number, stepFromInput: number,
-                                value: number, handleChange: any, handleBlur: any, precision: number): any => {
-    return getInputNumberProps("maximum", true, minFromInput, maxFromInput, stepFromInput,
-        value, handleChange, handleBlur, precision);
+export const getInputMaximum = (stepFromInput: number, value: number, handleChange: any, handleBlur: any,
+                                precision: number): any => {
+    return getInputNumberProps("maximum", stepFromInput, value, handleChange, handleBlur, precision);
 };
-export const getInputStepWidth = (minFromInput: number, maxFromInput: number, stepFromInput: number,
-                                  value: number, handleChange: any, handleBlur: any, precision: number): any => {
-    return getInputNumberProps("step-width", true, minFromInput, maxFromInput, stepFromInput, value,
-        handleChange, handleBlur, precision);
+export const getInputStepWidth = (stepFromInput: number, value: number, handleChange: any, handleBlur: any,
+                                  precision: number): any => {
+    return getInputNumberProps("step-width", stepFromInput, value, handleChange, handleBlur, precision);
 };
 
 export const getScaleTitle = (isEdit: boolean) => {

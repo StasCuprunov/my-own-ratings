@@ -34,6 +34,8 @@ import {
 } from "../../constant/CSSClassNameConstants";
 import {PageTemplate} from "../../component/PageTemplate";
 
+const exactMath = require("exact-math");
+
 const labelName: any = getLabelNameProps();
 const labelDescription: any = getLabelDescriptionProps();
 const labelMinimum: any = getLabelMinimumProps();
@@ -61,9 +63,12 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
 
     const [nameValidation, setNameValidation] =
         useState(new InputValidation());
+
     const [minimumValidation, setMinimumValidation] =
         useState(new InputValidation());
     const [maximumValidation, setMaximumValidation] =
+        useState(new InputValidation());
+    const [stepWidthValidation, setStepWidthValidation] =
         useState(new InputValidation());
 
     const [backendError, setBackendError] = useState(null);
@@ -99,49 +104,10 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
         });
     };
 
-    const handleMinimumBlur = () => {
-        let condition: boolean = false;
-        let text: string = "";
-        if (isMinimumTooBig()) {
-            condition = true;
-            text = "Minimum must be really smaller than maximum.";
-        }
-        setMinimumValidation({
-            condition: condition,
-            text: text
-        });
-        checkIfTheValuesCreateAScale();
-    };
-
-    const handleMaximumBlur = () => {
-        let condition: boolean = false;
-        let text: string = "";
-        if (isMinimumTooBig()) {
-            condition = true;
-            text = "Maximum must be really bigger than minimum.";
-        }
-        setMaximumValidation({
-            condition: condition,
-            text: text
-        });
-        checkIfTheValuesCreateAScale();
-    };
-
-    const handleStepWidthBlur = () => {
-        checkIfTheValuesCreateAScale();
-    };
-
-    const checkIfTheValuesCreateAScale = () => {
-        let condition: boolean = false;
-        let text: string = "";
-        if (!isScale()) {
-            condition = true;
-            text = "With the specified attributes it does not build a scale.";
-        }
-        setMinimumValidation({
-            condition: condition,
-            text: text
-        });
+    const handleScaleBlur = () => {
+        setMaximumError();
+        setStepWidthError();
+        setMinimumError();
     };
 
     const handleSubmit = async (event: any) => {
@@ -163,16 +129,120 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     };
 
     const areAttributesNotValid = () => {
-        return (nameValidation.condition || minimumValidation.condition || maximumValidation.condition);
+        return (nameValidation.condition || minimumValidation.condition || maximumValidation.condition ||
+            stepWidthValidation.condition);
     };
 
     const isScale = (): boolean => {
-        return Number.isInteger((rangeOfValues.maximum - rangeOfValues.minimum) / rangeOfValues.stepWidth);
+        return Number.isInteger(
+            exactMath.div(
+                exactMath.sub(rangeOfValues.maximum, rangeOfValues.minimum),
+                rangeOfValues.stepWidth)
+        );
     };
 
-    const isMinimumTooBig = (): boolean => {
-        return (rangeOfValues.minimum - rangeOfValues.maximum) >= 0;
+    const isMinimumBiggerThanMaximum = (): boolean => {
+        return exactMath.sub(rangeOfValues.minimum, rangeOfValues.maximum) >= 0;
     };
+
+    const setMinimumError = () => {
+        let condition: boolean = false;
+        let text: string = "";
+
+        if (!isMinimumExistent()) {
+            condition = true;
+            text = "Minimum is required.";
+        }
+        else if (isValueTooSmall(rangeOfValues.minimum)) {
+            condition = true;
+            text = "Minimum must be greater or equal " + rangeOfValuesMinimumBorder + ".";
+        }
+        else if (isValueTooBig(rangeOfValues.minimum)) {
+            condition = true;
+            text = "Minimum must be smaller or equal " + rangeOfValuesMaximumBorder + ".";
+        }
+
+        if (!condition && isMaximumExistent() && isMinimumBiggerThanMaximum()) {
+            condition = true;
+            text = "Minimum must be really smaller than maximum.";
+        }
+
+        if (!condition && isMaximumExistent() && isStepWidthExistent() && !isScale()) {
+            condition = true;
+            text = "With the specified attributes it does not build a scale.";
+        }
+
+        setMinimumValidation({
+            condition: condition,
+            text: text
+        });
+    };
+
+    const setMaximumError = () => {
+        let condition: boolean = false;
+        let text: string = "";
+
+        if (!isMaximumExistent()) {
+            condition = true;
+            text = "Maximum is required.";
+        }
+        else if (isValueTooSmall(rangeOfValues.maximum)) {
+            condition = true;
+            text = "Maximum must be greater equal " + rangeOfValuesMinimumBorder + ".";
+        }
+        else if (isValueTooBig(rangeOfValues.maximum)) {
+            condition = true;
+            text = "Maximum must be smaller equal " + rangeOfValuesMaximumBorder + ".";
+        }
+
+        setMaximumValidation({
+            condition: condition,
+            text: text
+        });
+    };
+
+    const setStepWidthError = () => {
+        let condition: boolean = false;
+        let text: string = "";
+
+        if (!isStepWidthExistent()) {
+            condition = true;
+            text = "Step width is required.";
+        }
+        else if (isStepWidthTooSmall()) {
+            condition = true;
+            text = "Step width must be greater or equal " + step + ".";
+        }
+
+        setStepWidthValidation({
+            condition: condition,
+            text: text
+        });
+    };
+
+    const isMinimumExistent = (): boolean => {
+        return (rangeOfValues.minimum !== undefined) && (rangeOfValues.minimum !== null);
+    }
+
+    const isMaximumExistent = (): boolean => {
+        return (rangeOfValues.maximum !== undefined) && (rangeOfValues.maximum !== null);
+    };
+
+    const isStepWidthExistent = (): boolean => {
+        return (rangeOfValues.stepWidth !== undefined) && (rangeOfValues.stepWidth !== null);
+    };
+
+    const isValueTooSmall = (value: number): boolean => {
+        return exactMath.sub(value, rangeOfValuesMinimumBorder) < 0;
+    };
+
+    const isValueTooBig = (value: number): boolean => {
+        return exactMath.sub(value, rangeOfValuesMaximumBorder) > 0;
+    };
+
+    const isStepWidthTooSmall = (): boolean => {
+        return rangeOfValues.stepWidth < step;
+    }
 
     const inputName: any = useMemo(() =>
             getInputNameProps(rating.name, props.maximumLengthOfName, handleRatingChange("name"), handleNameBlur),
@@ -180,14 +250,14 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     const textAreaDescription: any = useMemo(() => getTextAreaDescription(rating.description,
         props.maximumLengthOfDescription, handleRatingChange("description")), [rating.description]);
     const inputMinimum: any = useMemo(() =>
-        getInputMinimum(rangeOfValuesMinimumBorder, rangeOfValuesMaximumBorder, step, rangeOfValues.minimum,
-            handleMinimumChange, handleMinimumBlur, maximumNumberOfDecimalDigits), [rangeOfValues.minimum]);
+        getInputMinimum(step, rangeOfValues.minimum, handleMinimumChange, handleScaleBlur,
+            maximumNumberOfDecimalDigits), [rangeOfValues]);
     const inputMaximum: any = useMemo(() =>
-        getInputMaximum(rangeOfValuesMinimumBorder, rangeOfValuesMaximumBorder, step, rangeOfValues.maximum,
-            handleMaximumChange, handleMaximumBlur, maximumNumberOfDecimalDigits), [rangeOfValues.maximum]);
+        getInputMaximum(step, rangeOfValues.maximum, handleMaximumChange, handleScaleBlur,
+            maximumNumberOfDecimalDigits), [rangeOfValues]);
     const inputStepWidth: any = useMemo(() =>
-        getInputStepWidth(step, rangeOfValuesMaximumBorder, step, rangeOfValues.stepWidth,
-            handleStepWidthChange, handleStepWidthBlur, maximumNumberOfDecimalDigits), [rangeOfValues.stepWidth]);
+        getInputStepWidth(step, rangeOfValues.stepWidth, handleStepWidthChange, handleScaleBlur,
+            maximumNumberOfDecimalDigits), [rangeOfValues]);
 
     const formForName: any = {
         label: labelName,
@@ -219,6 +289,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     const formForStepWidth: any = {
         label: labelStepWidth,
         inputNumber: inputStepWidth,
+        inputError: stepWidthValidation,
         className: CSS_CLASS_STEP_WIDTH
     };
 
@@ -234,7 +305,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
         formForMaximum: formForMaximum,
         formForStepWidth: formForStepWidth,
         handleSubmit: handleSubmit,
-        backendError: backendError
+        backendError: backendError,
     };
 
     return (

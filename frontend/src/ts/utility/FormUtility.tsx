@@ -32,14 +32,10 @@ export const getInputTextProps = (name: string, value: string, maxLength: number
     };
 };
 
-export const getInputNumberProps = (name: string, required: boolean, min: number, max: number, step: number,
-                                    value: number, handleChange: any, handleBlur?: any, precision?: number): any => {
+export const getInputNumberProps = (name: string, step: number, value: number, handleChange: any, handleBlur?: any,
+                                    precision?: number): any => {
     return {
         name: name,
-        required: required,
-        type: "number",
-        min: min,
-        max: max,
         step: step,
         value: value,
         onChange: handleChange,
