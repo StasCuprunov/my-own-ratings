@@ -52,7 +52,7 @@ export const getLabelPasswordProps: any = () => {
   return {
       htmlFor: "password",
       text: "Password",
-      sup: "1"
+      sup: "1, 2"
   };
 };
 

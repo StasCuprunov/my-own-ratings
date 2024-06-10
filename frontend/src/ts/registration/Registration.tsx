@@ -157,7 +157,8 @@ export const Registration: FunctionComponent<any> = ({props}) => {
         formForSurname: formForSurname,
         formForPassword: formForPassword,
         formForPasswordConfirmation: formForPasswordConfirmation,
-        loginLink: loginLinkProps
+        loginLink: loginLinkProps,
+        passwordMaximumLength: props.passwordMaximumLength
     };
 
     return (

@@ -43,6 +43,9 @@ export const RegistrationPage: FunctionComponent<any> = ({props}) => {
                     <li>
                         <sup>1</sup>Required
                     </li>
+                    <li>
+                        <sup>2</sup>The password may have a maximum length of {props.passwordMaximumLength} characters.
+                    </li>
                 </ul>
             </div>
         </>
