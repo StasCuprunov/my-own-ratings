@@ -2,7 +2,7 @@ input, textarea {
   color: $primary-color;
 
   &:focus-visible {
-    border: 1px solid $primary-color;
+    border: borderValue($primary-color);
     outline: none;
   }
 }
@@ -10,12 +10,12 @@ input, textarea {
 input, textarea, .ant-input-number {
   font-size: $default-font-size;
   background-color: $container-background-color;
-  border: 1px solid $background-color;
+  border: borderValue($background-color);
 }
 
 input, textarea {
   &:hover {
-    border: 1px solid $primary-color;
+    border: borderValue($primary-color);
   }
 }
 

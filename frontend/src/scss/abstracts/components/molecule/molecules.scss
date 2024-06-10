@@ -2,6 +2,6 @@
 
 nav, footer {
   background-color: $container-background-color;
-  $padding: calc(2 * $default-padding);
-  padding: $default-padding $padding $default-padding $padding;
+  $big-padding: calc(2 * $default-padding);
+  padding: $default-padding $big-padding $default-padding $big-padding;
 }

@@ -40,7 +40,7 @@
 
   .MuiPaper-root {
     background-color: $container-background-color;
-    border: 1px solid $primary-color;
+    border: borderValue($primary-color);
   }
 
   .MuiDialogActions-root {

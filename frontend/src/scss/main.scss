@@ -1,4 +1,5 @@
 @import "abstracts/globals/variables/variables";
+@import "abstracts/globals/functions";
 @import "abstracts/globals/mixins";
 @import "abstracts/globals/placeholders";
 @import "abstracts/components/components";
@@ -29,8 +30,9 @@ ul, ol {
 }
 
 .website-container {
+  $big-padding: calc(2 * $default-padding);
   background-color: $container-background-color;
-  padding: calc(2 * $default-padding) calc(2 * $default-padding) $default-padding calc(2 * $default-padding);
+  padding: $big-padding $big-padding $default-padding $big-padding;
 }
 
 .container {

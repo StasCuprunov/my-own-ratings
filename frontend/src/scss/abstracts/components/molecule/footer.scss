@@ -1,5 +1,5 @@
 footer {
-  border-top: 1px solid $background-color;
+  border-top: borderValue($background-color);
 
   .title {
     margin-bottom: 5px;
