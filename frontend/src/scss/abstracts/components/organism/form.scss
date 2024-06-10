@@ -1,4 +1,6 @@
 input, textarea {
+  @extend %input-padding;
+
   color: $primary-color;
 
   &:focus-visible {
@@ -17,6 +19,10 @@ input, textarea {
   &:hover {
     border: borderValue($primary-color);
   }
+}
+
+input, .ant-input-number-input-wrap > input {
+  height: calc(1.5 * $default-font-size);
 }
 
 textarea {
@@ -78,6 +84,10 @@ input:-webkit-autofill:focus {
 
   .ant-input-number-input-wrap {
     transition: none;
+
+    input {
+      @extend %input-padding;
+    }
   }
 
   .ant-input-number-input-wrap > input, .ant-input-number-handler-up-inner, .ant-input-number-handler-down-inner {
