@@ -188,11 +188,11 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
         }
         else if (isValueTooSmall(rangeOfValues.maximum)) {
             condition = true;
-            text = "Maximum must be greater equal " + rangeOfValuesMinimumBorder + ".";
+            text = "Maximum must be greater or equal " + rangeOfValuesMinimumBorder + ".";
         }
         else if (isValueTooBig(rangeOfValues.maximum)) {
             condition = true;
-            text = "Maximum must be smaller equal " + rangeOfValuesMaximumBorder + ".";
+            text = "Maximum must be smaller or equal " + rangeOfValuesMaximumBorder + ".";
         }
 
         setMaximumValidation({
