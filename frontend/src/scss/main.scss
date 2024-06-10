@@ -1,12 +1,7 @@
-@import "abstracts/globals/variables";
+@import "abstracts/globals/variables/variables";
 @import "abstracts/globals/mixins";
 @import "abstracts/globals/placeholders";
-@import "abstracts/components/atom/button";
-@import "abstracts/components/atom/link";
-@import "abstracts/components/organism/data_grid";
-@import "abstracts/components/organism/table";
-@import "abstracts/components/organism/dialog";
-@import "abstracts/components/organism/form";
+@import "abstracts/components/components";
 
 body {
   background-color: $background-color;
