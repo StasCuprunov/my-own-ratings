@@ -12,39 +12,6 @@ body {
   justify-content: center;
 }
 
-h1 {
-  @include title($font-size-h1);
-  margin-bottom: 40px;
-}
-
-h2 {
-  @include title(calc(2.25 * $default-font-size));
-}
-
-h3 {
-  @include title(calc(2 * $default-font-size));
-}
-
-h4 {
-  @include title(calc(1.75 * $default-font-size));
-}
-
-h5 {
-  @include title($font-size-h5);
-}
-
-h6 {
-  @include title($font-size-h6);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-}
-
-h2, h3, h4, h5, h6 {
-  margin-bottom: 20px;
-}
-
 sup {
   font-size: $small-font-size;
 }
@@ -57,51 +24,8 @@ ul, ol, p {
   margin: 0;
 }
 
-
 ul, ol {
   padding-left: 20px;
-}
-
-nav {
-  border-bottom: 1px solid $background-color;
-  display: flex;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: $z-index-nav;
-
-  .MuiButton-root.MuiButton-outlined {
-    color: $secondary-color;
-    border-color: $secondary-color;
-
-    &:hover {
-      color: $tertiary-color;
-      border-color: $tertiary-color;
-    }
-  }
-}
-
-
-nav, footer {
-  background-color: $container-background-color;
-  $padding: calc(2 * $default-padding);
-  padding: $default-padding $padding $default-padding $padding;
-}
-
-footer {
-  border-top: 1px solid $background-color;
-
-  .title {
-    margin-bottom: 5px;
-  }
-
-  ul {
-    list-style-type: none;
-  }
-
-  li {
-    font-size: $small-font-size;
-  }
 }
 
 .website-container {

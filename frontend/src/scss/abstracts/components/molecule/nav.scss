@@ -1,0 +1,18 @@
+nav {
+  border-bottom: 1px solid $background-color;
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: $z-index-nav;
+
+  .MuiButton-root.MuiButton-outlined {
+    color: $secondary-color;
+    border-color: $secondary-color;
+
+    &:hover {
+      color: $tertiary-color;
+      border-color: $tertiary-color;
+    }
+  }
+}
