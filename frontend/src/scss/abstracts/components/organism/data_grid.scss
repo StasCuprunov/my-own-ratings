@@ -1,3 +1,16 @@
+.MuiDataGrid-root {
+  .MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor,
+  .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
+    border-color: $background-color;
+  }
+
+  .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor {
+    &:focus {
+      outline-color: $primary-color;
+    }
+  }
+}
+
 .MuiDataGrid-root.MuiDataGrid-withBorderColor  {
   border-color: $background-color;
 }
@@ -35,20 +48,7 @@
     }
   }
 }
-.css-az8st9-MuiDataGrid-root {
-  .MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor,
-  .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
-    border-color: $background-color;
-  }
 
-  .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor {
-    &:focus {
-      outline-color: $primary-color;
-      border-bottom-color: $primary-color;
-    }
-  }
-}
-
-.MuiDataGrid-overlay.css-1w53k9d-MuiDataGrid-overlay {
+.MuiDataGrid-overlayWrapperInner > .MuiDataGrid-overlay {
   background-color: $container-background-color;
 }

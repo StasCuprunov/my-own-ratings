@@ -6,7 +6,7 @@ import {WEBSITE_ROUTING_RATINGS_CREATE} from "../constant/routing/WebsiteRouting
 import {getColumns} from "./StartPageFunctions";
 import {customizePaginationDefault} from "../utility/DataGridUtility";
 import {PAGINATION_SIZE_LIST} from "../constant/DataGridConstants";
-import {CSS_CLASS_CONTAINER, CSS_CLASS_WEBSITE_CONTAINER} from "../constant/CSSClassNameConstants";
+import {CSS_CLASS_CONTAINER} from "../constant/CSSClassNameConstants";
 import {ButtonLinkWithIcon} from "../component/atom/button/link/ButtonLinkWithIcon";
 
 const createButtonLink: any = {
