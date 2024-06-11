@@ -1,7 +1,7 @@
 .MuiDataGrid-root {
   .MuiDataGrid-columnHeaders.MuiDataGrid-withBorderColor,
   .MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor {
-    border-color: $background-color;
+    border-color: $separator-color;
   }
 
   .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor {
@@ -12,7 +12,7 @@
 }
 
 .MuiDataGrid-root.MuiDataGrid-withBorderColor  {
-  border-color: $background-color;
+  border-color: $separator-color;
 }
 
 .MuiDataGrid-main {
@@ -20,7 +20,7 @@
   font-size: $default-font-size;
 
   .MuiDataGrid-cell.MuiDataGrid-withBorderColor {
-    border-color: $background-color;
+    border-color: $separator-color;
 
     &:focus {
       outline-color: $primary-color;
@@ -29,8 +29,10 @@
 }
 
 .MuiDataGrid-columnHeaders {
+  $color: $header-cell-color;
+  color: $color;
   path {
-    color: $primary-color;
+    color: $color;
   }
 }
 

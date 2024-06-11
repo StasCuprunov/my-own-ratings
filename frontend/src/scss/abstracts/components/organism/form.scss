@@ -4,7 +4,7 @@ input, textarea {
   color: $primary-color;
 
   &:focus-visible {
-    border: borderValue($primary-color);
+    border: borderAndOutlineValue($primary-color);
     outline: none;
   }
 }
@@ -12,12 +12,12 @@ input, textarea {
 input, textarea, .ant-input-number {
   font-size: $default-font-size;
   background-color: $container-background-color;
-  border: borderValue($background-color);
+  border: borderAndOutlineValue($background-color);
 }
 
 input, textarea {
   &:hover {
-    border: borderValue($primary-color);
+    border: borderAndOutlineValue($primary-color);
   }
 }
 
@@ -39,7 +39,7 @@ input:-webkit-autofill:focus {
 
 .input-error {
   font-size: $small-font-size;
-  color: $danger-light-color;
+  color: $danger-color;
   margin-top: 2px;
 }
 

@@ -1,11 +1,15 @@
 $background-color: #434343;
 $container-background-color: #201e1b;
 
-$primary-color: #1687de;
-$secondary-color: #ffb700;
-$tertiary-color: #9abeff;
+$primary-color: #47afff;
+$secondary-color: #ff9747;
+$tertiary-color: #53ff47;
+$quaternary-color: #f347ff;
 
-$danger-color: #de1634;
-$danger-light-color: #f7193a;
-$success-color: #16de5c;
-$warning-color: #de5c16;
+$danger-color: #ff4753;
+$success-color: $tertiary-color;
+$warning-color: $secondary-color;
+
+$heading-color: $secondary-color;
+$header-cell-color: $secondary-color;
+$separator-color: $background-color;

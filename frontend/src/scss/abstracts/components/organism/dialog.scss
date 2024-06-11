@@ -1,6 +1,10 @@
 .MuiDialog-container {
 
-  .MuiDialogTitle-root, .MuiDialogContent-root > p {
+  .MuiDialogTitle-root {
+    color: $heading-color;
+  }
+
+  .MuiDialogContent-root > p {
     color: $primary-color;
   }
 
@@ -40,7 +44,7 @@
 
   .MuiPaper-root {
     background-color: $container-background-color;
-    border: borderValue($primary-color);
+    border: borderAndOutlineValue($primary-color);
   }
 
   .MuiDialogActions-root {

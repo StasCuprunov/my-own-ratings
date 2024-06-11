@@ -1,7 +1,7 @@
 a, .link-with-icon {
   text-decoration: none;
   transition: $default-transition-time;
-  color: $tertiary-color;
+  color: $quaternary-color;
 
   &:hover {
     transition: $default-transition-time;
@@ -11,15 +11,12 @@ a, .link-with-icon {
 
 .link-with-icon {
   display: flex;
-  color: $primary-color;
 
   svg {
     align-self: center;
   }
 
   &:hover {
-    color: $tertiary-color;
-
     svg {
       margin-left: $default-svg-margin-left;
     }

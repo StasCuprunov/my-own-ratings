@@ -5,11 +5,11 @@
 
 @mixin operation-button($color, $border-color) {
   background-color: $color;
-  border: borderValue($border-color);
+  outline: borderAndOutlineValue($border-color);
 
   &:hover {
     background-color: $border-color;
     color: $color;
-    border-color: $color;
+    outline-color: $color;
   }
 }

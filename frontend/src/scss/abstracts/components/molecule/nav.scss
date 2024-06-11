@@ -1,5 +1,5 @@
 nav {
-  border-bottom: borderValue($background-color);
+  border-bottom: borderAndOutlineValue($separator-color);
   display: flex;
   justify-content: space-between;
   position: sticky;
