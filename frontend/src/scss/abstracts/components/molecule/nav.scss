@@ -7,12 +7,14 @@ nav {
   z-index: $z-index-nav;
 
   .MuiButton-root.MuiButton-outlined {
-    color: $secondary-color;
-    border-color: $secondary-color;
+    $color: $quaternary-color;
+    $hover-color: $primary-color;
+    color: $color;
+    border-color: $color;
 
     &:hover {
-      color: $tertiary-color;
-      border-color: $tertiary-color;
+      color: $hover-color;
+      border-color: $hover-color;
     }
   }
 }

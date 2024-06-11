@@ -3,13 +3,14 @@
   line-height: $font-size;
 }
 
-@mixin operation-button($color, $border-color) {
-  background-color: $color;
-  outline: borderAndOutlineValue($border-color);
+@mixin operation-button($background-color, $color) {
+  background-color: $background-color;
+  color: $color;
+  outline: borderAndOutlineValue($color);
 
   &:hover {
-    background-color: $border-color;
-    color: $color;
-    outline-color: $color;
+    background-color: $color;
+    color: $background-color;
+    outline-color: $background-color;
   }
 }

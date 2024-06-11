@@ -4,13 +4,18 @@
 }
 
 .MuiButtonBase-root.MuiButton-containedPrimary {
-  background-color: $primary-color;
-  color: $container-background-color;
+  $color: $tertiary-color;
+  $hover-color: $primary-color;
+  $background-color: $container-background-color;
+
+  background-color: $background-color;
+  color: $color;
+  outline: 1px solid $color;
 
   &:hover {
-    background-color: $container-background-color;
-    color: $primary-color;
-    outline: 1px solid $primary-color;
+    color: $hover-color;
+    outline-color: $hover-color;
+    background-color: $background-color;
   }
 }
 

@@ -1,11 +1,11 @@
 a, .link-with-icon {
   text-decoration: none;
   transition: $default-transition-time;
-  color: $quaternary-color;
+  color: $secondary-color;
 
   &:hover {
     transition: $default-transition-time;
-    color: $secondary-color;
+    color: $primary-color;
   }
 }
 
