@@ -33,14 +33,16 @@ export const getInputTextProps = (name: string, value: string, maxLength: number
 };
 
 export const getInputNumberProps = (name: string, step: number, value: number, handleChange: any, handleBlur?: any,
-                                    precision?: number): any => {
+                                    precision?: number, min?: number, max?: number): any => {
     return {
         name: name,
         step: step,
         value: value,
         onChange: handleChange,
         onBlur: handleBlur,
-        precision: precision
+        precision: precision,
+        min: min,
+        max: max
     };
 };
 export const getCancelButtonProps = (handleOnClick: Function) => {

@@ -7,6 +7,8 @@ export const InputNumber: FunctionComponent<any> = ({props}) => {
         <InputNumberAntDesign
             name={props.name}
             step={props.step}
+            min={props.min}
+            max={props.max}
             value={props.value}
             onChange={value => props.onChange(value)}
             onBlur={props.onBlur}

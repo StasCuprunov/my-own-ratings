@@ -8,7 +8,11 @@ import {CustomButton} from "../../../../../component/atom/button/CustomButton";
 import {FormForNumber} from "../../../../../component/molecule/form-attribute/FormForNumber";
 import {FormForInput} from "../../../../../component/molecule/form-attribute/FormForInput";
 import {getCancelButtonProps, getSubmitButtonProps} from "../../../../../utility/FormUtility";
-import {CSS_CLASS_CONTAINER, CSS_CLASS_HINTS} from "../../../../../constant/CSSClassNameConstants";
+import {
+    CSS_CLASS_CONTAINER,
+    CSS_CLASS_FORM_RATING_ENTRY,
+    CSS_CLASS_HINTS
+} from "../../../../../constant/CSSClassNameConstants";
 
 export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) => {
     return (
@@ -17,7 +21,7 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                 <CustomButton props={props.openDialogButton}/>
             }
             <Dialog open={props.isOpen} onClose={props.handleClose}>
-                <form onSubmit={props.handleSubmit} autoComplete={"off"}>
+                <form onSubmit={props.handleSubmit} autoComplete={"off"} className={CSS_CLASS_FORM_RATING_ENTRY}>
                     <DialogTitle>
                         {props.title}{props.oldName && <i>{props.oldName}</i>}
                     </DialogTitle>

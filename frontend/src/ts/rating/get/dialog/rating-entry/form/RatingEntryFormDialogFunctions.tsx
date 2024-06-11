@@ -30,8 +30,10 @@ export const getLabelValueProps = (): any => {
     };
 };
 
-export const getInputValueProps = (step: number, value: number, handleChange: any, handleBlur: any): any => {
-    return getInputNumberProps("value", step, value, handleChange, handleBlur);
+export const getInputValueProps = (step: number, minimum: number, maximum: number, value: number, handleChange: any,
+                                   handleBlur: any): any => {
+    return getInputNumberProps("value", step, value, handleChange, handleBlur, undefined, minimum,
+        maximum);
 };
 
 export const hasAlreadyRatingEntryWithName = (name: string, ratingEntries: RatingEntry[],

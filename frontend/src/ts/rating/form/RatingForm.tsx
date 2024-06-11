@@ -33,6 +33,7 @@ import {
     CSS_CLASS_STEP_WIDTH
 } from "../../constant/CSSClassNameConstants";
 import {PageTemplate} from "../../component/PageTemplate";
+import {isAllowedScaleValue} from "../RatingUtility";
 
 const exactMath = require("exact-math");
 
@@ -134,11 +135,7 @@ export const RatingForm: FunctionComponent<any> = ({props}) => {
     };
 
     const isScale = (): boolean => {
-        return Number.isInteger(
-            exactMath.div(
-                exactMath.sub(rangeOfValues.maximum, rangeOfValues.minimum),
-                rangeOfValues.stepWidth)
-        );
+        return isAllowedScaleValue(rangeOfValues.maximum, rangeOfValues.minimum, rangeOfValues.stepWidth);
     };
 
     const isMinimumBiggerThanMaximum = (): boolean => {

@@ -15,6 +15,7 @@ import {getInputNameProps} from "../../../../form/RatingFormFunctions";
 import {useNavigate} from "react-router-dom";
 import {WEBSITE_ROUTING_REFRESH} from "../../../../../constant/routing/WebsiteRoutingConstants";
 import {RatingEntry} from "../../../../../model/rating-entry/RatingEntry";
+import {isAllowedScaleValue} from "../../../../RatingUtility";
 
 const labelName: any = getLabelNameProps();
 const labelValue: any = getLabelValueProps();
@@ -51,6 +52,11 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
             ...nameValidation,
             condition: false
         });
+
+        setValueValidation({
+            ...valueValidation,
+            condition: false
+        });
     };
 
     const handleRatingEntryChange = (field: string, value?: any) => {
@@ -83,17 +89,13 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     };
 
     const handleValueBlur = () => {
-        let value: number =ratingEntry.value;
+        let value: number = ratingEntry.value;
         let condition: boolean = false;
         let text: string = "";
 
-        if (rangeOfValues.minimum > value) {
+        if (!isAllowedScaleValue(value, rangeOfValues.minimum, rangeOfValues.stepWidth)) {
             condition = true;
-            text = "Value is too small."
-        }
-        else if (rangeOfValues.maximum < value) {
-            condition = true;
-            text = "Value is too big."
+            text = "Value is not in scale."
         }
 
         setValueValidation({
@@ -128,8 +130,8 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
         getInputNameProps(ratingEntry.name, props.maximumLengthOfName, handleRatingEntryChange("name"),
             handleNameBlur), [ratingEntry.name]);
     const inputValue: any = useMemo(() =>
-        getInputValueProps(rangeOfValues.stepWidth, ratingEntry.value, handleValueChange,
-            handleValueBlur), [ratingEntry.value]);
+        getInputValueProps(rangeOfValues.stepWidth, rangeOfValues.minimum, rangeOfValues.maximum, ratingEntry.value,
+            handleValueChange, handleValueBlur), [ratingEntry]);
 
     const formForName: any = {
         label: labelName,
