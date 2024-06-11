@@ -107,7 +107,7 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     const handleSubmit = async (event: any) => {
         event.preventDefault();
 
-        if (nameValidation.condition) {
+        if (nameValidation.condition || valueValidation.condition) {
             return;
         }
 

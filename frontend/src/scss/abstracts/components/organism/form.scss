@@ -104,6 +104,7 @@ input:-webkit-autofill:focus {
 
 .ant-input-number.ant-input-number-focused {
   $button-background-color: $container-background-color;
+  $arrow-button-color-effect: $tertiary-color;
 
   .ant-input-number-handler-wrap {
     background-color: $button-background-color;
@@ -113,8 +114,15 @@ input:-webkit-autofill:focus {
   .ant-input-number-handler {
     &:active {
       .ant-input-number-handler-up-inner, .ant-input-number-handler-down-inner {
-        color: $tertiary-color;
+        color: $arrow-button-color-effect;
       }
+    }
+  }
+
+  @supports (-moz-appearance:none) {
+    .ant-input-number-handler-up:hover > .ant-input-number-handler-up-inner,
+    .ant-input-number-handler-down:hover > .ant-input-number-handler-down-inner {
+      color: $arrow-button-color-effect;
     }
   }
 
