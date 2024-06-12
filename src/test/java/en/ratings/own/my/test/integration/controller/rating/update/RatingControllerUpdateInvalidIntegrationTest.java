@@ -5,6 +5,10 @@ import en.ratings.own.my.model.rating.RangeOfValues;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_DESCRIPTION;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
+import static en.ratings.own.my.test.utility.GeneratorUtility.generateRandomAlphabeticString;
+import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanMaximum;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
         INVALID_RANGE_OF_VALUES_WITH_MINIMUM_EQUALS_TO_MAXIMUM;
 import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
@@ -92,6 +96,17 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
     }
 
     @Test
+    public void testInvalidUpdateWithTooLongName() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                createValidRatingDTODrinksWithNegativeMinimum());
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
+        RatingDTO input = responseCreate.getBody();
+        input.setName(generateRandomAlphabeticString(numberGreaterThanMaximum(MAX_LENGTH_OF_NAME)));
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
+    }
+
+    @Test
     public void testInvalidUpdateWithAlreadyUsedName() {
         ResponseEntity<RatingDTO> responseCreateDrinks = createValidRating(userStevenWorm,
                 createValidRatingDTODrinksWithNegativeMinimum());
@@ -100,6 +115,17 @@ public class RatingControllerUpdateInvalidIntegrationTest extends RatingControll
         RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreateBooks.getBody());
         RatingDTO input = responseCreateBooks.getBody();
         input.setName(responseCreateDrinks.getBody().getName());
+        testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
+        compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
+    }
+
+    @Test
+    public void testInvalidUpdateWithTooLongDescription() {
+        ResponseEntity<RatingDTO> responseCreate = createValidRating(userStevenWorm,
+                createValidRatingDTODrinksWithNegativeMinimum());
+        RatingDTO createdRatingDTO = createNewRatingDTOObject(responseCreate.getBody());
+        RatingDTO input = responseCreate.getBody();
+        input.setDescription(generateRandomAlphabeticString(numberGreaterThanMaximum(MAX_LENGTH_OF_DESCRIPTION)));
         testUpdateInvalidWithExpectedRatingUpdateFailedException(input);
         compareIfDatabaseEntriesHasNotBeenChanged(createdRatingDTO);
     }

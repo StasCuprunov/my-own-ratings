@@ -28,6 +28,10 @@ public class GeneratorUtility {
         return maximum + 1;
     }
 
+    public static int numberGreaterThanMaximum(int maximum) {
+        return maximum + 1;
+    }
+
     public static String generateRandomAlphabeticString(int numberOfCharacters) {
         if (numberOfCharacters <= 0) {
             return EMPTY_STRING;

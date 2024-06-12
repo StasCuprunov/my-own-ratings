@@ -3,6 +3,13 @@ package en.ratings.own.my.test.utility.rating;
 import en.ratings.own.my.dto.rating.RatingDTO;
 import en.ratings.own.my.model.rating.RangeOfValues;
 
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_DESCRIPTION;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
+import static en.ratings.own.my.test.utility.GeneratorUtility.generateRandomAlphabeticString;
+import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanMaximum;
+import static en.ratings.own.my.test.utility.rating.CreateRangeOfValuesUtility.
+        VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM;
+
 public class CreateRatingDTOUtility {
 
     public static RatingDTO createRatingDTOWithNoUserId(String name, String description, RangeOfValues rangeOfValues) {
@@ -25,5 +32,19 @@ public class CreateRatingDTOUtility {
 
     public static final RatingDTO INVALID_RATING_DTO_BECAUSE_EMPTY_NAME =
             createRatingDTOWithNoUserId("         ", "Not allowed.",
-                    CreateRangeOfValuesUtility.VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM);
+                    VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM);
+
+    public static RatingDTO createInvalidRatingDTOWithTooLongName()  {
+        int numberOfCharacters = numberGreaterThanMaximum(MAX_LENGTH_OF_NAME);
+
+        return createRatingDTOWithNoUserId(generateRandomAlphabeticString(numberOfCharacters),"Not allowed.",
+                VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM);
+    }
+
+    public static RatingDTO createInvalidRatingDTOWithTooLongDescription() {
+        int numberOfCharacters = numberGreaterThanMaximum(MAX_LENGTH_OF_DESCRIPTION);
+
+        return createRatingDTOWithNoUserId("Not allowed", generateRandomAlphabeticString(numberOfCharacters),
+                VALID_RANGE_OF_VALUES_WITH_NEGATIVE_MINIMUM_AND_MAXIMUM);
+    }
 }

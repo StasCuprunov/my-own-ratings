@@ -22,6 +22,8 @@ import static en.ratings.own.my.test.utility.asserts.AssertThatUtility.assertTha
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsCreated;
 import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.
         INVALID_RATING_DTO_BECAUSE_EMPTY_NAME;
+import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.createInvalidRatingDTOWithTooLongDescription;
+import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.createInvalidRatingDTOWithTooLongName;
 import static en.ratings.own.my.test.utility.rating.CreateRatingDTOUtility.createNewRatingDTOObject;
 import static en.ratings.own.my.test.utility.rating.RatingBooksUtility.
         INVALID_RATING_DTO_BOOKS_WITH_MAXIMUM_AND_STEP_WIDTH_WITH_TOO_MANY_DECIMAL_DIGITS;
@@ -115,6 +117,17 @@ public class RatingControllerCreateIntegrationTest extends RatingControllerInteg
     public void testInvalidCreateWithEmptyName() {
         testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm,
                 createNewRatingDTOObject(INVALID_RATING_DTO_BECAUSE_EMPTY_NAME));
+    }
+
+    @Test
+    public void testInvalidCreateWithTooLongName() {
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm, createInvalidRatingDTOWithTooLongName());
+    }
+
+    @Test
+    public void testInvalidCreateWithTooLongDescription() {
+        testInvalidCreateExpectedRatingCreationFailedException(userStevenWorm,
+                createInvalidRatingDTOWithTooLongDescription());
     }
 
     @Test
