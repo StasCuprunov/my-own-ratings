@@ -37,6 +37,7 @@ public final class ExceptionConstants {
     // For RatingEntryFailedException
     public static final String KEY_RATING_ENTRY_BY_ID_NOT_FOUND = "ratingEntryByIdNotFound";
     public static final String KEY_RATING_ENTRY_NAME_IS_EMPTY = "ratingEntryNameIsEmpty";
+    public static final String KEY_RATING_ENTRY_NAME_IS_TOO_LONG = "ratingEntryNameIsTooLong";
     public static final String KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING = "ratingEntryNameAlreadyUsedInRating";
     public static final String KEY_RATING_ENTRY_VALUE_HAS_TOO_MANY_DECIMAL_DIGITS =
             "ratingEntryValueHasTooManyDecimalDigits";
