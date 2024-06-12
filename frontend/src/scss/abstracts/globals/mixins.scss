@@ -3,7 +3,7 @@
   line-height: $font-size;
 }
 
-@mixin operation-button($background-color, $color) {
+@mixin operation-button($color, $background-color) {
   background-color: $background-color;
   color: $color;
   outline: borderAndOutlineValue($color);
