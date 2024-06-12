@@ -77,4 +77,11 @@ public class StringUtility {
         }
         return text;
     }
+
+    public static boolean isStringTooLong(String string, int maximumLength) {
+        if (string == null) {
+            return false;
+        }
+        return string.length() > maximumLength;
+    }
 }

@@ -14,7 +14,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_TOO_LONG;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_FIRST_NAME_TOO_LONG;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_ID_IS_DEFINED;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_SURNAME_TOO_LONG;
+import static en.ratings.own.my.service.user.UserValidation.isEmailTooLong;
+import static en.ratings.own.my.service.user.UserValidation.isFirstNameTooLong;
+import static en.ratings.own.my.service.user.UserValidation.isSurnameTooLong;
 import static en.ratings.own.my.utility.EnumUtility.roleUserAsString;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_ALREADY_EXISTS;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_EMAIL_SYNTAX;
@@ -50,6 +56,8 @@ public class UserService {
 
     public UserDTO create(User user) throws Exception {
         ArrayList<String> keysForException = emailValidation(user.getEmail());
+        addExistentStringToArrayList(keysForException, firstNameValidation(user.getFirstName()));
+        addExistentStringToArrayList(keysForException, surnameValidation(user.getSurname()));
         keysForException.addAll(passwordValidation(user.getPassword()));
         addExistentStringToArrayList(keysForException, userIdValidationForCreate(user));
 
@@ -75,6 +83,9 @@ public class UserService {
         if (!isEmailSyntaxAllowed(email)) {
             keysForException.add(KEY_EMAIL_SYNTAX);
         }
+        if (isEmailTooLong(email)) {
+            keysForException.add(KEY_EMAIL_TOO_LONG);
+        }
         if (!isEmailAvailable(email)) {
             keysForException.add(KEY_EMAIL_ALREADY_EXISTS);
         }
@@ -88,6 +99,20 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    private String firstNameValidation(String firstName) {
+        if (isFirstNameTooLong(firstName)) {
+            return KEY_FIRST_NAME_TOO_LONG;
+        }
+        return null;
+    }
+
+    private String surnameValidation(String surname) {
+        if (isSurnameTooLong(surname)) {
+            return KEY_SURNAME_TOO_LONG;
+        }
+        return null;
     }
 
     private String userIdValidationForCreate(User user) {

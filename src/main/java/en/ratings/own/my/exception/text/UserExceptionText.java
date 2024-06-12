@@ -2,6 +2,10 @@ package en.ratings.own.my.exception.text;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_EMAIL;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_FIRST_NAME;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_SURNAME;
+import static en.ratings.own.my.exception.text.ExceptionTextUtility.errorMessageStringAttributeIsTooLong;
 import static en.ratings.own.my.utility.PasswordUtility.LIST_OF_VALID_SPECIAL_CHARACTERS;
 import static en.ratings.own.my.utility.PasswordUtility.PASSWORD_MAXIMUM_LENGTH;
 import static en.ratings.own.my.utility.PasswordUtility.PASSWORD_MINIMUM_LENGTH;
@@ -18,8 +22,20 @@ public class UserExceptionText {
         return "The specified email is not valid.";
     }
 
+    public static String errorMessageForEmailTooLong() {
+        return errorMessageStringAttributeIsTooLong("email", MAX_LENGTH_OF_EMAIL);
+    }
+
     public static String errorMessageForEmailAlreadyExists() {
         return "The specified email already exists.";
+    }
+
+    public static String errorMessageForFirstNameTooLong() {
+        return errorMessageStringAttributeIsTooLong("first name", MAX_LENGTH_OF_FIRST_NAME);
+    }
+
+    public static String errorMessageForSurnameTooLong() {
+        return errorMessageStringAttributeIsTooLong("surname", MAX_LENGTH_OF_SURNAME);
     }
 
     public static String errorMessageForPasswordTooShort() {

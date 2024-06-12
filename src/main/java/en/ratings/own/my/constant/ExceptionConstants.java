@@ -5,7 +5,10 @@ public final class ExceptionConstants {
 
     // For UserCreationFailedException
     public static final String KEY_EMAIL_SYNTAX = "emailSyntax";
+    public static final String KEY_EMAIL_TOO_LONG = "emailTooLong";
     public static final String KEY_EMAIL_ALREADY_EXISTS = "emailAlreadyExists";
+    public static final String KEY_FIRST_NAME_TOO_LONG = "firstNameTooLong";
+    public static final String KEY_SURNAME_TOO_LONG = "surnameTooLong";
     public static final String KEY_PASSWORD_TOO_SHORT = "passwordTooShort";
     public static final String KEY_PASSWORD_TOO_LONG = "passwordTooLong";
     public static final String KEY_PASSWORD_HAS_NO_DIGIT = "passwordHasNoDigit";
