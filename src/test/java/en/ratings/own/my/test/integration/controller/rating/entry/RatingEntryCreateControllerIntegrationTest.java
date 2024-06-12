@@ -7,10 +7,12 @@ import org.junit.Test;
 
 import java.util.Optional;
 
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
 import static en.ratings.own.my.test.constant.TestConstants.EMPTY_TEXT;
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ZERO;
 import static en.ratings.own.my.test.constant.TestConstants.NUMBER_WITH_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
+import static en.ratings.own.my.test.utility.GeneratorUtility.generateRandomAlphabeticString;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberBetweenRangeOfValuesButNotAllowed;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanMaximum;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberSmallerThanMinimum;
@@ -104,6 +106,16 @@ public class RatingEntryCreateControllerIntegrationTest extends RatingEntryContr
         String ratingId = responseEntity.getBody().getId();
         RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
         ratingEntry.setName(EMPTY_TEXT);
+        assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
+        checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
+    }
+
+    @Test
+    public void testInvalidCreateWithTooLongName() {
+        ResponseEntity<RatingDTO> responseEntity = createRatingDrinksWithNegativeMinimum(userStevenWorm);
+        String ratingId = responseEntity.getBody().getId();
+        RatingEntry ratingEntry = createValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        ratingEntry.setName(generateRandomAlphabeticString(numberGreaterThanMaximum(MAX_LENGTH_OF_NAME)));
         assertThatExceptionIsEqualToRatingEntryFailedException(createInvalid(ratingEntry));
         checkIfExpectedNumberOfRatingEntriesWithRatingIdAreAvailable(ratingId, EXPECTED_ZERO);
     }
