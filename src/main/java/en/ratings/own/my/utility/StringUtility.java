@@ -72,6 +72,9 @@ public class StringUtility {
     }
 
     public static String shortenString(String text) {
+        if (text == null) {
+            return null;
+        }
         if (text.length() > LIMIT_FOR_SHORTENING) {
             return text.substring(0, LIMIT_FOR_SHORTENING) + HINT_IT_GOES_ON;
         }
