@@ -16,10 +16,13 @@ import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_IS_EMPTY;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_IS_TOO_LONG;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_HAS_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_DOES_NOT_FIT_IN_RANGE_OF_VALUES;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
 import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayList;
 import static en.ratings.own.my.service.rating.RangeOfValuesValidation.isValueInRangeOfValues;
+import static en.ratings.own.my.utility.StringUtility.isStringTooLong;
 import static en.ratings.own.my.utility.math.DecimalFormatUtility.numberHasTooManyDecimalDigits;
 
 @Service
@@ -116,6 +119,9 @@ public class RatingEntryService {
         if (name.isBlank()) {
             return KEY_RATING_ENTRY_NAME_IS_EMPTY;
         }
+        else if (isRatingEntryNameTooLong(name)) {
+            return KEY_RATING_ENTRY_NAME_IS_TOO_LONG;
+        }
 
         ArrayList<RatingEntry> ratingEntries = ratingEntryRepositoryService.
                 findAllByRatingId(ratingEntry.getRatingId());
@@ -130,6 +136,10 @@ public class RatingEntryService {
             }
         }
         return null;
+    }
+
+    private boolean isRatingEntryNameTooLong(String name) {
+        return isStringTooLong(name, MAX_LENGTH_OF_NAME);
     }
 
     private boolean isNameAlreadyUsedInDifferentRatingEntry(String id, String name, RatingEntry differentRatingEntry) {

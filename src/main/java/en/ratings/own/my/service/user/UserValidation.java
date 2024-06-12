@@ -6,6 +6,9 @@ import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_HAS_NO_
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_HAS_NO_ENGLISH_LOWER_CASE_LETTER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_HAS_NO_ENGLISH_UPPER_CASE_LETTER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_HAS_NO_VALID_SPECIAL_CHARACTER;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_EMAIL;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_FIRST_NAME;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_SURNAME;
 import static en.ratings.own.my.utility.PasswordUtility.AT_LEAST_ONE_DIGIT_REGEX;
 import static en.ratings.own.my.utility.PasswordUtility.AT_LEAST_ONE_ENGLISH_LOWER_CASE_LETTER_REGEX;
 import static en.ratings.own.my.utility.PasswordUtility.AT_LEAST_ONE_ENGLISH_UPPER_CASE_LETTER_REGEX;
@@ -15,10 +18,23 @@ import static en.ratings.own.my.utility.PasswordUtility.PASSWORD_MINIMUM_LENGTH;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_TOO_LONG;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_PASSWORD_TOO_SHORT;
 import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayList;
+import static en.ratings.own.my.utility.StringUtility.isStringTooLong;
 
 public class UserValidation {
     public static boolean isEmailSyntaxAllowed(String email) {
         return email.matches(regexEmailRFC5322());
+    }
+
+    public static boolean isEmailTooLong(String email) {
+        return isStringTooLong(email, MAX_LENGTH_OF_EMAIL);
+    }
+
+    public static boolean isFirstNameTooLong(String firstName) {
+        return isStringTooLong(firstName, MAX_LENGTH_OF_FIRST_NAME);
+    }
+
+    public static boolean isSurnameTooLong(String surname) {
+        return isStringTooLong(surname, MAX_LENGTH_OF_SURNAME);
     }
 
     public static ArrayList<String> passwordValidation(String password) {

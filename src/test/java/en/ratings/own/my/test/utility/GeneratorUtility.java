@@ -2,6 +2,9 @@ package en.ratings.own.my.test.utility;
 
 import en.ratings.own.my.model.rating.RangeOfValues;
 
+import static en.ratings.own.my.utility.StringUtility.EMPTY_STRING;
+import static org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+
 public class GeneratorUtility {
     public static final String ID_TEST = "test";
 
@@ -23,5 +26,22 @@ public class GeneratorUtility {
 
     public static Double numberGreaterThanMaximum(Double maximum) {
         return maximum + 1;
+    }
+
+    public static int numberGreaterThanMaximum(int maximum) {
+        return maximum + 1;
+    }
+
+    public static String generateRandomAlphabeticString(int numberOfCharacters) {
+        if (numberOfCharacters <= 0) {
+            return EMPTY_STRING;
+        }
+        return randomAlphabetic(numberOfCharacters);
+    }
+
+    public static String generateTooLongString(int maximumLength, String actualString) {
+        int numberOfAddedCharacters = maximumLength - actualString.length() + 1;
+
+        return actualString + generateRandomAlphabeticString(numberOfAddedCharacters);
     }
 }

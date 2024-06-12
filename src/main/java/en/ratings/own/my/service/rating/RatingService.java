@@ -19,15 +19,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_DESCRIPTION_TOO_LONG;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_HAS_DEFINED_ID;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_NAME_IS_EMPTY;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_NAME_IS_TOO_LONG;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_USER_WITH_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_NAME_ALREADY_USED_FOR_USER;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_DESCRIPTION;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
 import static en.ratings.own.my.service.rating.RangeOfValuesValidation.isValueInRangeOfValues;
 import static en.ratings.own.my.service.rating.RangeOfValuesValidation.rangeOfValuesValidation;
 import static en.ratings.own.my.utility.StringUtility.addExistentStringToArrayList;
+import static en.ratings.own.my.utility.StringUtility.isStringTooLong;
 
 @Service
 public class RatingService {
@@ -75,7 +80,7 @@ public class RatingService {
 
     public RatingDTO create(RatingDTO ratingDTO) throws Exception {
         checkIfIdAndRangeOfValuesAndUserIdAreValid(ratingDTO);
-        checkIfRatingNameIsValid(ratingDTO.getUserId(), ratingDTO.getName());
+        checkIfRatingNameAndDescriptionAreValid(ratingDTO);
 
         return createRating(ratingDTO);
     }
@@ -90,7 +95,7 @@ public class RatingService {
         RangeOfValues rangeOfValues = ratingDTO.getRangeOfValues();
 
         checkIfRangeOfValuesAndRatingIdAndUserIdAreValid(id, userId, rangeOfValues);
-        checkIfRatingNameIsValidAndNoInconsistentWithRatingEntries(id, userId, rangeOfValues, ratingDTO.getName());
+        checkIfRatingNameAndDescriptionAreValidAndNoInconsistentWithRatingEntries(ratingDTO);
 
         return updateRating(ratingDTO);
     }
@@ -157,9 +162,11 @@ public class RatingService {
         }
     }
 
-    private void checkIfRatingNameIsValid(String userId, String name) throws Exception {
+    private void checkIfRatingNameAndDescriptionAreValid(RatingDTO ratingDTO) throws Exception {
         ArrayList<String> keysForException = new ArrayList<>();
-        addExistentStringToArrayList(keysForException, ratingNameValidationForCreate(userId, name));
+        addExistentStringToArrayList(keysForException, ratingNameValidationForCreate(ratingDTO.getUserId(),
+                ratingDTO.getName()));
+        addExistentStringToArrayList(keysForException, descriptionValidation(ratingDTO.getDescription()));
 
         if (!keysForException.isEmpty()) {
             throw new RatingCreationFailedException(keysForException);
@@ -176,13 +183,17 @@ public class RatingService {
         }
     }
 
-    private void checkIfRatingNameIsValidAndNoInconsistentWithRatingEntries
-            (String ratingId, String userId, RangeOfValues rangeOfValues, String name) throws Exception {
+    private void checkIfRatingNameAndDescriptionAreValidAndNoInconsistentWithRatingEntries
+            (RatingDTO ratingDTO) throws Exception {
+        String ratingId = ratingDTO.getId();
+
         ArrayList<String> keysForException = new ArrayList<>();
         keysForException = addExistentStringToArrayList(keysForException,
-                ratingNameForUpdateValidation(ratingId, userId, name));
+                ratingNameForUpdateValidation(ratingId, ratingDTO.getUserId(), ratingDTO.getName()));
+        keysForException = addExistentStringToArrayList(keysForException,
+                descriptionValidation(ratingDTO.getDescription()));
 
-        ArrayList<String> ratingEntries = ratingEntriesDontFitInNewRangeOfValues(ratingId, rangeOfValues);
+        ArrayList<String> ratingEntries = ratingEntriesDontFitInNewRangeOfValues(ratingId, ratingDTO.getRangeOfValues());
         if (!ratingEntries.isEmpty()) {
             keysForException = addExistentStringToArrayList(keysForException, KEY_RATING_ENTRIES_DONT_FIT_IN_SCALE);
         }
@@ -226,6 +237,10 @@ public class RatingService {
         if (name.isBlank()) {
             return KEY_RATING_NAME_IS_EMPTY;
         }
+        else if (isRatingNameTooLong(name)) {
+            return KEY_RATING_NAME_IS_TOO_LONG;
+        }
+
         Rating rating;
         try {
             rating = ratingRepositoryService.findByUserIdAndName(userId, name);
@@ -236,6 +251,21 @@ public class RatingService {
             return KEY_RATING_NAME_ALREADY_USED_FOR_USER;
         }
         return null;
+    }
+
+    private boolean isRatingNameTooLong(String ratingName) {
+        return isStringTooLong(ratingName, MAX_LENGTH_OF_NAME);
+    }
+
+    private String descriptionValidation(String description) {
+        if (isDescriptionTooLong(description)) {
+            return KEY_RATING_DESCRIPTION_TOO_LONG;
+        }
+        return null;
+    }
+
+    private boolean isDescriptionTooLong(String description) {
+        return isStringTooLong(description, MAX_LENGTH_OF_DESCRIPTION);
     }
 
     private ArrayList<String> ratingEntriesDontFitInNewRangeOfValues(String ratingId, RangeOfValues rangeOfValues) {

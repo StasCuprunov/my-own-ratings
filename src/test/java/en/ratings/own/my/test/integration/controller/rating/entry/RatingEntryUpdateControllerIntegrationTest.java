@@ -5,8 +5,10 @@ import en.ratings.own.my.model.rating.RatingEntry;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
 import static en.ratings.own.my.test.constant.TestConstants.NUMBER_WITH_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
+import static en.ratings.own.my.test.utility.GeneratorUtility.generateRandomAlphabeticString;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberBetweenRangeOfValuesButNotAllowed;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberGreaterThanMaximum;
 import static en.ratings.own.my.test.utility.GeneratorUtility.numberSmallerThanMinimum;
@@ -104,6 +106,26 @@ public class RatingEntryUpdateControllerIntegrationTest extends RatingEntryContr
         input.setName(DRINK_APPLE_JUICE);
         login(userStevenWorm);
         testInvalidUpdateWithExpectedAccessDeniedException(input, ratingEntryBeforeUpdate);
+    }
+
+    @Test
+    public void testInvalidUpdateWithEmptyName() {
+        ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
+        String ratingId = responseEntityRating.getBody().getId();
+        RatingEntry ratingEntryBeforeUpdate = saveValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        RatingEntry input = createNewRatingEntryObject(ratingEntryBeforeUpdate);
+        input.setName("           \n");
+        testInvalidUpdateWithExpectedRatingEntryFailedException(input, ratingEntryBeforeUpdate);
+    }
+
+    @Test
+    public void testInvalidUpdateWithTooLongName() {
+        ResponseEntity<RatingDTO> responseEntityRating = createRatingDrinksWithNegativeMinimum(userFalakNoorahKhoury);
+        String ratingId = responseEntityRating.getBody().getId();
+        RatingEntry ratingEntryBeforeUpdate = saveValidRatingEntryCokeForDrinksWithNegativeMinimum(ratingId);
+        RatingEntry input = createNewRatingEntryObject(ratingEntryBeforeUpdate);
+        input.setName(generateRandomAlphabeticString(numberGreaterThanMaximum(MAX_LENGTH_OF_NAME)));
+        testInvalidUpdateWithExpectedRatingEntryFailedException(input, ratingEntryBeforeUpdate);
     }
 
     @Test

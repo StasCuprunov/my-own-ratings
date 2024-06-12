@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_LENGTH_OF_BIG_STRING;
-import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_LENGTH_OF_SMALL_STRING;
 import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_NUMBER_OF_DECIMAL_DIGITS;
 import static en.ratings.own.my.constant.AttributeConstants.RANGE_OF_VALUES_MAXIMUM_BORDER;
 import static en.ratings.own.my.constant.AttributeConstants.RANGE_OF_VALUES_MINIMUM_BORDER;
 import static en.ratings.own.my.constant.AttributeConstants.STEP_WIDTH_BORDER;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_DESCRIPTION;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,9 +20,9 @@ public class RatingValidationDTO {
 
     private String userId;
 
-    private int maximumLengthOfName = MAXIMUM_LENGTH_OF_SMALL_STRING;
+    private int maximumLengthOfName = MAX_LENGTH_OF_NAME;
 
-    private int maximumLengthOfDescription = MAXIMUM_LENGTH_OF_BIG_STRING;
+    private int maximumLengthOfDescription = MAX_LENGTH_OF_DESCRIPTION;
 
     private double stepWidthBorder = STEP_WIDTH_BORDER;
 

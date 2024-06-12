@@ -8,9 +8,11 @@ import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_BY_
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_BY_ID_NOT_FOUND;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_IS_EMPTY;
+import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_NAME_IS_TOO_LONG;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_HAS_TOO_MANY_DECIMAL_DIGITS;
 import static en.ratings.own.my.constant.ExceptionConstants.KEY_RATING_ENTRY_VALUE_DOES_NOT_FIT_IN_RANGE_OF_VALUES;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageForRatingEntryNameIsEmpty;
+import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageForRatingEntryNameIsTooLong;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageRatingEntryByIdNotFound;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.errorMessageRatingEntryNameAlreadyUsedInRating;
 import static en.ratings.own.my.exception.text.RatingEntryExceptionText.
@@ -31,6 +33,7 @@ public class RatingEntryFailedErrorMessage implements InterfaceErrorMessage {
                 case KEY_RATING_ENTRY_BY_ID_NOT_FOUND -> errorMessage.add(errorMessageRatingEntryByIdNotFound());
                 case KEY_RATING_BY_ID_NOT_FOUND -> errorMessage.add(errorMessageForRatingByIdNotFound());
                 case KEY_RATING_ENTRY_NAME_IS_EMPTY -> errorMessage.add(errorMessageForRatingEntryNameIsEmpty());
+                case KEY_RATING_ENTRY_NAME_IS_TOO_LONG -> errorMessage.add(errorMessageForRatingEntryNameIsTooLong());
                 case KEY_RATING_ENTRY_NAME_ALREADY_USED_IN_RATING -> errorMessage.
                         add(errorMessageRatingEntryNameAlreadyUsedInRating());
                 case KEY_RATING_ENTRY_VALUE_HAS_TOO_MANY_DECIMAL_DIGITS ->

@@ -2,6 +2,9 @@ package en.ratings.own.my.test.utility;
 
 import en.ratings.own.my.model.User;
 
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_EMAIL;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_FIRST_NAME;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_SURNAME;
 import static en.ratings.own.my.test.constant.PasswordConstants.INVALID_PASSWORD_TOO_LONG;
 import static en.ratings.own.my.test.constant.PasswordConstants.INVALID_PASSWORD_TOO_SHORT;
 import static en.ratings.own.my.test.constant.PasswordConstants.INVALID_PASSWORD_WITHOUT_DIGITS;
@@ -17,6 +20,7 @@ import static en.ratings.own.my.test.constant.PasswordConstants.VALID_PASSWORD_O
 import static en.ratings.own.my.test.constant.PasswordConstants.VALID_PASSWORD_THREE;
 import static en.ratings.own.my.test.constant.PasswordConstants.VALID_PASSWORD_TWO;
 import static en.ratings.own.my.test.utility.GeneratorUtility.ID_TEST;
+import static en.ratings.own.my.test.utility.GeneratorUtility.generateTooLongString;
 
 public class CreateUserUtility {
 
@@ -59,6 +63,30 @@ public class CreateUserUtility {
     public static User createUserLiangPaiWithInvalidEmail() {
         User user = createUserLiangPai();
         user.setEmail("liang.pai-gmail.com");
+        return user;
+    }
+
+    public static User createUserLiangPaiWithTooLongEmail() {
+        User user = createUserLiangPai();
+        String email = user.getEmail();
+        user.setEmail(generateTooLongString(MAX_LENGTH_OF_EMAIL, email));
+
+        return user;
+    }
+
+    public static User createUserLianPaiWithTooLongFirstName() {
+        User user = createUserLiangPai();
+        String firstName = user.getFirstName();
+        user.setFirstName(generateTooLongString(MAX_LENGTH_OF_FIRST_NAME, firstName));
+
+        return user;
+    }
+
+    public static User createUserLianPaiWithTooLongSurname() {
+        User user = createUserLiangPai();
+        String surname = user.getSurname();
+        user.setSurname(generateTooLongString(MAX_LENGTH_OF_SURNAME, surname));
+
         return user;
     }
 

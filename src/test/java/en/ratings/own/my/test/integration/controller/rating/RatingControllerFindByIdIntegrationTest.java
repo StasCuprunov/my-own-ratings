@@ -6,7 +6,7 @@ import en.ratings.own.my.model.rating.RatingEntry;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
-import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_LENGTH_OF_SMALL_STRING;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
 import static en.ratings.own.my.test.utility.GeneratorUtility.createNotExistentId;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
@@ -72,7 +72,7 @@ public class RatingControllerFindByIdIntegrationTest extends RatingControllerInt
 
     private void compareWithFoundById(RatingDTO input, ShowRatingDTO foundRatingDTO) {
         assertAll(
-                () -> assertThat(foundRatingDTO.getMaximumLengthOfName()).isEqualTo(MAXIMUM_LENGTH_OF_SMALL_STRING),
+                () -> assertThat(foundRatingDTO.getMaximumLengthOfName()).isEqualTo(MAX_LENGTH_OF_NAME),
                 () -> assertThat(foundRatingDTO.getId()).isEqualTo(input.getId()),
                 () -> assertThat(foundRatingDTO.getUserId()).isEqualTo(input.getUserId()),
                 () -> assertThat(foundRatingDTO.getName()).isEqualTo(input.getName()),

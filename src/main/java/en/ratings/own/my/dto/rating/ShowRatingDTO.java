@@ -11,7 +11,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
-import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_LENGTH_OF_SMALL_STRING;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +19,7 @@ import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_LENGTH_OF_SM
 @Setter
 public class ShowRatingDTO extends RatingDTO {
 
-    private int maximumLengthOfName = MAXIMUM_LENGTH_OF_SMALL_STRING;
+    private int maximumLengthOfName = MAX_LENGTH_OF_NAME;
 
     public ShowRatingDTO(Rating rating, @NonNull RangeOfValues rangeOfValues, ArrayList<RatingEntry> ratingEntries) {
         setId(rating.getId());

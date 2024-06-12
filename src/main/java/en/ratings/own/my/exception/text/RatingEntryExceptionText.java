@@ -1,5 +1,8 @@
 package en.ratings.own.my.exception.text;
 
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
+import static en.ratings.own.my.exception.text.ExceptionTextUtility.errorMessageStringAttributeIsTooLong;
+
 public class RatingEntryExceptionText {
 
     public static String errorMessageRatingEntryByIdNotFound() {
@@ -8,6 +11,9 @@ public class RatingEntryExceptionText {
 
     public static String errorMessageForRatingEntryNameIsEmpty() {
         return "The rating entry name may not be empty.";
+    }
+    public static String errorMessageForRatingEntryNameIsTooLong() {
+        return errorMessageStringAttributeIsTooLong("rating entry name", MAX_LENGTH_OF_NAME);
     }
     public static String errorMessageRatingEntryNameAlreadyUsedInRating() {
         return "The rating entry name is already used in your rating. This name has to be unique for every rating.";
