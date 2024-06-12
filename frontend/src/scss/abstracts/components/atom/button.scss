@@ -1,0 +1,48 @@
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.MuiButtonBase-root.MuiButton-containedPrimary {
+  $color: $tertiary-color;
+  $hover-color: $primary-color;
+  $background-color: $container-background-color;
+
+  background-color: $background-color;
+  color: $color;
+  outline: 1px solid $color;
+
+  &:hover {
+    color: $hover-color;
+    outline-color: $hover-color;
+    background-color: $background-color;
+  }
+}
+
+.MuiButtonBase-root.MuiButton-containedPrimary.cancel-button {
+  @extend %warning-button;
+}
+
+.MuiButtonBase-root.MuiButton-containedPrimary.create-button,
+.MuiButtonBase-root.MuiButton-containedPrimary.edit-button {
+  @extend %success-button;
+}
+
+.MuiButtonBase-root.MuiButton-containedPrimary.delete-button {
+  @extend %danger-button;
+}
+
+.MuiButtonBase-root.MuiButton-containedPrimary, .MuiButton-root.MuiButton-outlined {
+  font-size: $default-font-size;
+  text-transform: none;
+  transition: $default-transition-time;
+  padding: 5px 15px 5px 15px;
+
+  svg {
+    margin-left: $default-svg-margin-left;
+  }
+
+  &:hover {
+    transition: $default-transition-time;
+  }
+}

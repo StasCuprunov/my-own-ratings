@@ -1,4 +1,7 @@
 import {ChangeEvent} from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
+import {CSS_CLASS_CANCEL_BUTTON, CSS_CLASS_DELETE_BUTTON} from "../constant/CSSClassNameConstants";
 
 export const handleChange: any = (field: string, setObject: any) => {
     return (e: ChangeEvent<HTMLInputElement>) => {
@@ -7,6 +10,13 @@ export const handleChange: any = (field: string, setObject: any) => {
             [field]: e.target.value
         }));
     };
+};
+
+export const handleChangeWithValue: any = (field: string, value: number, setObject: any) => {
+    setObject((prev: any) => ({
+        ...prev,
+        [field]: value
+    }));
 };
 
 export const getInputTextProps = (name: string, value: string, maxLength: number, handleChange: any,
@@ -22,39 +32,48 @@ export const getInputTextProps = (name: string, value: string, maxLength: number
     };
 };
 
-export const getInputNumberProps = (name: string, required: boolean, min: number, max: number, step: number,
-                                    value: number, handleChange: any, handleBlur?: any): any => {
+export const getInputNumberProps = (name: string, step: number, value: number, handleChange: any, handleBlur?: any,
+                                    precision?: number, min?: number, max?: number): any => {
     return {
         name: name,
-        required: required,
-        type: "number",
-        min: min,
-        max: max,
         step: step,
         value: value,
         onChange: handleChange,
-        onBlur: handleBlur
+        onBlur: handleBlur,
+        precision: precision,
+        min: min,
+        max: max
     };
 };
 export const getCancelButtonProps = (handleOnClick: Function) => {
     return {
-        type: "button",
         text: "Cancel",
-        onClick: handleOnClick
+        onClick: handleOnClick,
+        icon: CancelIcon,
+        className: CSS_CLASS_CANCEL_BUTTON
     };
 };
 
-export const getDeleteButtonProps = (handleOnClick: Function) => {
+export const getDeleteButtonProps = (name: string, handleOnClick: Function) => {
     return {
-        type: "button",
-        text: "Delete",
-        onClick: handleOnClick
-    }
+        text: "Delete " + name,
+        onClick: handleOnClick,
+        icon: DeleteIcon
+    };
 };
 
-export const getSubmitButtonProps = (text: string) => {
+export const getDeleteButtonInDialogProps = (handleOnClick: Function) => {
     return {
-        type: "submit",
-        text: text
+        text: "Delete",
+        onClick: handleOnClick,
+        icon: DeleteIcon,
+        className: CSS_CLASS_DELETE_BUTTON
+    };
+};
+
+export const getSubmitButtonProps = (props: any) => {
+    return {
+        ...props,
+        type: "submit"
     };
 };

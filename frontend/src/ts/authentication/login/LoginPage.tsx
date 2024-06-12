@@ -1,50 +1,29 @@
 import {FunctionComponent} from "react";
-import {Label} from "../../component/atom/form/Label";
-import {Input} from "../../component/atom/form/input/Input";
-import {Button} from "../../component/atom/button/Button";
-import {ButtonLink} from "../../component/atom/button/link/ButtonLink";
+import {CustomButton} from "../../component/atom/button/CustomButton";
 import {
-    getEmailLabelProps,
-    getLoginButtonProps,
-    getPasswordLabelProps,
-    registrationButtonLinkProps
+    getLoginButtonProps
 } from "./LoginFunctions";
-import {Error} from "../../general-page/error/Error";
+import {FormForInput} from "../../component/molecule/form-attribute/FormForInput";
+import {CSS_CLASS_CONTAINER, CSS_CLASS_FORM_GROUP, CSS_CLASS_FORM_LOGIN} from "../../constant/CSSClassNameConstants";
+import {getClassNameAttribute} from "../../utility/CSSUtility";
+import {LinkWithText} from "../../component/molecule/LinkWithText";
 
-const labelEmail: any = getEmailLabelProps();
-const labelPassword: any = getPasswordLabelProps();
 const loginButton: any = getLoginButtonProps();
 
-export const LoginPage: FunctionComponent<any> = ({backendError, handleSubmit, inputEmail, inputPassword}) => {
-
-    if (backendError) {
-        return (
-            <Error error={backendError}/>
-        );
-    }
-
+export const LoginPage: FunctionComponent<any> = ({props}) => {
     return (
-        <div>
+        <form onSubmit={props.handleSubmit} className={getClassNameAttribute([CSS_CLASS_CONTAINER, CSS_CLASS_FORM_LOGIN])}>
             <h1>Login</h1>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <Label props={labelEmail}/>
-                        <Input props={inputEmail}/>
-                    </div>
-                    <div>
-                        <Label props={labelPassword}/>
-                        <Input props={inputPassword}/>
-                    </div>
-                    <div>
-                        <Button props={loginButton}/>
-                    </div>
-                </form>
+            <div className={CSS_CLASS_CONTAINER}>
+                <div className={getClassNameAttribute([CSS_CLASS_CONTAINER, CSS_CLASS_FORM_GROUP])}>
+                    <FormForInput props={props.formForEmail}/>
+                    <FormForInput props={props.formForPassword}/>
+                </div>
+                <div>
+                    <CustomButton props={loginButton}/>
+                </div>
             </div>
-            <div>
-                <h2>Don't you have an account?</h2>
-                <ButtonLink props={registrationButtonLinkProps()}/>
-            </div>
-        </div>
+            <LinkWithText props={props.linkToRegistration}/>
+        </form>
     );
 };

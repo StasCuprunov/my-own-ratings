@@ -1,0 +1,16 @@
+@mixin title($font-size) {
+  font-size: $font-size;
+  line-height: $font-size;
+}
+
+@mixin operation-button($color, $background-color) {
+  background-color: $background-color;
+  color: $color;
+  outline: borderAndOutlineValue($color);
+
+  &:hover {
+    background-color: $color;
+    color: $background-color;
+    outline-color: $background-color;
+  }
+}

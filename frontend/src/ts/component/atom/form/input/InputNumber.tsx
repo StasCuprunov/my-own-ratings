@@ -1,17 +1,20 @@
 import {FunctionComponent} from "react";
+import {InputNumber as InputNumberAntDesign
+} from 'antd';
 
 export const InputNumber: FunctionComponent<any> = ({props}) => {
     return (
-        <input
-            required={props.required}
+        <InputNumberAntDesign
             name={props.name}
-            type={"number"}
+            step={props.step}
             min={props.min}
             max={props.max}
-            step={props.step}
             value={props.value}
-            onChange={props.onChange}
+            onChange={value => props.onChange(value)}
             onBlur={props.onBlur}
+            decimalSeparator={"."}
+            precision={props.precision}
+            changeOnWheel={props.changeOnWheel}
         />
     );
 };

@@ -2,19 +2,26 @@ import {FunctionComponent, useEffect, useMemo, useState} from "react";
 import {RatingEntryFormDialogTemplate} from "./RatingEntryFormDialogTemplate";
 import {RangeOfValues} from "../../../../../model/RangeOfValues";
 import {InputValidation} from "../../../../../model/InputValidation";
-import {handleChange} from "../../../../../utility/FormUtility";
+import {handleChange, handleChangeWithValue} from "../../../../../utility/FormUtility";
 import {
     createRatingEntry,
     editRatingEntry,
     getInputValueProps,
+    getLabelNameProps,
+    getLabelValueProps,
     hasAlreadyRatingEntryWithName
 } from "./RatingEntryFormDialogFunctions";
 import {getInputNameProps} from "../../../../form/RatingFormFunctions";
 import {useNavigate} from "react-router-dom";
 import {WEBSITE_ROUTING_REFRESH} from "../../../../../constant/routing/WebsiteRoutingConstants";
-import {RatingEntry} from "../../../../../model/RatingEntry";
+import {RatingEntry} from "../../../../../model/rating-entry/RatingEntry";
+import {isAllowedScaleValue} from "../../../../RatingUtility";
+
+const labelName: any = getLabelNameProps();
+const labelValue: any = getLabelValueProps();
 
 export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
+    const attributeValue: string = "value";
     const isEdit: boolean = props.isEdit;
     const rangeOfValues: RangeOfValues = props.rangeOfValues;
     const defaultRatingEntry: RatingEntry = props.ratingEntry;
@@ -24,6 +31,8 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     const [ratingEntry, setRatingEntry] = useState(defaultRatingEntry);
 
     const [nameValidation, setNameValidation] =
+        useState(new InputValidation());
+    const [valueValidation, setValueValidation] =
         useState(new InputValidation());
 
     useEffect(() => {
@@ -43,10 +52,22 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
             ...nameValidation,
             condition: false
         });
+
+        setValueValidation({
+            ...valueValidation,
+            condition: false
+        });
     };
 
-    const handleRatingEntryChange = (field: string) => {
+    const handleRatingEntryChange = (field: string, value?: any) => {
+        if (value) {
+            handleChangeWithValue(field, value, setRatingEntry);
+        }
         return handleChange(field, setRatingEntry);
+    };
+
+    const handleValueChange = (value: number) => {
+        return handleRatingEntryChange(attributeValue, value);
     };
 
     const handleNameBlur = () => {
@@ -67,10 +88,26 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
         });
     };
 
+    const handleValueBlur = () => {
+        let value: number = ratingEntry.value;
+        let condition: boolean = false;
+        let text: string = "";
+
+        if (!isAllowedScaleValue(value, rangeOfValues.minimum, rangeOfValues.stepWidth)) {
+            condition = true;
+            text = "Value is not in scale."
+        }
+
+        setValueValidation({
+            condition: condition,
+            text: text
+        });
+    };
+
     const handleSubmit = async (event: any) => {
         event.preventDefault();
 
-        if (nameValidation.condition) {
+        if (nameValidation.condition || valueValidation.condition) {
             return;
         }
 
@@ -84,28 +121,43 @@ export const RatingEntryFormDialog: FunctionComponent<any> = ({props}) => {
     };
 
     const openDialogButton: any = {
-        type: "button",
-        text: props.submitButtonText,
-        onClick: handleOpenDialogButtonOnClick
+        text: props.openButtonText,
+        onClick: handleOpenDialogButtonOnClick,
+        icon: props.icon
     };
 
     const inputName: any = useMemo(() =>
         getInputNameProps(ratingEntry.name, props.maximumLengthOfName, handleRatingEntryChange("name"),
             handleNameBlur), [ratingEntry.name]);
     const inputValue: any = useMemo(() =>
-        getInputValueProps(rangeOfValues.minimum, rangeOfValues.maximum, rangeOfValues.stepWidth, ratingEntry.value,
-            handleRatingEntryChange("value")), [ratingEntry.value]);
+        getInputValueProps(rangeOfValues.stepWidth, rangeOfValues.minimum, rangeOfValues.maximum, ratingEntry.value,
+            handleValueChange, handleValueBlur), [ratingEntry]);
+
+    const formForName: any = {
+        label: labelName,
+        input: inputName,
+        inputError: nameValidation
+    };
+
+    const formForValue: any = {
+        label: labelValue,
+        inputNumber: inputValue,
+        inputError: valueValidation
+    };
 
     const ratingEntryFormDialogProps: any = {
         title: props.title,
-        submitButtonText: props.submitButtonText,
+        oldName: (isEdit) ? defaultRatingEntry.name : null,
+        submitButton: {
+            ...props.submitButton,
+            icon: props.icon
+        },
         openDialogButton: (isEdit) ? null : openDialogButton,
         isOpen: props.isOpen,
         handleClose: handleClose,
         handleSubmit: handleSubmit,
-        inputName: inputName,
-        inputValue: inputValue,
-        nameValidation: nameValidation
+        formForName: formForName,
+        formForValue: formForValue
     };
 
     return (

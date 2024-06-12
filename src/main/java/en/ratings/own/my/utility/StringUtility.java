@@ -6,6 +6,8 @@ import static en.ratings.own.my.utility.math.MathUtility.isLastIndex;
 
 public class StringUtility {
 
+    public static final int LIMIT_FOR_SHORTENING = 100;
+    public static final String HINT_IT_GOES_ON = "...";
     public static final String SPACE_CHARACTER = " ";
     public static final String EMPTY_STRING = "";
     public static final String COMMA_SEPARATION = ", ";
@@ -67,5 +69,12 @@ public class StringUtility {
             }
         }
         System.out.println(text);
+    }
+
+    public static String shortenString(String text) {
+        if (text.length() > LIMIT_FOR_SHORTENING) {
+            return text.substring(0, LIMIT_FOR_SHORTENING) + HINT_IT_GOES_ON;
+        }
+        return text;
     }
 }

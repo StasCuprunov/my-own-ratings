@@ -1,9 +1,12 @@
 import {FunctionComponent} from "react";
-import {Button} from "../../../../../component/atom/button/Button";
+import {CustomButton} from "../../../../../component/atom/button/CustomButton";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
-import {getCancelButtonProps, getDeleteButtonProps} from "../../../../../utility/FormUtility";
+import {
+    getCancelButtonProps,
+    getDeleteButtonInDialogProps
+} from "../../../../../utility/FormUtility";
 
 export const DeleteRatingEntryDialogTemplate: FunctionComponent<any> = ({props}) => {
 
@@ -11,11 +14,11 @@ export const DeleteRatingEntryDialogTemplate: FunctionComponent<any> = ({props})
         <div>
             <Dialog open={props.isOpen} onClose={props.handleClose}>
                 <DialogTitle>
-                    Do you really want to delete the rating entry "{props.name}"?
+                    Do you really want to delete the rating entry <i>{props.name}</i>?
                 </DialogTitle>
                 <DialogActions>
-                    <Button props={getDeleteButtonProps(props.handleDelete)}/>
-                    <Button props={getCancelButtonProps(props.handleClose)}/>
+                    <CustomButton props={getDeleteButtonInDialogProps(props.handleDelete)}/>
+                    <CustomButton props={getCancelButtonProps(props.handleClose)}/>
                 </DialogActions>
             </Dialog>
         </div>

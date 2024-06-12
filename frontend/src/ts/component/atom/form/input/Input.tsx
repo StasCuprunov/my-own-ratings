@@ -7,6 +7,7 @@ export const Input: FunctionComponent<any> = ({props}) => {
             name={props.name}
             type={props.type}
             value={props.value}
+            minLength={props.minLength}
             maxLength={props.maxLength}
             pattern={props.pattern}
             onChange={props.onChange}

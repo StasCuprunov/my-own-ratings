@@ -1,0 +1,15 @@
+footer {
+  border-top: borderAndOutlineValue($separator-color);
+
+  .title {
+    margin-bottom: 5px;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    font-size: $small-font-size;
+  }
+}

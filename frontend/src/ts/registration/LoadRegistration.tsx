@@ -7,6 +7,6 @@ export const LoadRegistration: FunctionComponent<any> = () =>  {
     let {data, error} = useRegistration();
 
     return (
-        <LoadComponentHandling error={error} Component={Registration} props={data}/>
+        <LoadComponentHandling error={error} Component={Registration} props={data} documentTitle={"registration"}/>
     );
 };

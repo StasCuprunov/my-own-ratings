@@ -7,6 +7,8 @@ export const LoadCreateRating: FunctionComponent<any> = () => {
     const { data, error } = useCreateRatingInfo();
 
     return (
-        <LoadComponentHandling Component={CreateRating} props={data} error={error}/>
+        <LoadComponentHandling Component={CreateRating} props={data} error={error} documentTitle={"create rating"}
+                               needsAuthentication={true}
+        />
     );
 };

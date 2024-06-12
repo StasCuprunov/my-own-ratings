@@ -1,10 +1,4 @@
 import {FunctionComponent} from "react";
-import {Error} from "../../general-page/error/Error";
-import {Label} from "../../component/atom/form/Label";
-import {Input} from "../../component/atom/form/input/Input";
-import {InputError} from "../../component/atom/form/input/InputError";
-import {TextArea} from "../../component/atom/form/TextArea";
-import {InputNumber} from "../../component/atom/form/input/InputNumber";
 import {
     getHintAdaptionRatingEntries,
     getHintMaximumDecimalPlaces,
@@ -14,74 +8,55 @@ import {
 } from "./RatingHints";
 import {
     getButtons,
-    getLabelDescriptionProps,
-    getLabelMaximumProps,
-    getLabelMinimumProps,
-    getLabelNameProps,
-    getLabelStepWidthProps,
     getScaleTitle
 } from "./RatingFormFunctions";
-
-const labelName: any = getLabelNameProps();
-const labelDescription: any = getLabelDescriptionProps();
-const labelMinimum: any = getLabelMinimumProps();
-const labelMaximum: any = getLabelMaximumProps();
-const labelStepWidth: any = getLabelStepWidthProps();
+import {FormForTextArea} from "../../component/molecule/form-attribute/FormForTextArea";
+import {FormForNumber} from "../../component/molecule/form-attribute/FormForNumber";
+import {FormForInput} from "../../component/molecule/form-attribute/FormForInput";
+import {
+    CSS_CLASS_CONTAINER,
+    CSS_CLASS_FORM_GROUP,
+    CSS_CLASS_FORM_RATING,
+    CSS_CLASS_HINTS,
+    CSS_CLASS_SCALE
+} from "../../constant/CSSClassNameConstants";
+import {getClassNameAttribute} from "../../utility/CSSUtility";
 
 export const RatingFormPage: FunctionComponent<any> = ({props}) => {
     const isEdit: boolean = props.isEdit;
 
-    if (props.backendError) {
-        return (
-            <Error error={props.backendError}/>
-        );
-    }
-
     return (
-        <div>
-            <h1>{props.title}</h1>
-            <form onSubmit={props.handleSubmit}>
-                <div>
-                    <Label props={labelName}/>
-                    <Input props={props.inputName}/>
-                    <InputError props={props.nameValidation}/>
-                </div>
-                <div>
-                    <Label props={labelDescription}/>
-                    <TextArea props={props.textAreaDescription}/>
-                </div>
-                <div>
-                    {getScaleTitle(isEdit)}
-                    <div>
-                        <Label props={labelMinimum}/>
-                        <InputNumber props={props.inputMinimum}/>
-                        <InputError props={props.minimumValidation}/>
+        <div className={CSS_CLASS_FORM_RATING}>
+            <h1>{props.title}{props.oldName && <i>{props.oldName}</i>}</h1>
+            <div className={CSS_CLASS_CONTAINER}>
+                <form onSubmit={props.handleSubmit} autoComplete={"off"}>
+                    <div className={getClassNameAttribute([CSS_CLASS_CONTAINER, CSS_CLASS_FORM_GROUP])}>
+                        <FormForInput props={props.formForName}/>
+                        <FormForTextArea props={props.formForDescription}/>
                     </div>
-                    <div>
-                        <Label props={labelMaximum}/>
-                        <InputNumber props={props.inputMaximum}/>
-                        <InputError props={props.maximumValidation}/>
+                    <div className={getClassNameAttribute([CSS_CLASS_CONTAINER, CSS_CLASS_SCALE])}>
+                        {getScaleTitle(isEdit)}
+                        <div className={CSS_CLASS_FORM_GROUP}>
+                            <FormForNumber props={props.formForMinimum}/>
+                            <FormForNumber props={props.formForMaximum}/>
+                            <FormForNumber props={props.formForStepWidth}/>
+                        </div>
                     </div>
-                    <div>
-                        <Label props={labelStepWidth}/>
-                        <InputNumber props={props.inputStepWidth}/>
-                    </div>
-                    <InputError props={props.scaleValidation}/>
-                </div>
-                {getButtons(isEdit, props.id)}
-                <div>
-                    <h2>Hints</h2>
-                    <ul>
-                        {getHintRequired()}
-                        {getHintRatingNameMustBeUnique()}
-                        {getHintWhatIsAScale()}
-                        {getHintMaximumDecimalPlaces(props.maximumNumberOfDecimalDigits)}
-                        {isEdit &&
-                            getHintAdaptionRatingEntries()
-                        }
-                    </ul>
-                </div>
-            </form>
+                    {getButtons(isEdit, props.id)}
+                </form>
+            </div>
+            <div className={getClassNameAttribute([CSS_CLASS_CONTAINER, CSS_CLASS_HINTS])}>
+                <h2>Hints</h2>
+                <ul>
+                    {getHintRequired()}
+                    {getHintRatingNameMustBeUnique()}
+                    {getHintWhatIsAScale()}
+                    {getHintMaximumDecimalPlaces(props.maximumNumberOfDecimalDigits)}
+                    {isEdit &&
+                        getHintAdaptionRatingEntries()
+                    }
+                </ul>
+            </div>
         </div>
     );
 };

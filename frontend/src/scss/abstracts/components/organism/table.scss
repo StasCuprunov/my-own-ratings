@@ -1,0 +1,27 @@
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+
+.table-container > .MuiTableContainer-root {
+  width: 50%;
+}
+
+.MuiTableContainer-root {
+  $border-color: $separator-color;
+  border-radius: 4px;
+  background-color: $container-background-color;
+  border: borderAndOutlineValue($border-color);
+  border-bottom: none;
+
+  .MuiTableCell-root.MuiTableCell-head {
+    color: $header-cell-color;
+  }
+
+  .MuiTableCell-root {
+    color: $primary-color;
+    font-size: $default-font-size;
+    border-color: $border-color;
+  }
+}
+

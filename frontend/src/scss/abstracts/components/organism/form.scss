@@ -1,0 +1,203 @@
+input, textarea {
+  @extend %input-padding;
+
+  color: $primary-color;
+
+  &:focus-visible {
+    border: borderAndOutlineValue($primary-color);
+    outline: none;
+  }
+}
+
+input, textarea, .ant-input-number {
+  font-size: $default-font-size;
+  background-color: $container-background-color;
+  border: borderAndOutlineValue($background-color);
+}
+
+input, textarea {
+  &:hover {
+    border: borderAndOutlineValue($primary-color);
+  }
+}
+
+input, .ant-input-number-input-wrap > input {
+  height: calc(1.5 * $default-font-size);
+}
+
+textarea {
+  height: calc(5 * $default-font-size);
+  max-width: 100%;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: $primary-color;
+  -webkit-box-shadow: 0 0 0 40rem $container-background-color inset;
+}
+
+.input-error {
+  font-size: $small-font-size;
+  color: $danger-color;
+  margin-top: 2px;
+}
+
+.form-attribute {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 2px;
+  }
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-area {
+  display: flex;
+}
+
+.ant-input-number {
+  $input-border-radius: 0;
+
+  border-radius: $input-border-radius;
+  width: 100%;
+
+  &:hover, &:focus, &:focus-within {
+    background-color: $container-background-color;
+    transition: none;
+  }
+
+  &:focus, &:focus-within {
+    box-shadow: none;
+  }
+
+  .ant-input-number-handler-up, .ant-input-number-handler.ant-input-number-handler-down {
+    background-color: $container-background-color;
+    border-color: $primary-color;
+    border-radius: $input-border-radius;
+  }
+
+  .ant-input-number-input-wrap {
+    transition: none;
+
+    input {
+      @extend %input-padding;
+    }
+  }
+
+  .ant-input-number-input-wrap > input, .ant-input-number-handler-up-inner, .ant-input-number-handler-down-inner {
+    color: $primary-color;
+  }
+
+  .ant-input-number-handler-up-disabled {
+    &:active {
+      background-color: $container-background-color;
+      border-radius: 0;
+    }
+  }
+}
+
+.ant-input-number.ant-input-number-focused {
+  $button-background-color: $container-background-color;
+  $arrow-button-color-effect: $secondary-color;
+
+  .ant-input-number-handler-wrap {
+    background-color: $button-background-color;
+    border-radius: 0;
+  }
+
+  .ant-input-number-handler {
+    &:active {
+      .ant-input-number-handler-up-inner, .ant-input-number-handler-down-inner {
+        color: $arrow-button-color-effect;
+      }
+    }
+  }
+
+  @supports (-moz-appearance:none) {
+    .ant-input-number-handler-up:hover > .ant-input-number-handler-up-inner,
+    .ant-input-number-handler-down:hover > .ant-input-number-handler-down-inner {
+      color: $arrow-button-color-effect;
+    }
+  }
+
+  .ant-input-number-handler-down {
+    $transition: all 0.2 linear;
+    transition: $transition;
+
+    &:active {
+      background-color: $button-background-color;
+      transition: $transition;
+    }
+  }
+}
+
+.form-rating {
+
+  .name {
+    width: 30%;
+  }
+
+  .description {
+    width: 45%;
+  }
+
+  .minimum, .maximum, .step-width {
+    width: 25%;
+  }
+
+  .scale > h2 > sup {
+    font-weight: normal;
+  }
+}
+
+.form-login {
+
+  .form-group {
+    display: block;
+  }
+
+  .form-attribute {
+    width: 30%;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.form-registration {
+
+  button {
+    margin-bottom: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+  }
+
+  .form-attribute {
+    width: 35%;
+  }
+}
+
+.form-rating-entry {
+  .form-attribute {
+    margin-bottom: 3px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}

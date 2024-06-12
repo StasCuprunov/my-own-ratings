@@ -4,44 +4,35 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {Button} from "../../../../../component/atom/button/Button";
-import {Label} from "../../../../../component/atom/form/Label";
-import {Input} from "../../../../../component/atom/form/input/Input";
-import {InputError} from "../../../../../component/atom/form/input/InputError";
-import {
-    getLabelNameProps,
-    getLabelValueProps
-} from "./RatingEntryFormDialogFunctions";
-import {InputNumber} from "../../../../../component/atom/form/input/InputNumber";
+import {CustomButton} from "../../../../../component/atom/button/CustomButton";
+import {FormForNumber} from "../../../../../component/molecule/form-attribute/FormForNumber";
+import {FormForInput} from "../../../../../component/molecule/form-attribute/FormForInput";
 import {getCancelButtonProps, getSubmitButtonProps} from "../../../../../utility/FormUtility";
-
-const labelName: any = getLabelNameProps();
-const labelValue: any = getLabelValueProps();
+import {
+    CSS_CLASS_CONTAINER,
+    CSS_CLASS_FORM_RATING_ENTRY,
+    CSS_CLASS_HINTS
+} from "../../../../../constant/CSSClassNameConstants";
 
 export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) => {
     return (
         <div>
             {props.openDialogButton &&
-                <Button props={props.openDialogButton}/>
+                <CustomButton props={props.openDialogButton}/>
             }
             <Dialog open={props.isOpen} onClose={props.handleClose}>
-                <form onSubmit={props.handleSubmit}>
+                <form onSubmit={props.handleSubmit} autoComplete={"off"} className={CSS_CLASS_FORM_RATING_ENTRY}>
                     <DialogTitle>
-                        {props.title}
+                        {props.title}{props.oldName && <i>{props.oldName}</i>}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            <div>
-                                <Label props={labelName}/>
-                                <Input props={props.inputName}/>
-                                <InputError props={props.nameValidation}/>
+                            <div className={CSS_CLASS_CONTAINER}>
+                                <FormForInput props={props.formForName}/>
+                                <FormForNumber props={props.formForValue}/>
                             </div>
-                            <div>
-                                <Label props={labelValue}/>
-                                <InputNumber props={props.inputValue}/>
-                            </div>
-                            <div>
-                                <h4>Hints</h4>
+                            <div className={CSS_CLASS_HINTS}>
+                                <h2>Hints</h2>
                                 <ul>
                                     <li>
                                         <sup>1</sup>Required
@@ -57,8 +48,8 @@ export const RatingEntryFormDialogTemplate: FunctionComponent<any> = ({props}) =
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button props={getSubmitButtonProps(props.submitButtonText)}/>
-                        <Button props={getCancelButtonProps(props.handleClose)}/>
+                        <CustomButton props={getSubmitButtonProps(props.submitButton)}/>
+                        <CustomButton props={getCancelButtonProps(props.handleClose)}/>
                     </DialogActions>
                 </form>
             </Dialog>

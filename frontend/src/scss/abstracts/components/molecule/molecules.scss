@@ -1,0 +1,7 @@
+@import "nav", "footer";
+
+nav, footer {
+  background-color: $container-background-color;
+  $big-padding: calc(2 * $default-padding);
+  padding: $default-padding $big-padding $default-padding $big-padding;
+}

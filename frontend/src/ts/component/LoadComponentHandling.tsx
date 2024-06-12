@@ -1,8 +1,23 @@
-import React, {FunctionComponent} from "react";
+import React, {FunctionComponent, useEffect} from "react";
 import {Error} from "../general-page/error/Error";
-import {WebsiteLoadingPage} from "../general-page/WebsiteLoadingPage";
+import {setSiteTitle} from "../utility/WebsiteUtility";
+import {useAuth} from "../context/AuthContext";
+import {NotAuthorizedPage} from "../general-page/NotAuthorizedPage";
 
-export const LoadComponentHandling: FunctionComponent<any> = ({Component, props, error}) =>  {
+export const LoadComponentHandling: FunctionComponent<any> = ({Component, props, error, documentTitle,
+                                                                  needsAuthentication}) =>  {
+    const auth = useAuth();
+
+    useEffect(() => {
+        setSiteTitle(documentTitle);
+    }, [documentTitle]);
+
+    if (needsAuthentication && !auth.authenticated) {
+        return (
+            <NotAuthorizedPage/>
+        );
+    }
+
     if (error) {
         return (
             <Error error={error}/>
@@ -14,6 +29,6 @@ export const LoadComponentHandling: FunctionComponent<any> = ({Component, props,
         );
     }
     return (
-        <WebsiteLoadingPage/>
+        <></>
     );
 }

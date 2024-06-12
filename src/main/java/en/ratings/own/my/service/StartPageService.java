@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+import static en.ratings.own.my.utility.StringUtility.shortenString;
+
 @Service
 public class StartPageService {
 
@@ -45,6 +47,7 @@ public class StartPageService {
     private static ArrayList<RatingForStartPageDTO> convertModelsToDTOs(ArrayList<Rating> ratings) {
         ArrayList<RatingForStartPageDTO> ratingDTOs = new ArrayList<>();
         for (Rating rating: ratings) {
+            rating.setDescription(shortenString(rating.getDescription()));
             ratingDTOs.add(new RatingForStartPageDTO(rating));
         }
         return ratingDTOs;

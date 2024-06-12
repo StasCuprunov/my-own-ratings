@@ -1,3 +1,5 @@
+import PersonIcon from '@mui/icons-material/Person';
+
 import {useGet} from "../interface/useGet";
 import {API_ROUTING_REGISTRATION, API_ROUTING_USERS_CREATE} from "../constant/routing/APIRoutingConstants";
 import {postAxios} from "../interface/BackendCalls";
@@ -50,7 +52,7 @@ export const getLabelPasswordProps: any = () => {
   return {
       htmlFor: "password",
       text: "Password",
-      sup: "1"
+      sup: "1, 2"
   };
 };
 
@@ -65,7 +67,8 @@ export const getLabelPasswordConfirmationProps: any = () => {
 export const getCreateAccountButtonProps: any = () => {
     return {
         type: "submit",
-        text: "Create Account"
+        text: "Create Account",
+        icon: PersonIcon
     };
 };
 
