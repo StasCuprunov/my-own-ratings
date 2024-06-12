@@ -17,7 +17,10 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static en.ratings.own.my.test.constant.TestConstants.EXPECTED_ONE;
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserLianPaiWithTooLongFirstName;
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserLianPaiWithTooLongSurname;
 import static en.ratings.own.my.test.utility.CreateUserUtility.createUserLiangPai;
+import static en.ratings.own.my.test.utility.CreateUserUtility.createUserLiangPaiWithTooLongEmail;
 import static en.ratings.own.my.test.utility.GeneratorUtility.printExceptionMessage;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToUserCreationFailedException;
@@ -83,6 +86,21 @@ public class UserControllerIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void testInvalidCreateWithDefinedId() {
         testInvalidCreate(createUserLiangPaiWithDefinedId());
+    }
+
+    @Test
+    public void testInvalidCreateWithTooLongEmail() {
+        testInvalidCreate(createUserLiangPaiWithTooLongEmail());
+    }
+
+    @Test
+    public void testInvalidCreateWithTooLongFirstName() {
+        testInvalidCreate(createUserLianPaiWithTooLongFirstName());
+    }
+
+    @Test
+    public void testInvalidCreateWithTooLongSurname() {
+        testInvalidCreate(createUserLianPaiWithTooLongSurname());
     }
 
     @Test
