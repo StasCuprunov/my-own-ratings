@@ -6,6 +6,9 @@ import static en.ratings.own.my.constant.AttributeConstants.MAXIMUM_NUMBER_OF_DE
 import static en.ratings.own.my.constant.AttributeConstants.RANGE_OF_VALUES_MAXIMUM_BORDER;
 import static en.ratings.own.my.constant.AttributeConstants.RANGE_OF_VALUES_MINIMUM_BORDER;
 import static en.ratings.own.my.constant.AttributeConstants.STEP_WIDTH_BORDER;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_DESCRIPTION;
+import static en.ratings.own.my.constant.MaxLengthConstants.MAX_LENGTH_OF_NAME;
+import static en.ratings.own.my.exception.text.ExceptionTextUtility.errorMessageStringAttributeIsTooLong;
 import static en.ratings.own.my.utility.StringUtility.enumerateStrings;
 
 public class RatingExceptionText {
@@ -52,8 +55,16 @@ public class RatingExceptionText {
     public static String errorMessageForRatingNameIsEmpty() {
         return "The rating name may not be empty.";
     }
+
+    public static String errorMessageForRatingNameIsTooLong() {
+        return errorMessageStringAttributeIsTooLong("rating name", MAX_LENGTH_OF_NAME);
+    }
     public static String errorMessageForRatingNameAlreadyUsedForUser() {
         return "The rating name is already used by you. This name has to be unique.";
+    }
+
+    public static String errorMessageForRatingDescriptionIsTooLong() {
+        return errorMessageStringAttributeIsTooLong("description", MAX_LENGTH_OF_DESCRIPTION);
     }
 
     public static String errorMessageForRatingHasDefinedId() {
