@@ -126,6 +126,13 @@ export const getInputPasswordConfirmationProps: any = (value: string, handleChan
     };
 };
 
+export const getInputErrorEmailProps: any = (isEmailInvalid: boolean) => {
+    return {
+        condition: isEmailInvalid,
+        text: "The email syntax is not allowed."
+    }
+};
+
 export const getInputErrorPasswordProps: any = (isPasswordInvalid: boolean,
                                                 passwordErrorText: string) => {
     return {
