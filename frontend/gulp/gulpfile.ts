@@ -21,7 +21,7 @@ gulp.task(GULP_TASK_MINIMIZING_CSS, function () {
 });
 
 gulp.task(GULP_TASK_WATCH, function() {
-    return watch(minimizingCssConfig.srcDirectories, gulp.series([GULP_TASK_MINIMIZING_CSS]))
+    return watch(minimizingCssConfig.watchDirectories, gulp.series([GULP_TASK_MINIMIZING_CSS]))
 });
 
 gulp.task("default",
