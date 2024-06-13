@@ -1,6 +1,7 @@
 {
   "minimizingCssConfig": {
     "srcDirectories": "../src/scss/*.scss",
+    "watchDirectories": "../src/scss/**/*",
     "minimizedFileName": "bundle-min.css",
     "destDirectory": "../src/css"
   }
