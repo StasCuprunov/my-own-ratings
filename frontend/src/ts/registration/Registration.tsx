@@ -5,6 +5,7 @@ import {User} from "../model/User";
 import {
     createUser,
     getInputEmailProps,
+    getInputErrorEmailProps,
     getInputErrorPasswordConfirmationProps,
     getInputErrorPasswordProps,
     getInputFirstNameProps,
@@ -32,12 +33,15 @@ export const Registration: FunctionComponent<any> = ({props}) => {
     const navigate = useNavigate();
     const maxLengthString: number = props.maximumLengthOfString;
 
+    const emailRegex: RegExp = useMemo(() => new RegExp(props.emailRegex), []);
     const passwordRegex: PasswordRegex = useMemo(() => new PasswordRegex(props.atLeastOneDigitRegex,
         props.atLeastOneEnglishUpperCaseLetterRegex, props.atLeastOneEnglishLowerCaseLetterRegex,
         props.atLeastOneValidSpecialCharacterRegex, props.enumerationOfValidSpecialCharacters), [])
 
     const [user, setUser] = useState(new User());
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+    const [isEmailValid, setIsEmailValid] = useState(true);
 
     const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [isPasswordConfirmationValid, setIsPasswordConfirmationValid] =
@@ -58,7 +62,9 @@ export const Registration: FunctionComponent<any> = ({props}) => {
     const handleSubmit = async (event: any) => {
         event.preventDefault();
 
-        if (!isPasswordValid || !isPasswordConfirmationValid) {
+        checkEmail();
+
+        if (!isEmailValid || !isPasswordValid || !isPasswordConfirmationValid) {
             return;
         }
         let result: any = await createUser(user);
@@ -79,6 +85,14 @@ export const Registration: FunctionComponent<any> = ({props}) => {
     useEffect(() => {
         checkPassword();
     }, [user.password]);
+
+    const checkEmail = () => {
+        let isValid: boolean = true;
+        if (user.email && !emailRegex.test(user.email)) {
+            isValid = false;
+        }
+        setIsEmailValid(isValid);
+    };
 
     const checkPassword = () => {
         const { isPasswordValid, passwordErrorText } = passwordRegex.checkPassword(user.password);
@@ -118,7 +132,8 @@ export const Registration: FunctionComponent<any> = ({props}) => {
 
     const formForEmail: any = {
         label: labelEmail,
-        input: inputEmail
+        input: inputEmail,
+        inputError: getInputErrorEmailProps(!isEmailValid)
     };
 
     const formForFirstName: any = {
