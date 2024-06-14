@@ -1,0 +1,33 @@
+%warning-button {
+  @include operation-button($warning-color, $container-background-color);
+}
+
+%success-button {
+  @include operation-button($success-color, $container-background-color);
+}
+
+%danger-button {
+  @include operation-button($danger-color, $container-background-color);
+}
+
+%hints {
+  sup {
+    margin-right: 2px;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+%input-padding {
+  padding: 5px 10px 5px 10px;
+}

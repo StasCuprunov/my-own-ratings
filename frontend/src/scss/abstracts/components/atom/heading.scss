@@ -1,0 +1,41 @@
+h1 {
+  @include title($font-size-h1);
+  margin-bottom: 40px;
+}
+
+h2 {
+  @include title(calc(2.25 * $default-font-size));
+}
+
+h3 {
+  @include title(calc(2 * $default-font-size));
+}
+
+h4 {
+  @include title(calc(1.75 * $default-font-size));
+}
+
+h5 {
+  @include title($font-size-h5);
+}
+
+h6 {
+  @include title($font-size-h6);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $heading-color;
+  margin-top: 0;
+
+  sup {
+    vertical-align: super;
+  }
+
+  i {
+    margin-right: 10px;
+  }
+}
+
+h2, h3, h4, h5, h6 {
+  margin-bottom: 20px;
+}

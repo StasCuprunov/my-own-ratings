@@ -1,0 +1,3 @@
+@function borderAndOutlineValue($color) {
+  @return 1px solid $color;
+}

@@ -1,0 +1,28 @@
+a, .link-with-icon {
+  text-decoration: none;
+  transition: $default-transition-time;
+  color: $secondary-color;
+
+  &:hover {
+    transition: $default-transition-time;
+    color: $primary-color;
+  }
+}
+
+.link-with-icon {
+  display: flex;
+
+  svg {
+    align-self: center;
+  }
+
+  &:hover {
+    svg {
+      margin-left: $default-svg-margin-left;
+    }
+  }
+}
+
+.link-with-text > span {
+  margin-right: 5px;
+}

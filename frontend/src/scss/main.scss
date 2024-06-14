@@ -1,0 +1,45 @@
+@import "abstracts/globals/variables/variables";
+@import "abstracts/globals/functions";
+@import "abstracts/globals/mixins";
+@import "abstracts/globals/placeholders";
+@import "abstracts/components/components";
+
+body {
+  background-color: $background-color;
+  color: $primary-color;
+  font-family: Roboto, sans-serif;
+  font-size: $default-font-size;
+  display: flex;
+  justify-content: center;
+  overflow-wrap: anywhere;
+}
+
+sup {
+  font-size: $small-font-size;
+}
+
+#root {
+  width: 65%;
+}
+
+ul, ol, p {
+  margin: 0;
+}
+
+ul, ol {
+  padding-left: 20px;
+}
+
+.website-container {
+  $big-padding: calc(2 * $default-padding);
+  background-color: $container-background-color;
+  padding: $big-padding $big-padding $default-padding $big-padding;
+}
+
+.container {
+  margin-bottom: $default-font-size;
+}
+
+.hints {
+  @extend %hints;
+}

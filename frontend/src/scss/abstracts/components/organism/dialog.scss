@@ -1,0 +1,65 @@
+.MuiDialog-container {
+
+  .MuiDialogTitle-root {
+    color: $heading-color;
+  }
+
+  .MuiDialogContent-root > p {
+    color: $primary-color;
+  }
+
+  .MuiDialogTitle-root, .MuiDialogContent-root {
+    padding: $default-padding;
+  }
+
+  .MuiDialogTitle-root {
+    @include title($font-size-h5);
+    font-weight: bold;
+  }
+
+  .MuiDialogContent-root {
+
+    p {
+      font-size: $default-font-size;
+    }
+
+    .hints {
+      @extend %hints;
+
+      sup {
+        margin-right: 1px;
+      }
+
+      h2 {
+        @include title($font-size-h6);
+        margin-bottom: 10px;
+      }
+
+      ul {
+        padding-left: 10px;
+        font-size: $small-font-size;
+      }
+    }
+  }
+
+  .MuiPaper-root {
+    background-color: $container-background-color;
+    border: borderAndOutlineValue($primary-color);
+  }
+
+  .MuiDialogActions-root {
+    padding: 0 $default-padding $default-padding $default-padding;
+
+    .MuiButtonBase-root.delete-button {
+      @extend %danger-button;
+    }
+
+    .MuiButtonBase-root.cancel-button {
+      @extend %warning-button;
+    }
+
+    .MuiButtonBase-root.create-button, .MuiButtonBase-root.edit-button {
+      @extend %success-button;
+    }
+  }
+}
