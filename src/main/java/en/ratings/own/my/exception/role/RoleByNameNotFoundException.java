@@ -1,4 +1,4 @@
-package en.ratings.own.my.exception;
+package en.ratings.own.my.exception.role;
 
 public class RoleByNameNotFoundException extends Exception {
     public RoleByNameNotFoundException(String name) {

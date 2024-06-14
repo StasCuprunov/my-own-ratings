@@ -1,6 +1,6 @@
 package en.ratings.own.my.service.repository.role;
 
-import en.ratings.own.my.exception.RoleByNameNotFoundException;
+import en.ratings.own.my.exception.role.RoleByNameNotFoundException;
 import en.ratings.own.my.exception.role.RoleByIdNotFoundException;
 import en.ratings.own.my.model.role.Role;
 import en.ratings.own.my.repository.role.RoleRepository;

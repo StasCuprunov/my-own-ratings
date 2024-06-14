@@ -12,6 +12,7 @@ import en.ratings.own.my.exception.rating.range.of.values.RangeOfValuesByIdNotFo
 import en.ratings.own.my.exception.rating.range.of.values.RangeOfValuesByMinimumAndMaximumAndStepWidthNotFoundException;
 import en.ratings.own.my.exception.rating.update.RatingUpdateFailedException;
 import en.ratings.own.my.exception.role.RoleByIdNotFoundException;
+import en.ratings.own.my.exception.role.RoleByNameNotFoundException;
 import en.ratings.own.my.exception.user.UserByEmailNotFoundException;
 import en.ratings.own.my.exception.user.creation.UserCreationFailedException;
 import org.springframework.http.HttpHeaders;

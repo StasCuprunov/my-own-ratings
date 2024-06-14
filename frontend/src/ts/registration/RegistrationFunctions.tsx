@@ -4,8 +4,6 @@ import {useGet} from "../interface/useGet";
 import {API_ROUTING_REGISTRATION, API_ROUTING_USERS_CREATE} from "../constant/routing/APIRoutingConstants";
 import {postAxios} from "../interface/BackendCalls";
 import {User} from "../model/User";
-import {WEBSITE_ROUTING_LOGIN} from "../constant/routing/WebsiteRoutingConstants";
-import {ButtonLink} from "../component/atom/button/link/ButtonLink";
 
 export const useRegistration: any = () => {
     return useGet(API_ROUTING_REGISTRATION);
@@ -13,17 +11,6 @@ export const useRegistration: any = () => {
 
 export const createUser: any = async (user: User) => {
     return await postAxios(API_ROUTING_USERS_CREATE, user);
-};
-
-export const getLoginButtonLink = () => {
-    const props: any = {
-        type: "button",
-        text: "Login",
-        to: WEBSITE_ROUTING_LOGIN
-    };
-    return (
-        <ButtonLink props={props}/>
-    );
 };
 
 export const getLabelEmailProps: any = () => {

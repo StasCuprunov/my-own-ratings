@@ -33,8 +33,6 @@ public class StartPageService {
         this.authenticationService = authenticationService;
     }
 
-
-
     public StartPageDTO index() throws Exception {
         String email = authenticationService.getAuthentication().getName();
         User user = userRepositoryService.findByEmail(email);
