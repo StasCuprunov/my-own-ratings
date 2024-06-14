@@ -15,8 +15,6 @@ import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAccessDeniedException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
         assertThatExceptionIsEqualToAuthenticationCredentialsNotFoundException;
-import static en.ratings.own.my.test.utility.asserts.AssertThatExceptionUtility.
-        assertThatExceptionIsEqualToRatingEntryByIdNotFoundException;
 import static en.ratings.own.my.test.utility.asserts.AssertThatStatusCodeUtility.assertThatStatusCodeIsNoContent;
 import static en.ratings.own.my.test.utility.rating.RatingDrinksUtility.
         createValidRatingEntryAppleJuiceForDrinksWithNegativeMinimum;

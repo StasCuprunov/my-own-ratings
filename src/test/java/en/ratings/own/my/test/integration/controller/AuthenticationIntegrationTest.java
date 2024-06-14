@@ -5,7 +5,6 @@ import en.ratings.own.my.model.Login;
 import en.ratings.own.my.model.User;
 import en.ratings.own.my.service.authentication.JwtService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
